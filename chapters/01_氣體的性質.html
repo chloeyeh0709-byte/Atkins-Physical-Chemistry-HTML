@@ -1,0 +1,1068 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第一章　氣體的性質 | 物理化學講義</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['$$', '$$']],
+    tags: 'none'
+  },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+:root{
+  --sidebar-bg:#22282f;
+  --sidebar-fg:#cfd6dd;
+  --sidebar-fg-dim:#8b96a3;
+  --accent:#c0392b;
+  --accent2:#2e6f9e;
+  --main-bg:#faf6ee;
+  --paper-bg:#fffdf8;
+  --ink:#2b2520;
+  --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Noto Serif TC', serif;
+  background:var(--main-bg);
+  color:var(--ink);
+  line-height:1.85;
+  font-size:17px;
+}
+h1,h2,h3,h4,.ui,nav,.toc{
+  font-family:'Noto Sans TC', sans-serif;
+}
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:280px;
+  flex-shrink:0;
+  background:var(--sidebar-bg);
+  color:var(--sidebar-fg);
+  position:fixed;
+  top:0;left:0;bottom:0;
+  overflow-y:auto;
+  padding:28px 20px 60px;
+}
+.sidebar h1{
+  font-size:1.25rem;
+  color:#fff;
+  margin:0 0 4px;
+  font-weight:700;
+  letter-spacing:.05em;
+}
+.sidebar .subtitle{
+  font-size:.8rem;
+  color:var(--sidebar-fg-dim);
+  margin-bottom:24px;
+  letter-spacing:.08em;
+}
+.toc{
+  list-style:none;
+  margin:0;padding:0;
+  font-size:.92rem;
+}
+.toc li{margin:0;}
+.toc a{
+  display:block;
+  color:var(--sidebar-fg);
+  text-decoration:none;
+  padding:7px 10px;
+  border-radius:4px;
+  border-left:3px solid transparent;
+  transition:background .15s, color .15s, border-color .15s;
+}
+.toc a:hover{
+  background:rgba(255,255,255,.06);
+  color:#fff;
+}
+.toc a.active{
+  background:rgba(192,57,43,.18);
+  color:#fff;
+  border-left-color:var(--accent);
+  font-weight:500;
+}
+.toc .lvl2 a{
+  padding-left:26px;
+  font-size:.86rem;
+  color:var(--sidebar-fg-dim);
+}
+.toc .lvl2 a.active{color:#fff;}
+.toc .section-title{
+  margin:18px 0 4px;
+  padding:0 10px;
+  font-size:.75rem;
+  letter-spacing:.15em;
+  color:var(--accent);
+  text-transform:uppercase;
+  font-weight:700;
+}
+/* ---------- Main content ---------- */
+.main{
+  margin-left:280px;
+  flex:1;
+  padding:50px 64px 120px;
+  max-width:880px;
+}
+.main h1.page-title{
+  font-size:2.4rem;
+  font-weight:700;
+  margin:0 0 6px;
+  color:var(--ink);
+  border-bottom:4px solid var(--accent);
+  padding-bottom:14px;
+}
+.main .page-subtitle{
+  font-family:'Noto Sans TC',sans-serif;
+  color:#8a7a5e;
+  font-size:1rem;
+  margin-bottom:40px;
+  letter-spacing:.05em;
+}
+section.chapter-intro{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:24px 28px;
+  margin-bottom:40px;
+  font-size:.98rem;
+  color:#4a4136;
+}
+h2{
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--accent2);
+  margin:56px 0 18px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--rule);
+  scroll-margin-top:20px;
+}
+h3{
+  font-size:1.25rem;
+  font-weight:700;
+  color:#a14b32;
+  margin:36px 0 14px;
+  scroll-margin-top:20px;
+}
+h4{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--ink);
+  margin:24px 0 10px;
+}
+p{margin:0 0 16px;}
+strong{color:#7a3322;}
+.eng{color:#8a7a5e; font-size:.92em;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:18px 0 28px;
+  font-size:.92rem;
+  background:var(--paper-bg);
+}
+table caption{
+  text-align:left;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  margin-bottom:8px;
+  color:var(--accent2);
+}
+th,td{
+  border:1px solid var(--rule);
+  padding:8px 12px;
+  text-align:left;
+}
+th{
+  background:#eee3cf;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+}
+tr:nth-child(even) td{background:#f6efe1;}
+.eq{
+  font-family:'JetBrains Mono',monospace;
+  background:#f1ece0;
+  border-left:4px solid var(--accent2);
+  padding:14px 20px;
+  margin:18px 0;
+  border-radius:0 4px 4px 0;
+  overflow-x:auto;
+}
+.eq .eqnum{
+  float:right;
+  color:#9a8c70;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85em;
+}
+/* ---------- Content-type boxes ---------- */
+.box{
+  margin:24px 0;
+  border-radius:6px;
+  padding:18px 22px;
+  border:1px solid transparent;
+}
+.box .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  font-size:.95rem;
+  margin:0 0 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  letter-spacing:.05em;
+}
+.box-example{
+  background:#eaf3ea;
+  border-color:#bcd9bc;
+}
+.box-example .box-title{color:#3a7d44;}
+.box-selftest{
+  background:#e9f0f7;
+  border-color:#b9d2e8;
+}
+.box-selftest .box-title{color:#2e6f9e;}
+.box-molecular{
+  background:#fdeee0;
+  border-color:#f0cdab;
+}
+.box-molecular .box-title{color:#c0691f;}
+.box-note{
+  background:#f1eef7;
+  border-color:#d3c6e8;
+}
+.box-note .box-title{color:#6b4fa0;}
+.box-derivation{
+  background:#f7f4ec;
+  border:1px dashed #c9b894;
+}
+.box-derivation .box-title{color:#9c7a2e;}
+.box-method{
+  background:#fff;
+  border:1px solid #d8cdb8;
+  border-left:4px solid #a14b32;
+  border-radius:0 6px 6px 0;
+  padding:14px 20px;
+  margin:14px 0;
+}
+.box-method .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  color:#a14b32;
+  margin:0 0 8px;
+  font-size:.92rem;
+}
+.box-answer{
+  background:#fbf8ef;
+  border:1px solid #e6dcc4;
+  border-left:4px solid #c0392b;
+  border-radius:0 6px 6px 0;
+  padding:14px 20px;
+  margin:14px 0;
+}
+.box-answer .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  color:#c0392b;
+  margin:0 0 8px;
+  font-size:.92rem;
+}
+.figure{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:18px 20px;
+  margin:24px 0;
+  text-align:center;
+  color:#6e6354;
+  font-size:.92rem;
+}
+.figure .fig-placeholder{
+  background:#efe7d4;
+  border:1px dashed #c9b894;
+  border-radius:4px;
+  padding:36px 12px;
+  margin-bottom:10px;
+  color:#9c8b65;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:.9rem;
+}
+.figure .fig-caption{
+  text-align:left;
+  font-family:'Noto Sans TC',sans-serif;
+}
+.figure .fig-caption b{color:var(--accent2);}
+.keylist{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:6px 28px 6px;
+  margin:16px 0 32px;
+}
+.keylist li{margin:12px 0;}
+.keylist li::marker{color:var(--accent2);}
+.discuss-list, .exercise-list{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:18px 24px;
+  margin:16px 0 32px;
+}
+.discuss-list li, .exercise-list li{margin:14px 0;}
+.discuss-list li::marker, .exercise-list li::marker{color:var(--accent);font-weight:700;}
+hr.section-divider{
+  border:none;
+  border-top:1px solid var(--rule);
+  margin:50px 0;
+}
+.back-to-top{
+  display:inline-block;
+  margin-top:8px;
+  font-size:.85rem;
+  color:var(--accent2);
+  text-decoration:none;
+  font-family:'Noto Sans TC',sans-serif;
+}
+@media (max-width:900px){
+  .sidebar{position:static;width:100%;height:auto;}
+  .main{margin-left:0;padding:30px 24px;}
+  .layout{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="sidebar">
+  <h1>物理化學講義</h1>
+  <div class="subtitle">ATKINS' PHYSICAL CHEMISTRY 改編學習版</div>
+  <ul class="toc" id="toc">
+    <li class="section-title">第一章　氣體的性質</li>
+    <li><a href="#intro">章節導讀</a></li>
+    <li><a href="#sec1-1">1.1　氣體的狀態</a></li>
+    <li class="lvl2"><a href="#sec1-1a">(a) 壓力</a></li>
+    <li class="lvl2"><a href="#sec1-1b">(b) 壓力的測量</a></li>
+    <li class="lvl2"><a href="#sec1-1c">(c) 溫度</a></li>
+    <li><a href="#sec1-2">1.2　氣體定律</a></li>
+    <li class="lvl2"><a href="#sec1-2a">(a) 理想氣體方程式</a></li>
+    <li class="lvl2"><a href="#sec1-2b">(b) 氣體混合物</a></li>
+    <li><a href="#impact">專題：氣體定律與天氣</a></li>
+    <li><a href="#sec1-3">1.3　分子間作用力</a></li>
+    <li class="lvl2"><a href="#sec1-3a">(a) 壓縮因子</a></li>
+    <li class="lvl2"><a href="#sec1-3b">(b) 維里係數</a></li>
+    <li class="lvl2"><a href="#sec1-3c">(c) 凝結</a></li>
+    <li class="lvl2"><a href="#sec1-3d">(d) 臨界常數</a></li>
+    <li><a href="#sec1-4">1.4　van der Waals 方程式</a></li>
+    <li><a href="#sec1-5">1.5　對應狀態原理</a></li>
+    <li><a href="#checklist">重點概念整理</a></li>
+    <li><a href="#discussion">討論問題</a></li>
+    <li><a href="#exercises">精選習題</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+
+<h1 class="page-title">第一章　氣體的性質</h1>
+<div class="page-subtitle">The Properties of Gases</div>
+
+<section class="chapter-intro" id="intro">
+<p>本章建立貫穿全書的氣體基本性質。我們從一個高度理想化的模型——<strong>理想氣體（perfect gas / ideal gas）</strong>——出發，說明如何由實驗歸納出它的<strong>狀態方程式（equation of state）</strong>。接著討論真實氣體與理想氣體的差異，並建立能描述真實氣體行為的方程式。</p>
+<p>物質中最簡單的一種狀態是<strong>氣體（gas）</strong>：它會自動充滿所佔據的容器。本章前半部僅討論純氣體，後半部會說明同樣的觀念與方程式也適用於氣體混合物。</p>
+</section>
+
+<h2 id="sec1-1">1.1　氣體的狀態</h2>
+
+<p>一個物質樣品的<strong>物理狀態（physical state）</strong>，也就是它的物理條件，是由其物理性質所決定的。如果兩個樣品具有相同的物理性質，就說它們處於相同的狀態。對純氣體而言，描述其狀態需要四個變數：體積 $V$、物質的量（摩爾數）$n$、壓力 $p$ 與溫度 $T$。</p>
+<p>但實驗顯示，這四個變數中只要任意指定三個，第四個便會被唯一決定。換句話說，每一種物質都遵循一個<strong>狀態方程式（equation of state）</strong>，把這四個變數聯繫在一起：</p>
+
+<div class="eq">$$p = f(T, V, n) \tag{1.1}$$</div>
+
+<p>這個方程式告訴我們：只要知道某物質的 $T$、$V$、$n$，壓力 $p$ 就會有一個確定的值。每種物質都有自己專屬的狀態方程式，但只有少數情形我們能寫出它的明確形式。其中最重要的一個例子，就是<strong>理想氣體（perfect gas）</strong>的狀態方程式：</p>
+
+<div class="eq">$$p = \dfrac{nRT}{V}$$</div>
+
+<p>其中 $R$ 是一個常數。本章後續大部分內容，就是要說明這個方程式從何而來，以及它能怎麼應用。</p>
+
+<h3 id="sec1-1a">(a) 壓力</h3>
+
+<p><strong>壓力（pressure）</strong>的定義是「單位面積上所受到的力」。同樣的面積上，受力愈大，壓力也愈大。氣體之所以會對容器壁產生壓力，是因為大量分子不斷撞擊器壁；由於碰撞次數極多，整體看來就像是一個穩定持續的力，也就是我們感受到的穩定壓力。</p>
+
+<p>SI 制中壓力的單位是<strong>帕斯卡（pascal, Pa）</strong>，定義為每平方公尺一牛頓：</p>
+
+<div class="eq">$$1\ \text{Pa} = 1\ \text{N m}^{-2} \tag{1.2a}$$</div>
+<div class="eq">$$1\ \text{Pa} = 1\ \text{kg m}^{-1}\,\text{s}^{-2} \tag{1.2b}$$</div>
+
+<p>除了帕斯卡，還有許多單位仍廣泛使用（見表 1.1）。其中最常見的是<strong>大氣壓（atmosphere）</strong>：$1\ \text{atm} = 1.013\,25 \times 10^{5}\ \text{Pa}$（精確值），以及<strong>巴（bar）</strong>：$1\ \text{bar} = 10^{5}\ \text{Pa}$。1 bar 被定為報告數據時的<strong>標準壓力</strong>，記為 $p^{\ominus}$。</p>
+
+<table>
+<caption>表 1.1　常見的壓力單位</caption>
+<thead><tr><th>名稱</th><th>符號</th><th>數值</th></tr></thead>
+<tbody>
+<tr><td>帕斯卡</td><td>1 Pa</td><td>1 N m⁻², 1 kg m⁻¹ s⁻²</td></tr>
+<tr><td>巴</td><td>1 bar</td><td>10⁵ Pa</td></tr>
+<tr><td>大氣壓</td><td>1 atm</td><td>101.325 kPa</td></tr>
+<tr><td>托爾</td><td>1 Torr</td><td>(101 325/760) Pa ≈ 133.32 Pa</td></tr>
+<tr><td>毫米水銀柱</td><td>1 mmHg</td><td>133.322 Pa</td></tr>
+<tr><td>磅力每平方英吋</td><td>1 psi</td><td>6.894 757 kPa</td></tr>
+</tbody>
+</table>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 1.1</p>
+<p>有一枚質量 1.0 kg 的物體，透過面積為 $1.0\times10^{-2}\ \text{mm}^2$ 的針尖壓在地表上。試計算此處所產生的壓力（分別以帕斯卡與大氣壓表示）。</p>
+<p><em>提示：地表附近，質量 $m$ 的物體因重力所施加的力為 $mg$，其中 $g$ 為重力加速度（標準值見書末附錄）。</em></p>
+<p><strong>答案：</strong>約 $0.98\ \text{GPa}$，相當於 $9.7\times10^{3}\ \text{atm}$。</p>
+</div>
+
+<p>如果兩個分別裝有氣體的容器之間，以一塊可自由移動的隔板（活塞）相連，壓力較高的一側會把隔板往低壓側推，使其體積縮小；同時高壓側因擴張而壓力下降，低壓側因被壓縮而壓力上升。最終兩側壓力相等，隔板不再移動——這種兩側壓力相等、隔板不再有運動傾向的狀態，稱為<strong>力學平衡（mechanical equilibrium）</strong>。因此，氣體的壓力可以告訴我們：當一個容器透過可移動的壁與另一氣體相接時，兩者是否處於力學平衡。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.1　高壓區與低壓區之間以可移動的壁分隔示意圖</div>
+<div class="fig-caption"><b>圖 1.1</b>　當高壓區與低壓區之間以一可移動的壁分隔時，壁會被推向其中一側，如圖中 (a)、(c) 所示；但若兩側壓力相同，壁則靜止不動，如 (b)，此即兩區達到力學平衡的狀態。</div>
+</div>
+
+<h3 id="sec1-1b">(b) 壓力的測量</h3>
+
+<p>大氣所施加的壓力是用<strong>氣壓計（barometer）</strong>測量的。最早的氣壓計由伽利略的學生托里切利發明：將一支上端封閉、灌滿水銀的管子倒置。當水銀柱與大氣達到力學平衡時，柱底所受的壓力等於大氣壓，因此水銀柱的高度與外界大氣壓成正比。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 1.1　液柱所產生的壓力</p>
+<p>試推導：在地球表面，一根密度為 $\rho$、高度為 $h$ 的液柱，在柱底所產生的壓力的表達式。</p>
+<div class="box-method">
+<p class="box-title">方法</p>
+<p>壓力的定義是 $p = F/A$，其中 $F$ 是作用在面積 $A$ 上的力，而 $F = mg$。要求出 $F$，需先求出這段液柱的質量 $m$：$m = \rho V$，其中 $V$ 是液柱的體積。第一步，先求出一根圓柱形液柱的體積。</p>
+</div>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>設液柱的截面積為 $A$，則其體積為 $Ah$，質量為 $m=\rho A h$。此液柱在底部施加的力為：</p>
+<div class="eq">$$F = mg = \rho A h g$$</div>
+<p>因此柱底的壓力為：</p>
+<div class="eq">$$p = \frac{F}{A} = \frac{\rho A h g}{A} = \rho g h \tag{1.3}$$</div>
+<p>注意：壓力與液柱的形狀及截面積無關。這是因為液柱的質量隨截面積增加，但受力的面積也同步增加，兩者剛好互相抵消。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 1.2</p>
+<p>試推導：一根長度為 $l$、與垂直方向夾角為 $\theta$ 的液柱，在其底部所產生的壓力表達式。</p>
+<p><strong>答案：</strong>$p = \rho g l \cos\theta$</p>
+</div>
+
+<p>容器內氣體樣品的壓力，通常利用<strong>壓力計（pressure gauge）</strong>來測量——這是一種電性會隨壓力改變的裝置。例如，<strong>Bayard–Alpert 壓力計</strong>利用氣體分子被游離後產生的離子電流來推算壓力；<strong>電容式壓力計（capacitance manometer）</strong>則是透過監測薄膜相對於固定電極的偏移所造成的電容變化來量測壓力；某些半導體本身也會對壓力產生反應，可作為固態壓力計的感測元件。</p>
+
+<h3 id="sec1-1c">(c) 溫度</h3>
+
+<p><strong>溫度（temperature）</strong>這個概念，源自於一個觀察：當兩個物體互相接觸時，物理狀態（例如體積）有時會發生變化——就像把一塊燒紅的金屬丟進水裡一樣。後面（第2章）我們會看到，這種狀態變化可以理解為「熱」這種形式的能量，從一個物體流向另一個物體。溫度 $T$ 正是用來指出：當兩個物體透過可導熱、剛性的壁接觸時，能量會往哪個方向流動的物理量。如果能量從 A 流向 B，我們就說 A 的溫度比 B 高。</p>
+
+<p>區分兩種邊界很有用：若兩個溫度不同的物體接觸後會發生狀態變化，這個邊界稱為<strong>導溫壁（diathermic）</strong>，即可導熱的邊界；若即使兩物體溫度不同，接觸後也不發生任何變化，這種邊界稱為<strong>絕熱壁（adiabatic）</strong>。金屬容器的壁是導溫壁的例子，保溫瓶則近似於絕熱容器。</p>
+
+<p>溫度這個物理量，可以告訴我們：若兩個物體透過導溫壁接觸，它們是否會處於<strong>熱平衡（thermal equilibrium）</strong>——也就是接觸後不再發生任何狀態變化。實驗發現一個重要事實：如果物體 A（例如一塊鐵）與物體 B（例如一塊銅）達到熱平衡，而 B 又與物體 C（例如一瓶水）達到熱平衡，那麼當 A 與 C 接觸時，它們也會處於熱平衡。這個觀察被總結為<strong>熱力學第零定律（Zeroth Law of thermodynamics）</strong>：</p>
+
+<div class="box box-note">
+<p class="box-title">📌 熱力學第零定律</p>
+<p>若 A 與 B 處於熱平衡，且 B 與 C 處於熱平衡，則 C 與 A 也必定處於熱平衡。</p>
+</div>
+
+<p>第零定律為「溫度」這個概念，以及「溫度計（thermometer）」這種測量裝置提供了理論基礎。設想 B 是一支裝有水銀等液體的玻璃毛細管，其體積會隨溫度顯著膨脹。當 A 與 B 接觸時，B 中水銀柱會停在某個固定長度。根據第零定律，如果把 B 拿去和另一個物體 C 接觸，水銀柱停在同樣的長度，就可以預測 A 與 C 接觸時不會發生任何變化——換句話說，我們可以用水銀柱的長度來代表 A 與 C 的溫度。</p>
+
+<p>早期的溫度計（直到今天的實驗室中仍常見）是利用液柱的長度來定義溫度：把溫度計分別放入融冰與沸水中，兩個固定點之間的液柱長度差被均分為 100 個刻度，稱為「度」，較低的那一點定為 0。這就是<strong>攝氏溫標（Celsius scale）</strong>的由來，本書以 $\theta$ 表示攝氏溫度，單位為 °C。</p>
+
+<p>然而，不同液體的膨脹程度不同，且膨脹率往往不均勻，因此用不同材質做成的溫度計，在兩個固定點之間會給出不同的數值。幸運的是，氣體的壓力可以用來建立一個與氣體種類無關的<strong>理想氣體溫標（perfect-gas temperature scale）</strong>，而這個溫標恰好等同於第3章將介紹的<strong>熱力學溫標（thermodynamic temperature scale）</strong>，因此本書統一採用後者的名稱以避免混淆。在熱力學溫標上，溫度以 $T$ 表示，單位為<strong>克耳文（kelvin, K）</strong>（注意不寫成「°K」）。熱力學溫度與攝氏溫度的精確關係為：</p>
+
+<div class="eq">$$T/\text{K} = \theta/^{\circ}\text{C} + 273.15 \tag{1.4}$$</div>
+
+<p>這個關係式（也可寫成 $\theta/^{\circ}\text{C} = T/\text{K} - 273.15$）正是現今攝氏溫標基於克耳文溫標的定義方式。它也意味著：溫度差 1°C 等於溫度差 1 K。</p>
+
+<div class="box box-note">
+<p class="box-title">📌 注意事項：零點的寫法</p>
+<p>我們會寫「$T=0$」，而不寫「$T=0\ \text{K}$」，因為熱力學溫標是一個絕對溫標——不論刻度單位大小（克耳文或其他），最低溫永遠是 0，正如我們寫 $p=0$ 代表零壓力，不論用的單位是 bar 還是 Pa。但攝氏溫標不是絕對溫標，因此「0°C」中的單位不可省略。</p>
+</div>
+
+<div class="box box-note">
+<p class="box-title">📌 範例：溫度換算</p>
+<p>將 $25.00^{\circ}\text{C}$ 換算成克耳文：利用 (1.4) 式，</p>
+<div class="eq">$$T/\text{K} = (25.00^{\circ}\text{C})/^{\circ}\text{C} + 273.15 = 25.00 + 273.15 = 298.15$$</div>
+<p>注意這裡的單位（°C）就像數字一樣可以互相消去——這種處理方式稱為「量的計算」(quantity calculus)：一個物理量（如溫度）可以看成「數值 × 單位」的乘積（此處為 $25.00 \times 1^{\circ}\text{C}$）。將等式兩邊乘以單位 K，便得到 $T = 298.15\ \text{K}$。</p>
+<p>書寫上建議的做法是：當方程式中需要標明單位時，採用「（物理量）/單位」的寫法，這樣得到的是一個無單位的純數字，例如 $(25.00^{\circ}\text{C})/^{\circ}\text{C} = 25.00$。單位可以像數字一樣相乘、相消。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec1-2">1.2　氣體定律</h2>
+
+<p>低壓下氣體的狀態方程式，是把幾條獨立的實驗定律組合起來而得到的。</p>
+
+<h3 id="sec1-2a">(a) 理想氣體方程式</h3>
+
+<p>以下幾條氣體定律應該是讀者熟悉的：</p>
+
+<div class="eq"><strong>波以耳定律 (Boyle's law)：</strong>$pV = \text{常數}$（$n$、$T$ 不變） <span class="eqnum">(1.5)°</span></div>
+<div class="eq"><strong>查理定律 (Charles's law)：</strong>$V = \text{常數} \times T$（$n$、$p$ 不變） <span class="eqnum">(1.6a)°</span></div>
+<div class="eq">$p = \text{常數} \times T$（$n$、$V$ 不變） <span class="eqnum">(1.6b)°</span></div>
+<div class="eq"><strong>亞佛加厥原理 (Avogadro's principle)：</strong>$V = \text{常數} \times n$（$p$、$T$ 不變） <span class="eqnum">(1.7)°</span></div>
+
+<p>波以耳定律與查理定律都屬於<strong>極限定律（limiting law）</strong>——也就是只有在某個極限條件下（這裡是 $p \to 0$）才嚴格成立的定律。本書凡是只在這種極限意義下成立的式子，都會在編號上加註「°」符號，如上面幾式。亞佛加厥原理常被表述為「在相同溫度與壓力下，等體積的氣體含有相同數目的分子」；嚴格來說這也只在 $p \to 0$ 時才完全成立。儘管如此，這些關係式在常壓（$p \approx 1\ \text{bar}$）下已相當可靠，因此在化學中被廣泛使用。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.4　不同溫度下，定量理想氣體的壓力對體積關係圖</div>
+<div class="fig-caption"><b>圖 1.4</b>　固定量理想氣體在不同溫度下，壓力隨體積變化的關係。每一條曲線對應一個固定溫度，稱為<strong>等溫線（isotherm）</strong>。依波以耳定律，理想氣體的等溫線是雙曲線。</div>
+</div>
+
+<p>圖 1.4 描繪了固定量氣體在改變體積時，壓力如何變化；每條曲線對應一個固定溫度，稱為<strong>等溫線（isotherm）</strong>。依波以耳定律，理想氣體的等溫線是雙曲線（即 $xy=\text{常數}$ 形式的曲線）。另一種畫法是將壓力對 $1/V$ 作圖（圖 1.5），會得到直線。查理定律所描述的體積與溫度的線性關係，繪於圖 1.6 中，這些線稱為<strong>等壓線（isobar）</strong>，表示壓力固定時性質的變化。圖 1.7 則顯示壓力與溫度的線性關係，這些線稱為<strong>等容線（isochore）</strong>，表示體積固定時性質的變化。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.5　壓力對 1/體積　|　圖 1.6　體積對溫度（等壓線）　|　圖 1.7　壓力對溫度（等容線）</div>
+<div class="fig-caption"><b>圖 1.5</b>　在固定溫度下，將壓力對 $1/V$ 作圖會得到直線。<br><b>圖 1.6</b>　固定壓力下，定量氣體的體積隨溫度呈線性變化；每條等壓線外插後都會在 $T=0$（即 $\theta=-273^{\circ}\text{C}$）處趨近於零體積。<br><b>圖 1.7</b>　固定體積下，壓力也與溫度呈線性關係，外插後在 $T=0$ 處趨近於零。</div>
+</div>
+
+<div class="box box-note">
+<p class="box-title">📌 注意事項：如何檢驗一個關係式</p>
+<p>要檢驗兩個量之間的關係是否成立，最好的辦法是用能畫出直線的方式作圖——因為偏離直線比偏離曲線更容易被察覺出來。</p>
+</div>
+
+<p>把 (1.5)–(1.7) 式所總結的實驗觀察組合起來，可以得到一個統一的式子：</p>
+
+<div class="eq">$$pV = \text{常數} \times nT$$</div>
+
+<p>這個式子在 $n$、$T$ 不變時化為波以耳定律（$pV=\text{常數}$）；在 $n$ 與 $V$（或 $p$）不變時化為兩種形式的查理定律；在 $p$、$T$ 不變時化為亞佛加厥原理（$V \propto n$）。其中的比例常數，實驗發現對所有氣體都相同，稱為<strong>氣體常數（gas constant）</strong>，記為 $R$。於是我們得到：</p>
+
+<div class="eq">$$pV = nRT \tag{1.8}°$$</div>
+
+<p>這就是<strong>理想氣體方程式（perfect gas equation）</strong>。它是任何氣體在低壓下的近似狀態方程式，且壓力愈低愈精確。一種在任何條件下都精確遵守 (1.8) 式的氣體，稱為<strong>理想氣體（perfect gas，亦稱 ideal gas）</strong>。<strong>真實氣體（real gas）</strong>則是指實際存在的氣體，它在壓力愈低時行為愈接近理想氣體，並在 $p \to 0$ 的極限下精確滿足 (1.8) 式。</p>
+
+<p>氣體常數 $R$ 可以透過在零壓極限下測量 $R = pV/nT$ 來確定（這樣才能保證氣體的行為趨近理想）；不過更精確的方法，是測量低壓氣體（實務上常用氬氣）中的聲速，並外插到零壓力。表 1.2 列出了 $R$ 在各種單位下的數值。</p>
+
+<table>
+<caption>表 1.2　氣體常數 R 的數值</caption>
+<thead><tr><th colspan="2">數值與單位</th></tr></thead>
+<tbody>
+<tr><td>8.314 47</td><td>J K⁻¹ mol⁻¹</td></tr>
+<tr><td>8.205 74 × 10⁻²</td><td>dm³ atm K⁻¹ mol⁻¹</td></tr>
+<tr><td>8.314 47 × 10⁻²</td><td>dm³ bar K⁻¹ mol⁻¹</td></tr>
+<tr><td>8.314 47</td><td>Pa m³ K⁻¹ mol⁻¹</td></tr>
+<tr><td>62.364</td><td>dm³ Torr K⁻¹ mol⁻¹</td></tr>
+<tr><td>1.987 21</td><td>cal K⁻¹ mol⁻¹</td></tr>
+</tbody>
+</table>
+
+<div class="box box-molecular">
+<p class="box-title">🧬 分子詮釋 1.1　氣體的動力論模型 (The kinetic model of gases)</p>
+<p>從分子的角度，波以耳定律可以這樣理解：如果把一份氣體壓縮到原體積的一半，那麼在相同時間內，撞擊器壁的分子數會變成原來的兩倍，平均施加在器壁上的力也因此加倍。也就是說，體積減半時壓力加倍，$pV$ 維持不變。波以耳定律之所以適用於所有氣體（在低壓下），是因為此時分子間距離極大，分子幾乎不互相影響，各自獨立運動。</p>
+<p>查理定律的分子層級解釋則是：升高溫度會使氣體分子的平均速率增加，分子撞擊器壁的頻率與撞擊力都隨之增加，因此對器壁施加更大的壓力。</p>
+<p>以上這些定性概念，可以透過<strong>氣體動力論模型（kinetic model of gases）</strong>定量地表達出來（詳見第21章）。這個模型建立在三個簡單假設之上：</p>
+<ol>
+<li>氣體由質量為 $m$ 的分子組成，這些分子持續不斷地做隨機運動。</li>
+<li>分子本身的大小可忽略——也就是分子的直徑遠小於分子間碰撞的平均自由路徑。</li>
+<li>分子之間只透過短暫、不頻繁且彈性的碰撞而相互作用。</li>
+</ol>
+<p><strong>彈性碰撞（elastic collision）</strong>是指碰撞前後分子的總平移動能保持不變的碰撞。從這些非常精簡的假設出發，可以推導出（詳見第21章）氣體的壓力與體積之間滿足：</p>
+<div class="eq">$$pV = \frac{1}{3}nMc^2 \tag{1.9}°$$</div>
+<p>其中 $M = mN_{\text{A}}$ 是分子的摩爾質量，$c$ 稱為分子的<strong>根均方速率（root mean square speed）</strong>，定義為分子速率平方的平均值再取平方根：</p>
+<div class="eq">$$c = \langle v^2 \rangle^{1/2} \tag{1.10}$$</div>
+<p>如果根均方速率只與溫度有關，那麼在固定溫度下，$pV=\text{常數}$，這正是波以耳定律的內容。此外，若 (1.9) 式要成為理想氣體的狀態方程式，其右側必須等於 $nRT$，因此可以推得氣體在溫度 $T$ 下分子的根均方速率為：</p>
+<div class="eq">$$c = \left(\frac{3RT}{M}\right)^{1/2} \tag{1.11}°$$</div>
+<p>由此可知：<strong>氣體分子的根均方速率，與溫度的平方根成正比，與摩爾質量的平方根成反比。</strong>也就是說，溫度愈高，分子的根均方速率愈大；而在同一溫度下，較重的分子比較輕的分子移動得慢。例如，由 (1.11) 式可算出，N₂ 分子在 298 K 時的根均方速率約為 $515\ \text{m s}^{-1}$。</p>
+</div>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.8　固定量理想氣體的 p–V–T 曲面　|　圖 1.9　該曲面在固定溫度下的截面</div>
+<div class="fig-caption"><b>圖 1.8</b>　固定量理想氣體的壓力對體積與熱力學溫度作圖，所構成的曲面，依 (1.8) 式繪製。曲面上的點代表氣體可能存在的所有狀態——氣體不可能處於不對應曲面上任何一點的狀態。<br><b>圖 1.9</b>　圖 1.8 曲面在固定溫度下的截面，即對應圖 1.4 的等溫線與圖 1.6 的等壓線。</div>
+</div>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 1.2　使用理想氣體方程式</p>
+<p>在某工業流程中，氮氣在一個體積固定的容器中被加熱到 500 K。若氮氣進入容器時的狀態為 100 atm、300 K，假設它的行為符合理想氣體，那麼在工作溫度 500 K 時，它的壓力會是多少？</p>
+<div class="box-method">
+<p class="box-title">方法</p>
+<p>由於溫度上升，可預期壓力也會上升。理想氣體方程式可寫成 $pV/nT = R$；若條件由一組數值變為另一組，因為 $pV/nT$ 等於常數 $R$，兩組數值之間必滿足「合併氣體定律」：</p>
+<div class="eq">$$\frac{p_1V_1}{n_1T_1} = \frac{p_2V_2}{n_2T_2} \tag{1.12}°$$</div>
+<p>已知與未知的數據整理如下表：</p>
+<table>
+<thead><tr><th></th><th>$n$</th><th>$p$</th><th>$V$</th><th>$T$</th></tr></thead>
+<tbody>
+<tr><td>初始狀態</td><td>相同</td><td>100</td><td>相同</td><td>300</td></tr>
+<tr><td>最終狀態</td><td>相同</td><td>?</td><td>相同</td><td>500</td></tr>
+</tbody>
+</table>
+</div>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>因為 $V_1=V_2$、$n_1=n_2$，合併氣體定律兩側可分別消去體積與物質的量，化簡為：</p>
+<div class="eq">$$\frac{p_1}{T_1} = \frac{p_2}{T_2}$$</div>
+<p>整理後得：</p>
+<div class="eq">$$p_2 = \frac{T_2}{T_1} \times p_1$$</div>
+<p>代入數據：</p>
+<div class="eq">$$p_2 = \frac{500\ \text{K}}{300\ \text{K}} \times (100\ \text{atm}) = 167\ \text{atm}$$</div>
+<p>實際實驗測得的壓力約為 183 atm，可見若假設氣體為理想氣體，誤差約達 10%。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 1.3</p>
+<p>同一樣品要在什麼溫度下，才會產生 300 atm 的壓力？</p>
+<p><strong>答案：</strong>900 K</p>
+</div>
+
+<p>理想氣體方程式在物理化學中極為重要，因為它是推導熱力學中許多關係式的基礎。此外它也很有實用價值，可用來計算氣體在各種條件下的性質。例如，在<strong>標準環境溫度與壓力（standard ambient temperature and pressure, SATP，即 298.15 K、1 bar = $10^5$ Pa）</strong>下，理想氣體的摩爾體積 $V_{\text{m}}=V/n$ 可由 $V_{\text{m}}=RT/p$ 算出，為 $24.789\ \text{dm}^3\,\text{mol}^{-1}$。早期定義的<strong>標準溫度與壓力（standard temperature and pressure, STP，即 0°C、1 atm）</strong>下，理想氣體的摩爾體積則為 $22.414\ \text{dm}^3\,\text{mol}^{-1}$。</p>
+
+<h3 id="sec1-2b">(b) 氣體混合物</h3>
+
+<p>處理氣體混合物時，我們常需要知道每個成分對總壓力的貢獻。混合物中某氣體 J 的<strong>分壓（partial pressure）</strong>$p_{\text{J}}$ 定義為：</p>
+
+<div class="eq">$$p_{\text{J}} = x_{\text{J}}\,p \tag{1.13}$$</div>
+
+<p>其中 $x_{\text{J}}$ 是組分 J 的<strong>摩爾分率（mole fraction）</strong>，即 J 的物質的量佔混合物總物質的量 $n$ 的比例：</p>
+
+<div class="eq">$$x_{\text{J}} = \frac{n_{\text{J}}}{n}, \qquad n = n_{\text{A}} + n_{\text{B}} + \cdots \tag{1.14}$$</div>
+
+<p>當混合物中不含 J 分子時，$x_{\text{J}}=0$；若只含 J 分子，則 $x_{\text{J}}=1$。由定義可知，無論混合物的組成如何，$x_{\text{A}}+x_{\text{B}}+\cdots=1$，因此所有分壓之和等於總壓：</p>
+
+<div class="eq">$$p_{\text{A}} + p_{\text{B}} + \cdots = (x_{\text{A}}+x_{\text{B}}+\cdots)\,p = p \tag{1.15}$$</div>
+
+<p>這個關係式對真實氣體與理想氣體都成立。</p>
+
+<p>當所有氣體都是理想氣體時，(1.13) 式所定義的分壓，恰好等於該氣體單獨佔據整個容器、處於相同溫度時所產生的壓力——這也是「分壓」一詞最初的含義，也是<strong>道耳頓定律（Dalton's law）</strong>最初的表述方式：</p>
+
+<div class="box box-note">
+<p class="box-title">📌 道耳頓定律</p>
+<p>混合氣體所產生的總壓力，等於各成分氣體單獨佔據整個容器時各自產生壓力之和。</p>
+</div>
+
+<p>不過，現在 (1.13) 式所定義的分壓與 (1.15) 式所給出的總壓之間的關係，對任何氣體都成立；而「分壓等於該氣體單獨存在時的壓力」這個說法，則只對理想氣體才正確。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 1.3　計算分壓</p>
+<p>海平面處乾燥空氣的質量百分組成大約為：N₂ 75.5%、O₂ 23.2%、Ar 1.3%。當總壓為 1.00 atm 時，求各成分的分壓。</p>
+<div class="box-method">
+<p class="box-title">方法</p>
+<p>摩爾分率較高的成分，分壓應該也按比例較高。分壓由 (1.13) 式定義，需先求出摩爾分率（由 (1.14) 式定義）。利用「質量 $m_{\text{J}}$ 的樣品中，摩爾質量為 $M_{\text{J}}$ 的分子 J 的物質的量為 $n_{\text{J}}=m_{\text{J}}/M_{\text{J}}$」這一事實。由於摩爾分率與樣品總質量無關，可以選總質量為 100 g（方便由質量百分比直接換算）。因此 N₂ 的質量為 100 g 的 75.5%，即 75.5 g。</p>
+</div>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>100 g 空氣中各分子的物質的量為：</p>
+<div class="eq">
+$$n(\text{N}_2) = \frac{75.5\ \text{g}}{28.02\ \text{g mol}^{-1}} = \frac{75.5}{28.02}\ \text{mol}$$
+$$n(\text{O}_2) = \frac{23.2\ \text{g}}{32.00\ \text{g mol}^{-1}} = \frac{23.2}{32.00}\ \text{mol}$$
+$$n(\text{Ar}) = \frac{1.3\ \text{g}}{39.95\ \text{g mol}^{-1}} = \frac{1.3}{39.95}\ \text{mol}$$
+</div>
+<p>分別約為 2.69 mol、0.725 mol、0.033 mol，總計 3.45 mol。將各物質的量除以 3.45 mol 得摩爾分率，再乘以總壓 (1.00 atm) 即得分壓：</p>
+<table>
+<thead><tr><th></th><th>N₂</th><th>O₂</th><th>Ar</th></tr></thead>
+<tbody>
+<tr><td>摩爾分率</td><td>0.780</td><td>0.210</td><td>0.0096</td></tr>
+<tr><td>分壓 / atm</td><td>0.780</td><td>0.210</td><td>0.0096</td></tr>
+</tbody>
+</table>
+<p>注意：整個計算過程並未假設氣體是理想氣體——分壓 $p_{\text{J}}=x_{\text{J}}p$ 的定義對任何氣體都適用。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 1.4</p>
+<p>若再考慮二氧化碳，質量百分比變為：N₂ 75.52%、O₂ 23.15%、Ar 1.28%、CO₂ 0.046%。當總壓為 0.900 atm 時，各成分的分壓為多少？</p>
+<p><strong>答案：</strong>N₂ 0.703 atm、O₂ 0.189 atm、Ar 0.0084 atm、CO₂ 0.00027 atm</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="impact">專題：氣體定律與天氣 <span class="eng">(Impact on environmental science: The gas laws and the weather)</span></h2>
+
+<p>我們最容易接觸到的最大氣體樣品，就是大氣。表 1.3 列出乾燥空氣在海平面的組成。這個組成靠擴散與對流（風，特別是局部的渦流）維持大致穩定，但壓力與溫度會隨高度與當地條件變化，尤其是在<strong>對流層（troposphere，「變化的一層」）</strong>——也就是地表以上約 11 km 範圍內的大氣層。</p>
+
+<table>
+<caption>表 1.3　海平面乾燥空氣的組成</caption>
+<thead><tr><th>成分</th><th>體積百分比</th><th>質量百分比</th></tr></thead>
+<tbody>
+<tr><td>氮氣 N₂</td><td>78.08</td><td>75.53</td></tr>
+<tr><td>氧氣 O₂</td><td>20.95</td><td>23.14</td></tr>
+<tr><td>氬氣 Ar</td><td>0.93</td><td>1.28</td></tr>
+<tr><td>二氧化碳 CO₂</td><td>0.031</td><td>0.047</td></tr>
+<tr><td>氫氣 H₂</td><td>5.0 × 10⁻³</td><td>2.0 × 10⁻⁴</td></tr>
+<tr><td>氖 Ne</td><td>1.8 × 10⁻³</td><td>1.3 × 10⁻³</td></tr>
+<tr><td>氦 He</td><td>5.2 × 10⁻⁴</td><td>7.2 × 10⁻⁵</td></tr>
+<tr><td>甲烷 CH₄</td><td>2.0 × 10⁻⁴</td><td>1.1 × 10⁻⁴</td></tr>
+<tr><td>氪 Kr</td><td>1.1 × 10⁻⁴</td><td>3.2 × 10⁻⁴</td></tr>
+<tr><td>一氧化氮 NO</td><td>5.0 × 10⁻⁵</td><td>1.7 × 10⁻⁶</td></tr>
+<tr><td>氙 Xe</td><td>8.7 × 10⁻⁶</td><td>1.2 × 10⁻⁵</td></tr>
+<tr><td>臭氧 O₃（夏）</td><td>7.0 × 10⁻⁶</td><td>1.2 × 10⁻⁵</td></tr>
+<tr><td>臭氧 O₃（冬）</td><td>2.0 × 10⁻⁶</td><td>3.3 × 10⁻⁶</td></tr>
+</tbody>
+</table>
+
+<p>對流層中，海平面的平均溫度約為 15°C，而在對流層頂（約 11 km 處）則降至約 −57°C；換算成克耳文後，這個變化幅度相對較小，由 288 K 降到 216 K，平均約為 268 K。若假設整個對流層的溫度都維持在這個平均值，壓力隨高度 $h$ 的變化可用<strong>氣壓高度公式（barometric formula）</strong>描述：</p>
+
+<div class="eq">$$p = p_0\,e^{-h/H}$$</div>
+
+<p>其中 $p_0$ 為海平面壓力，$H$ 是一個約等於 8 km 的常數，更精確地說 $H=RT/Mg$，$M$ 為空氣的平均摩爾質量。這個公式即使在對流層以上的區域，也與觀測到的壓力分布相當吻合（圖 1.10）。它意味著：在 $h=H\ln 2 \approx 6\ \text{km}$ 處，空氣的壓力與密度會降為海平面數值的一半。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.10　大氣壓力隨高度變化圖　|　圖 1.11　典型天氣圖（2000年1月1日美國）　|　圖 1.12　南北半球高低壓系統周圍的風向</div>
+<div class="fig-caption"><b>圖 1.10</b>　大氣壓力隨高度的變化，依氣壓高度公式預測的結果與「美國標準大氣」模型（考慮溫度隨高度變化）相近。<br><b>圖 1.11</b>　典型天氣圖範例（2000年1月1日，美國）。<br><b>圖 1.12</b>　南北半球中，空氣（「風」）在高壓區與低壓區周圍的流動方式。</div>
+</div>
+
+<p>對流層中壓力、溫度與組成的局部變化，正是我們所說的「天氣」。一小團空氣稱為一個<strong>氣團（parcel）</strong>。首先要注意：同樣大小的氣團，暖空氣的密度比冷空氣低。當氣團上升時，會在沒有與外界進行熱交換的情況下（即<strong>絕熱（adiabatic）</strong>地）膨脹，因而降溫。冷空氣能容納的水蒸氣濃度比暖空氣低，因此多餘的水分會凝結成雲。所以多雲的天空往往伴隨著空氣上升，晴朗的天空則往往伴隨著空氣下沉。</p>
+
+<p>高空中空氣的運動，可能造成某些區域空氣聚積、另一些區域空氣流失。前者形成<strong>高壓區（"highs" 或反氣旋）</strong>，後者形成<strong>低壓區（"lows"，低氣壓或氣旋）</strong>，在天氣圖上分別標示為 H 與 L（見圖 1.11）。圖上每隔 4 mbar（400 Pa，約 3 Torr）畫出的等壓線稱為<strong>等壓線（isobar）</strong>；狹長的高壓區與低壓區分別稱為<strong>高壓脊（ridge）</strong>與<strong>低壓槽（trough）</strong>。</p>
+
+<p>氣象學上，大規模的垂直空氣運動稱為<strong>對流（convection）</strong>。水平方向的壓力差會造成空氣流動，也就是<strong>風（wind）</strong>（圖 1.12）。在北半球，由北方來的風，以及在南半球由南方來的風，會因地球自轉速度從極區（較慢）到赤道（較快）的差異而向西偏轉。風向大致與等壓線平行：北半球低壓在風的左側，南半球則在右側。在地表，由於風速較低，風向會更接近垂直於等壓線、由高壓吹向低壓。這種差異運動，使得北半球的高壓系統呈順時針向外旋出，低壓系統則呈逆時針向內旋入。</p>
+
+<p>高壓區流失的空氣，會由周圍空氣匯聚並下沉來補充。如前所述，下沉的空氣對應晴朗的天空；空氣下沉時還會因壓縮而升溫，因此高壓區常伴隨較高的地表溫度。冬季時，地表冷空氣可能阻止上方空氣完全下沉，形成<strong>逆溫層（temperature inversion）</strong>——上層暖空氣、下層冷空氣的結構。某些地形（例如洛杉磯）也可能把冷空氣困住，使光化學污染物（即「煙霧」smog）被困在暖空氣層之下。</p>
+
+<hr class="section-divider">
+
+<h2 id="sec1-3">真實氣體 <span class="eng">Real gases</span></h2>
+
+<p>真實氣體並不完全遵守理想氣體方程式。這種偏差在高壓、低溫——尤其是氣體接近凝結成液體——的條件下特別顯著。</p>
+
+<h2 id="sec1-3-main" style="margin-top:0">1.3　分子間作用力 <span class="eng">Molecular interactions</span></h2>
+
+<p>真實氣體偏離理想氣體定律，原因在於分子之間存在相互作用力。<strong>排斥力（repulsive force）</strong>有助於氣體膨脹，<strong>吸引力（attractive force）</strong>則有助於氣體被壓縮。</p>
+
+<p>排斥力只有在分子幾乎接觸時才顯著——它是一種短程作用力，即使以分子直徑為尺度衡量也是如此（圖 1.13）。正因為是短程作用，只有在分子平均間距很小（也就是高壓、許多分子擠在小體積內）時，排斥力才重要。相反地，分子間的吸引力是相對長程的作用，可在數個分子直徑的距離內發揮效果；當分子相當靠近但尚未接觸時（圖 1.13 中間的間距範圍），吸引力最為重要；當分子相距很遠時，吸引力則無效（圖 1.13 最右側）。</p>
+
+<p>當溫度很低，分子的平均速率很小，使分子容易被彼此「捕獲」時，分子間作用力也會變得重要。在低壓下，氣體佔據很大的體積，分子彼此間大部分時間都離得很遠，分子間作用力幾乎不起作用，此時氣體幾乎表現出理想行為。在中等壓力下，分子的平均間距只有幾個分子直徑大小，吸引力會超過排斥力，此時氣體比理想氣體更容易被壓縮，因為吸引力有助於把分子拉近。在高壓下，分子間距很小，排斥力佔主導，氣體因此比理想氣體更不容易被壓縮，因為排斥力會把分子推開。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.13　兩個分子的位能對其間距的變化曲線</div>
+<div class="fig-caption"><b>圖 1.13</b>　兩個分子之間的位能隨間距變化的示意圖。在極小間距處位能為強正值，表示此時排斥力主導；在中等間距處位能為負值，表示吸引力主導；在大間距處（圖右側）位能趨近於零，分子間幾乎沒有交互作用。</div>
+</div>
+
+<h4 id="sec1-3a">(a) 壓縮因子 <span class="eng">The compression factor</span></h4>
+
+<p>氣體的<strong>壓縮因子（compression factor）</strong>$Z$，定義為其實測的摩爾體積 $V_{\text{m}}=V/n$，與相同溫度、壓力下理想氣體的摩爾體積 $V_{\text{m}}^{\,\circ}$ 之比：</p>
+
+<div class="eq">$$Z = \frac{V_{\text{m}}}{V_{\text{m}}^{\,\circ}} \tag{1.16}$$</div>
+
+<p>由於理想氣體的摩爾體積為 $RT/p$，因此 $Z=RT/pV_{\text{m}}^{\,\circ}$，於是 (1.16) 式也可寫成：</p>
+
+<div class="eq">$$pV_{\text{m}} = RTZ \tag{1.17}$$</div>
+
+<p>因為理想氣體在任何條件下 $Z=1$，所以 $Z$ 偏離 1 的程度，正反映了氣體偏離理想行為的程度。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.14　0°C 時，數種氣體的壓縮因子 Z 對壓力的關係圖</div>
+<div class="fig-caption"><b>圖 1.14</b>　0°C 時數種氣體的壓縮因子 $Z$ 隨壓力的變化。理想氣體在所有壓力下 $Z=1$。注意：雖然所有曲線在 $p\to 0$ 時都趨近 1，但趨近的斜率各不相同。</div>
+</div>
+
+<p>圖 1.14 顯示了一些氣體的實測 $Z$ 值。在極低壓力下，所有氣體的 $Z\approx 1$，行為近乎理想；在高壓下，所有氣體的 $Z>1$，表示其摩爾體積比理想氣體大，此時排斥力佔主導；在中等壓力下，大多數氣體的 $Z<1$，表示吸引力使摩爾體積比理想氣體小。</p>
+
+<h4 id="sec1-3b">(b) 維里係數 <span class="eng">Virial coefficients</span></h4>
+
+<p>圖 1.15 顯示二氧化碳的實驗等溫線。在摩爾體積大、溫度高的情形下，真實氣體的等溫線與理想氣體等溫線差異不大。這些微小差異顯示，理想氣體定律其實是下列展開式的第一項：</p>
+
+<div class="eq">$$pV_{\text{m}} = RT(1 + B'p + C'p^2 + \cdots) \tag{1.18}$$</div>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.15　二氧化碳在數個溫度下的實驗等溫線（含臨界等溫線 31.04°C）</div>
+<div class="fig-caption"><b>圖 1.15</b>　二氧化碳在多個溫度下的實驗等溫線。「臨界等溫線」即臨界溫度 31.04°C 所對應的等溫線，臨界點以星號標示。</div>
+</div>
+
+<p>這是物理化學中常見的處理方式：把一個已知是良好一級近似的簡單定律（這裡是 $pV=nRT$），視為某個變數（這裡是 $p$）的級數展開式的第一項。另一種更常用的展開形式是：</p>
+
+<div class="eq">$$pV_{\text{m}} = RT\left(1 + \frac{B}{V_{\text{m}}} + \frac{C}{V_{\text{m}}^2} + \cdots\right) \tag{1.19}$$</div>
+
+<p>(1.18) 與 (1.19) 式都是<strong>維里方程式（virial equation of state）</strong>的兩種形式（virial 一詞源自拉丁文「力」）。比較 (1.19) 式與 (1.17) 式可知，括號中的項即對應壓縮因子 $Z$。</p>
+
+<p>係數 $B, C, \ldots$ 隨溫度變化，分別稱為第二、第三、……<strong>維里係數（virial coefficients）</strong>（第一維里係數即為 1，見表 1.4）。一般而言，在常見的摩爾體積範圍內，第三維里係數 $C$ 的重要性遠不如第二維里係數 $B$，即 $C/V_{\text{m}}^2 \ll B/V_{\text{m}}$。</p>
+
+<table>
+<caption>表 1.4　第二維里係數 B / (cm³ mol⁻¹)（精選數據）</caption>
+<thead><tr><th>氣體</th><th>273 K</th><th>600 K</th></tr></thead>
+<tbody>
+<tr><td>Ar</td><td>−21.7</td><td>11.9</td></tr>
+<tr><td>CO₂</td><td>−149.7</td><td>−12.4</td></tr>
+<tr><td>N₂</td><td>−10.5</td><td>21.7</td></tr>
+<tr><td>Xe</td><td>−153.7</td><td>−19.6</td></tr>
+</tbody>
+</table>
+
+<p>維里方程式可以幫助我們說明一個重要的觀點：雖然真實氣體的狀態方程式在 $p\to 0$ 時會收斂到理想氣體定律，但這並不代表它的所有性質都會在這個極限下與理想氣體一致。考慮 $\mathrm{d}Z/\mathrm{d}p$，即壓縮因子對壓力作圖的斜率：對理想氣體而言 $\mathrm{d}Z/\mathrm{d}p=0$（因為 $Z=1$ 處處成立），但對真實氣體，由 (1.18) 式可得：</p>
+
+<div class="eq">$$\frac{\mathrm{d}Z}{\mathrm{d}p} = B' + 2pC' + \cdots \;\longrightarrow\; B' \quad (p \to 0) \tag{1.20a}$$</div>
+
+<p>然而 $B'$ 未必為零，因此 $Z$ 對 $p$ 的斜率在 $p\to 0$ 時也未必趨近於理想氣體的 0 值（圖 1.14 即可見此現象）。由於許多氣體的物理性質都涉及導數，真實氣體的這類性質即使在低壓下也未必與理想氣體相同。同理可得：</p>
+
+<div class="eq">$$\frac{\mathrm{d}Z}{\mathrm{d}(1/V_{\text{m}})} \longrightarrow B \quad (V_{\text{m}}\to\infty,\ \text{即}\ p\to 0) \tag{1.20b}$$</div>
+
+<p>由於維里係數會隨溫度變化，可能存在某個特定溫度，使得 $Z\to 1$ 時斜率恰為零（圖 1.16）。這個溫度稱為<strong>波以耳溫度（Boyle temperature）</strong>$T_{\text{B}}$，在此溫度下，真實氣體在 $p\to 0$ 時的性質會與理想氣體完全一致。由 (1.20b) 式可知，$Z$ 在 $p\to 0$ 時斜率為零的條件是 $B=0$，因此波以耳溫度正是使 $B=0$ 的溫度。由 (1.19) 式可知，在波以耳溫度下 $pV_{\text{m}}\approx RT_{\text{B}}$ 在比其他溫度更大的壓力範圍內都成立，因為此時 $B/V_{\text{m}}$ 這一項為零，而 $C/V_{\text{m}}^2$ 及更高階項也可忽略。氦氣的 $T_{\text{B}}=22.64\ \text{K}$；空氣的 $T_{\text{B}}=346.8\ \text{K}$（更多數值見表 1.5）。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.16　壓縮因子 Z 在低壓區的行為與波以耳溫度示意圖</div>
+<div class="fig-caption"><b>圖 1.16</b>　壓縮因子 $Z$ 在低壓下都趨近 1，但趨近的斜率不同。理想氣體的斜率為零；真實氣體的斜率可正可負，且隨溫度變化。在波以耳溫度下，斜率為零，氣體在比其他溫度更廣的條件範圍內表現出理想行為。</div>
+</div>
+
+<table>
+<caption>表 1.5　氣體的臨界常數（精選數據）</caption>
+<thead><tr><th>氣體</th><th>$p_{\text{c}}$ / atm</th><th>$V_{\text{c}}$ / (cm³ mol⁻¹)</th><th>$T_{\text{c}}$ / K</th><th>$Z_{\text{c}}$</th><th>$T_{\text{B}}$ / K</th></tr></thead>
+<tbody>
+<tr><td>Ar</td><td>48.0</td><td>75.3</td><td>150.7</td><td>0.292</td><td>411.5</td></tr>
+<tr><td>CO₂</td><td>72.9</td><td>94.0</td><td>304.2</td><td>0.274</td><td>714.8</td></tr>
+<tr><td>He</td><td>2.26</td><td>57.8</td><td>5.2</td><td>0.305</td><td>22.64</td></tr>
+<tr><td>O₂</td><td>50.14</td><td>78.0</td><td>154.8</td><td>0.308</td><td>405.9</td></tr>
+</tbody>
+</table>
+
+<h4 id="sec1-3c">(c) 凝結 <span class="eng">Condensation</span></h4>
+
+<p>接下來考慮：在固定溫度下，把一份氣體從圖 1.15 中標記為 A 的狀態開始壓縮（用活塞推進）會發生什麼事。在 A 附近，氣體壓力大致依波以耳定律上升。當體積減小到 B 點時，開始明顯偏離波以耳定律。</p>
+
+<p>到達 C 點時（對二氧化碳而言約為 60 atm），氣體已完全不再表現出理想行為：活塞繼續推進，壓力卻不再上升，這個階段對應水平線段 CDE。觀察容器內部會發現，剛過 C 點後就出現了液體，並形成一個有清晰界面分開的兩相系統。從 C 經 D 到 E，體積持續減小，但液體量持續增加；活塞不會遇到額外阻力，因為多餘的氣體會持續凝結成液體來「吸收」體積的減少。這段水平線 CDE 所對應的壓力，也就是液相與氣相達到平衡時的壓力，稱為該溫度下液體的<strong>蒸氣壓（vapour pressure）</strong>。</p>
+
+<p>到達 E 點時，樣品已全部變為液體，活塞正好接觸到液面。此後若要進一步減小體積，需要施加相當大的壓力——E 點左側壓力急遽上升的曲線正說明了這一點：即使從 E 到 F 只是很小的體積變化，也需要壓力大幅增加。</p>
+
+<h4 id="sec1-3d">(d) 臨界常數 <span class="eng">Critical constants</span></h4>
+
+<p>溫度 $T_{\text{c}}$（對 CO₂ 而言為 304.19 K，即 31.04°C）所對應的等溫線，在物質狀態理論中扮演特殊的角色。略低於 $T_{\text{c}}$ 的等溫線行為如前所述：在某個壓力下，液體會從氣體中凝結出來，並可由可見的界面與氣體區分。但如果壓縮恰好發生在 $T_{\text{c}}$ 本身，分隔兩相的界面就不會出現——原本水平段兩端的體積會合併成單一個點，這個點稱為該氣體的<strong>臨界點（critical point）</strong>。在臨界點上的溫度、壓力與摩爾體積，分別稱為<strong>臨界溫度</strong> $T_{\text{c}}$、<strong>臨界壓力</strong> $p_{\text{c}}$ 與<strong>臨界摩爾體積</strong> $V_{\text{c}}$，三者合稱該物質的<strong>臨界常數（critical constants）</strong>（見表 1.5）。</p>
+
+<p>在 $T_{\text{c}}$ 或更高溫度下，樣品始終是充滿整個容器的單一相——依定義這就是氣體。也就是說，高於臨界溫度時不會形成液相。例如氧氣的臨界溫度意味著：若溫度高於 155 K，不論如何加壓都無法把氧氣液化；必須先把溫度降到 155 K 以下，再進行等溫壓縮，才能得到不佔滿整個容器的流體相。當 $T>T_{\text{c}}$ 時，這個充滿整個容器的單一相，其密度可能遠高於我們通常認知的「氣體」，因此更適合稱為<strong>超臨界流體（supercritical fluid）</strong>。</p>
+
+<hr class="section-divider">
+
+<h2 id="sec1-4">1.4　van der Waals 方程式</h2>
+
+<p>從維里方程式出發，只有代入具體的係數數值才能得到結論。但若想對所有氣體的行為有一個較粗略、卻更全面的圖像，1873年 J.D. van der Waals 提出的近似狀態方程式就十分有用。這個方程式是「從一個數學上複雜、但物理圖像簡單的問題出發，運用科學思維建立模型」的一個極佳範例。</p>
+
+<p><strong>van der Waals 方程式</strong>為：</p>
+
+<div class="eq">$$p = \frac{nRT}{V-nb} - a\left(\frac{n}{V}\right)^2 \tag{1.21a}$$</div>
+
+<p>其推導見下方的推導說明。若以摩爾體積 $V_{\text{m}}=V/n$ 表示，常寫成：</p>
+
+<div class="eq">$$p = \frac{RT}{V_{\text{m}}-b} - \frac{a}{V_{\text{m}}^2} \tag{1.21b}$$</div>
+
+<p>常數 $a$ 與 $b$ 稱為<strong>van der Waals 係數</strong>，是每種氣體的特徵常數，與溫度無關（見表 1.6）。</p>
+
+<table>
+<caption>表 1.6　van der Waals 係數（精選數據）</caption>
+<thead><tr><th>氣體</th><th>$a$ / (atm dm⁶ mol⁻²)</th><th>$b$ / (10⁻² dm³ mol⁻¹)</th></tr></thead>
+<tbody>
+<tr><td>Ar</td><td>1.337</td><td>3.20</td></tr>
+<tr><td>CO₂</td><td>3.610</td><td>4.29</td></tr>
+<tr><td>He</td><td>0.0341</td><td>2.38</td></tr>
+<tr><td>Xe</td><td>4.137</td><td>5.16</td></tr>
+</tbody>
+</table>
+
+<div class="box box-derivation">
+<p class="box-title">🔬 推導說明 1.1　van der Waals 方程式的由來</p>
+<p>分子間的排斥力，可以用「分子是不可穿透的小球」這個圖像來理解。由於分子本身佔有體積，它們實際能運動的空間不是 $V$，而是 $V-nb$，其中 $nb$ 大約等於分子本身所佔的總體積。這個論點意味著理想氣體定律 $p=nRT/V$ 在排斥力顯著時，應改寫為：</p>
+<div class="eq">$$p = \frac{nRT}{V-nb}$$</div>
+<p>兩個半徑為 $r$、體積 $V_{\text{molecule}}=\frac{4}{3}\pi r^3$ 的硬球分子，最接近時中心距離為 $2r$，因此被排除的體積為 $\frac{4}{3}\pi(2r)^3=8V_{\text{molecule}}$。每個分子平均被排除的體積為其一半，即 $4V_{\text{molecule}}$，因此 $b\approx 4V_{\text{molecule}}N_{\text{A}}$。</p>
+<p>壓力同時取決於分子撞擊器壁的頻率與每次撞擊的力道。吸引力會以與分子濃度 $n/V$ 成正比的強度，同時降低碰撞頻率與碰撞力道；因此壓力的降低量會與濃度的平方成正比。若把這個壓力的降低量寫成 $-a(n/V)^2$（$a$ 為每種氣體特有的正常數），排斥與吸引兩種效應合併起來，就得到 (1.21) 式所示的 van der Waals 方程式。</p>
+<p>這裡的推導只是用「分子體積」與「作用力效應」這類較粗略的論證來建立方程式；雖然也可以用其他方式推導，但這種方法的好處是展示了「如何從一般概念導出方程式的形式」。同時也提醒我們：係數 $a$ 與 $b$ 最好被視為經驗參數，而非精確定義的分子性質。</p>
+</div>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 1.4　用 van der Waals 方程式估算摩爾體積</p>
+<p>試估算 CO₂ 在 500 K、100 atm 時的摩爾體積（視為 van der Waals 氣體）。</p>
+<div class="box-method">
+<p class="box-title">方法</p>
+<p>將 (1.21b) 式兩邊乘以 $(V_{\text{m}}-b)V_{\text{m}}^2$，可得：</p>
+<div class="eq">$$(V_{\text{m}}-b)V_{\text{m}}^2 p = RTV_{\text{m}}^2 - (V_{\text{m}}-b)a$$</div>
+<p>再除以 $p$，並依 $V_{\text{m}}$ 的次方整理，得到一個三次方程式：</p>
+<div class="eq">$$V_{\text{m}}^3 - \left(b+\frac{RT}{p}\right)V_{\text{m}}^2 + \left(\frac{a}{p}\right)V_{\text{m}} - \frac{ab}{p} = 0$$</div>
+<p>三次方程式的根雖然有解析公式，但形式相當複雜；除非確實需要解析解，通常直接用數值方法求解較為方便。</p>
+</div>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>由表 1.6，$a=3.592\ \text{dm}^6\,\text{atm}\,\text{mol}^{-2}$，$b=4.267\times10^{-2}\ \text{dm}^3\,\text{mol}^{-1}$。在題設條件下 $RT/p=0.410\ \text{dm}^3\,\text{mol}^{-1}$，因此方程式的係數為：</p>
+<div class="eq">
+$$b+\frac{RT}{p}=0.453\ \text{dm}^3\,\text{mol}^{-1}$$
+$$\frac{a}{p}=3.61\times10^{-2}\ (\text{dm}^3\,\text{mol}^{-1})^2$$
+$$\frac{ab}{p}=1.55\times10^{-3}\ (\text{dm}^3\,\text{mol}^{-1})^3$$
+</div>
+<p>令 $x=V_{\text{m}}/(\text{dm}^3\,\text{mol}^{-1})$，待解方程式為：</p>
+<div class="eq">$$x^3 - 0.453x^2 + (3.61\times10^{-2})x - (1.55\times10^{-3}) = 0$$</div>
+<p>可接受的根為 $x=0.366$，即 $V_{\text{m}}=0.366\ \text{dm}^3\,\text{mol}^{-1}$。相同條件下理想氣體的摩爾體積為 $0.410\ \text{dm}^3\,\text{mol}^{-1}$。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 1.5</p>
+<p>假設氬氣為 van der Waals 氣體，試計算其在 100°C、100 atm 時的摩爾體積。</p>
+<p><strong>答案：</strong>$0.298\ \text{dm}^3\,\text{mol}^{-1}$</p>
+</div>
+
+<h3 id="sec1-4a">(a) 方程式的可靠程度</h3>
+
+<p>現在來檢視 van der Waals 方程式對真實氣體行為的描述能力。期望單一、簡單的表達式能成為所有物質的真實狀態方程式是過於樂觀的；精確的工作仍須依賴維里方程式，並使用各溫度下的係數表進行數值分析。然而 van der Waals 方程式的優點在於它是<strong>解析式</strong>（即可以用符號表達），因此能讓我們對真實氣體得出一些一般性的結論。當這個方程式失效時，我們可以改用表 1.7 中列出的其他狀態方程式、提出新的方程式，或回到維里方程式。</p>
+
+<table>
+<caption>表 1.7　幾種常見的狀態方程式（節選）</caption>
+<thead><tr><th>方程式名稱</th><th>表達式</th><th>臨界常數 $T_{\text{c}}$</th></tr></thead>
+<tbody>
+<tr><td>理想氣體</td><td>$p=\dfrac{RT}{V_{\text{m}}}$</td><td>—</td></tr>
+<tr><td>van der Waals</td><td>$p=\dfrac{RT}{V_{\text{m}}-b}-\dfrac{a}{V_{\text{m}}^2}$</td><td>$\dfrac{8a}{27bR}$</td></tr>
+<tr><td>Berthelot</td><td>$p=\dfrac{RT}{V_{\text{m}}-b}-\dfrac{a}{TV_{\text{m}}^2}$</td><td>$\dfrac{2}{3}\left(\dfrac{2a}{3bR}\right)^{1/2}$</td></tr>
+<tr><td>Dieterici</td><td>$p=\dfrac{RTe^{-a/RTV_{\text{m}}}}{V_{\text{m}}-b}$</td><td>$\dfrac{a}{4bR}$</td></tr>
+<tr><td>維里</td><td>$p=\dfrac{RT}{V_{\text{m}}}\left\{1+\dfrac{B(T)}{V_{\text{m}}}+\dfrac{C(T)}{V_{\text{m}}^2}+\cdots\right\}$</td><td>—</td></tr>
+</tbody>
+</table>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.17　van der Waals 方程式所允許的 p–V–T 曲面　|　圖 1.18　不同 T/Tc 下的 van der Waals 等溫線</div>
+<div class="fig-caption"><b>圖 1.17</b>　van der Waals 方程式所允許的狀態曲面，可與圖 1.8 的理想氣體曲面對照。<br><b>圖 1.18</b>　不同 $T/T_{\text{c}}$ 值下的 van der Waals 等溫線，可與圖 1.15 的實驗等溫線對照。圖中的「van der Waals 環圈」通常以水平直線取代。臨界等溫線對應 $T/T_{\text{c}}=1$。</div>
+</div>
+
+<p>圖 1.17 與 1.18 顯示由 van der Waals 方程式計算出的等溫線。除了臨界溫度以下出現的振盪外，這些曲線與實驗等溫線相當接近。這種振盪稱為<strong>van der Waals 環圈（van der Waals loops）</strong>，並不符合實際情況，因為它意味著在某些條件下，壓力增加反而會使體積增加。因此，實務上會用水平線取代這些環圈，使環圈在水平線上下圍出的面積相等——這個做法稱為<strong>Maxwell 構建法（Maxwell construction）</strong>。表 1.7 中列出的 van der Waals 係數，就是透過將計算曲線與實驗曲線擬合而得到的。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖：Maxwell 構建法示意——環圈上下方面積相等</div>
+<div class="fig-caption">Maxwell 構建法：以一條水平直線取代 van der Waals 環圈，使曲線在直線上方與下方圍出的面積相等。</div>
+</div>
+
+<h3 id="sec1-4b">(b) 方程式的主要特徵</h3>
+
+<p>van der Waals 方程式的主要特徵可歸納如下：</p>
+
+<p><strong>(1) 在高溫與大摩爾體積下，會還原為理想氣體等溫線。</strong>當溫度很高時，$RT$ 可能遠大於 (1.21b) 式中的第二項；此外，若摩爾體積很大（$V_{\text{m}}\gg b$），分母 $V_{\text{m}}-b \approx V_{\text{m}}$。在這種條件下，方程式化簡為 $p=RT/V_{\text{m}}$，也就是理想氣體方程式。</p>
+
+<p><strong>(2) 當「凝聚效應」與「分散效應」互相平衡時，氣相與液相可以共存。</strong>van der Waals 環圈出現在 (1.21b) 式兩項數值相近的時候：第一項來自分子的動能與排斥作用，第二項則代表吸引作用的效果。</p>
+
+<p><strong>(3) 臨界常數與 van der Waals 係數之間存在固定關係。</strong></p>
+
+<p>當 $T<T_{\text{c}}$ 時，計算出的等溫線會出現振盪，每條曲線都先經過一個極小值再經過一個極大值；這兩個極值會隨 $T\to T_{\text{c}}$ 而互相靠近，並在 $T=T_{\text{c}}$ 時重合，形成一個平緩的反曲點。根據曲線的性質，這種反曲點發生在一階導數與二階導數同時為零的地方：</p>
+
+<div class="eq">$$\left(\frac{\partial p}{\partial V_{\text{m}}}\right) = -\frac{RT}{(V_{\text{m}}-b)^2} + \frac{2a}{V_{\text{m}}^3} = 0$$</div>
+<div class="eq">$$\left(\frac{\partial^2 p}{\partial V_{\text{m}}^2}\right) = \frac{2RT}{(V_{\text{m}}-b)^3} - \frac{6a}{V_{\text{m}}^4} = 0$$</div>
+
+<p>解這兩個方程式（並利用 (1.21b) 式由 $V_{\text{c}}$、$T_{\text{c}}$ 求出 $p_{\text{c}}$），可得：</p>
+
+<div class="eq">$$V_{\text{c}} = 3b, \qquad p_{\text{c}} = \frac{a}{27b^2}, \qquad T_{\text{c}} = \frac{8a}{27Rb} \tag{1.22}$$</div>
+
+<p>這些關係式提供了另一條由臨界常數求出 $a$、$b$ 的途徑。它們也可以用<strong>臨界壓縮因子（critical compression factor）</strong>$Z_{\text{c}}$ 來檢驗——van der Waals 方程式預測：</p>
+
+<div class="eq">$$Z_{\text{c}} = \frac{p_{\text{c}}V_{\text{c}}}{RT_{\text{c}}} = \frac{3}{8} \tag{1.23}$$</div>
+
+<p>對所有氣體都應相同。由表 1.5 可見，雖然實際的 $Z_{\text{c}}$ 略小於 $\frac{3}{8}=0.375$，但大致維持在 0.3 左右，差異並不算太大。</p>
+
+<hr class="section-divider">
+
+<h2 id="sec1-5">1.5　對應狀態原理 <span class="eng">The principle of corresponding states</span></h2>
+
+<p>科學上比較不同物件性質的一個重要通用手法，是選定某個同類的基本性質，以此建立相對的尺度。我們已經看到，臨界常數是氣體的特徵性質，因此可以拿它們作為基準，建立一套無單位的<strong>歸一化變數（reduced variables）</strong>——將實際變數除以對應的臨界常數：</p>
+
+<div class="eq">$$p_{\text{r}} = \frac{p}{p_{\text{c}}}, \qquad V_{\text{r}} = \frac{V_{\text{m}}}{V_{\text{c}}}, \qquad T_{\text{r}} = \frac{T}{T_{\text{c}}} \tag{1.24}$$</div>
+
+<p>若已知某氣體的歸一化壓力 $p_{\text{r}}$，便可由 $p=p_{\text{r}}p_{\text{c}}$ 算出實際壓力，體積與溫度依此類推。van der Waals 最早嘗試這個方法，他希望：在相同的歸一化體積 $V_{\text{r}}$ 與相同的歸一化溫度 $T_{\text{r}}$ 下，不同氣體會表現出相同的歸一化壓力 $p_{\text{r}}$。這個想法大致上得到了驗證（圖 1.19）：圖中顯示不同氣體在各種歸一化溫度下，壓縮因子對歸一化壓力的關係——把這張圖與未使用歸一化變數的圖 1.14 比較，效果相當顯著：不同氣體的數據幾乎都落在同一條曲線上。這個觀察被稱為<strong>對應狀態原理（principle of corresponding states）</strong>。這個原理只是一個近似：對球形分子組成的氣體效果最好，對非球形或極性分子則可能出現較大誤差。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 1.19　四種氣體以歸一化變數表示的壓縮因子曲線</div>
+<div class="fig-caption"><b>圖 1.19</b>　圖 1.14 中四種氣體的壓縮因子，改用歸一化變數重新繪製。曲線依歸一化溫度 $T_{\text{r}}=T/T_{\text{c}}$ 標示。使用歸一化變數後，不同氣體的數據幾乎都落在同一組曲線上。</div>
+</div>
+
+<p>van der Waals 方程式可以為這個原理提供一些理論說明。首先將 (1.21b) 式以歸一化變數表示：</p>
+
+<div class="eq">$$p_{\text{r}}p_{\text{c}} = \frac{RT_{\text{r}}T_{\text{c}}}{V_{\text{r}}V_{\text{c}}-b} - \frac{a}{V_{\text{r}}^2V_{\text{c}}^2}$$</div>
+
+<p>再利用 (1.22) 式把臨界常數以 $a$、$b$ 表示並代入，整理後可得：</p>
+
+<div class="eq">$$p_{\text{r}} = \frac{8T_{\text{r}}}{3V_{\text{r}}-1} - \frac{3}{V_{\text{r}}^2} \tag{1.25}$$</div>
+
+<p>這個方程式的形式與原方程式相同，但隨氣體種類而異的係數 $a$ 與 $b$ 已經消失。也就是說，如果用歸一化變數繪製等溫線（事實上圖 1.18 就是這樣做的），不論是哪種氣體都會得到相同的曲線——這正是對應狀態原理的內容，因此 van der Waals 方程式與這個原理是相容的。</p>
+
+<p>不過也不宜過度解讀這個「成功」，因為表 1.7 中其他狀態方程式同樣也能滿足這個原理：只要方程式中有兩個分別扮演 $a$ 與 $b$ 角色的參數，就總能整理成歸一化形式。真實氣體大致遵守這個原理的事實，說明吸引與排斥作用的效應，大致都可以用單一參數來近似。這個原理真正的價值，與其說是理論上的意義，不如說是它能把各種氣體的性質統整到同一張圖上（例如把圖 1.14 變成圖 1.19）。</p>
+
+<hr class="section-divider">
+
+<h2 id="checklist">重點概念整理 <span class="eng">Checklist of key ideas</span></h2>
+
+<ul class="keylist">
+<li>氣體是一種會自動充滿其容器的物質狀態。</li>
+<li>狀態方程式將壓力、體積、溫度與物質的量聯繫起來：$p=f(T,V,n)$。</li>
+<li>壓力是力除以受力面積；標準壓力為 $p^{\ominus}=1\ \text{bar}=10^5\ \text{Pa}$。</li>
+<li><strong>力學平衡</strong>是指可移動的壁兩側壓力相等的狀態。</li>
+<li><strong>溫度</strong>是指出能量透過導熱、剛性壁流動方向的物理量。</li>
+<li><strong>導溫壁</strong>允許「熱」這種形式的能量通過；<strong>絕熱壁</strong>則阻止熱的通過。</li>
+<li><strong>熱平衡</strong>是指兩物體 A、B 透過導溫壁接觸時不再發生狀態變化的條件。</li>
+<li><strong>熱力學第零定律</strong>：若 A 與 B 熱平衡，B 與 C 熱平衡，則 C 與 A 亦熱平衡。</li>
+<li>攝氏溫標與熱力學溫標的關係：$T/\text{K}=\theta/^{\circ}\text{C}+273.15$。</li>
+<li><strong>理想氣體</strong>在任何條件下都精確遵守 $pV=nRT$。</li>
+<li><strong>道耳頓定律</strong>：混合氣體的總壓力，等於各氣體分壓之和。</li>
+<li>任一氣體的分壓定義為 $p_{\text{J}}=x_{\text{J}}p$，其中 $x_{\text{J}}=n_{\text{J}}/n$ 為其摩爾分率，$p$ 為總壓。</li>
+<li>真實氣體中，分子間作用力會影響狀態方程式；真實的狀態方程式以維里係數 $B,C,\ldots$ 表示：$pV_{\text{m}}=RT(1+B/V_{\text{m}}+C/V_{\text{m}}^2+\cdots)$。</li>
+<li><strong>蒸氣壓</strong>是蒸氣與其凝聚相達到平衡時的壓力。</li>
+<li><strong>臨界點</strong>是等溫線水平段兩端體積合併為單一點之處。臨界常數 $p_{\text{c}}$、$V_{\text{c}}$、$T_{\text{c}}$ 分別是臨界點的壓力、摩爾體積與溫度。</li>
+<li><strong>超臨界流體</strong>是高於臨界溫度與臨界壓力的高密度流體相。</li>
+<li><strong>van der Waals 方程式</strong>是一種近似的狀態方程式，以參數 $a$ 代表吸引作用、參數 $b$ 代表排斥作用：$p=nRT/(V-nb)-a(n/V)^2$。</li>
+<li><strong>歸一化變數</strong>是實際變數除以對應的臨界常數所得到的量。</li>
+<li><strong>對應狀態原理</strong>：在相同的歸一化體積與歸一化溫度下，真實氣體會表現出相同的歸一化壓力。</li>
+</ul>
+
+<hr class="section-divider">
+
+<h2 id="discussion">討論問題 <span class="eng">Discussion questions</span></h2>
+
+<ol class="discuss-list">
+<li>說明理想氣體狀態方程式如何由波以耳定律、查理定律與亞佛加厥原理組合而成。</li>
+<li>解釋「分壓」一詞的意義，並說明為什麼道耳頓定律是一條極限定律。</li>
+<li>說明壓縮因子如何隨壓力與溫度變化，並描述它能告訴我們關於真實氣體中分子間作用力的哪些資訊。</li>
+<li>臨界常數的物理意義是什麼？</li>
+<li>說明 van der Waals 方程式的建立方式，並針對表 1.7 中另一種狀態方程式，提出其合理性的說明。</li>
+<li>說明 van der Waals 方程式如何解釋臨界行為。</li>
+</ol>
+
+<hr class="section-divider">
+
+<h2 id="exercises">精選習題 <span class="eng">Exercises &amp; Problems</span></h2>
+
+<p style="color:#8a7a5e; font-size:.92rem; margin-top:-8px;">以下習題改編自原書的練習題與習題，數值條件保留，文字描述重新編寫。</p>
+
+<ol class="exercise-list">
+<li>131 g 的氙氣裝在體積為 $1.0\ \text{dm}^3$ 的容器中，25°C 時：(a) 若視為理想氣體，能否產生 20 atm 的壓力？若不能，實際（理想氣體假設下）的壓力應為多少？(b) 若視為 van der Waals 氣體，壓力又是多少？</li>
+<li>某理想氣體經等溫壓縮後，體積減少了 $2.20\ \text{dm}^3$。已知壓縮後的壓力與體積分別為 $5.04\ \text{bar}$ 與 $4.65\ \text{dm}^3$，求壓縮前的壓力（分別以 bar 及 atm 表示）。</li>
+<li>某汽車輪胎在氣溫 $-5^{\circ}\text{C}$ 的冬日被打氣到 $24\ \text{lb in}^{-2}$（$1.00\ \text{atm}=14.7\ \text{lb in}^{-2}$）。假設沒有漏氣、體積不變，在氣溫 $35^{\circ}\text{C}$ 的夏日，胎壓會變成多少？實務上還需考慮哪些因素？</li>
+<li>255 mg 的氖氣在 122 K 時佔有 $3.00\ \text{dm}^3$ 的體積，試以理想氣體定律計算其壓力。</li>
+<li>一個潛水鐘在船上甲板時，空氣艙的體積為 $3.0\ \text{m}^3$。當潛水鐘下潛到水深 50 m 時（海水平均密度取 $1.025\ \text{g cm}^{-3}$，溫度與表面相同），空氣艙的體積會變成多少？</li>
+<li>一個 U 形管壓力計中裝有水（25°C 時密度為 $0.997\,07\ \text{g cm}^{-3}$）。一端接到待測裝置，另一端開放於大氣（大氣壓為 770 Torr）。已知開放端的液面比連接裝置端低 10.0 cm，求裝置內的壓力。</li>
+<li>已知海平面乾燥空氣在 0.987 bar、27°C 時的密度為 $1.146\ \text{kg m}^{-3}$。假設空氣只由 N₂ 與 O₂ 組成，求兩者的摩爾分率與分壓；若空氣中還含有 1.0 mol% 的 Ar，結果又如何？</li>
+<li>某氣態化合物在 330 K、20 kPa 時的密度為 $1.23\ \text{kg m}^{-3}$，求其摩爾質量。</li>
+<li>一容器體積為 $22.4\ \text{dm}^3$，內含 2.0 mol H₂ 與 1.0 mol N₂，溫度為 273.15 K。求 (a) 各成分的摩爾分率，(b) 各成分的分壓，(c) 總壓力。</li>
+<li>已知甲烷的臨界常數為 $p_{\text{c}}=45.6\ \text{atm}$、$V_{\text{c}}=98.7\ \text{cm}^3\,\text{mol}^{-1}$、$T_{\text{c}}=190.6\ \text{K}$，求其 van der Waals 係數 $a$、$b$，並估算其分子半徑。</li>
+<li>10.0 mol 的 C₂H₆(g) 被限制在 $4.860\ \text{dm}^3$、27°C 的容器中。分別以 (a) 理想氣體方程式、(b) van der Waals 方程式（$a=5.507\ \text{dm}^6\,\text{atm}\,\text{mol}^{-2}$，$b=0.0651\ \text{dm}^3\,\text{mol}^{-1}$）預測乙烷的壓力，並計算對應的壓縮因子。</li>
+<li>在 273 K 時，氬氣的第二、第三維里係數分別為 $B=-21.7\ \text{cm}^3\,\text{mol}^{-1}$、$C=1200\ \text{cm}^6\,\text{mol}^{-2}$。假設理想氣體定律足以估算展開式的第二、三項，求氬氣在 100 atm、273 K 時的壓縮因子，並估算其摩爾體積。</li>
+<li>夏威夷的 Kilauea 火山每日排放 200–300 噸 SO₂。若這些氣體以 800°C、1.0 atm 的狀態排出，其體積為多少？</li>
+<li>大氣中臭氧含量常以「多布森單位（Dobson unit）」表示：1 個多布森單位代表把臭氧收集成純氣體、置於 1.00 atm、0°C 時，柱狀氣體的厚度為千分之一公分。若某區域臭氧含量為 250 Dobson units（中緯度典型值），求截面積 $1.00\ \text{dm}^2$ 的氣柱中含有多少摩爾的 O₃；若南極臭氧層破洞處降至 100 Dobson units 以下，又是多少摩爾？</li>
+</ol>
+
+</main>
+</div>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var targets = links.map(function(a){
+    var id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  });
+
+  function onScroll(){
+    var pos = window.scrollY + 120;
+    var current = 0;
+    for(var i=0;i<targets.length;i++){
+      if(targets[i] && targets[i].offsetTop <= pos){
+        current = i;
+      }
+    }
+    links.forEach(function(a,i){
+      a.classList.toggle('active', i === current);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

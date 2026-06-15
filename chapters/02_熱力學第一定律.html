@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二章　熱力學第一定律 | 物理化學講義</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false});"></script>
+<style>
+:root{
+  --sidebar-bg:#22282f;
+  --sidebar-fg:#cfd6dd;
+  --sidebar-fg-dim:#8b96a3;
+  --accent:#c0392b;
+  --accent2:#2e6f9e;
+  --main-bg:#faf6ee;
+  --paper-bg:#fffdf8;
+  --ink:#2b2520;
+  --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:'Noto Serif TC', serif;
+  background:var(--main-bg);
+  color:var(--ink);
+  line-height:1.85;
+  font-size:17px;
+}
+h1,h2,h3,h4,.ui,nav,.toc{
+  font-family:'Noto Sans TC', sans-serif;
+}
+.layout{
+  display:flex;
+  min-height:100vh;
+}
+/* ---------- Sidebar ---------- */
+.sidebar{
+  width:280px;
+  flex-shrink:0;
+  background:var(--sidebar-bg);
+  color:var(--sidebar-fg);
+  position:fixed;
+  top:0;left:0;bottom:0;
+  overflow-y:auto;
+  padding:28px 20px 60px;
+}
+.sidebar h1{
+  font-size:1.25rem;
+  color:#fff;
+  margin:0 0 4px;
+  font-weight:700;
+  letter-spacing:.05em;
+}
+.sidebar .subtitle{
+  font-size:.8rem;
+  color:var(--sidebar-fg-dim);
+  margin-bottom:24px;
+  letter-spacing:.08em;
+}
+.toc{
+  list-style:none;
+  margin:0;padding:0;
+  font-size:.92rem;
+}
+.toc li{margin:0;}
+.toc a{
+  display:block;
+  color:var(--sidebar-fg);
+  text-decoration:none;
+  padding:7px 10px;
+  border-radius:4px;
+  border-left:3px solid transparent;
+  transition:background .15s, color .15s, border-color .15s;
+}
+.toc a:hover{
+  background:rgba(255,255,255,.06);
+  color:#fff;
+}
+.toc a.active{
+  background:rgba(192,57,43,.18);
+  color:#fff;
+  border-left-color:var(--accent);
+  font-weight:500;
+}
+.toc .lvl2 a{
+  padding-left:26px;
+  font-size:.86rem;
+  color:var(--sidebar-fg-dim);
+}
+.toc .lvl2 a.active{color:#fff;}
+.toc .section-title{
+  margin:18px 0 4px;
+  padding:0 10px;
+  font-size:.75rem;
+  letter-spacing:.15em;
+  color:var(--accent);
+  text-transform:uppercase;
+  font-weight:700;
+}
+/* ---------- Main content ---------- */
+.main{
+  margin-left:280px;
+  flex:1;
+  padding:50px 64px 120px;
+  max-width:880px;
+}
+.main h1.page-title{
+  font-size:2.4rem;
+  font-weight:700;
+  margin:0 0 6px;
+  color:var(--ink);
+  border-bottom:4px solid var(--accent);
+  padding-bottom:14px;
+}
+.main .page-subtitle{
+  font-family:'Noto Sans TC',sans-serif;
+  color:#8a7a5e;
+  font-size:1rem;
+  margin-bottom:40px;
+  letter-spacing:.05em;
+}
+section.chapter-intro{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:24px 28px;
+  margin-bottom:40px;
+  font-size:.98rem;
+  color:#4a4136;
+}
+h2{
+  font-size:1.6rem;
+  font-weight:700;
+  color:var(--accent2);
+  margin:56px 0 18px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--rule);
+  scroll-margin-top:20px;
+}
+h3{
+  font-size:1.25rem;
+  font-weight:700;
+  color:#a14b32;
+  margin:36px 0 14px;
+  scroll-margin-top:20px;
+}
+h4{
+  font-size:1.05rem;
+  font-weight:700;
+  color:var(--ink);
+  margin:24px 0 10px;
+  scroll-margin-top:20px;
+}
+p{margin:0 0 16px;}
+strong{color:#7a3322;}
+.eng{color:#8a7a5e; font-size:.92em;}
+table{
+  border-collapse:collapse;
+  width:100%;
+  margin:18px 0 28px;
+  font-size:.92rem;
+  background:var(--paper-bg);
+}
+table caption{
+  text-align:left;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  margin-bottom:8px;
+  color:var(--accent2);
+}
+th,td{
+  border:1px solid var(--rule);
+  padding:8px 12px;
+  text-align:left;
+}
+th{
+  background:#eee3cf;
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+}
+tr:nth-child(even) td{background:#f6efe1;}
+.eq{
+  font-family:'JetBrains Mono',monospace;
+  background:#f1ece0;
+  border-left:4px solid var(--accent2);
+  padding:14px 20px;
+  margin:18px 0;
+  border-radius:0 4px 4px 0;
+  overflow-x:auto;
+}
+.eq .eqnum{
+  float:right;
+  color:#9a8c70;
+  font-family:'JetBrains Mono',monospace;
+  font-size:.85em;
+}
+/* ---------- Content-type boxes ---------- */
+.box{
+  margin:24px 0;
+  border-radius:6px;
+  padding:18px 22px;
+  border:1px solid transparent;
+}
+.box .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  font-size:.95rem;
+  margin:0 0 10px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  letter-spacing:.05em;
+}
+.box-example{
+  background:#eaf3ea;
+  border-color:#bcd9bc;
+}
+.box-example .box-title{color:#3a7d44;}
+.box-selftest{
+  background:#e9f0f7;
+  border-color:#b9d2e8;
+}
+.box-selftest .box-title{color:#2e6f9e;}
+.box-molecular{
+  background:#fdeee0;
+  border-color:#f0cdab;
+}
+.box-molecular .box-title{color:#c0691f;}
+.box-note{
+  background:#f1eef7;
+  border-color:#d3c6e8;
+}
+.box-note .box-title{color:#6b4fa0;}
+.box-derivation{
+  background:#f7f4ec;
+  border:1px dashed #c9b894;
+}
+.box-derivation .box-title{color:#9c7a2e;}
+.box-method{
+  background:#fff;
+  border:1px solid #d8cdb8;
+  border-left:4px solid #a14b32;
+  border-radius:0 6px 6px 0;
+  padding:14px 20px;
+  margin:14px 0;
+}
+.box-method .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  color:#a14b32;
+  margin:0 0 8px;
+  font-size:.92rem;
+}
+.box-answer{
+  background:#fbf8ef;
+  border:1px solid #e6dcc4;
+  border-left:4px solid #c0392b;
+  border-radius:0 6px 6px 0;
+  padding:14px 20px;
+  margin:14px 0;
+}
+.box-answer .box-title{
+  font-family:'Noto Sans TC',sans-serif;
+  font-weight:700;
+  color:#c0392b;
+  margin:0 0 8px;
+  font-size:.92rem;
+}
+.figure{
+  margin:24px 0;
+  padding:16px;
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+}
+.fig-placeholder{
+  background:#ede6d6;
+  border:1px dashed #b8a98a;
+  border-radius:4px;
+  padding:18px;
+  text-align:center;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:.88rem;
+  color:#7a6a50;
+  margin-bottom:10px;
+}
+.figure .fig-caption{
+  text-align:left;
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:.88rem;
+  color:#5a5040;
+}
+.figure .fig-caption b{color:var(--accent2);}
+.keylist{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:6px 28px 6px;
+  margin:16px 0 32px;
+}
+.keylist li{margin:12px 0;}
+.keylist li::marker{color:var(--accent2);}
+.discuss-list, .exercise-list{
+  background:var(--paper-bg);
+  border:1px solid var(--rule);
+  border-radius:6px;
+  padding:18px 24px;
+  margin:16px 0 32px;
+}
+.discuss-list li, .exercise-list li{margin:14px 0;}
+.discuss-list li::marker, .exercise-list li::marker{color:var(--accent);font-weight:700;}
+hr.section-divider{
+  border:none;
+  border-top:1px solid var(--rule);
+  margin:50px 0;
+}
+.back-to-top{
+  display:inline-block;
+  margin-top:8px;
+  font-size:.85rem;
+  color:var(--accent2);
+  text-decoration:none;
+  font-family:'Noto Sans TC',sans-serif;
+}
+/* ---------- Mobile ---------- */
+.menu-btn{
+  display:none;
+  width:100%;
+  background:rgba(255,255,255,.06);
+  border:none;
+  border-bottom:1px solid rgba(255,255,255,.12);
+  color:var(--sidebar-fg);
+  font-family:'Noto Sans TC',sans-serif;
+  font-size:.95rem;
+  padding:15px 20px;
+  cursor:pointer;
+  text-align:left;
+  letter-spacing:.03em;
+}
+@media (max-width:900px){
+  .layout{display:block;}
+  .sidebar{
+    position:fixed;
+    top:0;left:0;right:0;bottom:auto;
+    width:100%;
+    max-height:52px;
+    overflow:hidden;
+    z-index:200;
+    padding:0;
+    transition:max-height .28s ease;
+  }
+  .sidebar.open{max-height:100vh;overflow-y:auto;padding:0 0 60px;}
+  .sidebar.open h1{padding:16px 20px 0;margin-bottom:4px;}
+  .sidebar.open .subtitle{padding:0 20px;margin-bottom:20px;}
+  .sidebar.open .toc{padding:0 20px;}
+  .sidebar.open .section-title{padding:0;}
+  .menu-btn{display:block;}
+  .main{margin-left:0;padding:68px 20px 80px;}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+<nav class="sidebar" id="sidebar">
+  <button class="menu-btn" id="menu-btn">☰ 目錄</button>
+  <h1>物理化學講義</h1>
+  <div class="subtitle">ATKINS' PHYSICAL CHEMISTRY 改編學習版</div>
+  <ul class="toc" id="toc">
+    <li class="section-title">第二章　熱力學第一定律</li>
+    <li><a href="#intro">章節導讀</a></li>
+    <li><a href="#sec2-1">2.1　功、熱與能量</a></li>
+    <li class="lvl2"><a href="#mol2-1">分子詮釋 2.1</a></li>
+    <li><a href="#sec2-2">2.2　內能</a></li>
+    <li class="lvl2"><a href="#firstlaw">熱力學第一定律</a></li>
+    <li><a href="#sec2-3">2.3　膨脹功</a></li>
+    <li class="lvl2"><a href="#sec2-3a">(a) 自由膨脹</a></li>
+    <li class="lvl2"><a href="#sec2-3b">(b) 恆外壓膨脹</a></li>
+    <li class="lvl2"><a href="#sec2-3c">(c) 可逆膨脹</a></li>
+    <li class="lvl2"><a href="#sec2-3d">(d) 等溫可逆膨脹</a></li>
+    <li><a href="#sec2-4">2.4　熱的交換</a></li>
+    <li class="lvl2"><a href="#sec2-4a">(a) 量熱法</a></li>
+    <li class="lvl2"><a href="#sec2-4b">(b) 定容熱容</a></li>
+    <li><a href="#sec2-5">2.5　焓</a></li>
+    <li class="lvl2"><a href="#sec2-5a">(a) 焓與定壓熱</a></li>
+    <li class="lvl2"><a href="#sec2-5b">(b) 定壓熱容</a></li>
+    <li class="lvl2"><a href="#sec2-5c">(c) 溫度對焓的影響</a></li>
+    <li><a href="#impact">專題：差示掃描量熱法</a></li>
+    <li><a href="#sec2-6">2.6　絕熱變化</a></li>
+    <li><a href="#thermochem">熱化學</a></li>
+    <li class="lvl2"><a href="#sec2-7">2.7　標準焓變</a></li>
+    <li class="lvl2"><a href="#sec2-8">2.8　標準生成焓</a></li>
+    <li class="lvl2"><a href="#sec2-9">2.9　基希霍夫定律</a></li>
+    <li><a href="#sec2-10">2.10　精確與非精確微分</a></li>
+    <li><a href="#sec2-11">2.11　內能的變化</a></li>
+    <li class="lvl2"><a href="#sec2-11a">(a) 內壓力</a></li>
+    <li class="lvl2"><a href="#sec2-11b">(b) 恆壓下的內能變化</a></li>
+    <li><a href="#sec2-12">2.12　焦耳－湯姆森效應</a></li>
+    <li><a href="#checklist">重點概念整理</a></li>
+    <li><a href="#discussion">討論問題</a></li>
+    <li><a href="#exercises">精選習題</a></li>
+  </ul>
+</nav>
+
+<main class="main">
+
+<h1 class="page-title">第二章　熱力學第一定律</h1>
+<div class="page-subtitle">The First Law of Thermodynamics</div>
+
+<section class="chapter-intro" id="intro">
+<p>本章建立熱力學（thermodynamics）的核心架構。熱力學研究的是能量在不同形式之間的轉換——特別是熱（heat）、功（work）與內能（internal energy）三者之間的關係。這一切都根植於<strong>熱力學第一定律（First Law of Thermodynamics）</strong>：一個孤立系統的總能量是不變的。</p>
+<p>為了充分運用第一定律，我們需要引入<strong>焓（enthalpy, H）</strong>這個概念——它讓我們能在恆壓條件下（即化學實驗室的日常條件）方便地計算能量交換。本章後半部「熱化學」部分，則說明如何利用這些概念計算化學反應中的熱效應。</p>
+<p>在進入第一定律之前，我們需要先建立幾個基本概念：系統與環境、功、熱，以及作為狀態函數（state function）的內能。</p>
+</section>
+
+<div class="box box-note" id="terms">
+<p class="box-title">📌 基本術語：系統與環境</p>
+<p>我們把宇宙分成兩個部分：所研究的那個部分稱為<strong>系統（system）</strong>；系統以外的所有部分稱為<strong>環境（surroundings）</strong>。系統的邊界稱為<strong>界面（boundary）</strong>。</p>
+<p>依據物質與能量能否通過界面，系統分為三類：</p>
+<ul>
+<li><strong>開放系統（open system）</strong>：物質與能量都能通過界面。</li>
+<li><strong>封閉系統（closed system）</strong>：能量（熱與功）能通過，但物質不能。</li>
+<li><strong>孤立系統（isolated system）</strong>：物質與能量都不能通過界面。</li>
+</ul>
+<p>化學實驗室中，多數反應發生在封閉系統（密封容器）中；熱力學第一定律則是針對孤立系統而言——其總能量為常數。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-1">2.1　功、熱與能量 <span class="eng">Work, Heat, and Energy</span></h2>
+
+<p>在熱力學中，<strong>功（work）</strong>的定義是：以「克服阻力的運動」方式轉移的能量。當一個力 $F$ 使物體移動了 $\text{d}z$ 的距離時，所做的功為：</p>
+
+<div class="eq">$$\text{d}w = -F\,\text{d}z \tag{2.1}$$</div>
+
+<p>負號的出現是因為：對系統做功（$w > 0$）表示能量流入系統，這時系統克服外力向內壓縮（$\text{d}z < 0$）；反之，若系統膨脹對外做功，能量流出，$w < 0$。</p>
+
+<p><strong>熱（heat, $q$）</strong>是另一種能量轉移方式：它是由溫度差所驅動的能量傳遞。若系統從環境吸熱，$q > 0$（吸熱過程，endothermic）；若系統向環境放熱，$q < 0$（放熱過程，exothermic）。</p>
+
+<table>
+<caption>表 2.1　$q$ 與 $w$ 的符號規則</caption>
+<thead><tr><th>過程</th><th>符號</th><th>意義</th></tr></thead>
+<tbody>
+<tr><td>系統吸熱</td><td>$q > 0$</td><td>能量以熱的形式流入系統</td></tr>
+<tr><td>系統放熱</td><td>$q < 0$</td><td>能量以熱的形式流出系統</td></tr>
+<tr><td>對系統做功</td><td>$w > 0$</td><td>能量以功的形式流入系統</td></tr>
+<tr><td>系統對外做功</td><td>$w < 0$</td><td>能量以功的形式流出系統</td></tr>
+</tbody>
+</table>
+
+<div class="box box-molecular" id="mol2-1">
+<p class="box-title">🧬 分子詮釋 2.1　內能與能量均分定理 (Internal energy and equipartition)</p>
+<p>從微觀角度看，物質的<strong>內能（internal energy, U）</strong>包含所有分子的動能與位能。對單一原子的氣體，分子只有平移動能，每個自由度貢獻 $\frac{1}{2}k_BT$ 的能量（$k_B$ 為玻爾茲曼常數）。這就是<strong>能量均分定理（equipartition theorem）</strong>的核心：</p>
+<p style="text-align:center;font-style:italic;">每個平方出現的能量項（即每個自由度），對平均熱能的貢獻均為 $\frac{1}{2}k_BT$。</p>
+<p>對於單原子分子，有 3 個平移自由度，故：</p>
+<div class="eq">$$U_{\text{m}} = U_{\text{m}}(0) + \frac{3}{2}RT$$</div>
+<p>其中 $U_{\text{m}}(0)$ 是 $T=0$ 時的內能（由零點能決定），$R = N_A k_B$。線型雙原子分子有 3 個平移 + 2 個轉動自由度，故 $U_{\text{m}} = U_{\text{m}}(0) + \frac{5}{2}RT$；若包含振動，則更高。</p>
+<p>對理想氣體而言，分子間距很大，分子間位能可忽略，因此內能只與溫度有關，而與體積無關。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-2">2.2　內能 <span class="eng">The Internal Energy</span></h2>
+
+<p>系統的<strong>內能（internal energy）</strong>$U$ 是系統中所有微觀能量——分子平移動能、轉動動能、振動動能、電子能量、核能以及分子間位能——的總和。它是一個<strong>廣度性質（extensive property）</strong>（隨物質的量成比例）。</p>
+
+<p>對化學家而言，最關鍵的一點是：我們通常無法得知 $U$ 的絕對值，但能夠精確地測量其<strong>變化量 $\Delta U$</strong>。</p>
+
+<h3 id="firstlaw">熱力學第一定律</h3>
+
+<p>實驗告訴我們，孤立系統的內能是不變的。推廣到封閉系統（可以與環境交換熱與功），我們得到<strong>熱力學第一定律（First Law of Thermodynamics）</strong>：</p>
+
+<div class="box box-note">
+<p class="box-title">📌 熱力學第一定律</p>
+<p>封閉系統的內能，只能透過做功或傳熱而改變：</p>
+<div class="eq">$$\Delta U = q + w \tag{2.2}$$</div>
+<p>其中 $q$ 為系統從環境吸收的熱，$w$ 為環境對系統所做的功。$U$ 是一個<strong>狀態函數（state function）</strong>——其值只取決於系統的當前狀態，而不依賴歷史路徑。</p>
+</div>
+
+<p>$\Delta U = q + w$ 中，$q$ 和 $w$ 本身都是<strong>路徑函數（path functions）</strong>（其值依賴過程的具體路徑），但它們的和 $\Delta U$ 卻是路徑無關的。這正是 $U$ 作為狀態函數的深刻含義。</p>
+
+<hr class="section-divider">
+
+<h2 id="sec2-3">2.3　膨脹功 <span class="eng">Expansion Work</span></h2>
+
+<p>化學反應中最常見的功是氣體的<strong>膨脹功（expansion work）</strong>。當系統以體積 $V$ 對抗外壓 $p_{\text{ex}}$ 膨脹時，功的一般表達式為：</p>
+
+<div class="eq">$$\text{d}w = -p_{\text{ex}}\,\text{d}V \tag{2.3}$$</div>
+
+<p>負號說明：膨脹（$\text{d}V > 0$）時系統對外做功，$w < 0$，符合能量守恆。積分得：</p>
+
+<div class="eq">$$w = -\int_{V_i}^{V_f} p_{\text{ex}}\,\text{d}V \tag{2.3a}$$</div>
+
+<h4 id="sec2-3a">(a) 自由膨脹 <span class="eng">Free expansion</span></h4>
+
+<p>若系統對抗的外壓 $p_{\text{ex}} = 0$（例如向真空膨脹），則由 (2.3a) 知功為零：</p>
+
+<div class="eq">$$w = 0 \quad \text{（自由膨脹）} \tag{2.4}$$</div>
+
+<p>若此過程同時是絕熱的（$q = 0$），則由第一定律知 $\Delta U = 0$。</p>
+
+<h4 id="sec2-3b">(b) 恆外壓膨脹 <span class="eng">Expansion against constant pressure</span></h4>
+
+<p>若外壓 $p_{\text{ex}}$ 保持不變（如大氣壓），則：</p>
+
+<div class="eq">$$w = -p_{\text{ex}}\,\Delta V \tag{2.5}$$</div>
+
+<p>其中 $\Delta V = V_f - V_i$。在壓力—體積圖（$p$–$V$ 圖）上，此功對應一個矩形的面積（寬為 $\Delta V$，高為 $p_{\text{ex}}$）。</p>
+
+<h4 id="sec2-3c">(c) 可逆膨脹 <span class="eng">Reversible expansion</span></h4>
+
+<p>若系統的膨脹可以「逆轉」——即施加一個無窮小的擾動就能使過程反向進行——則此過程稱為<strong>可逆過程（reversible process）</strong>。對可逆膨脹，在每個瞬間外壓都等於系統的氣壓：$p_{\text{ex}} = p$（系統壓力）。</p>
+
+<div class="box box-note">
+<p class="box-title">📌 可逆過程做最大功</p>
+<p>在所有從同一初態到同一終態的膨脹過程中，<strong>可逆膨脹所做的功最大</strong>（對外輸出功的絕對值最大）。不可逆膨脹（有耗散）總是比可逆膨脹少做功。</p>
+</div>
+
+<h4 id="sec2-3d">(d) 等溫可逆膨脹 <span class="eng">Isothermal reversible expansion</span></h4>
+
+<p>對<strong>理想氣體</strong>進行等溫（$T$ 不變）的可逆膨脹，$p = nRT/V$，代入積分：</p>
+
+<div class="eq">$$w = -\int_{V_i}^{V_f} p\,\text{d}V = -\int_{V_i}^{V_f}\frac{nRT}{V}\,\text{d}V = -nRT\ln\frac{V_f}{V_i} \tag{2.7}$$</div>
+
+<p>因為是理想氣體且溫度不變，$\Delta U = 0$，所以由第一定律 $q = -w = nRT\ln(V_f/V_i)$：膨脹吸熱，壓縮放熱。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.1　計算膨脹功</p>
+<p>1.00 mol 理想氣體在 25°C 下從 10.0 dm³ 等溫可逆膨脹到 20.0 dm³。求所做的功。</p>
+<div class="box-method">
+<p class="box-title">方法</p>
+<p>代入 (2.7) 式，其中 $n=1.00\ \text{mol}$，$T = 298\ \text{K}$，$R = 8.3145\ \text{J K}^{-1}\text{mol}^{-1}$。</p>
+</div>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<div class="eq">$$w = -(1.00\ \text{mol})(8.3145\ \text{J K}^{-1}\text{mol}^{-1})(298\ \text{K})\ln\frac{20.0}{10.0}$$</div>
+<div class="eq">$$w = -(8.3145 \times 298 \times 0.6931)\ \text{J} \approx -1.72\ \text{kJ}$$</div>
+<p>負號代表系統對外做功（能量流出系統）。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 2.1</p>
+<p>同樣是 1.00 mol 理想氣體在 25°C 下從 10.0 dm³ 膨脹到 20.0 dm³，但改為對抗恆定外壓 $p_{\text{ex}} = p_f$（$p_f$ 為終態壓力）進行膨脹。求功，並與可逆過程相比較。</p>
+<p><strong>答案：</strong>終態壓力 $p_f = nRT/V_f = (1.00 \times 8.3145 \times 298)/20.0 \times 10^{-3} \approx 124\ \text{kPa}$；
+$w = -p_f \Delta V = -1.24 \times 10^5 \times (20.0-10.0) \times 10^{-3} \approx -1.24\ \text{kJ}$，
+絕對值小於可逆過程的 1.72 kJ，符合可逆膨脹做最大功的原則。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-4">2.4　熱的交換 <span class="eng">Heat Transactions</span></h2>
+
+<h4 id="sec2-4a">(a) 量熱法 <span class="eng">Calorimetry</span></h4>
+
+<p>測量熱效應的方法稱為<strong>量熱法（calorimetry）</strong>，所使用的儀器稱為<strong>量熱儀（calorimeter）</strong>。</p>
+
+<p>最重要的一種是<strong>彈式量熱儀（bomb calorimeter）</strong>。在彈式量熱儀中，樣品在封閉的鋼製容器（「炸彈」）中，以過量的 O₂ 燃燒。容器體積固定（$\Delta V = 0$），所以膨脹功 $w = 0$，由第一定律：</p>
+
+<div class="eq">$$\Delta U = q_V \tag{2.12}$$</div>
+
+<p>即在<strong>恆容條件</strong>下，吸收的熱等於內能的變化。量熱儀中浴液溫度的上升，乘以量熱儀的<strong>熱容（heat capacity）</strong>$C_V$（單位 J K⁻¹），即得 $q_V$：</p>
+
+<div class="eq">$$q = C_V\,\Delta T \tag{2.13a}$$</div>
+
+<h4 id="sec2-4b">(b) 定容熱容 <span class="eng">Heat capacity at constant volume</span></h4>
+
+<p>某一物質的<strong>定容摩爾熱容（molar heat capacity at constant volume）</strong>$C_{V,\text{m}}$ 定義為：在恆定體積下，使 1 mol 物質溫度升高 1 K 所需的熱量。對無限小的溫度變化，這相當於：</p>
+
+<div class="eq">$$C_V = \left(\frac{\partial U}{\partial T}\right)_V \tag{2.13}$$</div>
+
+<p>由均分定理，單原子理想氣體的 $C_{V,\text{m}} = \frac{3}{2}R$（每摩爾），線型雙原子分子 $C_{V,\text{m}} = \frac{5}{2}R$（不包含振動貢獻）。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.2　彈式量熱儀實驗</p>
+<p>在彈式量熱儀（熱容 $C_V = 14.4\ \text{kJ K}^{-1}$）中，燃燒 2.016 g 苯甲酸（$M = 122.12\ \text{g mol}^{-1}$），測得溫度升高 1.345 K。試確定苯甲酸燃燒的內能變化（以每摩爾計）。</p>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>量熱儀吸收的熱為：</p>
+<div class="eq">$$q_V = C_V\,\Delta T = (14.4\ \text{kJ K}^{-1})(1.345\ \text{K}) = 19.37\ \text{kJ}$$</div>
+<p>2.016 g 苯甲酸的物質的量為 $2.016/122.12 = 0.01651\ \text{mol}$，故每摩爾燃燒的 $\Delta U$ 為：</p>
+<div class="eq">$$\Delta_c U = -\frac{19.37\ \text{kJ}}{0.01651\ \text{mol}} = -1173\ \text{kJ mol}^{-1}$$</div>
+<p>負號表示燃燒放出能量。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 2.2</p>
+<p>在另一次實驗中，燃燒了 0.825 g 的萘（$C_{10}H_8$，$M = 128.17\ \text{g mol}^{-1}$），量熱儀溫度升高了 1.940 K。熱容同上為 14.4 kJ K⁻¹。試求萘的燃燒內能 $\Delta_c U$（每摩爾）。</p>
+<p><strong>答案：</strong>$\Delta_c U \approx -5157\ \text{kJ mol}^{-1}$</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-5">2.5　焓 <span class="eng">Enthalpy</span></h2>
+
+<h4 id="sec2-5a">(a) 焓與定壓熱</h4>
+
+<p>大多數化學實驗是在對大氣開放的容器中進行，壓力維持恆定。在這種<strong>恆壓條件</strong>下，功只有對抗大氣的膨脹功 $w = -p_{\text{ex}}\Delta V = -p\Delta V$（$p = p_{\text{ex}} = $常數）。由第一定律：</p>
+
+<div class="eq">$$\Delta U = q_p + w = q_p - p\Delta V$$</div>
+
+<p>整理得：</p>
+
+<div class="eq">$$q_p = \Delta U + p\Delta V = (U_f + pV_f) - (U_i + pV_i)$$</div>
+
+<p>因此，我們定義一個新的狀態函數——<strong>焓（enthalpy, H）</strong>：</p>
+
+<div class="eq">$$H = U + pV \tag{2.14}$$</div>
+
+<p>則<strong>恆壓條件下</strong>，從環境吸收的熱等於焓的變化：</p>
+
+<div class="eq">$$\Delta H = q_p \tag{2.16}$$</div>
+
+<p>因為 $U$、$p$、$V$ 都是狀態函數，$H$ 也是狀態函數。$H$ 的值比 $U$ 的值多了一個 $pV$ 項，對凝聚態（固態或液態）物質，$pV$ 通常很小，因此 $H \approx U$。對氣體，$pV = nRT$，差異可達數 kJ。</p>
+
+<p>焓變 $\Delta H$ 與內能變之間的關係：</p>
+
+<div class="eq">$$\Delta H = \Delta U + \Delta(pV) = \Delta U + \Delta n_g RT \tag{2.21}$$</div>
+
+<p>其中 $\Delta n_g$ 是反應過程中氣態物質物質的量的改變（生成物氣體摩爾數減去反應物氣體摩爾數）。對固態或液態之間的反應，$\Delta n_g = 0$，所以 $\Delta H \approx \Delta U$。</p>
+
+<h4 id="sec2-5b">(b) 定壓熱容 <span class="eng">Heat capacity at constant pressure</span></h4>
+
+<p><strong>定壓熱容（heat capacity at constant pressure）</strong>$C_p$ 定義為：</p>
+
+<div class="eq">$$C_p = \left(\frac{\partial H}{\partial T}\right)_p \tag{2.20}$$</div>
+
+<p>對理想氣體，可以證明：</p>
+
+<div class="eq">$$C_p - C_V = nR \tag{2.26}$$</div>
+
+<p>這是因為在恆壓下，氣體除了升溫所需的能量外，還需要額外的能量去做膨脹對抗大氣的功。因此 $C_p > C_V$，差值 $nR$ 正好等於每莫耳氣體每升高 1 K 時對大氣所做的功。</p>
+
+<p>熱容之比 $\gamma = C_{p,\text{m}}/C_{V,\text{m}}$ 稱為<strong>熱容比（heat capacity ratio）</strong>，在絕熱過程中很重要。對單原子理想氣體，$\gamma = 5/3$；對線型雙原子分子（忽略振動），$\gamma = 7/5 = 1.4$。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.3　利用焓計算熱效應</p>
+<p>100 g 水（$c_p = 4.18\ \text{J K}^{-1}\text{g}^{-1}$）在恆壓下從 20.0°C 加熱到 50.0°C，求吸收的熱量。</p>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>由 $q_p = \Delta H = C_p \Delta T$（這裡 $C_p$ 是整個樣品的熱容）：</p>
+<div class="eq">$$q = m \cdot c_p \cdot \Delta T = (100\ \text{g})(4.18\ \text{J K}^{-1}\text{g}^{-1})(30.0\ \text{K}) = 12.54\ \text{kJ}$$</div>
+</div>
+</div>
+
+<h4 id="sec2-5c">(c) 溫度對焓的影響</h4>
+
+<p>若知道某物質在溫度 $T_1$ 的焓，如何求 $T_2$ 時的焓？由 $C_p$ 的定義積分：</p>
+
+<div class="eq">$$H(T_2) = H(T_1) + \int_{T_1}^{T_2} C_p\,\text{d}T \tag{2.24}$$</div>
+
+<p>若在溫度範圍內 $C_p$ 可視為常數：$H(T_2) - H(T_1) = C_p(T_2 - T_1)$。</p>
+
+<p>熱容往往隨溫度變化，常用的經驗公式為：</p>
+
+<div class="eq">$$C_{p,\text{m}} = a + bT + c/T^2 \tag{2.25}$$</div>
+
+<p>其中 $a$、$b$、$c$ 是由實驗數據擬合的常數（表 2.2 列出部分數值）。</p>
+
+<table>
+<caption>表 2.2　部分物質的定壓熱容參數（$C_{p,\text{m}}/({\rm J\,K^{-1}mol^{-1}}) = a + bT + c/T^2$）</caption>
+<thead><tr><th>物質</th><th>$a$</th><th>$b/(10^{-3}\ \text{K}^{-1})$</th><th>$c/(10^{5}\ \text{K}^2)$</th></tr></thead>
+<tbody>
+<tr><td>H₂(g)</td><td>27.28</td><td>3.26</td><td>0.50</td></tr>
+<tr><td>N₂(g)</td><td>28.58</td><td>3.77</td><td>−0.50</td></tr>
+<tr><td>O₂(g)</td><td>29.96</td><td>4.18</td><td>−1.67</td></tr>
+<tr><td>H₂O(g)</td><td>30.36</td><td>9.61</td><td>1.18</td></tr>
+<tr><td>CO₂(g)</td><td>44.22</td><td>8.79</td><td>−8.62</td></tr>
+<tr><td>C(石墨)</td><td>16.86</td><td>4.77</td><td>−8.54</td></tr>
+</tbody>
+</table>
+
+<hr class="section-divider">
+
+<h2 id="impact">專題：生物化學中的差示掃描量熱法 <span class="eng">(Impact on biochemistry: Differential scanning calorimetry)</span></h2>
+
+<p><strong>差示掃描量熱法（differential scanning calorimetry, DSC）</strong>是一種廣泛用於研究生物大分子（如蛋白質和核酸）折疊/展開行為的技術。儀器同時緩慢升溫兩個樣品池：一個裝有待測樣品（如蛋白質溶液），另一個裝有參考液（如純緩衝液）。計算兩者維持相同溫度所需的功率差 $\Delta P$，即可得到超額熱容 $C_{p,\text{excess}}$。</p>
+
+<p>當蛋白質在某溫度 $T_m$（<strong>中點展開溫度，melting temperature</strong>）附近展開（unfold）時，需要吸收大量的熱（斷裂氫鍵、疏水效應等），產生一個明顯的 $C_p$ 峰值。積分這個峰面積，即得到展開過程的焓變 $\Delta_{\text{unfold}}H$。</p>
+
+<p>DSC 實驗提供了關於蛋白質穩定性的豐富資訊：$T_m$ 反映蛋白質的熱穩定性；$\Delta_{\text{unfold}}H$ 代表維持蛋白質折疊態所涉及的分子間作用力的總強度；不同條件（如 pH、鹽濃度、配體）下的 DSC 曲線比較，可以揭示影響蛋白質穩定性的因素。</p>
+
+<div class="figure">
+<div class="fig-placeholder">圖 2.16　典型 DSC 熱譜圖（蛋白質在展開轉變附近的超額熱容 vs. 溫度）</div>
+<div class="fig-caption"><b>圖 2.16</b>　差示掃描量熱儀測得的蛋白質熱譜圖示意。在展開溫度 $T_m$ 附近，超額熱容呈現明顯峰值；峰面積積分即為展開焓 $\Delta_{\text{unfold}}H$。峰後的基線位移說明展開態比折疊態有更高的熱容。</div>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-6">2.6　絕熱變化 <span class="eng">Adiabatic Changes</span></h2>
+
+<p>在<strong>絕熱過程（adiabatic process）</strong>中，$q = 0$，由第一定律 $\Delta U = w$。對理想氣體的可逆絕熱膨脹，系統對外做功，內能降低，溫度下降。</p>
+
+<p>絕熱功（adiabatic work）可用定容熱容表達：由於 $\text{d}U = C_V\,\text{d}T$（對理想氣體），且 $\text{d}w = \text{d}U$（絕熱），所以：</p>
+
+<div class="eq">$$w_{\text{ad}} = C_V\,\Delta T = C_V(T_f - T_i) \tag{2.27}$$</div>
+
+<p>對可逆絕熱膨脹，可以推導出終態溫度與體積的關係（見進一步資訊 2.1）：</p>
+
+<div class="eq">$$T_f = T_i\left(\frac{V_i}{V_f}\right)^{1/c}, \quad c = \frac{C_{V,\text{m}}}{R} \tag{2.28}$$</div>
+
+<p>這說明：絕熱膨脹（$V_f > V_i$）導致溫度下降（$T_f < T_i$）。壓力與體積的關係則為：</p>
+
+<div class="eq">$$p_i V_i^{\gamma} = p_f V_f^{\gamma} \tag{2.29}$$</div>
+
+<p>其中 $\gamma = C_{p,\text{m}}/C_{V,\text{m}}$。這條曲線（$pV^\gamma = \text{常數}$）比等溫線（$pV = \text{常數}$）更陡峭，因為絕熱膨脹時溫度下降，壓力降低得更快。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.4　可逆絕熱膨脹的終態溫度</p>
+<p>1.00 mol Ar（理想氣體，$C_{V,\text{m}} = \frac{3}{2}R$）在 25°C、$V_i = 10.0\ \text{dm}^3$ 的條件下，進行可逆絕熱膨脹至 $V_f = 30.0\ \text{dm}^3$。求終態溫度。</p>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<p>$c = C_{V,\text{m}}/R = 3/2$，$T_i = 298\ \text{K}$：</p>
+<div class="eq">$$T_f = 298\left(\frac{10.0}{30.0}\right)^{1/(3/2)} = 298\left(\frac{1}{3}\right)^{2/3}$$</div>
+<div class="eq">$$T_f = 298 \times 0.4807 \approx 143\ \text{K}$$</div>
+<p>溫度從 25°C 降至約 −130°C，可見絕熱膨脹的降溫效果非常顯著。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 2.4</p>
+<p>1.00 mol N₂（$\gamma = 1.40$，$C_{V,\text{m}} = \frac{5}{2}R$）在 25°C 時進行可逆絕熱壓縮，使體積從 20.0 dm³ 縮至 5.00 dm³，求終態溫度及終態壓力。</p>
+<p><strong>答案：</strong>$T_f = 298 \times (20.0/5.00)^{2/5} = 298 \times 4^{0.4} \approx 298 \times 1.741 \approx 519\ \text{K}$（約 246°C）；終態壓力由理想氣體定律求得。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="thermochem">熱化學 <span class="eng">Thermochemistry</span></h2>
+
+<p>熱化學（thermochemistry）是將焓的概念應用於化學反應的學科，主要關心化學反應所伴隨的焓變。</p>
+
+<h3 id="sec2-7">2.7　標準焓變 <span class="eng">Standard Enthalpy Changes</span></h3>
+
+<p>為了讓不同來源的數據可以相互比較，定義<strong>標準狀態（standard state）</strong>：在特定溫度下、壓力為 $p^{\ominus} = 1\ \text{bar}$ 的純物質。在標準狀態下的焓變，稱為<strong>標準焓變（standard enthalpy change）</strong>，記為 $\Delta H^{\ominus}$（或 $\Delta H^{\circ}$）。</p>
+
+<p>常見的標準焓變類型：</p>
+
+<table>
+<caption>表 2.3　標準焓變類型</caption>
+<thead><tr><th>名稱</th><th>符號</th><th>說明</th></tr></thead>
+<tbody>
+<tr><td>標準熔化焓</td><td>$\Delta_{\text{fus}}H^{\ominus}$</td><td>固態 → 液態（在熔點）</td></tr>
+<tr><td>標準汽化焓</td><td>$\Delta_{\text{vap}}H^{\ominus}$</td><td>液態 → 氣態（在沸點）</td></tr>
+<tr><td>標準升華焓</td><td>$\Delta_{\text{sub}}H^{\ominus}$</td><td>固態 → 氣態</td></tr>
+<tr><td>標準燃燒焓</td><td>$\Delta_c H^{\ominus}$</td><td>有機物在 O₂ 中完全燃燒</td></tr>
+<tr><td>標準溶解焓</td><td>$\Delta_{\text{sol}}H^{\ominus}$</td><td>溶質溶於溶劑中</td></tr>
+</tbody>
+</table>
+
+<p>相變焓滿足<strong>可加性（additivity）</strong>：</p>
+<div class="eq">$$\Delta_{\text{sub}}H^{\ominus} = \Delta_{\text{fus}}H^{\ominus} + \Delta_{\text{vap}}H^{\ominus} \tag{2.32}$$</div>
+
+<p>且正逆過程的焓變大小相等、符號相反：</p>
+<div class="eq">$$\Delta H^{\ominus}(\text{正向}) = -\Delta H^{\ominus}(\text{逆向}) \tag{2.33}$$</div>
+
+<h3 id="sec2-8">2.8　標準生成焓與 Hess 定律 <span class="eng">Standard Enthalpies of Formation and Hess's Law</span></h3>
+
+<p>任何化合物的<strong>標準生成焓（standard enthalpy of formation）</strong>$\Delta_f H^{\ominus}$，定義為：在標準狀態下，由各元素的<strong>參考態（reference state）</strong>（即最穩定的同素異形體）生成 1 mol 化合物時的焓變。</p>
+
+<p>元素在其最穩定的參考態下，$\Delta_f H^{\ominus} = 0$（定義），例如 $\Delta_f H^{\ominus}(\text{C, 石墨}) = 0$，$\Delta_f H^{\ominus}(\text{H}_2\text{,g}) = 0$。</p>
+
+<p><strong>Hess 定律（Hess's law）</strong>：任何反應的標準焓變，等於生成物標準生成焓之和，減去反應物標準生成焓之和：</p>
+
+<div class="eq">$$\Delta_r H^{\ominus} = \sum_{\text{生成物}} \nu\,\Delta_f H^{\ominus} - \sum_{\text{反應物}} \nu\,\Delta_f H^{\ominus} \tag{2.34}$$</div>
+
+<p>其中 $\nu$ 是計量係數。這一關係源自焓是狀態函數這一事實——不論反應路徑如何，總焓變只取決於初態與終態。</p>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.5　利用 Hess 定律計算反應焓</p>
+<p>利用表中的標準生成焓，計算下列反應在 298 K 時的 $\Delta_r H^{\ominus}$：</p>
+<div class="eq">$$\text{CH}_4(\text{g}) + 2\,\text{O}_2(\text{g}) \to \text{CO}_2(\text{g}) + 2\,\text{H}_2\text{O(l)}$$</div>
+<p>已知：$\Delta_f H^{\ominus}(\text{CH}_4,\text{g}) = -74.81\ \text{kJ mol}^{-1}$，$\Delta_f H^{\ominus}(\text{CO}_2,\text{g}) = -393.51\ \text{kJ mol}^{-1}$，$\Delta_f H^{\ominus}(\text{H}_2\text{O},\text{l}) = -285.83\ \text{kJ mol}^{-1}$；O₂ 為元素參考態，$\Delta_f H^{\ominus} = 0$。</p>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<div class="eq">
+$$\Delta_r H^{\ominus} = \Delta_f H^{\ominus}(\text{CO}_2) + 2\,\Delta_f H^{\ominus}(\text{H}_2\text{O}) - \Delta_f H^{\ominus}(\text{CH}_4) - 2\,\Delta_f H^{\ominus}(\text{O}_2)$$
+</div>
+<div class="eq">
+$$= (-393.51) + 2(-285.83) - (-74.81) - 0 = -890.36\ \text{kJ mol}^{-1}$$
+</div>
+<p>甲烷燃燒放出約 890 kJ/mol 的熱，這是天然氣作為燃料的能量來源。</p>
+</div>
+</div>
+
+<div class="box box-selftest">
+<p class="box-title">🔹 自測題 2.5</p>
+<p>利用 Hess 定律計算乙醇燃燒反應 $\text{C}_2\text{H}_5\text{OH(l)} + 3\,\text{O}_2(\text{g}) \to 2\,\text{CO}_2(\text{g}) + 3\,\text{H}_2\text{O(l)}$ 的 $\Delta_r H^{\ominus}$。已知 $\Delta_f H^{\ominus}(\text{C}_2\text{H}_5\text{OH},\text{l}) = -277.7\ \text{kJ mol}^{-1}$。</p>
+<p><strong>答案：</strong>$\Delta_r H^{\ominus} = 2(-393.51) + 3(-285.83) - (-277.7) = -1366.9\ \text{kJ mol}^{-1}$</p>
+</div>
+
+<h3 id="sec2-9">2.9　基希霍夫定律 <span class="eng">Kirchhoff's Law</span></h3>
+
+<p>標準焓變的大小會隨溫度改變（因為反應物與生成物的熱容通常不相等）。<strong>基希霍夫定律（Kirchhoff's law）</strong>給出了這種依賴關係：</p>
+
+<div class="eq">$$\Delta_r H^{\ominus}(T_2) = \Delta_r H^{\ominus}(T_1) + \int_{T_1}^{T_2} \Delta_r C_p^{\ominus}\,\text{d}T \tag{2.36}$$</div>
+
+<p>其中 $\Delta_r C_p^{\ominus} = \sum_{\text{生成物}} \nu C_{p,\text{m}}^{\ominus} - \sum_{\text{反應物}} \nu C_{p,\text{m}}^{\ominus}$ 是反應的熱容差。若 $\Delta_r C_p^{\ominus}$ 可視為常數：</p>
+
+<div class="eq">$$\Delta_r H^{\ominus}(T_2) \approx \Delta_r H^{\ominus}(T_1) + \Delta_r C_p^{\ominus}(T_2 - T_1) \tag{2.36a}$$</div>
+
+<div class="box box-example">
+<p class="box-title">📘 例題 2.6　基希霍夫定律的應用</p>
+<p>已知 $\text{N}_2(\text{g}) + 3\,\text{H}_2(\text{g}) \to 2\,\text{NH}_3(\text{g})$ 在 298 K 時 $\Delta_r H^{\ominus} = -92.22\ \text{kJ mol}^{-1}$。</p>
+<p>$C_{p,\text{m}}^{\ominus}$ 的近似值：NH₃(g) = 35.1，N₂(g) = 29.1，H₂(g) = 28.8 J K⁻¹ mol⁻¹。</p>
+<p>求 500 K 時的 $\Delta_r H^{\ominus}$。</p>
+<div class="box-answer">
+<p class="box-title">解答</p>
+<div class="eq">$$\Delta_r C_p^{\ominus} = 2(35.1) - 29.1 - 3(28.8) = 70.2 - 29.1 - 86.4 = -45.3\ \text{J K}^{-1}\text{mol}^{-1}$$</div>
+<div class="eq">$$\Delta_r H^{\ominus}(500\ \text{K}) = -92220 + (-45.3)(500 - 298) = -92220 - 9151 \approx -101\ \text{kJ mol}^{-1}$$</div>
+</div>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-10">2.10　精確微分與非精確微分 <span class="eng">Exact and Inexact Differentials</span></h2>
+
+<p>狀態函數（如 $U$、$H$）的無窮小變化是<strong>精確微分（exact differential）</strong>：積分結果與路徑無關，只取決於初末狀態。</p>
+
+<p>功 $\text{d}w$ 和熱 $\text{d}q$ 則是<strong>非精確微分（inexact differential）</strong>：積分結果依賴過程路徑（常寫作 $\delta w$、$\delta q$ 以示區別）。</p>
+
+<p>精確微分的數學判據：若 $\text{d}f = g(x,y)\,\text{d}x + h(x,y)\,\text{d}y$ 是精確微分，則必有：</p>
+
+<div class="eq">$$\left(\frac{\partial g}{\partial y}\right)_x = \left(\frac{\partial h}{\partial x}\right)_y$$</div>
+
+<p>這稱為 Euler 等式。利用此判據，可以驗證 $\text{d}U = \text{d}q + \text{d}w$ 的各成分性質。</p>
+
+<div class="box box-note">
+<p class="box-title">📌 狀態函數 vs. 路徑函數</p>
+<p>狀態函數（$U$、$H$、$p$、$V$、$T$）只取決於系統的當前狀態。路徑函數（$q$、$w$）依賴過程的具體路徑。可以把狀態函數想像成地圖上的高度：高度差只取決於起點和終點，而爬山的路徑有無限多種。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="sec2-11">2.11　內能的變化 <span class="eng">Changes in Internal Energy</span></h2>
+
+<p>內能 $U$ 是 $T$ 和 $V$ 的函數（對封閉系統）。利用偏微分，無窮小的內能變化可以寫成：</p>
+
+<div class="eq">$$\text{d}U = \left(\frac{\partial U}{\partial V}\right)_T\text{d}V + \left(\frac{\partial U}{\partial T}\right)_V\text{d}T \tag{2.40}$$</div>
+
+<h4 id="sec2-11a">(a) 內壓力 <span class="eng">Internal pressure</span></h4>
+
+<p>偏導數 $\left(\frac{\partial U}{\partial V}\right)_T$ 具有壓力的量綱，稱為<strong>內壓力（internal pressure）</strong>$\pi_T$：</p>
+
+<div class="eq">$$\pi_T = \left(\frac{\partial U}{\partial V}\right)_T \tag{2.41}$$</div>
+
+<p>$\pi_T$ 度量的是：在恆溫下，將分子相互拉遠（增大體積）所需克服的分子間吸引力。代入 (2.40)：</p>
+
+<div class="eq">$$\text{d}U = \pi_T\,\text{d}V + C_V\,\text{d}T \tag{2.42}$$</div>
+
+<p>對<strong>理想氣體</strong>，分子間無作用力，內壓力 $\pi_T = 0$：內能只取決於溫度，與體積無關。</p>
+
+<p>焦耳（James Joule）曾用實驗驗證這一點（<strong>焦耳實驗</strong>）：將氣體從一個容器絕熱自由膨脹至真空。由 $w = 0$、$q = 0$ 得 $\Delta U = 0$；且他觀察到水浴溫度幾乎不變，這說明 $\pi_T \approx 0$。（實驗精度有限，只能測到 $\pi_T$ 的近似值；精確測量需要用 Joule-Thomson 實驗。）</p>
+
+<h4 id="sec2-11b">(b) 恆壓下的內能變化及膨脹係數</h4>
+
+<p>在恆壓條件下，可以從 (2.42) 推導出：</p>
+
+<div class="eq">$$\left(\frac{\partial U}{\partial T}\right)_p = \pi_T\alpha V + C_V \tag{2.45}$$</div>
+
+<p>其中<strong>膨脹係數（expansion coefficient）</strong>$\alpha$ 定義為：</p>
+
+<div class="eq">$$\alpha = \frac{1}{V}\left(\frac{\partial V}{\partial T}\right)_p \tag{2.43}$$</div>
+
+<p><strong>等溫壓縮率（isothermal compressibility）</strong>$\kappa_T$ 定義為：</p>
+
+<div class="eq">$$\kappa_T = -\frac{1}{V}\left(\frac{\partial V}{\partial p}\right)_T \tag{2.44}$$</div>
+
+<p>對理想氣體，可以直接算出 $\alpha = 1/T$，$\kappa_T = 1/p$。</p>
+
+<p>利用這些量，可以導出一個普遍適用的公式：</p>
+
+<div class="eq">$$C_p - C_V = \frac{\alpha^2 TV}{\kappa_T} \tag{2.49}$$</div>
+
+<p>這對所有物質都成立。代入理想氣體的 $\alpha = 1/T$、$\kappa_T = 1/p$ 可驗證 $C_p - C_V = nR$。對凝聚態，$\alpha$ 小，但 $\kappa_T$ 也小，兩者之比 $\alpha^2/\kappa_T$ 不可忽略，因此 $C_p$ 可能顯著大於 $C_V$。</p>
+
+<table>
+<caption>表 2.4　膨脹係數 $\alpha$ 與等溫壓縮率 $\kappa_T$（298 K）</caption>
+<thead><tr><th>物質</th><th>$\alpha\,/\,(10^{-4}\ \text{K}^{-1})$</th><th>$\kappa_T\,/\,(10^{-6}\ \text{bar}^{-1})$</th></tr></thead>
+<tbody>
+<tr><td>苯（液態）</td><td>12.4</td><td>90.9</td></tr>
+<tr><td>水（液態）</td><td>2.1</td><td>49.0</td></tr>
+<tr><td>鉛（固態）</td><td>0.861</td><td>2.18</td></tr>
+<tr><td>鑽石（固態）</td><td>0.030</td><td>0.185</td></tr>
+</tbody>
+</table>
+
+<hr class="section-divider">
+
+<h2 id="sec2-12">2.12　焦耳－湯姆森效應 <span class="eng">The Joule–Thomson Effect</span></h2>
+
+<p>對焓 $H$（視為 $T$ 和 $p$ 的函數），類似地可寫出：</p>
+
+<div class="eq">$$\text{d}H = -\mu C_p\,\text{d}p + C_p\,\text{d}T \tag{2.50}$$</div>
+
+<p>其中<strong>焦耳－湯姆森係數（Joule–Thomson coefficient）</strong>$\mu$ 定義為：</p>
+
+<div class="eq">$$\mu = \left(\frac{\partial T}{\partial p}\right)_H \tag{2.51}$$</div>
+
+<p>$\mu$ 代表：在恆焓條件下，氣體壓力降低 1 bar 所引起的溫度變化。若 $\mu > 0$，壓力下降時溫度也下降（冷卻）；若 $\mu < 0$，壓力下降時溫度上升（加熱）。</p>
+
+<p>焦耳（Joule）和湯姆森（Thomson，即後來的克耳文勛爵）設計了一個測量 $\mu$ 的實驗：讓氣體通過多孔隔板（節流閥），從高壓端穩定地流向低壓端，整套裝置用隔熱材料包裹。可以證明，這個過程是<strong>恆焓膨脹（isenthalpic expansion）</strong>（見推導 2.3）。測量節流前後的溫差 $\Delta T$ 與壓差 $\Delta p$，就得到 $\mu = \Delta T/\Delta p$。</p>
+
+<div class="box box-derivation">
+<p class="box-title">📐 推導 2.3　焦耳－湯姆森膨脹是恆焓過程</p>
+<p>設氣體從高壓端（$p_i, T_i, V_i$）通過節流閥流向低壓端（$p_f, T_f, V_f$）。由於整個過程絕熱（$q=0$），$\Delta U = w$。高壓端氣體被推入節流閥所做的功 $w_1 = p_i V_i$（推入）；低壓端氣體推動活塞膨脹做的功 $w_2 = -p_f V_f$（推出）。總功：</p>
+<div class="eq">$$w = p_i V_i - p_f V_f$$</div>
+<p>故 $U_f - U_i = p_i V_i - p_f V_f$，整理：</p>
+<div class="eq">$$U_f + p_f V_f = U_i + p_i V_i \implies H_f = H_i$$</div>
+<p>證明過程確實是恆焓的。</p>
+</div>
+
+<p>更便於實驗的量是<strong>等溫焦耳－湯姆森係數</strong>：</p>
+
+<div class="eq">$$\mu_T = \left(\frac{\partial H}{\partial p}\right)_T \tag{2.54}$$</div>
+
+<p>兩者的關係：$\mu_T = -C_p\,\mu$（2.55）。</p>
+
+<p>實驗發現，大多數氣體在室溫下 $\mu > 0$（降壓冷卻），這正是工業液化氣體的基礎。但氦（He）和氫（H₂）例外：它們在室溫下 $\mu < 0$，必須先預冷到<strong>逆轉溫度（inversion temperature）$T_I$</strong> 以下才能利用節流效應冷卻。</p>
+
+<table>
+<caption>表 2.5　部分氣體的焦耳－湯姆森係數與逆轉溫度（1 atm，298 K）</caption>
+<thead><tr><th>氣體</th><th>$\mu\,/\,(\text{K bar}^{-1})$</th><th>$T_I\,/\,\text{K}$</th></tr></thead>
+<tbody>
+<tr><td>Ar</td><td>+1.10</td><td>723</td></tr>
+<tr><td>N₂</td><td>+0.25</td><td>621</td></tr>
+<tr><td>CO₂</td><td>+1.11</td><td>1500</td></tr>
+<tr><td>He</td><td>−0.060</td><td>40</td></tr>
+</tbody>
+</table>
+
+<p>對理想氣體，$\mu = 0$：等溫膨脹不改變溫度，因為分子間沒有吸引力，膨脹不消耗動能。焦耳－湯姆森效應的存在，正是分子間作用力的宏觀體現。</p>
+
+<div class="box box-molecular">
+<p class="box-title">🧬 分子詮釋 2.3　焦耳－湯姆森效應的分子機制</p>
+<p>真實氣體節流降壓時，分子間距增大。若吸引力佔主導（$Z < 1$），分子相互拉遠需消耗動能，溫度下降，$\mu > 0$。這和拋球入空中類似：球升高時動能轉化為重力位能，速度變慢。</p>
+<p>若排斥力佔主導（$Z > 1$，即高溫高密度），膨脹反而釋放位能，轉化為動能，溫度上升，$\mu < 0$。逆轉溫度 $T_I$ 正是吸引力與排斥力效應相互平衡的臨界點。</p>
+<p><strong>林德（Linde）冷凍機</strong>就利用了多次循環的節流冷卻：節流後冷卻的氣體先返回冷卻進氣，再次節流，如此循環，溫度逐步降低，最終液化。</p>
+</div>
+
+<hr class="section-divider">
+
+<h2 id="checklist">重點概念整理 <span class="eng">Checklist of Key Ideas</span></h2>
+
+<ul class="keylist">
+<li>功是以「克服阻力的運動」方式轉移的能量（$w>0$ 為對系統做功）；熱是由溫度差驅動的能量傳遞（$q>0$ 為吸熱）。</li>
+<li>系統的<strong>內能</strong>$U$ 是其所有微觀能量的總和，是一個狀態函數。</li>
+<li><strong>熱力學第一定律</strong>：$\Delta U = q + w$。</li>
+<li>膨脹功：$w = -\int p_{\text{ex}}\,\text{d}V$；自由膨脹（真空）$w=0$；等溫可逆膨脹 $w = -nRT\ln(V_f/V_i)$。</li>
+<li>可逆過程做最大功；不可逆過程有耗散，功的絕對值較小。</li>
+<li>恆容下 $\Delta U = q_V$；恆壓下 $\Delta H = q_p$。</li>
+<li><strong>焓</strong>：$H = U + pV$，$\Delta H = q_p$；適用於恆壓下的反應熱計算。</li>
+<li>定容熱容：$C_V = (\partial U/\partial T)_V$；定壓熱容：$C_p = (\partial H/\partial T)_p$；對理想氣體 $C_p - C_V = nR$。</li>
+<li>可逆絕熱膨脹：$T_f = T_i(V_i/V_f)^{1/c}$，$pV^\gamma = \text{常數}$，$\gamma = C_{p,\text{m}}/C_{V,\text{m}}$。</li>
+<li>標準焓變以 $p^{\ominus} = 1\ \text{bar}$ 為基準，常用標準狀態溫度 $T = 298.15\ \text{K}$。</li>
+<li><strong>Hess 定律</strong>：$\Delta_r H^{\ominus} = \sum \nu\,\Delta_f H^{\ominus}(\text{生成物}) - \sum \nu\,\Delta_f H^{\ominus}(\text{反應物})$。</li>
+<li><strong>基希霍夫定律</strong>：$\Delta_r H^{\ominus}(T_2) = \Delta_r H^{\ominus}(T_1) + \int_{T_1}^{T_2}\Delta_r C_p^{\ominus}\,\text{d}T$。</li>
+<li>精確微分（狀態函數的變化）路徑無關；非精確微分（$\delta w$、$\delta q$）路徑相關。</li>
+<li><strong>內壓力</strong>：$\pi_T = (\partial U/\partial V)_T$；理想氣體 $\pi_T = 0$。</li>
+<li>膨脹係數 $\alpha = (1/V)(\partial V/\partial T)_p$；等溫壓縮率 $\kappa_T = -(1/V)(\partial V/\partial p)_T$；$C_p - C_V = \alpha^2 TV/\kappa_T$。</li>
+<li><strong>焦耳－湯姆森效應</strong>：節流膨脹為恆焓過程，$\mu = (\partial T/\partial p)_H$。$\mu > 0$ 時降壓冷卻，$\mu < 0$ 時降壓升溫；<strong>逆轉溫度</strong>$T_I$ 為 $\mu$ 改變符號的臨界溫度。</li>
+</ul>
+
+<hr class="section-divider">
+
+<h2 id="discussion">討論問題 <span class="eng">Discussion Questions</span></h2>
+
+<ol class="discuss-list">
+<li>分別從宏觀與微觀角度定義功與熱，並說明兩者如何共同構成第一定律中的 $\Delta U = q + w$。</li>
+<li>考慮理想氣體的可逆膨脹：試從物理上解釋為何可逆絕熱膨脹滿足 $pV^\gamma = \text{常數}$，而等溫膨脹只滿足 $pV = \text{常數}$（$\gamma > 1$ 說明什麼？）。</li>
+<li>說明內能變化 $\Delta U$ 與焓變 $\Delta H$ 之間的差異，並舉例說明在哪些情況下兩者相近，哪些情況下差別顯著。</li>
+<li>何謂狀態函數？試列出你所能識別的所有狀態函數，並說明功 $w$ 和熱 $q$ 為何不是狀態函數。</li>
+<li>解釋焦耳實驗和焦耳－湯姆森實驗各自測量的物理量，並說明後者比前者更靈敏的原因。</li>
+<li>描述 van der Waals 氣體的內壓力如何隨體積變化（$\pi_T = a/V_m^2$），並解釋這在物理上說明了什麼。</li>
+</ol>
+
+<hr class="section-divider">
+
+<h2 id="exercises">精選習題 <span class="eng">Exercises &amp; Problems</span></h2>
+
+<p style="color:#8a7a5e; font-size:.92rem; margin-top:-8px;">以下習題改編自原書的練習題，數值條件保留，文字描述重新編寫。</p>
+
+<ol class="exercise-list">
+<li>一位體重 65 kg 的人在地表（$g = 9.81\ \text{m s}^{-2}$）爬高 4.0 m，需要做多少功？如果在月球（$g = 1.60\ \text{m s}^{-2}$）做同樣的動作呢？</li>
+<li>1.00 mol Ar 在 0°C 從 22.4 dm³ 等溫膨脹到 44.8 dm³：(a) 可逆膨脹，(b) 對抗等於終態壓力的恆定外壓，(c) 向真空自由膨脹。分別求三種情況的 $q$、$w$、$\Delta U$、$\Delta H$。</li>
+<li>某化學反應在截面積為 100 cm² 的容器中進行，活塞在外壓 1.0 atm 下被推出 10 cm。求系統所做的功（J）。</li>
+<li>某定容量熱儀（$C_V = 14.4\ \text{kJ K}^{-1}$）中，燃燒 1.010 g 苯（$C_6H_6$，$M = 78.11\ \text{g mol}^{-1}$），溫度升高了 3.05 K。計算苯的標準燃燒內能 $\Delta_c U^{\ominus}$ 和標準燃燒焓 $\Delta_c H^{\ominus}$（以 kJ mol⁻¹ 表示）。</li>
+<li>已知 N₂ 的 $C_{V,\text{m}} = \frac{5}{2}R$，12.0 g N₂（$M = 28.02\ \text{g mol}^{-1}$）在 $p_i = 100\ \text{kPa}$、$T_i = 300\ \text{K}$ 的條件下進行可逆絕熱壓縮到 $T_f = 500\ \text{K}$。求功 $w$、終態體積 $V_f$、終態壓力 $p_f$。</li>
+<li>在 25°C，以下標準焓變已知：$\Delta_f H^{\ominus}(\text{C}_2\text{H}_4,\text{g}) = +52.5\ \text{kJ mol}^{-1}$，$\Delta_f H^{\ominus}(\text{H}_2\text{O},\text{l}) = -285.8\ \text{kJ mol}^{-1}$，$\Delta_f H^{\ominus}(\text{CO}_2,\text{g}) = -393.5\ \text{kJ mol}^{-1}$。計算乙烯完全燃燒反應 $\text{C}_2\text{H}_4(\text{g}) + 3\,\text{O}_2(\text{g}) \to 2\,\text{CO}_2(\text{g}) + 2\,\text{H}_2\text{O(l)}$ 的 $\Delta_r H^{\ominus}$。</li>
+<li>已知乙炔（$\text{C}_2\text{H}_2$）在 298 K 時的標準燃燒焓為 $-1300\ \text{kJ mol}^{-1}$，其 $C_p^{\ominus}$ 與產物在 $298-700\ \text{K}$ 範圍內可視為常數（$\Delta_r C_p^{\ominus} = -25\ \text{J K}^{-1}\text{mol}^{-1}$）。利用基希霍夫定律估算 700 K 時的燃燒焓。</li>
+<li>某氣體在擴散實驗中，從 32 atm、0°C 通過節流閥膨脹至 1.00 atm，測得溫度下降了 22 K。在此溫度範圍內假設 $\mu$ 為常數，計算該氣體在 0°C 的焦耳－湯姆森係數。</li>
+<li>van der Waals 氣體的內壓力為 $\pi_T = a/V_m^2$。利用此結果，計算 N₂ 的內能在 298 K 下從 $V_m = 1.00\ \text{dm}^3\text{mol}^{-1}$ 等溫膨脹到 $V_m = 24.8\ \text{dm}^3\text{mol}^{-1}$ 的變化 $\Delta U_m$（N₂ 的 $a = 1.352\ \text{dm}^6\text{atm}\,\text{mol}^{-2}$）。</li>
+<li>在彈式量熱儀中燃燒 0.500 g 苯甲酸（$\Delta_c U = -3228\ \text{kJ mol}^{-1}$，$M = 122.1\ \text{g mol}^{-1}$），溫度升高 0.800 K。確定量熱儀的熱容 $C_V$。接著在同一量熱儀中燃燒 1.00 mmol 萘（$C_{10}H_8$），溫度升高 0.0464 K，求萘的 $\Delta_c U$（kJ mol⁻¹）。</li>
+<li>水在 25°C 時膨脹係數 $\alpha = 2.1 \times 10^{-4}\ \text{K}^{-1}$，等溫壓縮率 $\kappa_T = 4.9 \times 10^{-5}\ \text{bar}^{-1}$，$C_{p,\text{m}} = 75.3\ \text{J K}^{-1}\text{mol}^{-1}$，$V_m = 18.1\ \text{cm}^3\text{mol}^{-1}$。利用 (2.49) 式計算 $C_{V,\text{m}}$，並與 $C_{p,\text{m}}$ 相比較。</li>
+<li>已知某理想氣體在 25°C、1.00 atm 下的焓 $H$，現將其在恆壓下加熱到 100°C，$C_{p,\text{m}} = 29.4\ \text{J K}^{-1}\text{mol}^{-1}$（視為常數），並計算 1.00 mol 氣體在此過程中的 $\Delta H$、$\Delta U$（利用 $\Delta U = \Delta H - nR\Delta T$，理想氣體恆壓過程）。</li>
+</ol>
+
+</main>
+</div>
+
+<script>
+(function(){
+  /* --- Mobile sidebar toggle --- */
+  var btn = document.getElementById('menu-btn');
+  var sidebar = document.getElementById('sidebar');
+  if(btn && sidebar){
+    btn.addEventListener('click', function(){
+      sidebar.classList.toggle('open');
+      btn.textContent = sidebar.classList.contains('open') ? '✕ 關閉' : '☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click', function(){
+        if(window.innerWidth <= 900){
+          sidebar.classList.remove('open');
+          btn.textContent = '☰ 目錄';
+        }
+      });
+    });
+  }
+
+  /* --- Scroll-spy --- */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var targets = links.map(function(a){
+    var id = a.getAttribute('href').slice(1);
+    return document.getElementById(id);
+  });
+
+  function onScroll(){
+    var pos = window.scrollY + 120;
+    var current = 0;
+    for(var i = 0; i < targets.length; i++){
+      if(targets[i] && targets[i].offsetTop <= pos){ current = i; }
+    }
+    links.forEach(function(a, i){
+      a.classList.toggle('active', i === current);
+    });
+  }
+
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>

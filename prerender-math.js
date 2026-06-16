@@ -6,6 +6,7 @@ const katex = require('katex');
 const files = [
   'chapters/01_氣體的性質.html',
   'chapters/02_熱力學第一定律.html',
+  'chapters/03_熱力學第二定律.html',
 ];
 
 function renderDisplay(latex) {

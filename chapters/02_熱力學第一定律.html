@@ -60,28 +60,18 @@ h1,h2,h3,h4,.ui,nav,.toc{
   margin-bottom:12px;
   letter-spacing:.08em;
 }
-.chapter-nav{
-  border-top:1px solid rgba(255,255,255,.08);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  padding:8px 0 10px;
-  margin-bottom:14px;
-}
-.chapter-nav-label{
-  font-size:.68rem;letter-spacing:.15em;color:var(--accent);
-  text-transform:uppercase;font-weight:700;padding:0 10px 5px;
-}
-.chapter-link{
-  display:block;padding:5px 10px;
+.home-btn{
+  display:block;margin:0 10px 14px;
+  padding:8px 14px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:5px;
   font-family:'Noto Sans TC',sans-serif;font-size:.8rem;
-  color:var(--sidebar-fg-dim);text-decoration:none;
-  border-left:3px solid transparent;border-radius:3px;
-  transition:color .15s,background .15s;line-height:1.5;
+  color:var(--sidebar-fg);text-decoration:none;
+  transition:background .15s,color .15s;
+  text-align:center;letter-spacing:.04em;
 }
-.chapter-link:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
-.chapter-link.current{
-  color:#fff;border-left-color:var(--accent);
-  background:rgba(192,57,43,.18);
-}
+.home-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
 .toc{
   list-style:none;
   margin:0;padding:0;
@@ -391,12 +381,7 @@ hr.section-divider{
   <button class="menu-btn" id="menu-btn">☰ 目錄</button>
   <h1>物理化學講義</h1>
   <div class="subtitle">ATKINS' PHYSICAL CHEMISTRY 改編學習版</div>
-  <div class="chapter-nav">
-    <div class="chapter-nav-label">章節選擇</div>
-    <a class="chapter-link" href="01_氣體的性質.html">第一章　氣體的性質</a>
-    <a class="chapter-link current" href="02_熱力學第一定律.html">第二章　熱力學第一定律</a>
-    <a class="chapter-link" href="03_熱力學第二定律.html">第三章　熱力學第二定律</a>
-  </div>
+  <a class="home-btn" href="../index.html">← 返回章節列表</a>
   <ul class="toc" id="toc">
     <li class="section-title">第二章　熱力學第一定律</li>
     <li><a href="#intro">章節導讀</a></li>

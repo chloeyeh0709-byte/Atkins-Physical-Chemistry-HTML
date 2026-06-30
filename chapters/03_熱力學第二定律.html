@@ -48,29 +48,19 @@ body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:
 #toc .toc-h3{padding-left:32px;}
 #toc .toc-h4{padding-left:44px;font-size:.74rem;}
 
-/* ── Chapter navigation ── */
-.chapter-nav{
-  border-top:1px solid rgba(255,255,255,.08);
-  border-bottom:1px solid rgba(255,255,255,.08);
-  padding:8px 0 10px;
-  margin:0 0 6px;
-}
-.chapter-nav-label{
-  font-size:.68rem;letter-spacing:.15em;color:var(--accent);
-  text-transform:uppercase;font-weight:700;padding:0 20px 5px;
-}
-.chapter-link{
-  display:block;padding:5px 20px;
+/* ── Home button ── */
+.home-btn{
+  display:block;margin:0 20px 10px;
+  padding:8px 14px;
+  background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:5px;
   font-family:'Noto Sans TC',sans-serif;font-size:.8rem;
-  color:var(--sidebar-fg-dim);text-decoration:none;
-  border-left:3px solid transparent;
-  transition:color .15s,background .15s;line-height:1.5;
+  color:var(--sidebar-fg);text-decoration:none;
+  transition:background .15s,color .15s;
+  text-align:center;letter-spacing:.04em;
 }
-.chapter-link:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
-.chapter-link.current{
-  color:#fff;border-left-color:var(--accent);
-  background:rgba(192,57,43,.18);
-}
+.home-btn:hover{background:rgba(255,255,255,.14);color:#fff;}
 
 /* ── Mobile menu button ── */
 .menu-btn{
@@ -177,12 +167,7 @@ tr:nth-child(even) td{background:#f5f0e8;}
     <h2>物理化學講義</h2>
     <div style="font-size:.75rem;color:var(--sidebar-fg-dim);letter-spacing:.07em;margin-top:2px;">ATKINS' PHYSICAL CHEMISTRY 改編學習版</div>
   </div>
-  <div class="chapter-nav">
-    <div class="chapter-nav-label">章節選擇</div>
-    <a class="chapter-link" href="01_氣體的性質.html">第一章　氣體的性質</a>
-    <a class="chapter-link" href="02_熱力學第一定律.html">第二章　熱力學第一定律</a>
-    <a class="chapter-link current" href="03_熱力學第二定律.html">第三章　熱力學第二定律</a>
-  </div>
+  <a class="home-btn" href="../index.html">← 返回章節列表</a>
   <nav id="toc">
     <a href="#sec3-1" class="toc-h2">3.1 能量的分散</a>
     <a href="#sec3-2" class="toc-h2">3.2 熵</a>

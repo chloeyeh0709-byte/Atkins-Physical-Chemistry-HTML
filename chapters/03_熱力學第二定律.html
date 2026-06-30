@@ -30,16 +30,11 @@ body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:
   position:sticky;top:0;height:100vh;overflow-y:auto;padding:0 0 60px;
 }
 .sidebar-header{
-  padding:24px 20px 16px;border-bottom:1px solid rgba(255,255,255,.08);
+  padding:24px 20px 14px;
 }
-.sidebar-header .back{
-  font-family:'Noto Sans TC',sans-serif;font-size:.75rem;color:var(--sidebar-fg-dim);
-  text-decoration:none;display:block;margin-bottom:10px;letter-spacing:.06em;
-}
-.sidebar-header .back:hover{color:var(--sidebar-fg);}
 .sidebar-header h2{
-  margin:0;font-family:'Noto Sans TC',sans-serif;font-size:.9rem;
-  font-weight:700;color:#fff;letter-spacing:.04em;line-height:1.4;
+  margin:0;font-family:'Noto Sans TC',sans-serif;font-size:1.15rem;
+  font-weight:700;color:#fff;letter-spacing:.05em;line-height:1.3;
 }
 #toc{padding:12px 0;}
 #toc a{
@@ -52,6 +47,30 @@ body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:
 #toc .toc-h2{font-weight:700;font-size:.82rem;color:var(--sidebar-fg);margin-top:8px;}
 #toc .toc-h3{padding-left:32px;}
 #toc .toc-h4{padding-left:44px;font-size:.74rem;}
+
+/* ── Chapter navigation ── */
+.chapter-nav{
+  border-top:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:8px 0 10px;
+  margin:0 0 6px;
+}
+.chapter-nav-label{
+  font-size:.68rem;letter-spacing:.15em;color:var(--accent);
+  text-transform:uppercase;font-weight:700;padding:0 20px 5px;
+}
+.chapter-link{
+  display:block;padding:5px 20px;
+  font-family:'Noto Sans TC',sans-serif;font-size:.8rem;
+  color:var(--sidebar-fg-dim);text-decoration:none;
+  border-left:3px solid transparent;
+  transition:color .15s,background .15s;line-height:1.5;
+}
+.chapter-link:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+.chapter-link.current{
+  color:#fff;border-left-color:var(--accent);
+  background:rgba(192,57,43,.18);
+}
 
 /* ── Mobile menu button ── */
 .menu-btn{
@@ -155,8 +174,14 @@ tr:nth-child(even) td{background:#f5f0e8;}
 <aside class="sidebar" id="sidebar">
   <button class="menu-btn" id="menu-btn">☰ 目錄</button>
   <div class="sidebar-header">
-    <a class="back" href="../index.html">← 返回章節列表</a>
-    <h2>第三章<br>熱力學第二定律</h2>
+    <h2>物理化學講義</h2>
+    <div style="font-size:.75rem;color:var(--sidebar-fg-dim);letter-spacing:.07em;margin-top:2px;">ATKINS' PHYSICAL CHEMISTRY 改編學習版</div>
+  </div>
+  <div class="chapter-nav">
+    <div class="chapter-nav-label">章節選擇</div>
+    <a class="chapter-link" href="01_氣體的性質.html">第一章　氣體的性質</a>
+    <a class="chapter-link" href="02_熱力學第一定律.html">第二章　熱力學第一定律</a>
+    <a class="chapter-link current" href="03_熱力學第二定律.html">第三章　熱力學第二定律</a>
   </div>
   <nav id="toc">
     <a href="#sec3-1" class="toc-h2">3.1 能量的分散</a>

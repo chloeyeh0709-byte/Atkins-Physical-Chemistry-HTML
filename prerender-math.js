@@ -7,6 +7,11 @@ const files = [
   'chapters/01_氣體的性質.html',
   'chapters/02_熱力學第一定律.html',
   'chapters/03_熱力學第二定律.html',
+  'chapters/04_純物質的物理變化.html',
+  'chapters/05_簡單混合物.html',
+  'chapters/06_相圖.html',
+  'chapters/07_化學平衡.html',
+  'chapters/08_量子理論導論.html',
 ];
 
 function renderDisplay(latex) {

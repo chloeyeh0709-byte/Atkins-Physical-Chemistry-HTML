@@ -19,6 +19,11 @@ const files = [
   'chapters/13_分子光譜學一轉動與振動光譜.html',
   'chapters/14_分子光譜學二電子躍遷.html',
   'chapters/15_分子光譜學三磁共振.html',
+  'chapters/16_統計熱力學一概念.html',
+  'chapters/17_統計熱力學二應用.html',
+  'chapters/18_分子交互作用.html',
+  'chapters/19_材料一高分子與聚集體.html',
+  'chapters/20_材料二固態.html',
 ];
 
 function renderDisplay(latex) {

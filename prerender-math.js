@@ -14,6 +14,11 @@ const files = [
   'chapters/08_量子理論導論.html',
   'chapters/09_量子力學技術與應用.html',
   'chapters/10_原子結構與原子光譜.html',
+  'chapters/11_分子結構.html',
+  'chapters/12_分子對稱性.html',
+  'chapters/13_分子光譜學一轉動與振動光譜.html',
+  'chapters/14_分子光譜學二電子躍遷.html',
+  'chapters/15_分子光譜學三磁共振.html',
 ];
 
 function renderDisplay(latex) {

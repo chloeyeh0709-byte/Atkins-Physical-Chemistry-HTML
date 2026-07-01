@@ -24,6 +24,11 @@ const files = [
   'chapters/18_分子交互作用.html',
   'chapters/19_材料一高分子與聚集體.html',
   'chapters/20_材料二固態.html',
+  'chapters/21_分子運動.html',
+  'chapters/22_化學反應速率.html',
+  'chapters/23_複雜反應動力學.html',
+  'chapters/24_分子反應動力學.html',
+  'chapters/25_固體表面過程.html',
 ];
 
 function renderDisplay(latex) {

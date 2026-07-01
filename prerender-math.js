@@ -12,6 +12,8 @@ const files = [
   'chapters/06_相圖.html',
   'chapters/07_化學平衡.html',
   'chapters/08_量子理論導論.html',
+  'chapters/09_量子力學技術與應用.html',
+  'chapters/10_原子結構與原子光譜.html',
 ];
 
 function renderDisplay(latex) {

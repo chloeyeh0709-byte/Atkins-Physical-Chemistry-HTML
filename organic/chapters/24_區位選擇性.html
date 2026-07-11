@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十四章：區位選擇性</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{position:fixed;top:0;left:0;height:100vh;width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;}
+@media(max-width:900px){#menu-btn{display:block;}#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0!important;}}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:16px 20px;margin:1.4em 0;}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{background:#1e2228;color:#d4e0c8;border-radius:8px;padding:20px 24px;margin:1.4em 0;font-family:'Courier New',Courier,monospace;font-size:.88rem;line-height:1.7;overflow-x:auto;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十四章<br>區位選擇性</h2>
+  </div>
+  <div id="toc">
+    <a href="#regioselectivity-intro">區位選擇性的定義</a>
+    <a href="#eas-regioselectivity">EAS 的區位選擇性（複習）</a>
+    <a href="#ortholithiation">鄰位鋰化（Ortholithiation）</a>
+    <a href="#naphthalene">萘的區位選擇性</a>
+    <a href="#intramolecular">分子內環化的區位</a>
+    <a href="#markovnikov">馬氏規則與反馬氏</a>
+    <a href="#radical-hbr">HBr 的自由基加成</a>
+    <a href="#nbs">NBS 烯丙位溴化</a>
+    <a href="#allylic-sub">烯丙基取代的 SN 位置</a>
+    <a href="#organocuprate-sn2prime">有機銅與 SN2'</a>
+    <a href="#conjugated-dienes">共軛二烯的 1,2 vs 1,4 加成</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十四章</div>
+    <h1>區位選擇性</h1>
+    <div class="subtitle">Regioselectivity</div>
+  </div>
+
+  <!-- ===================== INTRO ===================== -->
+  <h2 id="regioselectivity-intro">區位選擇性的定義</h2>
+  <p><strong>區位選擇性（Regioselectivity）</strong>指在同一官能基（或同類型官能基）內，反應優先發生在哪個位置。它不同於化學選擇性（哪個官能基反應）和立體選擇性（生成哪個立體異構體）。</p>
+
+  <div class="box-key">
+    <strong>三種選擇性的比較</strong>
+    <table>
+      <tr><th>選擇性</th><th>問題</th><th>例子</th></tr>
+      <tr><td>化學選擇性（chemoselectivity）</td><td>哪個官能基反應？</td><td>酮 vs 酯 + NaBH₄ → 只還原酮</td></tr>
+      <tr><td>區位選擇性（regioselectivity）</td><td>官能基中哪個位置？</td><td>丙烯 + HBr → 哪個 C 得到 Br？</td></tr>
+      <tr><td>立體選擇性（stereoselectivity）</td><td>生成哪個立體異構體？</td><td>氫硼化 → syn 加成</td></tr>
+    </table>
+  </div>
+
+  <!-- ===================== EAS REGIOSELECTIVITY ===================== -->
+  <h2 id="eas-regioselectivity">EAS 的區位選擇性（複習與深化）</h2>
+  <p>EAS 的區位選擇性由取代基效應決定（第 21 章），在此複習並加深理解策略性應用。</p>
+
+  <div class="reaction-scheme">
+EAS 取代基效應與區位選擇性（彙整）：
+
+ED 基（供電子）→ 鄰/對位導向：
+  -OH, -OR, -NR₂：強活化，鄰/對位
+  -R（烷基）：弱活化，鄰/對位
+
+EW 基（吸電子）→ 間位導向：
+  -NO₂, -CN, -COR, -CF₃：去活化，間位
+  -NR₃⁺（帶正電）：最強去活化，間位
+
+鹵素（特殊）→ 鄰/對位導向 + 去活化
+
+策略性應用（磺化作為封閉基）：
+
+例：合成 1-chloro-2-nitrobenzene 和 1-chloro-4-nitrobenzene 的混合物？
+→ 先硝化（間位導向如果有 Cl） → 再磺化（封閉鄰位） → 再氯化 → 去磺化
+
+磺化（可逆）作為臨時封閉位置的策略：
+1. 硝化苯 → 硝基苯
+2. 磺化 → 佔據某位置（例如鄰位）
+3. 引入第二取代基（位置被控制）
+4. 去磺化（水/酸，加熱）→ 得到特定位置的二取代苯
+
+官能基互相轉換改變定向：
+-NO₂（間位導向）→ 還原 → -NH₂（鄰/對位導向）
+→ 允許合成兩種不同定向在同一分子的雙取代苯
+  </div>
+
+  <!-- ===================== ORTHOLITHIATION ===================== -->
+  <h2 id="ortholithiation">鄰位鋰化（Directed Ortho Metalation）</h2>
+  <p>除了 EAS，苯環上的直接 C-H 金屬化也可實現區域選擇性取代。</p>
+
+  <div class="reaction-scheme">
+鄰位鋰化（Ortholithiation / Directed Metalation）：
+
+原理：含 O 或 N 的導向基（DMG, directed metalation group）螯合 BuLi，
+     使鋰化發生在 DMG 的鄰位。
+
+底物 + n-BuLi（強鹼）→ 鄰位 C-H 去質子 → 鄰位芳基鋰（aryllithium）
+
+DMG 例子：
+- -OMe（甲氧基）
+- -NR₂（胺基、醯胺）
+- -CONR₂（醯胺）：最強的 DMG
+- -SO₂NR₂（磺醯胺）
+
+機制（以 -OMe 為例）：
+          OMe                     OMe
+           |    + n-BuLi   →      |
+         [苯環]                  [苯環]
+                                    |
+                                   Li  （鄰位 C-Li）
+
+→ C-Li 再與親電試劑反應（R-X, RCHO, CO₂ 等）
+→ 在鄰位引入官能基（高區位選擇性！）
+
+優點：
+✓ 高鄰位選擇性（> 95:5）
+✓ 不需要苯環預先活化
+✓ 可引入各種官能基（醛基、酯基、鹵素等）
+  </div>
+
+  <!-- ===================== NAPHTHALENE ===================== -->
+  <h2 id="naphthalene">萘的區位選擇性</h2>
+
+  <div class="reaction-scheme">
+萘（naphthalene）的 EAS 區位選擇性：
+
+萘有兩種不等效碳：α 位（C-1）和 β 位（C-2）
+
+       4    3
+      /  \  /
+5    |    2
+|    |    |
+6    |    1（α 位）
+      \  /  \
+       7    8
+
+α 位（C-1, C-4, C-5, C-8）：通常動力學優先
+β 位（C-2, C-3, C-6, C-7）：在某些條件下熱力學優先
+
+硝化萘（HNO₃/H₂SO₄）：
+主要產物：α-硝基萘（1-硝基萘，> 90%）
+原因：α 位的 arenium ion 中間體更穩定（保留一個完整的苯環，6π 芳香）
+
+磺化萘（可逆！）：
+低溫（60°C）：α-萘磺酸（動力學）
+高溫（160°C）：β-萘磺酸（熱力學，較穩定，更大基團較少空間阻礙）
+
+萘磺化的可逆性應用：
+1. 低溫磺化 → α-磺酸（→ 換用其他試劑 → α-取代）
+2. 高溫磺化（再異構化）→ β-磺酸（→ 去磺化 → β 位 H 回來）
+
+萘的鄰位導向 EAS：
+已有 ED 基的萘 → 鄰/對位導向（優先在同環 peri 或鄰位）
+已有 EW 基的萘 → 反應在另一環的 α 位
+  </div>
+
+  <!-- ===================== INTRAMOLECULAR ===================== -->
+  <h2 id="intramolecular">分子內環化的區位選擇性</h2>
+
+  <h3>分子內 Friedel-Crafts 烷基化</h3>
+  <div class="reaction-scheme">
+分子內 Friedel-Crafts 給鄰位產物：
+
+底物：鏈狀分子，一端有芳環，另一端有烷基鹵（或羥基）
+
+例：4-苯丁酸氯化物 + AlCl₃ → 分子內 F-C 醯化
+    → 四氫萘酮（tetralone，六元環，鄰位 = 動力學）
+
+規律：
+- 5 元環 > 6 元環 > 7 元環（反應性和穩定性的平衡）
+- 分子內環化偏好形成 5 或 6 元環（Baldwin's rules 的有機版）
+- 鄰位攻擊（ortho attack）比對位攻擊在分子內更容易（因鏈長優先到鄰位）
+  </div>
+
+  <h3>鹵素內酯化（Halolactonization）</h3>
+  <div class="reaction-scheme">
+溴內酯化（Bromolactonization）：
+
+底物：γ,δ-不飽和羧酸（或 δ,ε-）+ Br₂/NaHCO₃
+
+機制：
+1. Br₂ 與雙鍵反應 → 溴鑤離子（bromonium ion）
+2. 羧酸根（CO₂⁻，分子內）攻擊 C → 內酯（lactone）形成
+3. Br⁻ 離去（外界 Br⁻ 提供 Br 到另一 C 不正確；是先羧酸進攻）
+
+區位選擇性：
+- 5 元環（γ-內酯）優先於 6 元環（δ-內酯）和 7 元環
+- 羧酸根作為分子內親核劑，形成最優化的環張力
+
+立體化學：
+- 溴鑤離子（三元環，兩面電子）被從背面攻擊
+- 反式（anti）加成
+- 兩個新立體中心的構型由 anti 加成決定
+  </div>
+
+  <!-- ===================== MARKOVNIKOV ===================== -->
+  <h2 id="markovnikov">Markovnikov 規則與反馬氏加成</h2>
+
+  <div class="reaction-scheme">
+Markovnikov 規則（HBr 加到烯烴）：
+
+HBr + CH₂=CH-CH₃（丙烯）→ CH₃-CHBr-CH₃（2-溴丙烷，主要）
+                              CH₃-CH₂-CH₂Br（1-溴丙烷，少量）
+
+Markovnikov：H 加到 H 較多的 C（= Br 加到更取代/更穩定碳陽離子的 C）
+
+機制：
+1. H⁺ 加到丙烯（C1）→ 生成 2° 碳陽離子（在 C2，更穩定）
+2. Br⁻ 攻擊 C2 → 2-溴丙烷（Markovnikov 產物）
+
+若 H⁺ 先加到 C2 → 生成 1° 碳陽離子（不穩定）→ 不優先
+
+氫硼化（反 Markovnikov）：
+烯烴 + BH₃ → H 加到更取代的 C，B 加到較少取代的 C
+→ 氧化（H₂O₂/NaOH）→ OH 在較少取代的 C（反 Markovnikov 醇）
+
+反應：丙烯 + BH₃ → B 在 C1 → 氧化 → 1-丙醇（anti-Markovnikov）
+  </div>
+
+  <!-- ===================== RADICAL HBR ===================== -->
+  <h2 id="radical-hbr">HBr 的自由基加成（過氧化物條件）</h2>
+  <div class="reaction-scheme">
+自由基加成 HBr（反 Markovnikov）：
+
+條件：HBr + 過氧化物（ROOR，提供自由基引發劑）
+      或光照（hν）
+
+結果：反 Markovnikov 產物！
+CH₂=CH-CH₃ + HBr（ROOR）→ CH₃-CH₂-CH₂Br（1-溴丙烷）
+
+機制（鏈式反應，chain mechanism）：
+1. 引發（initiation）：ROOR → 2 RO·（加熱或光）
+                       RO· + HBr → ROH + Br·
+
+2. 傳遞（propagation）：
+   Br· + CH₂=CH-CH₃ → BrCH₂-·CH-CH₃（1° 自由基，因 Br 加到 C1）
+                                         等等 → 為什麼？
+
+   Br· 加到 CH₂=（末端 C, C1）→ 生成 2° 自由基（在 C2）→ 更穩定！
+   Br· 加到 C2 → 生成 1° 自由基（在 C1）→ 較不穩定
+
+   2° 自由基（在 C2）+ HBr → CH₃-CH₂-CH₂Br（Br 在 C1 的最終產物） + Br·
+
+3. 終止（termination）：自由基結合
+
+自由基添加 Br·：
+- Br 先加到末端（更少取代的 C）→ 生成更穩定的內部自由基
+- 然後從 HBr 奪 H → Br 最終在末端（1-溴丙烷）
+
+比較：
+- 離子機制（H⁺ 先）：Markovnikov → Br 在內部（2-溴丙烷）
+- 自由基（Br· 先）：反 Markovnikov → Br 在末端（1-溴丙烷）
+
+注意：只有 HBr 有這種「過氧化物效應」（HCl 和 HI 沒有）！
+  </div>
+
+  <!-- ===================== NBS ===================== -->
+  <h2 id="nbs">NBS 烯丙位溴化</h2>
+  <div class="reaction-scheme">
+NBS（N-溴代琥珀醯亞胺）的烯丙位溴化：
+
+條件：NBS / CCl₄ / hν（或 AIBN 引發劑）
+底物：烯烴（有烯丙位 C-H）
+
+反應：在烯丙位（allylic position）引入 Br，保留雙鍵位置
+
+CH₂=CH-CH₃ + NBS → CH₂=CH-CH₂Br（烯丙溴）
+
+機制（低 [Br₂]，自由基）：
+1. NBS 提供低濃度 Br₂ → Br· 自由基
+2. Br· 從烯丙位 C-H 奪 H（烯丙自由基最穩定）
+3. 烯丙自由基 + Br₂（NBS 分解）→ 烯丙溴 + Br·（鏈式傳遞）
+
+為什麼 NBS 而不是 Br₂（高濃度）？
+- 高 [Br₂]：離子加成到雙鍵（→ 鄰二溴）
+- 低 [Br₂]（NBS 提供）：自由基選擇性烯丙 C-H 抽取
+
+區位選擇性：
+- Br 引入到烯丙位（allylic C），雙鍵位置不變（但可能遷移！）
+- 烯丙自由基是對稱的 → 兩個可能的烯丙溴位置（Br 在雙鍵兩端）
+
+例：丁烯 + NBS → 1-溴-2-丁烯（E/Z）和 3-溴-1-丁烯（烯丙位移位）
+  </div>
+
+  <!-- ===================== ALLYLIC SUB ===================== -->
+  <h2 id="allylic-sub">烯丙基取代反應的 SN 位置</h2>
+  <div class="reaction-scheme">
+烯丙基鹵（allylic halide）的親核取代區位選擇性：
+
+底物：RCH=CH-CH₂-X（烯丙基鹵，X = Br 或 Cl）
+
+可能的 SN 位置：
+α 位（直接取代，SN2）：Nu 攻擊 CH₂-X → Nu-CH₂-CH=CH-R
+γ 位（SN2'，遠端取代）：Nu 攻擊末端 C（CH=CH-R 那端）→ X-CH₂-CH=CH-Nu
+
+選擇性決定因素：
+
+1. 一級烯丙基（primary allylic）：
+   SN2 直接取代（在較少位阻的 α-C）優先
+   但 SN2' 也可能（取決於試劑和溶劑）
+
+2. 三級烯丙基（tertiary allylic）：
+   傾向 SN1 → 烯丙基碳陽離子（兩端都可以被 Nu 攻擊）
+   → 得到 SN2 和 SN2' 混合物（平衡）
+
+3. 有機銅試劑（R₂CuLi）：
+   強烈偏好 SN2'（遠端攻擊）> 98:2 ！
+  </div>
+
+  <!-- ===================== ORGANOCUPRATE SN2 PRIME ===================== -->
+  <h2 id="organocuprate-sn2prime">有機銅試劑與 SN2'</h2>
+  <div class="reaction-scheme">
+有機銅試劑（organocuprates）與 SN2' 反應：
+
+R₂CuLi + 烯丙基親電試劑（R'-CH=CH-CH₂-X）→
+
+SN2'（遠端攻擊）>> SN2（直接）：
+→ R-CH=CH-CH₂-R'（Br 位移，R 加在遠端，雙鍵移位）
+→ > 98% SN2' 選擇性！（在某些條件 RCu/BF₃ 中更高）
+
+為什麼有機銅偏好 SN2'？
+- Cu 是「軟」的金屬（d 電子多，極化大）
+- 軟親核劑攻擊「軟」的位置（共軛末端，LUMO 係數大）
+- → 符合 HSAB 理論
+
+實際例子：
+烯丙基氯 + Me₂CuLi → 3-甲基-1-丙烯（SN2' 產物，Cl 在 1，Me 在 3）
+
+合成應用：
+烯丙基轉位（allylic transposition）+ 有機銅 → 精確控制位置
+→ 合成具有指定雙鍵位置和取代基位置的烯烴
+  </div>
+
+  <!-- ===================== CONJUGATED DIENES ===================== -->
+  <h2 id="conjugated-dienes">共軛二烯的 1,2- vs 1,4-加成</h2>
+  <div class="reaction-scheme">
+共軛二烯（conjugated diene）與親電試劑（如 HBr）的加成：
+
+1,3-丁二烯 + HBr：
+
+兩種產物：
+1,2-加成：CH₂=CH-CHBr-CH₃（3-溴-1-丁烯）
+1,4-加成：CH₃-CHBr-CH=CH₂ → CH₃-CHBr-CH=CH₂... 等等
+實際：BrCH₂-CH=CH-CH₃（1-溴-2-丁烯，1,4 產物）
+      但也 CH₂=CH-CHBr-CH₃（3-溴-1-丁烯，1,2 產物）
+
+機制：
+1. H⁺ 加到末端 C（C1）→ 烯丙基碳陽離子（在 C2/C4 共振）
+2. Br⁻ 攻擊 C2（SN2 型，直接，1,2 加成）或 C4（SN2' 型，遠端，1,4 加成）
+
+溫度控制（動力學 vs 熱力學）：
+
+低溫（-80°C，動力學控制）：
+→ 1,2-加成（3-溴-1-丁烯）優先（速率快：Br⁻ 在 C2 的活化能低）
+→ 較不穩定的產物（端基烯烴，末端雙鍵）
+
+高溫（0-40°C，熱力學控制）：
+→ 1,4-加成（1-溴-2-丁烯）優先（熱力學穩定：內部烯烴更穩定）
+→ 較穩定的產物（內部雙鍵）
+
+類比（回顧）：
+- 軟親核劑（RS⁻, R₂CuLi）+ α,β-不飽和酮 → 1,4-加成（軟攻軟，β-C）
+- 共軛二烯 + 親電試劑 → 也有 1,2 vs 1,4 競爭，溫度決定
+  </div>
+
+  <div class="box-key">
+    <strong>動力學 vs 熱力學 1,2/1,4 加成彙整</strong>
+    <table>
+      <tr><th>條件</th><th>產物</th><th>雙鍵位置</th><th>穩定性</th></tr>
+      <tr><td>低溫（-80°C）、短時間</td><td>1,2-（動力學）</td><td>末端（end）</td><td>較不穩定</td></tr>
+      <tr><td>高溫（0°C+）、長時間</td><td>1,4-（熱力學）</td><td>內部（internal）</td><td>較穩定</td></tr>
+    </table>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>第二十四章核心要點</strong>
+    <ul>
+      <li><strong>區位選擇性</strong>：決定反應在官能基中的哪個位置，由電子效應、空間效應、溫度和試劑類型控制</li>
+      <li><strong>EAS 取代基策略</strong>：磺化（可逆）用作臨時封閉基；NO₂ → NH₂ 轉換導向基，實現複雜位置的二取代苯合成</li>
+      <li><strong>鄰位鋰化</strong>：BuLi + DMG 螯合 → 高鄰位選擇性 C-H 活化，引入各種官能基</li>
+      <li><strong>萘</strong>：α 位動力學優先（EAS）；磺化可逆 → 低溫 α，高溫 β（熱力學）</li>
+      <li><strong>Markovnikov</strong>：H⁺ 先，生成更穩定碳陽離子，Bu 在更取代的 C → Markovnikov 產物</li>
+      <li><strong>反馬氏（HBr + 過氧化物）</strong>：Br· 先攻末端，生成更穩定自由基，H 來自 HBr → Br 在末端（反 Markovnikov）</li>
+      <li><strong>NBS 烯丙位溴化</strong>：低 [Br₂]，自由基，選擇性在烯丙 C-H；NBS 提供可控的 Br₂ 濃度</li>
+      <li><strong>SN2'</strong>：有機銅（R₂CuLi）強烈偏好烯丙位遠端攻擊（SN2' >> SN2）</li>
+      <li><strong>共軛二烯</strong>：低溫 → 1,2-（動力學）；高溫 → 1,4-（熱力學，更穩定的內部烯烴）</li>
+    </ul>
+  </div>
+
+  <div class="box-selftest">
+    <strong>自我測驗</strong>
+    <ol>
+      <li>如何使用磺化反應作為合成策略，在苯環的特定位置引入取代基？舉一例說明。</li>
+      <li>HBr 與丙烯的離子加成和自由基加成分別得到什麼產物？機制上有何差別？</li>
+      <li>NBS 為什麼比直接用 Br₂ 更適合烯丙位溴化？</li>
+      <li>有機銅試劑 R₂CuLi 與一級烯丙氯反應，為什麼優先得到 SN2' 產物？</li>
+      <li>1,3-丁二烯 + HBr 在 -80°C 和 +40°C 分別得到什麼主要產物？原因是什麼？</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

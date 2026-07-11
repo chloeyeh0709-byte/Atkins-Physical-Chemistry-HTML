@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十章：烯醇與烯醇酯的形成與反應</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+/* Sidebar */
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+
+/* Mobile */
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+
+/* Main */
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+
+/* Boxes */
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+
+/* Reaction schemes */
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十章<br>烯醇與烯醇酯的形成與反應</h2>
+  </div>
+  <div id="toc">
+    <a href="#tautomerism">互變異構現象</a>
+    <a href="#enolization-mechanism" class="toc-sub">烯醇化機制</a>
+    <a href="#enolate-structure" class="toc-sub">烯醇鹽結構</a>
+    <a href="#enolizable">可烯醇化的羰基</a>
+    <a href="#enolate-reactions">烯醇鹽的反應</a>
+    <a href="#stable-enols">穩定的烯醇</a>
+    <a href="#consequences">互變異構的後果</a>
+    <a href="#halogenation">鹵化反應</a>
+    <a href="#nitrosation">亞硝化反應</a>
+    <a href="#stable-enolates">穩定烯醇鹽等效物</a>
+    <a href="#enol-ethers">烯醇醚</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十章</div>
+    <h1>烯醇與烯醇酯的形成與反應</h1>
+    <div class="subtitle">Formation and Reactions of Enols and Enolates</div>
+  </div>
+
+  <!-- ===================== TAUTOMERISM ===================== -->
+  <h2 id="tautomerism">酮-烯醇互變異構現象</h2>
+  <p>羰基化合物（酮、醛）與烯醇之間可以相互轉換，稱為<strong>酮-烯醇互變異構現象</strong>（keto-enol tautomerism）。兩者並非共振結構，而是真實存在的異構體，在質子溶劑中可以快速達到平衡。</p>
+
+  <div class="box-example">
+    <strong>例：二甲酮（dimedone）的互變異構</strong>
+    <p>Dimedone（1,3-環己二酮衍生物）在 CDCl₃ 中：</p>
+    <ul>
+      <li>酮式（keto form）：67%</li>
+      <li>烯醇式（enol form）：33%</li>
+    </ul>
+    <p>1,3-二羰基化合物的烯醇含量遠高於一般酮，因為烯醇式可形成分子內氫鍵，且雙鍵與另一個羰基共軛，增加穩定性。</p>
+  </div>
+
+  <div class="box-key">
+    <strong>關鍵概念</strong>
+    <p>互變異構體（tautomers）≠ 共振結構。互變異構體是真實的分子異構體，需要斷開和形成共價鍵（通常是 O−H 鍵和 C−H 鍵），且在適當條件下可以分離。</p>
+  </div>
+
+  <h3 id="enolization-mechanism">烯醇化機制</h3>
+  <p>烯醇化（enolization）可由酸或鹼催化：</p>
+
+  <h4>酸催化烯醇化</h4>
+  <div class="reaction-scheme">
+酸催化烯醇化：
+
+   O                   OH
+   ‖                    |
+R-C-CH₂R' + H⁺ ——→ R-C-CH₂R' (共軛酸)
+                         |
+                         ↓ 去質子
+                   OH
+                    |
+              R-C=CHR'   (烯醇)
+
+步驟：
+1. 質子先加到 O 上 → 形成氧陽離子（oxonium ion）
+2. 再從 α-C 失去質子 → 烯醇
+
+關鍵：先質子化 O，再去質子化 C
+  </div>
+
+  <h4>鹼催化烯醇化</h4>
+  <div class="reaction-scheme">
+鹼催化烯醇化：
+
+   O                    ⊖O
+   ‖                     |
+R-C-CH₂R' + B: ——→ R-C=CHR'  +  BH
+
+步驟：
+1. 鹼從 α-C 奪取質子 → 形成烯醇鹽陰離子（enolate ion）
+2. 烯醇鹽質子化 → 烯醇
+
+關鍵：鹼從 α-C 移除質子，生成烯醇鹽
+  </div>
+
+  <div class="box-note">
+    <strong>注意</strong>
+    <p>α-碳（α-carbon）指緊鄰羰基碳的碳原子。α-C 上的氫稱為 α-氫，因鄰近羰基的電子吸引效應，具有較高酸性（pKa ≈ 20，遠低於一般烷烴 pKa ≈ 50）。</p>
+  </div>
+
+  <!-- ===================== ENOLATE STRUCTURE ===================== -->
+  <h2 id="enolate-structure">烯醇鹽離子的結構</h2>
+  <p>烯醇鹽（enolate ion）是一個三原子四電子的離域系統：</p>
+
+  <div class="reaction-scheme">
+烯醇鹽的共振結構：
+
+      ⊖O                    O⊖
+       |                     ‖
+  R-C=CH-R'   ←——→   R-C-CH:-R'
+
+  氧上帶負電荷的共振式   碳上帶負電荷的共振式
+  (主要共振式)           (次要共振式)
+
+電荷分布：負電荷主要在 O 上
+HOMO（最高占有分子軌道）：主要在 C 上
+
+→ 烯醇鹽是兩可親核劑（ambident nucleophile）：
+  可從 O 或 C 進行親核反應
+  </div>
+
+  <div class="box-key">
+    <strong>關鍵概念：兩可親核劑</strong>
+    <p>烯醇鹽既可從 <strong>O（氧端）</strong> 反應，也可從 <strong>C（碳端）</strong> 反應：</p>
+    <ul>
+      <li><strong>O-烷基化</strong>：從 O 攻擊親電試劑 → 生成烯醇醚（vinyl ether）</li>
+      <li><strong>C-烷基化</strong>：從 C 攻擊親電試劑 → 在 α-C 引入取代基</li>
+      <li><strong>O-醯化</strong>：從 O 攻擊醯氯 → 生成烯醇酯（enol ester）</li>
+    </ul>
+  </div>
+
+  <!-- ===================== ENOLIZABLE ===================== -->
+  <h2 id="enolizable">可烯醇化的羰基化合物</h2>
+  <p>並非所有羰基化合物都能被烯醇化：</p>
+
+  <table>
+    <tr><th>化合物</th><th>是否可烯醇化</th><th>原因</th></tr>
+    <tr><td>酮（ketone）</td><td>✓ 可</td><td>有 α-H，pKa ≈ 20</td></tr>
+    <tr><td>醛（aldehyde）</td><td>✓ 可</td><td>有 α-H，pKa ≈ 17</td></tr>
+    <tr><td>酯（ester）</td><td>✓ 可</td><td>有 α-H，pKa ≈ 25</td></tr>
+    <tr><td>醯氯（acyl chloride）</td><td>✓ 可</td><td>有 α-H</td></tr>
+    <tr><td>羧酸（carboxylic acid）</td><td>✗ 否</td><td>優先形成羧酸根（carboxylate），pKa ≈ 5</td></tr>
+    <tr><td>醯胺（amide）</td><td>✗ 否（通常）</td><td>優先去除 N-H（更酸，pKa ≈ 25）</td></tr>
+  </table>
+
+  <div class="box-note">
+    <strong>注意</strong>
+    <p>羧酸在鹼性條件下，O-H（pKa ≈ 5）遠比 α-C-H（pKa ≈ 30+）酸，因此鹼會優先奪取 O-H 形成羧酸根，而不會烯醇化 α-C。醯胺中 N-H 也比 α-C-H 酸（N-H pKa ≈ 25，C-H pKa ≈ 30+），故優先去除 N-H。</p>
+  </div>
+
+  <!-- ===================== ENOLATE REACTIONS ===================== -->
+  <h2 id="enolate-reactions">烯醇鹽的反應</h2>
+  <p>烯醇鹽從 C 端進行親核反應是有機化學中建立 C-C 鍵的重要方法。</p>
+
+  <h3>與醯氯反應：O-醯化 → 烯醇酯</h3>
+  <div class="reaction-scheme">
+烯醇鹽 + 醯氯 → 烯醇酯（O-醯化）：
+
+   ⊖O                  O   O
+    |                   ‖   ‖
+R-C=CH-R' + R''COCl → R-C-CH-C-R''
+                           |
+                           (O-acylation product)
+
+烯醇酯（enol ester）的用途：
+- 在有機合成中作為活化的醯基供體
+- 可進一步水解或轉酯化
+  </div>
+
+  <h3>與烷基鹵化物反應：C-烷基化</h3>
+  <div class="reaction-scheme">
+烯醇鹽 + 烷基鹵 → α-烷基化產物（C-烷基化）：
+
+   ⊖O                    O
+    |                     ‖
+R-C=CH-R' + R''-X → R-C-CH(R')-R''
+                        ↑
+                    α-碳上引入 R'' 基
+
+這是建立 C-C 鍵的重要反應！
+條件：強鹼（LDA）在 -78°C，確保完全去質子化
+  </div>
+
+  <!-- ===================== STABLE ENOLS ===================== -->
+  <h2 id="stable-enols">穩定的烯醇</h2>
+  <p>大多數烯醇在室溫下不穩定，會迅速轉換回酮式。但在某些特殊情況下，烯醇可以穩定存在：</p>
+
+  <h3>動力學穩定的烯醇</h3>
+  <div class="box-example">
+    <strong>例：乙烯醇（vinyl alcohol）</strong>
+    <p>乙烯醇（CH₂=CHOH）在 900°C 下可以氣態存在（動力學穩定），在常溫溶液中壽命極短，迅速轉換為乙醛（ΔG° ≈ -40 kJ/mol 有利於酮式）。</p>
+  </div>
+
+  <h3>熱力學穩定的烯醇</h3>
+  <p><strong>1,3-二羰基化合物</strong>（如乙醯丙酮 acetylacetone、dimedone）的烯醇式因兩個因素而穩定：</p>
+  <ul>
+    <li><strong>分子內氫鍵</strong>：烯醇 O-H 與另一羰基 C=O 形成六元環氫鍵</li>
+    <li><strong>共軛</strong>：C=C-C=O 共軛體系使能量降低</li>
+  </ul>
+
+  <div class="reaction-scheme">
+乙醯丙酮的烯醇式（含分子內氫鍵）：
+
+  O   OH      O
+  ‖    |       ‖
+H₃C-C-CH=C-CH₃
+         ↕
+     分子內氫鍵（六元環）
+
+烯醇含量：約 80%（CDCl₃ 中）
+
+其他穩定烯醇：
+- 維生素 C（烯二醇）
+- 苯酚（完全芳香化的烯醇，非常穩定）
+  </div>
+
+  <!-- ===================== CONSEQUENCES ===================== -->
+  <h2 id="consequences">互變異構現象的化學後果</h2>
+
+  <h3>雙鍵遷移至共軛位置</h3>
+  <div class="reaction-scheme">
+γ-質子化導致雙鍵遷移：
+
+   O                  O
+   ‖                   ‖
+R-CH=CH-CH₂-R' → R-CH₂-CH=CH-R'
+  （α,β-不飽和酮）   （β,γ-不飽和酮 → 遷移到共軛位置）
+
+鹼催化下，γ-H 被奪去 → 烯醇鹽 → 質子化 → 雙鍵移至 α,β 位（共軛位置更穩定）
+  </div>
+
+  <h3>消旋化（Racemization）</h3>
+  <div class="box-example">
+    <strong>例：布洛芬（Ibuprofen）的體內消旋化</strong>
+    <p>布洛芬含有一個 α-C 手性中心（相鄰於羧基）。在體內酵素催化下，S-布洛芬（無活性）可通過烯醇中間體轉換為 R-布洛芬（活性）。這是一個有治療意義的體內消旋化過程。</p>
+  </div>
+
+  <!-- ===================== HALOGENATION ===================== -->
+  <h2 id="halogenation">羰基化合物的鹵化反應</h2>
+  <p>酮的 α-C 可發生鹵化反應，反應條件不同，產物也不同：</p>
+
+  <h3>酸催化鹵化（單鹵化）</h3>
+  <div class="reaction-scheme">
+酸催化鹵化 → 單鹵化（在更取代的 α-C）：
+
+  O               O
+  ‖               ‖
+CH₃-C-CH₃ + Br₂/H⁺ → CH₃-C-CH₂Br + HBr
+
+機制：
+1. 酸催化烯醇化（慢，RDS）
+2. 烯醇攻擊 Br₂（快）
+
+→ 產物一旦形成，不再進一步反應（因為 α-溴酮的烯醇化比原料慢）
+→ 導向更取代的 α-C（因較取代的烯醇更穩定）
+  </div>
+
+  <h3>鹼催化鹵化（多鹵化 + 鹵仿反應）</h3>
+  <div class="reaction-scheme">
+鹼催化鹵化 → 多鹵化 → 鹵仿反應：
+
+  O               O                    O
+  ‖               ‖                    ‖
+CH₃-C-CH₃ + Br₂/OH⁻ → CH₃-C-CBr₃ → CH₃-C-O⁻ + CHBr₃
+                                        溴仿（bromoform）
+
+機制：
+1. OH⁻ 烯醇化 → 烯醇鹽
+2. Br₂ 鹵化 → α-溴酮（更易被去質子，因 Br 是 EW 基）
+3. 重複 → 三鹵化物
+4. OH⁻ 進攻三鹵化物 → 四面體中間體 → CX₃⁻ 離去 → 鹵仿
+
+碘仿反應（iodoform test）：用 I₂/NaOH 鑑別甲基酮 → CHI₃（黃色沉澱）
+  </div>
+
+  <!-- ===================== NITROSATION ===================== -->
+  <h2 id="nitrosation">亞硝化反應</h2>
+  <div class="reaction-scheme">
+α-亞硝化反應（α-Nitrosation）：
+
+  O              O              O              O
+  ‖              ‖              ‖              ‖
+CH₃-C-R → NaNO₂/HCl → CH₃-C-CH(NO)-R → 水解 → CH₃-C-CO-R
+                         亞硝基酮          二酮
+                         (可轉換為肟 oxime)
+
+步驟：
+1. NaNO₂ + HCl → HNO₂（亞硝酸）
+2. 酮烯醇化 → 烯醇攻擊 NO⁺
+3. 得到 α-亞硝基酮 → 互變為肟（oxime，-C=N-OH）
+4. 酸水解 → α-二酮（α-diketone）
+  </div>
+
+  <!-- ===================== STABLE ENOLATES ===================== -->
+  <h2 id="stable-enolates">穩定烯醇鹽的等效物</h2>
+  <p>有機合成中，常需要生成特定的烯醇鹽（動力學 vs 熱力學），這需要特殊試劑：</p>
+
+  <h3>鋰烯醇鹽（Lithium Enolates）：LDA 法</h3>
+  <div class="reaction-scheme">
+使用 LDA（二異丙基醯胺鋰）生成動力學烯醇鹽：
+
+  O                     OLi
+  ‖                      |
+R-C-CH₂R' + LDA, -78°C → R-C=CHR'
+                          動力學烯醇鹽
+                        （less substituted / kinetic）
+
+LDA 的特點：
+- 強鹼（pKa ≈ 36），可完全去質子化酮（pKa ≈ 20）
+- 空間位阻大（兩個異丙基），不進行親核反應
+- 低溫（-78°C）：避免熱力學平衡 → 動力學控制
+- 生成動力學（less substituted）烯醇鹽
+
+比較：
+- NaH / KOtBu：熱力學烯醇鹽（more substituted）
+- LDA / -78°C：動力學烯醇鹽（less substituted）
+  </div>
+
+  <h3>矽基烯醇醚（Silyl Enol Ethers，TMS 烯醇醚）</h3>
+  <div class="reaction-scheme">
+製備矽基烯醇醚（穩定的烯醇等效物）：
+
+  O                      OTMS
+  ‖          TMS-Cl        |
+R-C-CH₂R' + 弱鹼（Et₃N）→ R-C=CHR'
+                         矽基烯醇醚（silyl enol ether）
+
+特點：
+- TMS = trimethylsilyl，-Si(CH₃)₃
+- 穩定存在（不像烯醇鹽在溶液中不穩定）
+- 可分離、儲存
+- 水解（酸性條件）→ 酮
+
+用途：
+- 保護特定的烯醇鹽位置
+- 作為合成等效物（後續在 Lewis 酸存在下反應）
+  </div>
+
+  <div class="box-key">
+    <strong>動力學 vs 熱力學烯醇鹽</strong>
+    <table>
+      <tr><th>條件</th><th>生成</th><th>特點</th></tr>
+      <tr><td>強鹼（LDA）, 低溫, 無平衡</td><td>動力學烯醇鹽</td><td>在較不取代的 α-C（去質子較快）</td></tr>
+      <tr><td>弱鹼, 高溫, 平衡條件</td><td>熱力學烯醇鹽</td><td>在較多取代的 α-C（較穩定）</td></tr>
+    </table>
+  </div>
+
+  <!-- ===================== ENOL ETHERS ===================== -->
+  <h2 id="enol-ethers">烯醇醚（Enol Ethers）</h2>
+  <p>烯醇醚（vinyl ether）是烯醇的醚衍生物（O-烷基烯醇），可作為穩定的烯醇等效物。</p>
+
+  <h3>烯醇醚的製備</h3>
+  <div class="reaction-scheme">
+烯醇醚的製備：
+
+1. 醇 + 乙烯乙炔（acid 催化 transetherification）
+2. 醛/酮 + 醇 + TsOH → 縮醛（acetal，非烯醇醚）
+3. 烯醇鹽 + 烷基鹵（O-烷基化） → 烯醇醚
+  </div>
+
+  <h3>烯醇醚的水解（酸催化）</h3>
+  <div class="reaction-scheme">
+烯醇醚的酸催化水解：
+
+  OMe              O⊕Me            O
+   |                |               ‖
+R-C=CHR' + H⁺ → R-C-CH₂R' → R-C-CH₂R' + MeOH
+                    氧鎓離子
+                  (oxonium ion)
+
+機制：
+1. 雙鍵質子化 → 氧鎓離子（帶正電 O）
+2. 水分子攻擊 C（親核加成）
+3. 失去 MeOH → 得到半縮醛中間體
+4. 失去 MeOH（酸催化）→ 最終羰基化合物
+
+重要規則：雙鍵質子化遵循馬氏規則 → 質子加在雙鍵含 H 較多的 C 上（生成更穩定的碳陽離子）
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>第二十章核心要點</strong>
+    <ul>
+      <li><strong>酮-烯醇互變</strong>：可逆，需斷裂/形成 C-H 與 O-H 鍵；互變異構體 ≠ 共振結構</li>
+      <li><strong>烯醇化機制</strong>：酸催化（先質子化 O），鹼催化（先去質子化 α-C）</li>
+      <li><strong>烯醇鹽結構</strong>：3 原子 4 電子離域，O 上帶負電為主；HOMO 在 C，因此 C-烷基化動力學上優先</li>
+      <li><strong>可烯醇化</strong>：酮、醛、酯、醯氯；羧酸和醯胺因其他位置更酸而不易烯醇化</li>
+      <li><strong>穩定烯醇</strong>：1,3-二羰基化合物（分子內氫鍵 + 共軛）、苯酚（芳香性）</li>
+      <li><strong>鹵化</strong>：酸性條件 → 單鹵化；鹼性條件 → 多鹵化 → 鹵仿反應</li>
+      <li><strong>LDA 法</strong>：強鹼 + 低溫 → 動力學烯醇鹽（less substituted）</li>
+      <li><strong>矽基烯醇醚</strong>：穩定的烯醇等效物，酸催化水解可還原</li>
+      <li><strong>烯醇醚水解</strong>：酸催化，經氧鎓離子中間體，得到酮和醇</li>
+    </ul>
+  </div>
+
+  <div class="box-selftest">
+    <strong>自我測驗</strong>
+    <ol>
+      <li>為什麼乙醯丙酮的烯醇含量（80%）遠高於丙酮（< 0.01%）？</li>
+      <li>LDA 在 -78°C 生成的烯醇鹽是動力學還是熱力學的？差別在哪裡？</li>
+      <li>鹵仿反應的條件是什麼？能用它鑑別甲基酮嗎？</li>
+      <li>矽基烯醇醚的合成條件和水解條件各是什麼？</li>
+      <li>烯醇鹽是兩可親核劑，在什麼條件下分別以 O 端或 C 端進行反應？</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

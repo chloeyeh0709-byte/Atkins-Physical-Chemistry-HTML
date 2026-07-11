@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十一章：親電芳香取代</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;}
+@media(max-width:900px){#menu-btn{display:block;}#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0!important;}}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:16px 20px;margin:1.4em 0;}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{background:#1e2228;color:#d4e0c8;border-radius:8px;padding:20px 24px;margin:1.4em 0;font-family:'Courier New',Courier,monospace;font-size:.88rem;line-height:1.7;overflow-x:auto;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十一章<br>親電芳香取代</h2>
+  </div>
+  <div id="toc">
+    <a href="#benzene-structure">苯的結構</a>
+    <a href="#eas-mechanism">EAS 通用機制</a>
+    <a href="#nitration">硝化反應</a>
+    <a href="#sulfonation">磺化反應</a>
+    <a href="#friedel-crafts">Friedel-Crafts 反應</a>
+    <a href="#activating-od">活化基：OH 與 NH₂</a>
+    <a href="#alkyl-directing">烷基苯</a>
+    <a href="#deactivating-ew">去活化基：EW 基</a>
+    <a href="#halogens">鹵素取代基</a>
+    <a href="#rates-table">相對速率表</a>
+    <a href="#ortho-para-ratio">鄰位與對位的比例</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十一章</div>
+    <h1>親電芳香取代</h1>
+    <div class="subtitle">Electrophilic Aromatic Substitution (EAS)</div>
+  </div>
+
+  <!-- ===================== BENZENE STRUCTURE ===================== -->
+  <h2 id="benzene-structure">苯的結構與芳香性</h2>
+  <p>苯（benzene, C₆H₆）是所有 EAS 反應的基礎底物。理解其結構是理解 EAS 機制的前提。</p>
+
+  <div class="reaction-scheme">
+苯的關鍵特徵：
+
+1. 所有 C-C 鍵等長：1.39 Å（介於 C-C 1.54 Å 和 C=C 1.34 Å 之間）
+2. 六個 H 全部等效（¹H NMR: δ 7.2，低場，芳環電流效應）
+3. 平面型分子，所有 C 為 sp²
+4. 環狀共軛（6π 電子）→ 芳香性（Hückel 規則：4n+2 π 電子，n=1）
+5. 芳環去電子化比烯烴困難 → 苯傾向「保留芳香性」→ 取代而非加成
+
+苯的氘交換（deuterium exchange）：
+PhH + D₂SO₄ → PhD + HDSO₄（快速，確認苯可被質子化）
+苯酚在鹼性條件下氘交換更快（→ 說明 EAS 是可逆的 σ-complex 步驟）
+  </div>
+
+  <!-- ===================== EAS MECHANISM ===================== -->
+  <h2 id="eas-mechanism">EAS 通用機制</h2>
+  <p>親電芳香取代（EAS）的通用機制分兩步：</p>
+
+  <div class="reaction-scheme">
+EAS 通用機制：
+
+步驟 1：親電試劑（E⁺）攻擊苯環 → 形成 σ-錯合物（arenium ion）
+         （速率決定步驟 = 速率限制步驟，RDS）
+
+   H  E
+    \ /
+  [苯環]⁺   ← arenium ion（Wheland intermediate）
+             sp³ 碳，非芳香，正電荷分散到三個 C
+
+步驟 2：鹼（通常為共軛鹼 A⁻）奪取 H → 恢復芳香性
+
+總反應：ArH + E⁺ → ArE + H⁺
+
+特點：
+- 速率決定步驟 = E⁺ 進攻 → 形成 arenium ion
+- 第二步快（芳香性恢復作為驅動力）
+- 取代（不是加成）：保留苯的芳香性
+  </div>
+
+  <div class="box-key">
+    <strong>關鍵：arenium ion（Wheland 中間體）</strong>
+    <ul>
+      <li>sp³ 碳（帶 H 和 E 的碳）</li>
+      <li>非芳香（不再是平面六元共軛環）</li>
+      <li>正電荷離域到環上 3 個碳（1,3,5 位相對於 sp³ 碳）</li>
+      <li>穩定性由中間體能量決定 → 取代基效應透過中間體穩定性解釋</li>
+    </ul>
+  </div>
+
+  <!-- ===================== NITRATION ===================== -->
+  <h2 id="nitration">硝化反應（Nitration）</h2>
+  <div class="reaction-scheme">
+苯的硝化反應：
+
+PhH + HNO₃/H₂SO₄（混酸）→ PhNO₂ + H₂O
+
+親電試劑的生成：
+HNO₃ + H₂SO₄ → NO₂⁺ + HSO₄⁻ + H₂O
+                 硝醯陽離子（nitronium ion）
+
+NO₂⁺ 的特徵：
+- 線形分子，N 帶正電
+- 強親電試劑
+- 由混酸（HNO₃ + H₂SO₄）生成
+
+反應過程：
+苯 + NO₂⁺ → arenium ion（正電荷離域）→ -H⁺ → 硝基苯
+
+用途：
+- 苯 → 硝基苯（工業 → 還原 → 苯胺 → 染料、藥物）
+- 硝基苯 + HNO₃/H₂SO₄（更強，加熱）→ 間-二硝基苯（NO₂ 為間位導向）
+  </div>
+
+  <!-- ===================== SULFONATION ===================== -->
+  <h2 id="sulfonation">磺化反應（Sulfonation）</h2>
+  <div class="reaction-scheme">
+苯的磺化反應：
+
+PhH + SO₃/H₂SO₄（發煙硫酸）→ PhSO₃H（苯磺酸）
+
+親電試劑：SO₃ 或 H₂S₂O₇ 中的 SO₃H⁺
+
+重要特點：
+1. 磺化反應是可逆的（reversible）！
+   PhSO₃H + H₂O → PhH + H₂SO₄（在稀酸、高溫下）
+
+2. 可利用磺化的可逆性：
+   - 先磺化 → 佔據某位置（保護）
+   - 進行其他 EAS 取代
+   - 去磺化（去除磺基）→ 恢復 H
+
+這讓磺基成為「臨時」取代基，用於區域選擇性合成！
+  </div>
+
+  <!-- ===================== FRIEDEL-CRAFTS ===================== -->
+  <h2 id="friedel-crafts">Friedel-Crafts 反應</h2>
+
+  <h3>Friedel-Crafts 烷基化（Alkylation）</h3>
+  <div class="reaction-scheme">
+Friedel-Crafts 烷基化：
+
+PhH + R-Cl + AlCl₃ → Ph-R + HCl + AlCl₃（再生）
+
+親電試劑的生成：
+R-Cl + AlCl₃ → R⁺ + AlCl₄⁻（碳陽離子）
+
+問題：
+1. 碳陽離子重排（rearrangement）：
+   n-PrCl + AlCl₃ → 正丙基碳陽離子 → (1,2-H 遷移) → 異丙基碳陽離子
+   → 主要得到異丙基苯（不是正丙基苯）
+
+2. 多烷基化（polyalkylation）：
+   Ph-R 比苯更活化（烷基 = 活化基）→ 繼續被烷基化
+
+用 t-BuCl 可避免重排（叔丁基陽離子本已是最穩定）
+  </div>
+
+  <h3>Friedel-Crafts 醯化（Acylation）</h3>
+  <div class="reaction-scheme">
+Friedel-Crafts 醯化：
+
+PhH + R-COCl + AlCl₃ → Ph-CO-R（芳酮）+ HCl
+
+親電試劑的生成：
+R-COCl + AlCl₃ → [R-C≡O]⁺ + AlCl₄⁻（醯陽離子，acylium ion）
+
+優點（相比烷基化）：
+1. 醯陽離子不重排（sp 碳，沒有遷移途徑）
+2. 不發生多醯化（苯酮比苯更去活化，因 C=O 是 EW 基）
+→ 乾淨地得到單醯化產物！
+
+醯基的還原：
+Ar-CO-R → Ar-CH₂-R
+方法：Clemmensen（Zn/HCl）或 Wolff-Kishner（NH₂NH₂/KOH）
+→ 結合 F-C 醯化 + 還原，可間接引入烷基（避免重排）
+  </div>
+
+  <!-- ===================== ACTIVATING GROUPS ===================== -->
+  <h2 id="activating-od">活化基：羥基（OH）與胺基（NH₂）</h2>
+  <p>羥基和胺基是強活化、鄰/對位導向基。</p>
+
+  <h3>苯酚（Phenol）的 EAS</h3>
+  <div class="reaction-scheme">
+苯酚的活化與方向性：
+
+- OH 是強活化基（鄰/對位導向）
+- 機制：O 的孤對電子直接共振供電到鄰位和對位 → 穩定 arenium ion
+
+   OH        OH        OH
+    |    →    |    →    |
+  [苯]   鄰位鹵化  對位鹵化
+
+苯酚 + Br₂（不需要 AlCl₃！）→ 2,4,6-三溴苯酚（+ 3 HBr）
+
+原因：苯酚已高度活化，Br₂ 本身即足夠強的親電試劑
+
+控制在單溴化：
+苯酚 + 1 eq Br₂（低溫，CCl₄）→ 4-溴苯酚（對位，85%）+ 2-溴苯酚（15%）
+→ 低溫下動力學控制 → 主要得到對位（對位更穩定的 arenium ion）
+
+反應箭頭的起點：由 O 的孤對電子出發！（不是從苯環 π 電子出發）
+  </div>
+
+  <h3>苯胺（Aniline）的 EAS</h3>
+  <div class="reaction-scheme">
+苯胺的反應性：
+
+- NH₂ 比 OH 更強的活化基（N 的電負性比 O 小，孤對電子更易供電）
+- 苯胺的活化程度 > 苯酚
+
+問題：胺基太活化，可能過度反應
+
+解決：先乙醯化（acetylation）→ 醯胺（amide）→ 適度降低活化程度
+PhNH₂ + Ac₂O → PhNHCOCH₃（acetanilide）
+→ EAS 反應（更溫和，主要對位）
+→ 水解 → PhNH₂（恢復）
+
+苯胺 + Br₂/H₂O → 2,4,6-三溴苯胺（直接反應，過度溴化）
+乙醯苯胺 + 1 eq Br₂ → 4-溴乙醯苯胺（主要對位，84%）
+  </div>
+
+  <!-- ===================== ALKYL DIRECTING ===================== -->
+  <h2 id="alkyl-directing">烷基苯（甲苯等）的 EAS</h2>
+  <div class="reaction-scheme">
+烷基苯的活化與方向性：
+
+甲苯（toluene）：
+- CH₃ 是活化基（鄰/對位導向）
+- 機制：CH₃ 的超共軛（hyperconjugation，σ-共軛）
+- 甲苯 EAS 速率 ≈ 苯的 25 倍（在硝化中）
+
+甲苯 + HNO₃/H₂SO₄ → 鄰-硝基甲苯（58%) + 對-硝基甲苯（38%) + 間-硝基甲苯（4%)
+（鄰位 + 對位共佔 96%）
+
+為何甲基是鄰/對位導向？
+CH₃ → σ-共軛（超共軛）或誘導效應 → 在鄰位和對位 arenium ion 中，正電荷可傳遞到 CH₃，使中間體更穩定
+→ 間位 arenium ion 沒有這個優勢，能量較高
+  </div>
+
+  <!-- ===================== DEACTIVATING EW GROUPS ===================== -->
+  <h2 id="deactivating-ew">去活化基：吸電子基（EW groups）</h2>
+  <div class="reaction-scheme">
+吸電子基 → 間位導向 + 去活化：
+
+典型 EW 基：-NO₂, -CF₃, -COR, -SO₃H, -NMe₃⁺, -CN
+
+原因：
+- EW 基使苯環電子密度降低（去活化，比苯慢）
+- EW 基在鄰位/對位 arenium ion 中，正電荷與 EW 基直接相鄰 → 不穩定
+- 間位 arenium ion 中，正電荷不與 EW 基直接相鄰 → 相對穩定
+
+→ 生成間位產物（meta product）
+
+硝基苯 + HNO₃/H₂SO₄（更強條件）→ 間-二硝基苯（92%）
+
+EW 基的不同程度：
+完全去活化（鄰/對位產物幾乎無）：-NO₂, -NR₃⁺, -CF₃
+部分去活化：-COR, -CN, -SO₃H（仍主要得間位，但可能有少量鄰/對位）
+  </div>
+
+  <!-- ===================== HALOGENS ===================== -->
+  <h2 id="halogens">鹵素取代基的雙重性格</h2>
+  <div class="reaction-scheme">
+鹵素（F, Cl, Br, I）的特殊性：
+
+→ 鄰/對位導向（指向性：透過共振供電）
+→ 去活化（速率：比苯慢，因誘導吸電子效應）
+
+這是一個矛盾的組合！原因如下：
+
+1. 誘導效應（induction）：X 電負性強 → 透過 σ-鍵從苯環拉電子 → 去活化
+2. 共振效應（resonance）：X 孤對電子 → 透過 π-共軛供電到苯環 → 鄰/對位 arenium ion 更穩定
+
+最終結果：
+- 去活化（比苯慢）：誘導效應主導
+- 鄰/對位導向：共振效應主導方向性
+
+硝化相對速率（以苯 = 1）：
+PhF = 0.18（次活化）
+PhCl = 0.064（去活化）
+PhBr = 0.060（去活化）
+PhI = 0.12（輕微去活化）
+
+→ F 的誘導吸電子最強（最小原子，σ-鍵最有效）
+→ 但 F 的共振供電也最強（最小，p 軌道最有效重疊）
+→ 淨效果：F 是最弱的去活化鹵素
+  </div>
+
+  <!-- ===================== RATES TABLE ===================== -->
+  <h2 id="rates-table">EAS 取代基效應彙整</h2>
+
+  <table>
+    <tr><th>取代基</th><th>電子效應</th><th>方向性</th><th>活化/去活化</th></tr>
+    <tr><td>-OH, -OR</td><td>共振供電（O 孤對）</td><td>鄰/對位</td><td>強活化</td></tr>
+    <tr><td>-NH₂, -NR₂</td><td>共振供電（N 孤對）</td><td>鄰/對位</td><td>最強活化</td></tr>
+    <tr><td>-alkyl（甲基等）</td><td>超共軛/誘導供電</td><td>鄰/對位</td><td>活化（弱）</td></tr>
+    <tr><td>-F</td><td>誘導吸電 > 共振供電</td><td>鄰/對位</td><td>輕微去活化</td></tr>
+    <tr><td>-Cl, -Br, -I</td><td>誘導吸電 > 共振供電</td><td>鄰/對位</td><td>去活化</td></tr>
+    <tr><td>-NO₂, -CF₃, -NR₃⁺</td><td>強誘導 + 無共振供電</td><td>間位</td><td>強去活化</td></tr>
+    <tr><td>-COR, -CHO, -CO₂R</td><td>共振吸電</td><td>間位</td><td>去活化</td></tr>
+  </table>
+
+  <!-- ===================== ORTHO PARA RATIO ===================== -->
+  <h2 id="ortho-para-ratio">鄰位 vs 對位比例</h2>
+  <p>鄰/對位導向基通常同時生成鄰位和對位產物，但比例受到多種因素影響：</p>
+
+  <div class="reaction-scheme">
+影響鄰/對位比例的因素：
+
+1. 空間效應（steric effect）：
+   - 取代基越大 → 鄰位空間位阻越大 → 更多對位產物
+   - 例：苯甲醚（PhOMe）+ HNO₃ → 鄰（30%) + 對（70%)
+
+2. 誘導效應（induction）：
+   - O 和 N 的誘導吸電效應在鄰位稍強 → 使鄰位 arenium ion 略不穩定
+   - → 偏向對位
+
+3. 電子效應（對位 vs 鄰位）：
+   - 對位通常比鄰位稍多（更穩定）
+   - 但實際比例因底物和親電試劑而異
+
+乙醯苯胺 + Br₂ → 84% 對位，只有 10% 鄰位（4% 間位）
+說明：大體積 NHCOMe + 稀酸條件 → 幾乎完全對位
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>第二十一章核心要點</strong>
+    <ul>
+      <li><strong>苯的特性</strong>：所有 C-C 等長（1.39 Å），6π 芳香，¹H NMR δ 7.2（環電流）</li>
+      <li><strong>EAS 機制</strong>：E⁺ → arenium ion（RDS）→ -H⁺ → 恢復芳香性；是取代，不是加成</li>
+      <li><strong>硝化</strong>：NO₂⁺ 由 HNO₃/H₂SO₄ 混酸生成</li>
+      <li><strong>磺化</strong>：可逆！可用作臨時保護基</li>
+      <li><strong>F-C 烷基化</strong>：有碳陽離子重排風險；F-C 醯化更乾淨（醯陽離子不重排，不多醯化）</li>
+      <li><strong>OH, NH₂</strong>：強活化，鄰/對位導向（共振供電），苯酚不需 Lewis 酸即可溴化</li>
+      <li><strong>烷基</strong>：弱活化，鄰/對位導向（超共軛）</li>
+      <li><strong>NO₂, CF₃, NR₃⁺</strong>：強去活化，間位導向（吸電子使鄰/對位 arenium ion 不穩定）</li>
+      <li><strong>鹵素</strong>：去活化（誘導效應主導），但鄰/對位導向（共振效應主導方向）</li>
+      <li><strong>鄰/對位比例</strong>：受空間效應（取代基大 → 對位多）和電子效應影響</li>
+    </ul>
+  </div>
+
+  <div class="box-selftest">
+    <strong>自我測驗</strong>
+    <ol>
+      <li>為什麼 EAS 是取代反應而不是加成反應？驅動力是什麼？</li>
+      <li>苯酚在 CCl₄ 溶劑中與 1 mol Br₂ 反應，主要產物是什麼？為什麼不需要 AlCl₃？</li>
+      <li>F-C 烷基化和 F-C 醯化相比，醯化有什麼優點？</li>
+      <li>為什麼鹵素是去活化基但同時是鄰/對位導向基？</li>
+      <li>說明用磺化做「封閉基團」的策略，以合成 1,2,3-三取代苯。</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

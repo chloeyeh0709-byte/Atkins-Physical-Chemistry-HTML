@@ -48,6 +48,11 @@ const files = [
   'organic/chapters/17_消除反應.html',
   'organic/chapters/18_光譜學方法複習.html',
   'organic/chapters/19_親電加成至烯烴.html',
+  'organic/chapters/20_烯醇與烯醇酯的形成與反應.html',
+  'organic/chapters/21_親電芳香取代.html',
+  'organic/chapters/22_共軛加成與親核芳香取代.html',
+  'organic/chapters/23_化學選擇性與保護基.html',
+  'organic/chapters/24_區位選擇性.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

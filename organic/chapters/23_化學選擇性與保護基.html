@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十三章：化學選擇性與保護基</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{position:fixed;top:0;left:0;height:100vh;width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;}
+@media(max-width:900px){#menu-btn{display:block;}#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0!important;}}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:16px 20px;margin:1.4em 0;}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{background:#1e2228;color:#d4e0c8;border-radius:8px;padding:20px 24px;margin:1.4em 0;font-family:'Courier New',Courier,monospace;font-size:.88rem;line-height:1.7;overflow-x:auto;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十三章<br>化學選擇性與保護基</h2>
+  </div>
+  <div id="toc">
+    <a href="#selectivity-intro">選擇性的概念</a>
+    <a href="#carbonyl-reactivity">羰基的反應性順序</a>
+    <a href="#nabh4">NaBH₄ 的選擇性還原</a>
+    <a href="#lialh4">LiAlH₄ 的還原</a>
+    <a href="#bh3">BH₃ 的還原</a>
+    <a href="#dibal">DIBAL 的還原</a>
+    <a href="#reducing-agents">還原劑比較表</a>
+    <a href="#hydrogenation">催化氫化</a>
+    <a href="#lindlar">Lindlar 催化劑</a>
+    <a href="#birch">Birch 還原</a>
+    <a href="#aldehyde-synthesis">醛的合成</a>
+    <a href="#deoxygenation">去氧反應</a>
+    <a href="#oxidation">氧化反應</a>
+    <a href="#chemosel-kinetic">動力學與熱力學化學選擇性</a>
+    <a href="#protecting-groups">保護基策略</a>
+    <a href="#dianion">二價陰離子</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十三章</div>
+    <h1>化學選擇性與保護基</h1>
+    <div class="subtitle">Chemoselectivity and Protecting Groups</div>
+  </div>
+
+  <!-- ===================== SELECTIVITY INTRO ===================== -->
+  <h2 id="selectivity-intro">選擇性的概念</h2>
+  <p>有機合成中，選擇性（selectivity）是核心挑戰：當分子含有多個官能基時，如何讓試劑只與所需官能基反應？</p>
+
+  <div class="box-key">
+    <strong>三種選擇性</strong>
+    <ul>
+      <li><strong>化學選擇性（Chemoselectivity）</strong>：哪個官能基反應（例如：只還原酮，不還原酯）</li>
+      <li><strong>區位選擇性（Regioselectivity）</strong>：在同一官能基中哪個位置反應（例如：Markovnikov vs 反 Markovnikov）</li>
+      <li><strong>立體選擇性（Stereoselectivity）</strong>：生成哪個立體異構體（syn vs anti，R vs S）</li>
+    </ul>
+    <p>本章專注於<strong>化學選擇性</strong>。</p>
+  </div>
+
+  <!-- ===================== CARBONYL REACTIVITY ===================== -->
+  <h2 id="carbonyl-reactivity">羰基化合物的反應性順序</h2>
+  <p>不同類型的羰基化合物對親核試劑的反應性不同，這決定了化學選擇性：</p>
+
+  <div class="reaction-scheme">
+羰基反應性（對親核試劑）從高到低：
+
+醛（aldehyde） > 酮（ketone） > 酯（ester） > 醯胺（amide） > 羧酸根（carboxylate）
+
+原因（活化程度）：
+1. 醛/酮：無 O/N 孤對電子共振 → 羰基 C 電正性強 → 最易被親核攻擊
+   R-CHO > R-CO-R'（醛 > 酮，因酮有兩個 R 供電）
+
+2. 酯：O 孤對電子共振入羰基 → 部分去活化 C=O
+   RCOOC-: O 共振使 C=O 的 C 較不親電
+
+3. 醯胺：N 孤對電子比 O 更強的共振供電 → C=O 幾乎不親電
+   R-CO-NR₂: N 的孤對電子更有效共振（N 電負性 < O）
+
+4. 羧酸根（RCOO⁻）：帶負電，親核試劑排斥 → 幾乎不反應
+
+記憶口訣：「醛 > 酮 > 酯 > 醯胺 > 酸根」
+（活化從左到右遞減，難以被親核進攻從右到左遞增）
+  </div>
+
+  <!-- ===================== NABH4 ===================== -->
+  <h2 id="nabh4">NaBH₄ 的選擇性還原</h2>
+  <p>硼氫化鈉（NaBH₄）是最常用的溫和還原劑之一。</p>
+
+  <div class="reaction-scheme">
+NaBH₄（硼氫化鈉）：
+- 溶劑：醇（MeOH, EtOH）或 THF/水
+- 可還原：酮、醛 → 對應醇
+- 不可還原：酯、醯胺、羧酸
+
+機制：H⁻ 從 NaBH₄ 傳遞到羰基 C（SN2 型 H⁻ 轉移）
+→ 四面體烷氧基中間體 → 質子化 → 醇
+
+選擇性：
+✓ 酮 → 仲醇
+✓ 醛 → 伯醇
+✗ 酯不反應（羰基 C 較不親電）
+✗ 醯胺不反應
+✗ 羧酸不反應（且 NaBH₄ 與 NaO₂CR 不相容）
+
+例：含酮基和酯基的化合物 + NaBH₄ → 只有酮被還原
+  </div>
+
+  <!-- ===================== LIALH4 ===================== -->
+  <h2 id="lialh4">LiAlH₄ 的強力還原</h2>
+  <p>氫化鋁鋰（LiAlH₄）是比 NaBH₄ 強得多的還原劑。</p>
+
+  <div class="reaction-scheme">
+LiAlH₄（氫化鋁鋰，LAH）：
+- 溶劑：無水乙醚（Et₂O）或 THF（絕對無水！）
+- 危險：遇水劇烈反應（2 LiAlH₄ + 2 H₂O → H₂↑ + AlO₂Li...）
+
+可還原的官能基：
+✓ 醛 → 伯醇
+✓ 酮 → 仲醇
+✓ 酯 → 伯醇 + 醇（兩個當量 H⁻）
+✓ 醯胺 → 胺（C=O 變成 CH₂，N 留下）
+✓ 羧酸 → 伯醇（先質子化，再兩步還原）
+✓ 環氧化物 → 醇（H⁻ 攻擊較不取代的 C）
+✓ 腈 → 伯胺（C≡N → CH₂-NH₂）
+
+酯的還原機制（兩步）：
+RCOOR' + [H⁻] → R-CHO（醛，中間體）+ R'O⁻
+                           ↓ 再加一個 [H⁻]
+                       R-CH₂OH（伯醇）
+
+醯胺的還原：
+R-CO-NR₂ + LiAlH₄ → R-CH₂-NR₂（胺）
+（C=O 完全去氧為 CH₂；N 被保留）
+  </div>
+
+  <!-- ===================== BH3 ===================== -->
+  <h2 id="bh3">BH₃（硼烷）的特殊選擇性</h2>
+  <div class="reaction-scheme">
+BH₃（硼烷，borane）或其 THF 錯合物 BH₃·THF：
+
+特殊選擇性：
+✓ 羧酸 → 伯醇（選擇性還原羧酸！NaBH₄ 無法）
+✓ 醯胺 → 胺（選擇性還原）
+✓ 烯烴（氫硼化反應，見第 19 章）
+
+不還原：酯（相對選擇性）
+
+原因：
+- BH₃ 是路易斯酸，先與 C=O 的 O 配位 → 活化羰基
+- 羧酸的 C=O 對 BH₃ 最親和（因 O-H 鍵和 BH₃ 反應生成 H₂，使羧酸更易反應）
+- 電子最豐富的 C=O 先被 BH₃ 活化
+
+選擇性比較：
+BH₃ 可還原 COOH 和 CONH₂，而 NaBH₄ 不可
+→ 含多種羰基時，BH₃ 可選擇性還原羧酸
+  </div>
+
+  <!-- ===================== DIBAL ===================== -->
+  <h2 id="dibal">DIBAL：選擇性還原酯至醛</h2>
+  <div class="reaction-scheme">
+DIBAL（DIBAL-H, diisobutylaluminium hydride，氫化二異丁基鋁）：
+
+條件：-70°C（低溫！），無水有機溶劑（CH₂Cl₂ 或甲苯）
+1 eq DIBAL
+
+還原酯 → 醛（在 -70°C 停留在四面體中間體）：
+
+RCOOR' + DIBAL（-70°C）→ RCHO（醛）
+
+機制：
+- H⁻ 從 DIBAL 加到酯羰基 C
+- 生成四面體烷氧基鋁中間體（Al 配位穩定，不易再分解）
+- 在 -70°C，中間體被「凍結」（不進一步反應）
+- 水解（workup）→ RCHO
+
+若溫度升高（如 0°C）→ 四面體中間體分解 → 醛 → 繼續被還原 → 醇
+
+DIBAL 還可還原：
+✓ 腈 → 醛（-70°C 水解）：R-CN + DIBAL → R-CHO
+✓ 醛 → 醇（若用過量 DIBAL）
+  </div>
+
+  <!-- ===================== REDUCING AGENTS ===================== -->
+  <h2 id="reducing-agents">還原劑比較彙整</h2>
+
+  <table>
+    <tr>
+      <th>還原劑</th>
+      <th>醛→醇</th>
+      <th>酮→醇</th>
+      <th>酯→醇</th>
+      <th>醯胺→胺</th>
+      <th>COOH→醇</th>
+      <th>特殊用途</th>
+    </tr>
+    <tr><td>NaBH₄</td><td>✓</td><td>✓</td><td>✗</td><td>✗</td><td>✗</td><td>溫和，醇溶劑</td></tr>
+    <tr><td>LiAlH₄（LAH）</td><td>✓</td><td>✓</td><td>✓→醇</td><td>✓→胺</td><td>✓</td><td>強力，無水乙醚</td></tr>
+    <tr><td>BH₃</td><td>✓</td><td>✓</td><td>慢</td><td>✓</td><td>✓（優先）</td><td>氫硼化，選擇 COOH</td></tr>
+    <tr><td>DIBAL（低溫）</td><td>✓→醇</td><td>✓→醇</td><td>✓→醛（停！）</td><td>部分</td><td>✗</td><td>酯→醛；腈→醛</td></tr>
+    <tr><td>NaCNBH₃</td><td>弱</td><td>弱</td><td>✗</td><td>✗</td><td>✗</td><td>還原胺化（還原亞胺）</td></tr>
+  </table>
+
+  <div class="box-key">
+    <strong>還原劑由弱至強</strong>
+    <p>NaCNBH₃ &lt; NaBH₄ &lt; LiBH₄ &lt; LiAlH₄（由溫和到強力）</p>
+    <p>BH₃ 的選擇性獨特（羧酸優先），不屬於直接的強弱比較序列。</p>
+  </div>
+
+  <!-- ===================== HYDROGENATION ===================== -->
+  <h2 id="hydrogenation">催化氫化（Catalytic Hydrogenation）</h2>
+  <div class="reaction-scheme">
+催化氫化：H₂ + 催化劑
+
+最常用條件：
+H₂/Pd/C（在醇溶劑中）：
+- 烯烴（alkene）→ 烷烴（syn-加成）
+- 芳香族硝基（ArNO₂）→ 芳胺（ArNH₂）
+- 炔烴（alkyne）→ 烷烴（完全還原）
+- 脫苄基（benzyl ether → free alcohol）
+
+H₂/Pt（氧化鉑，Adams 催化劑）：
+- 以上所有 + 苯環（arene → cyclohexane）
+- 比 Pd/C 更強
+
+H₂/Raney Ni（骨架鎳）：
+- 脫硫（thioether, thiol → C-H）
+- 一般烯烴還原
+
+立體化學：syn-加成（H₂ 從催化劑表面同面加成）
+  </div>
+
+  <!-- ===================== LINDLAR ===================== -->
+  <h2 id="lindlar">Lindlar 催化劑：炔烴→順烯</h2>
+  <div class="reaction-scheme">
+Lindlar 催化劑：Pd/CaCO₃/Pb(OAc)₂
+
+功能：炔烴（alkyne）→ 順式烯烴（cis-alkene）
+選擇性：不繼續還原烯烴（毒化催化劑）
+
+R-C≡C-R' + H₂/Lindlar → R     R'
+                            \   /
+                            C=C（cis/Z）
+                            /   \
+                           H     H
+
+機制：
+- Pb(OAc)₂ 毒化 Pd 表面 → 降低對烯烴的活性（選擇性）
+- H₂ 在 Pd 表面 syn-加成 → cis-烯烴
+
+對比：Na/NH₃（Birch 還原）→ 炔 → trans-烯烴（互補！）
+  </div>
+
+  <!-- ===================== BIRCH ===================== -->
+  <h2 id="birch">Birch 還原（Birch Reduction）</h2>
+  <p>Birch 還原用溶解金屬（Na 或 Li）在液氨中還原苯環，區域選擇性獨特。</p>
+
+  <div class="reaction-scheme">
+Birch 還原條件：
+Na（或 Li）/ NH₃(l) / EtOH（或 t-BuOH）
+
+還原苯環：
+苯 + Birch → 1,4-環己二烯（非共軛雙鍵）
+
+機制：
+1. Na 提供 e⁻ → 苯環獲得 e⁻（自由基陰離子）
+2. EtOH 提供 H⁺ → 質子化
+3. 重複 → 1,4-二氫產物（1,4-cyclohexadiene）
+
+Birch 還原的區域選擇性：
+
+含吸電子基（EW, 如 -COOH, -COOR）的苯環：
+→ 雙鍵「避開」EW 基（EW 基在雙鍵外）
+→ 還原發生在 ipso + para 位（含 EW 的 C）
+→ 雙鍵留在 ipso-meta 位（遠離 EW 基）
+
+含供電子基（ED, 如 -OMe, -NR₂）的苯環：
+→ 雙鍵「保留」靠近 ED 基的位置
+→ 還原發生在 ortho + meta 位（遠離 ED 基）
+→ 雙鍵留在靠近 ED 基的 C
+
+記憶：
+- EW 基：雙鍵在 EW 基的「外面」（ipso/meta 位）
+- ED 基：雙鍵在 ED 基的「旁邊」（ipso/ortho 位）
+
+類比：Birch 還原炔烴 → trans-烯烴（Na/NH₃ → 反式）
+  </div>
+
+  <!-- ===================== ALDEHYDE SYNTHESIS ===================== -->
+  <h2 id="aldehyde-synthesis">醛的合成：特殊還原</h2>
+  <div class="reaction-scheme">
+Rosenmund 還原（酸氯化物 → 醛）：
+
+R-COCl + H₂/Pd/BaSO₄/喹啉（quinoline）→ R-CHO
+
+原理：
+- BaSO₄ 和喹啉毒化 Pd（防止繼續還原醛）
+- H₂ 還原 C-Cl 鍵（不還原 C=O 鍵本身）
+- 得到 RCHO（醛）
+
+比較 DIBAL 法（酯 → 醛）和 Rosenmund（酸氯化物 → 醛）：
+- 兩者都是合成醛的「中斷還原」
+- Rosenmund：需要酸氯化物（活性酯），條件溫和
+- DIBAL：需要低溫（-70°C），適用範圍更廣
+  </div>
+
+  <!-- ===================== DEOXYGENATION ===================== -->
+  <h2 id="deoxygenation">去氧反應（Deoxygenation）：C=O → CH₂</h2>
+  <div class="reaction-scheme">
+羰基完全去氧（C=O → CH₂）：
+
+1. Wolff-Kishner 還原：
+
+   R-CO-R' + NH₂NH₂（聯胺，hydrazine）→ R-C(=NNH₂)-R'（腙, hydrazone）
+                              KOH / 熱（或 DMSO, NaH）
+                              → R-CH₂-R' + N₂↑
+
+   機制：腙 + 鹼 → 失去 N₂（驅動力）→ 碳負離子 → 質子化
+
+   條件：強鹼（KOH），高溫（或 DMSO）
+
+2. Clemmensen 還原：
+
+   R-CO-R' + Zn/conc.HCl（濃鹽酸）→ R-CH₂-R' + H₂O
+
+   條件：酸性（濃 HCl），鋅汞齊
+
+互補性：
+- Wolff-Kishner：適用於鹼性條件穩定的底物
+- Clemmensen：適用於酸性條件穩定的底物
+- 兩者都去除 C=O，「縮減氧化態」
+  </div>
+
+  <!-- ===================== OXIDATION ===================== -->
+  <h2 id="oxidation">氧化反應的選擇性</h2>
+
+  <h3>醇的氧化</h3>
+  <div class="reaction-scheme">
+醇的氧化（選擇性控制的鍵）：
+
+伯醇（R-CH₂OH）的氧化：
+
+→ 醛（aldehyde, R-CHO）：溫和且無水條件
+  - PCC（吡啶氯鉻酸, pyridinium chlorochromate）/ CH₂Cl₂（無水）
+  - TPAP（四丙基過釕酸銨）+ NMO（催化量 TPAP）
+  - Dess-Martin（超碘醯苯衍生物, DMP）/ CH₂Cl₂
+
+→ 羧酸（R-COOH）：
+  - Jones（Cr(VI)/丙酮水溶液）
+  - KMnO₄（強氧化劑）
+
+仲醇（R-CHOH-R'）的氧化：
+→ 酮（ketone, R-CO-R'）：以上任何條件
+
+叔醇（R₃COH）：不可被氧化
+
+選擇性：
+PCC / Dess-Martin → 停在醛（不繼續氧化到羧酸）
+Jones / KMnO₄ → 繼續氧化到羧酸
+  </div>
+
+  <h3>Swern 氧化（溫和、無水氧化醇）</h3>
+  <div class="reaction-scheme">
+Swern 氧化：
+(COCl)₂（草醯氯）/ DMSO / Et₃N（三乙胺）/ CH₂Cl₂
+
+R-CH₂OH → R-CHO（伯醇→醛，或 仲醇→酮）
+
+特點：
+✓ 極溫和（低溫，-60~-78°C）
+✓ 無水（適合對水敏感的底物）
+✓ 不過度氧化（停在醛）
+✗ 生成 DMSO 和甲硫醚（有臭味，需真空除去）
+
+機制（簡化）：
+DMSO + (COCl)₂ → 活化 DMSO → 與醇形成 sulfonium 中間體
+→ Et₃N 去質子 → [2,3]-sigmatropic → 醛 + DMSO 副產物
+  </div>
+
+  <h3>其他氧化反應</h3>
+  <div class="reaction-scheme">
+常用氧化反應彙整：
+
+烯烴 → 環氧化物：m-CPBA（間氯過苯甲酸）
+烯烴 → 順二醇（cis-diol）：OsO₄（osmium tetroxide，+NMO 催化量）
+烯烴 → 反二醇（trans-diol）：先環氧化（m-CPBA），再鹼性開環
+烯烴 → 醛/酮（斷裂）：O₃（臭氧化），再 Me₂S（Zn/AcOH）或 H₂O₂ 後處理
+芳香族 → 苯酚：使用 m-CPBA（特殊條件）
+伯醇 → 醛：PCC / Dess-Martin / Swern
+伯醇 → 酸：Jones / KMnO₄
+仲醇 → 酮：任何 Cr(VI) 試劑
+  </div>
+
+  <!-- ===================== CHEMOSEL KINETIC ===================== -->
+  <h2 id="chemosel-kinetic">動力學 vs 熱力學化學選擇性</h2>
+
+  <div class="box-example">
+    <strong>例：胺基醇與苯甲醯氯的反應</strong>
+    <p>含有 OH 和 NH₂ 基團的化合物（胺基醇）與 PhCOCl（苯甲醯氯）的反應：</p>
+    <ul>
+      <li><strong>動力學控制</strong>（低溫、快速加入、短反應時間）：OH 先反應 → 酯（ester）為主要產物</li>
+      <li><strong>熱力學控制</strong>（長時間、高溫、加熱）：NH₂ 反應（較強親核，更穩定的醯胺鍵）→ 醯胺（amide）為主要產物</li>
+    </ul>
+  </div>
+
+  <div class="reaction-scheme">
+動力學 vs 熱力學化學選擇性的原理：
+
+醯化試劑（如 RCOCl）+ 含 OH 和 NH₂ 的底物：
+
+動力學：OH 更快反應（速率更快，因為 OH 先碰到試劑；熱力學不穩定）
+         → 主要得酯（kinetic product）
+
+熱力學：醯胺（amide）比酯（ester）更穩定（N 更好的供電基穩定 C=O）
+         → 長時間/高溫 → 轉酯化（→ 醯胺）
+
+一般規律：
+- 短時間、低溫、過量試劑：動力學選擇性
+- 長時間、可逆條件：熱力學選擇性
+  </div>
+
+  <!-- ===================== PROTECTING GROUPS ===================== -->
+  <h2 id="protecting-groups">保護基策略（Protecting Groups）</h2>
+  <p>當分子有多個官能基，而只需對其中一個進行選擇性反應時，可以用<strong>保護基</strong>暫時遮蔽不需要反應的官能基。</p>
+
+  <div class="box-key">
+    <strong>保護基的基本要求</strong>
+    <ol>
+      <li>安裝（protection）：高效，不影響其他官能基</li>
+      <li>穩定：在後續步驟的條件下穩定</li>
+      <li>去除（deprotection）：高效，不影響目標官能基和其他已有取代基</li>
+    </ol>
+  </div>
+
+  <h3>常用保護基</h3>
+  <table>
+    <tr><th>官能基</th><th>保護基</th><th>安裝</th><th>去除</th></tr>
+    <tr><td>醇（-OH）</td><td>TMS 矽醚（-OTMS）</td><td>TMS-Cl/Et₃N</td><td>F⁻（TBAF）或稀酸</td></tr>
+    <tr><td>醇（-OH）</td><td>Bn 苄醚（-OBn）</td><td>BnBr/NaH</td><td>H₂/Pd/C（脫苄）</td></tr>
+    <tr><td>醇（-OH）</td><td>Ac 乙醯基（-OAc）</td><td>Ac₂O/Et₃N</td><td>K₂CO₃/MeOH（溫和鹼）</td></tr>
+    <tr><td>醛/酮（C=O）</td><td>縮醛（acetal）</td><td>醇/TsOH（Dean-Stark）</td><td>稀酸水解</td></tr>
+    <tr><td>胺（-NH₂）</td><td>Cbz（-NHCbz）</td><td>Cbz-Cl/Et₃N</td><td>H₂/Pd/C</td></tr>
+    <tr><td>胺（-NH₂）</td><td>Boc（-NHBoc）</td><td>Boc₂O</td><td>TFA 或 HCl/dioxane（酸性）</td></tr>
+    <tr><td>胺（-NH₂）</td><td>Fmoc</td><td>Fmoc-Cl</td><td>哌啶（鹼性）</td></tr>
+  </table>
+
+  <!-- ===================== DIANION ===================== -->
+  <h2 id="dianion">二價陰離子（Dianions）</h2>
+  <div class="reaction-scheme">
+二價陰離子（dianions）的化學選擇性：
+
+含羥基和炔烴的底物（如炔醇）可生成二價陰離子：
+
+HC≡C-CH₂OH + 2 n-BuLi → ⁻C≡C-CH₂O⁻
+                             二價陰離子
+
+選擇性：
+- 最後形成的負離子（alkynyl anion，更碳基負離子）比先形成的（alkoxide, O⁻）反應性更高
+- 與親電試劑（RX, RCHO）→ 主要在 alkynyl 端反應（更碳基的 α 端）
+
+規律：「後形成的負離子先反應」（last in, first out）
+原因：alkynyl anion（sp-C）比 alkoxide（O⁻）更強的碳基親核劑
+
+→ 可控制反應的化學選擇性：在多功能底物中定點進行反應
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>第二十三章核心要點</strong>
+    <ul>
+      <li><strong>羰基反應性順序</strong>：醛 > 酮 > 酯 > 醯胺 > 羧酸根（對親核試劑）</li>
+      <li><strong>NaBH₄</strong>：溫和，只還原醛/酮 → 醇；不還原酯、醯胺、羧酸</li>
+      <li><strong>LiAlH₄</strong>：強力，還原幾乎所有羰基；酯 → 伯醇，醯胺 → 胺，酸 → 醇；絕對無水</li>
+      <li><strong>BH₃</strong>：選擇性還原羧酸（COOH 優先），也還原醯胺；是氫硼化試劑</li>
+      <li><strong>DIBAL（-70°C）</strong>：酯 → 醛（停住！），腈 → 醛；溫度升高 → 繼續還原到醇</li>
+      <li><strong>Lindlar</strong>：炔 → 順式烯烴（cis，Z）；Na/NH₃：炔 → 反式烯烴（trans，E）</li>
+      <li><strong>Birch 還原</strong>：苯環 → 1,4-環己二烯；EW 基 → 雙鍵遠離 EW；ED 基 → 雙鍵靠近 ED</li>
+      <li><strong>Wolff-Kishner</strong>：C=O → CH₂（鹼性，聯胺，N₂ 離去）</li>
+      <li><strong>Clemmensen</strong>：C=O → CH₂（酸性，Zn/HCl）</li>
+      <li><strong>醇氧化</strong>：PCC/Dess-Martin/Swern → 醛；Jones/KMnO₄ → 酸</li>
+      <li><strong>保護基策略</strong>：安裝→反應→去除；不同官能基有不同保護基，正交保護可同時保護多個基團</li>
+    </ul>
+  </div>
+
+  <div class="box-selftest">
+    <strong>自我測驗</strong>
+    <ol>
+      <li>含有酮和酯官能基的化合物，用 NaBH₄ 和 LiAlH₄ 分別會得到什麼產物？</li>
+      <li>解釋為什麼 DIBAL 在 -70°C 可以把酯還原到醛而不繼續到醇。</li>
+      <li>Birch 還原對甲氧基苯（anisole）和苯甲酸（benzoic acid）的區域選擇性各為何？</li>
+      <li>Wolff-Kishner 和 Clemmensen 的互補性是什麼？各適用於哪類底物？</li>
+      <li>要合成一個 C2 位置有 -OH 而 C6 位置有 -NH₂ 的六碳分子，需要在哪一步加入保護基？</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

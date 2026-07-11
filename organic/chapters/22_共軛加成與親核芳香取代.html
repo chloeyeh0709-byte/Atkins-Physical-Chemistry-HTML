@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十二章：共軛加成與親核芳香取代</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{position:fixed;top:0;left:0;height:100vh;width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;}
+@media(max-width:900px){#menu-btn{display:block;}#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0!important;}}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:16px 20px;margin:1.4em 0;}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{background:#1e2228;color:#d4e0c8;border-radius:8px;padding:20px 24px;margin:1.4em 0;font-family:'Courier New',Courier,monospace;font-size:.88rem;line-height:1.7;overflow-x:auto;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十二章<br>共軛加成與親核芳香取代</h2>
+  </div>
+  <div id="toc">
+    <a href="#conjugated-carbonyls">α,β-不飽和羰基</a>
+    <a href="#1-2-vs-1-4">1,2-加成 vs 1,4-加成</a>
+    <a href="#thermodynamic-kinetic">熱力學 vs 動力學控制</a>
+    <a href="#hard-soft">硬軟親核劑規則</a>
+    <a href="#organocuprate">有機銅試劑</a>
+    <a href="#nabh4-reduction">NaBH₄ 的還原</a>
+    <a href="#conjugate-substitution">共軛取代</a>
+    <a href="#nucleophilic-epoxidation">親核環氧化</a>
+    <a href="#snar">親核芳香取代（SNAr）</a>
+    <a href="#snar-mechanism">SNAr 機制詳解</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十二章</div>
+    <h1>共軛加成與親核芳香取代</h1>
+    <div class="subtitle">Conjugate Addition and Nucleophilic Aromatic Substitution</div>
+  </div>
+
+  <!-- ===================== CONJUGATED CARBONYLS ===================== -->
+  <h2 id="conjugated-carbonyls">α,β-不飽和羰基化合物</h2>
+  <p>α,β-不飽和羰基化合物（α,β-unsaturated carbonyl compounds）包含 C=C-C=O 共軛體系，是有機化學中最重要的功能性底物之一。</p>
+
+  <div class="reaction-scheme">
+α,β-不飽和羰基的命名和結構：
+
+   β   α
+   |   |
+H₂C=CH-C=O     ← 丙烯醛（acrolein，最簡單的例子）
+                     R（R = H 為醛，R = R' 為酮）
+
+術語：
+- α 碳：緊鄰羰基碳（C=O 的鄰碳）
+- β 碳：α 碳的隔壁（雙鍵的另一端）
+- C=C 和 C=O 共軛 → LUMO 和 HOMO 都是離域的
+
+LUMO（最低未佔分子軌道）分析：
+- 共軛系統的 LUMO 最大係數在 β-C 上
+- → 親核試劑（HOMO 豐富電子）傾向攻擊 β-C（共軛加成）
+
+但也有 C=O 羰基 C 可被攻擊（直接加成）
+→ 形成競爭：1,2-加成 vs 1,4-加成
+  </div>
+
+  <!-- ===================== 1,2 VS 1,4 ===================== -->
+  <h2 id="1-2-vs-1-4">直接加成（1,2-）與共軛加成（1,4-）</h2>
+
+  <div class="reaction-scheme">
+兩種加成模式：
+
+直接加成（1,2-addition）= 攻擊羰基碳（C=O）：
+
+   β   α  1
+   |   |   ‖
+H₂C=CH-C=O + Nu⁻ → H₂C=CH-C-Nu
+                                |
+                               O⁻
+                     (β,γ-不飽和醇，動力學產物)
+
+共軛加成（1,4-addition / conjugate addition / Michael addition）= 攻擊 β-C：
+
+  4   3  2  1
+  |   |  |  ‖
+H₂C=CH-C=O + Nu⁻ → Nu-CH₂-CH=C-O⁻
+                         ↓ 質子化
+                     Nu-CH₂-CH₂-C=O
+                     (烯醇 → 酮，熱力學產物)
+
+數字標記：
+1 = 羰基 C（O 端為位置 1）
+2 = α-C
+3 = β-C
+4 = 等等
+
+「1,4」指的是電荷從 Nu⁻ 加到位置 4（=β-C），H⁺ 最終加到位置 1（=O⁻）
+  </div>
+
+  <!-- ===================== THERMO VS KINETIC ===================== -->
+  <h2 id="thermodynamic-kinetic">熱力學 vs 動力學控制</h2>
+
+  <div class="box-example">
+    <strong>例：HCN 對 α,β-不飽和酮的加成</strong>
+    <p>HCN 對丁烯酮的加成展現了溫度對產物的控制：</p>
+  </div>
+
+  <div class="reaction-scheme">
+HCN/NaCN 對丁烯酮（但酮烯）的加成：
+
+CH₂=CH-CO-CH₃（丁烯酮）+ HCN
+
+低溫（動力學控制）：
+→ CN⁻ 攻擊 C=O（位置 1,2）
+→ 直接加成產物（β-羥基腈）
+→ 可逆！（1,2-加成是熱力學不利的）
+
+高溫，80°C（熱力學控制）：
+→ CN⁻ 攻擊 β-C（位置 1,4）
+→ 共軛加成產物（γ-氰基酮）
+→ 不可逆！（共軛加成熱力學有利，且一旦質子化後不易逆轉）
+
+關鍵：共軛加成（1,4）是熱力學更穩定的產物
+      在條件允許平衡時（高溫、可逆試劑），共軛加成占優
+      不可逆的試劑（RLi, RMgBr）→ 動力學控制 → 直接加成
+  </div>
+
+  <!-- ===================== HARD SOFT ===================== -->
+  <h2 id="hard-soft">硬親核劑 vs 軟親核劑的規則</h2>
+  <p>預測 1,2- vs 1,4-加成的最有用規則是<strong>硬軟親核劑</strong>原則（HSAB 理論的有機化學應用）：</p>
+
+  <table>
+    <tr><th>親核劑類型</th><th>加成位置</th><th>產物</th><th>例子</th></tr>
+    <tr><td>硬親核劑（hard, charge-dense）</td><td>C=O（直接，1,2）</td><td>醇（動力學）</td><td>RMgBr, RLi, OH⁻, H₂O</td></tr>
+    <tr><td>軟親核劑（soft, polarizable）</td><td>β-C（共軛，1,4）</td><td>酮（熱力學）</td><td>RS⁻, R₂CuLi, NaCN（高T）</td></tr>
+  </table>
+
+  <div class="box-key">
+    <strong>硬軟親核劑記憶法</strong>
+    <ul>
+      <li><strong>硬親核劑</strong>：電荷密度大、難極化、反應性高（charge-controlled）→ 攻擊電荷密度最高的原子（C=O 的 C，因 O 的電負性使 C 帶δ+）→ 1,2-加成</li>
+      <li><strong>軟親核劑</strong>：易極化、大原子（S, Cu）→ 攻擊 LUMO 係數最大的原子（β-C）→ 1,4-加成（共軛加成）</li>
+    </ul>
+  </div>
+
+  <!-- ===================== ORGANOCUPRATE ===================== -->
+  <h2 id="organocuprate">有機銅試劑（Organocuprates）</h2>
+  <p>有機銅試劑（lithium dialkylcuprate, R₂CuLi）是進行共軛加成的最佳試劑。</p>
+
+  <div class="reaction-scheme">
+有機銅試劑的製備和反應：
+
+製備（Gilman 試劑）：
+2 RLi + CuI → R₂CuLi + LiI
+（兩莫耳 RLi 與一莫耳 CuI 反應）
+
+反應：
+R₂CuLi + α,β-不飽和酮 → 共軛加成產物
+
+例：
+(CH₃)₂CuLi + CH₂=CH-CO-CH₃ → CH₃-CH₂-CH₂-CO-CH₃
+                                 （甲基加到 β-C，共軛加成）
+
+Grignard 試劑的改良（催化量 CuCl）：
+RMgBr → R₂CuLi（加入 1% CuCl 轉換）
+→ 由直接加成（RMgBr 本身的特性）→ 共軛加成
+
+有機銅試劑特點：
+✓ 高度選擇性共軛加成（1,4 >> 1,2）
+✓ 溫和條件（低溫 -78°C 到 0°C）
+✓ 可容忍多種官能基
+✗ 不與酯、醯胺、羧酸反應
+✗ 對水敏感
+  </div>
+
+  <!-- ===================== NABH4 REDUCTION ===================== -->
+  <h2 id="nabh4-reduction">NaBH₄ 對 α,β-不飽和羰基的還原</h2>
+
+  <div class="reaction-scheme">
+NaBH₄ 對α,β-不飽和羰基的還原行為：
+
+1. 簡單烯醛（enal，如丙烯醛 CH₂=CH-CHO）：
+   NaBH₄ + 烯醛 → 攻擊 C=O（直接，1,2-還原）
+   → 烯丙醇（allyl alcohol）
+
+   CH₂=CH-CHO + NaBH₄ → CH₂=CH-CH₂OH（烯丙醇）
+
+2. 烯酮（enone，如丁烯酮）：
+   NaBH₄ + 烯酮 → 先 1,4-還原（H⁻ 到 β-C）→ 烯醇鹽 → 再還原 C=O
+   → 饱和醇（double reduction）
+
+3. Luche 條件（NaBH₄ + CeCl₃）：
+   → 強制 1,2-加成（直接還原 C=O），不管是醛或酮
+   → 得到不飽和醇（保留雙鍵）
+
+記憶：
+- 「Luche = allylic alcohol」（保留 C=C，還原 C=O）
+- CeCl₃ 使 Ce³⁺ 活化 C=O，使其更親電 → H⁻ 攻擊 C=O
+  </div>
+
+  <!-- ===================== CONJUGATE SUBSTITUTION ===================== -->
+  <h2 id="conjugate-substitution">共軛取代（Conjugate Substitution）</h2>
+  <p>當 β-C 帶有離去基（例如鹵素）時，共軛加成後可以發生消除，整體上是<strong>取代</strong>反應。</p>
+
+  <div class="reaction-scheme">
+共軛取代機制：
+
+β-鹵代烯酮（β-halo enone）+ 親核試劑（Nu）：
+
+  Nu⁻          O
+   |            ‖
+   →  Cl-CH=CH-C-R  +  Nu⁻
+            ↓  1,4-加成（Nu 到 β-C）
+         Cl
+         |
+  Nu-CH₂-C=C-O⁻
+             ↓  Cl⁻ 消除（氯是好的離去基）
+  Nu-CH=CH-C=O
+   （β-Nu 烯酮：取代產物）
+
+整體：Cl（離去基）被 Nu（新基團）取代，雙鍵得以保留
+
+實例：
+β-氯烯酮 + MeOH → β-甲氧基烯酮（烯醇醚）
+Cl-CH=CH-CO-R + MeO⁻ → MeO-CH=CH-CO-R
+
+應用：西咪替丁（cimetidine）、雷尼替丁（ranitidine）的合成步驟
+  </div>
+
+  <!-- ===================== NUCLEOPHILIC EPOXIDATION ===================== -->
+  <h2 id="nucleophilic-epoxidation">親核環氧化（Nucleophilic Epoxidation）</h2>
+  <p>α,β-不飽和羰基可被氫過氧根離子（HOO⁻）環氧化，產生 α,β-環氧羰基化合物。</p>
+
+  <div class="reaction-scheme">
+親核環氧化（Weiss-Cook 型）：
+
+α,β-不飽和酮 + H₂O₂/NaOH（鹼性條件）→ α,β-環氧酮
+
+機制：
+1. H₂O₂ + OH⁻ → HOO⁻ + H₂O（HOO⁻ = 親核試劑）
+2. HOO⁻ 攻擊 β-C（共軛加成，「α-效應」：α-nucleus 具有額外的驅動力）
+3. 生成 β-烷氧負離子（β-alkoxide）
+4. 分子內 SN2：O⁻ 攻擊 Oα-O 鍵 → 環氧化物 + OH⁻ 離去
+
+產物：
+CH₂=CH-CO-R + HOO⁻ → [β加成中間體] → 環氧-CH-CH₂-CO-R
+
+立體化學：
+- 兩步加成/環化 → 中間有自由旋轉
+- 最終給 trans-環氧化物（與 m-CPBA 親電環氧化不同！）
+
+比較：
+- m-CPBA（親電環氧化）→ 攻擊富電子烯烴，syn-加成，cis/trans 保留
+- HOO⁻（親核環氧化）→ 攻擊缺電子烯烴（共軛），兩步，trans 優先
+  </div>
+
+  <!-- ===================== SNAR ===================== -->
+  <h2 id="snar">親核芳香取代（SNAr）</h2>
+  <p>苯環通常是 EAS 底物，但在特殊條件下可以發生<strong>親核芳香取代</strong>（SNAr）：親核試劑攻擊苯環，離去基（通常是鹵素）被取代。</p>
+
+  <div class="box-note">
+    <strong>SNAr 的必要條件</strong>
+    <ul>
+      <li>苯環上必須有<strong>強吸電子基（EW）</strong>在離去基的<strong>鄰位或對位</strong></li>
+      <li>常見 EW 基：-NO₂, -CN, -C=O（鄰或對）</li>
+      <li>離去基：通常是 F, Cl, Br（F 最佳！雖然 C-F 鍵強，但 F 的 EW 誘導使環更易被親核攻擊）</li>
+      <li>親核試劑：O（烷氧負離子、醇）、N（胺）、CN⁻ 等</li>
+    </ul>
+  </div>
+
+  <!-- ===================== SNAR MECHANISM ===================== -->
+  <h2 id="snar-mechanism">SNAr 機制詳解</h2>
+
+  <div class="reaction-scheme">
+SNAr 機制（加成-消除，addition-elimination）：
+
+底物：1-氯-2,4-二硝基苯（picryl chloride 衍生物）+ MeO⁻
+
+步驟 1：加成（親核試劑攻擊被鹵素取代的 C）
+
+       Cl              MeO   Cl
+       |                 \ /
+  [苯環]-NO₂ + MeO⁻ → [苯環]⁻
+       |                  |
+       NO₂               NO₂   NO₂
+                  Meisenheimer 錯合物（σ-錯合物）
+                  負電荷離域到鄰/對位的 NO₂ 基
+
+步驟 2：消除（Cl⁻ 離去，恢復芳香性）
+
+  Meisenheimer 錯合物 → [苯環]-OMe + Cl⁻
+
+速率決定步驟：
+- 若 LG 容易離去 → 步驟 1（加成）為 RDS
+- 若 LG 難離去 → 步驟 2（消除）為 RDS
+- F（雖難離去，但步驟 1 很快）→ F 通常步驟 2 為 RDS，但整體比 Cl 快
+
+SNAr 的特點：
+✓ F 是最佳離去基（違反直覺！）
+  原因：C-F 鍵最強（Meisenheimer 不易逆向分解），F 是最強 EW（使步驟 1 最快）
+✓ 需要鄰位或對位 EW 基（間位 EW 無效）
+✓ 不是碳陽離子機制（沒有 Ar⁺ 中間體）
+  </div>
+
+  <div class="box-key">
+    <strong>SNAr vs EAS 比較</strong>
+    <table>
+      <tr><th>特性</th><th>EAS</th><th>SNAr</th></tr>
+      <tr><td>反應類型</td><td>取代</td><td>取代</td></tr>
+      <tr><td>進攻試劑</td><td>親電試劑（E⁺）</td><td>親核試劑（Nu⁻）</td></tr>
+      <tr><td>中間體</td><td>arenium ion（正電）</td><td>Meisenheimer 錯合物（負電）</td></tr>
+      <tr><td>所需取代基</td><td>富電子基（ED）活化；ED 鄰/對位</td><td>吸電子基（EW）在 LG 鄰/對位</td></tr>
+      <tr><td>最佳離去基</td><td>H⁺（所有 EAS）</td><td>F（C-F 鍵強，但 F 幫助 Meisenheimer 形成）</td></tr>
+      <tr><td>機制步驟</td><td>加成→消除 H⁺</td><td>加成（Nu）→消除 LG⁻</td></tr>
+    </table>
+  </div>
+
+  <div class="box-example">
+    <strong>例：西咪替丁（Cimetidine）的合成</strong>
+    <p>抗胃酸藥物西咪替丁的合成包含共軛取代步驟：利用 β-氯乙烯基硫醚作為底物，胺類親核試劑進行共軛加成/消除，引入咪唑環所需的氮原子。</p>
+    <p>雷尼替丁（Ranitidine）的合成也採用類似的共軛取代策略，引入呋喃環和二甲胺基甲基基團。</p>
+  </div>
+
+  <!-- ===================== SUMMARY ===================== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>第二十二章核心要點</strong>
+    <ul>
+      <li><strong>α,β-不飽和羰基</strong>：LUMO 在 β-C（共軛加成優先），也可在 C=O（直接加成）</li>
+      <li><strong>1,4-（共軛）加成</strong>：熱力學優先，不可逆；1,2-（直接）加成：動力學（常可逆）</li>
+      <li><strong>硬親核劑（RMgBr, RLi）</strong>：1,2-加成（攻擊 C=O）</li>
+      <li><strong>軟親核劑（RS⁻, R₂CuLi）</strong>：1,4-共軛加成（攻擊 β-C）</li>
+      <li><strong>有機銅試劑 R₂CuLi</strong>：最佳共軛加成試劑；Grignard + 催化量 CuCl 也可</li>
+      <li><strong>NaBH₄</strong>：通常在 C=O 直接還原（烯醛）或雙還原（烯酮）；Luche（+CeCl₃）強制 1,2-還原</li>
+      <li><strong>共軛取代</strong>：β-鹵代烯酮 + Nu → Nu 共軛加成 → 鹵素消除 → β-取代烯酮</li>
+      <li><strong>親核環氧化</strong>：HOO⁻ 對 α,β-不飽和酮共軛加成 → 分子內 SN2 → trans-環氧酮</li>
+      <li><strong>SNAr</strong>：加成-消除機制；需 EW 基在 LG 鄰/對位；Meisenheimer 錯合物為中間體；F 最佳 LG</li>
+    </ul>
+  </div>
+
+  <div class="box-selftest">
+    <strong>自我測驗</strong>
+    <ol>
+      <li>有機銅試劑 R₂CuLi 為什麼選擇性進行 1,4-加成而不是 1,2-加成？</li>
+      <li>丁烯酮 + NaBH₄，與丁烯酮 + NaBH₄/CeCl₃，產物分別是什麼？</li>
+      <li>SNAr 中，為什麼氟（F）是最佳的離去基，儘管 C-F 鍵比 C-Cl 鍵強得多？</li>
+      <li>Meisenheimer 錯合物是什麼？它在 SNAr 中的地位相當於 EAS 中的什麼？</li>
+      <li>親核環氧化（HOO⁻ 法）和親電環氧化（m-CPBA 法）在立體化學上有何差別？</li>
+    </ol>
+  </div>
+</div>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

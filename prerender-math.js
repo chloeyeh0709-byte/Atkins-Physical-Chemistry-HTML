@@ -39,6 +39,11 @@ const files = [
   'organic/chapters/08_酸鹼性與pKa.html',
   'organic/chapters/09_有機金屬試劑製備CC鍵.html',
   'organic/chapters/10_羰基的親核取代.html',
+  'organic/chapters/11_羰基氧的取代.html',
+  'organic/chapters/13_質子核磁共振.html',
+  'organic/chapters/14_立體化學.html',
+  'organic/chapters/15_飽和碳的親核取代.html',
+  'inorganic/chapters/04_對稱性與群論.html',
 ];
 
 function renderDisplay(latex) {

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第14章 立體化學</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh}
+#sidebar{width:260px;min-width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+#sidebar-header{padding:20px 16px 12px;border-bottom:1px solid #333c45}
+#sidebar-header h2{font-size:0.85rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+#sidebar-header p{font-size:0.78rem;color:var(--sidebar-fg-dim);line-height:1.4}
+#toc{padding:12px 0 24px}
+#toc a{display:block;padding:6px 18px;font-size:0.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.04)}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.1)}
+#toc .toc-section{padding:10px 18px 4px;font-size:0.7rem;color:#566270;text-transform:uppercase;letter-spacing:.06em}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer}
+main{flex:1;padding:40px 48px;max-width:860px}
+h1{font-size:1.9rem;font-weight:700;color:#1a1208;margin-bottom:6px}
+.subtitle{color:#7a6a55;font-size:1rem;margin-bottom:32px;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:#1a1208;margin:40px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.1rem;font-weight:700;color:#2d2010;margin:24px 0 10px}
+h4{font-size:0.95rem;font-weight:700;color:#3a2e1a;margin:18px 0 8px}
+p{line-height:1.75;margin-bottom:12px}
+.back-link{display:inline-block;margin-bottom:28px;color:var(--accent);text-decoration:none;font-size:0.88rem}
+.back-link:hover{text-decoration:underline}
+section{background:var(--paper-bg);border:1px solid var(--rule);border-radius:8px;padding:28px 32px;margin-bottom:28px}
+.box-note{background:#f0f7ff;border-left:4px solid var(--accent2);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-example{background:#f6fff0;border-left:4px solid var(--accent);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-key{background:#fff8e6;border-left:4px solid #e6a817;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-selftest{background:#fdf0f8;border-left:4px solid #c0399a;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-summary{background:#f3faf5;border:1px solid #b2dfc0;border-radius:6px;padding:16px 20px;margin:20px 0}
+.reaction-scheme{background:#f8f8f4;border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:14px 0;font-family:'Courier New',monospace;font-size:0.88rem;line-height:1.8;overflow-x:auto;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.91rem}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:#f5f2ec}
+ul,ol{padding-left:22px;margin:10px 0 14px}
+li{line-height:1.7;margin-bottom:4px}
+@media(max-width:900px){
+  #sidebar{position:fixed;left:-260px;top:0;height:100%;z-index:100;transition:left .25s}
+  #sidebar.open{left:0}
+  #menu-btn{display:block}
+  main{padding:24px 18px;padding-top:56px}
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>有機化學</h2>
+    <p>第14章 立體化學</p>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#chirality">手性與鏡像異構物</a>
+    <a href="#stereocentre">立體中心的辨認</a>
+    <a href="#rs-rules">R/S命名法（CIP規則）</a>
+    <a href="#optical">旋光性與比旋光度</a>
+    <a href="#dl">D/L命名法</a>
+    <a href="#diastereomers">非鏡像異構物與內消旋</a>
+    <a href="#atropisomers">阻轉異構物</a>
+    <a href="#symmetry">對稱性分析</a>
+    <a href="#resolution">外消旋混合物的拆分</a>
+    <a href="#chiral-drugs">手性藥物</a>
+  </div>
+</nav>
+<button id="menu-btn">☰ 目錄</button>
+<main>
+  <a class="back-link" href="../index.html">← 返回有機化學目錄</a>
+  <h1>第14章 立體化學</h1>
+  <p class="subtitle">Stereochemistry</p>
+
+  <section id="chirality">
+    <h2>手性與鏡像異構物</h2>
+    <p>若一個分子與其鏡像<strong>不可重疊（non-superimposable）</strong>，則稱此分子具有<strong>手性（chirality）</strong>，如同左右手。具有手性的分子稱為<strong>手性分子（chiral molecule）</strong>。</p>
+    <p>一對互為鏡像卻不可重疊的分子稱為<strong>鏡像異構物（enantiomers）</strong>。</p>
+    <div class="box-key">
+      <strong>手性的來源：</strong>最常見的情況是碳原子連接四個<strong>不同</strong>的取代基，稱為<strong>立體中心（stereogenic centre）</strong>或手性碳（chiral carbon）。但手性也可由軸（axis）或平面（plane）產生，無需立體中心。
+    </div>
+    <p>自然界中的手性非常普遍：氨基酸幾乎全是 L 型，糖幾乎全是 D 型。兩個鏡像異構物的所有物理和化學性質完全相同，<strong>除了</strong>：（1）旋光方向相反；（2）與其他手性物質反應的速率不同。</p>
+  </section>
+
+  <section id="stereocentre">
+    <h2>立體中心的辨認</h2>
+    <p>要辨認立體中心，尋找<strong>連接四個不同取代基的 sp³ 碳</strong>。</p>
+    <div class="box-example">
+      <strong>辨認練習：</strong>
+      <ul>
+        <li>乙醇（CH₃CH₂OH）：無，因為 CH₂ 連有兩個 H</li>
+        <li>丙醇（CH₃CH(OH)CH₃）：無，因為中間 C 的兩個 CH₃ 相同</li>
+        <li>乳酸（CH₃CH(OH)COOH）：有，C2 連接 CH₃、OH、COOH、H — 全不同</li>
+        <li>葡萄糖：有四個立體中心（C2、C3、C4、C5）</li>
+      </ul>
+    </div>
+    <p>若分子含有 <em>n</em> 個<strong>不同</strong>的立體中心，最多有 2ⁿ 個立體異構物（但對稱性可能使實際數目更少）。</p>
+  </section>
+
+  <section id="rs-rules">
+    <h2>R/S 命名法（CIP 優先規則）</h2>
+    <p>由 Cahn、Ingold、Prelog 制定的<strong>CIP 優先順序規則</strong>，用於指定每個立體中心的絕對構型為 <em>R</em> 或 <em>S</em>。</p>
+    <h3>CIP 優先順序的四個規則</h3>
+    <ol>
+      <li><strong>原子序越大優先：</strong>直接連接立體中心的原子，原子序越大則優先（I &gt; Br &gt; Cl &gt; O &gt; N &gt; C &gt; H）</li>
+      <li><strong>相同原子則比下一層：</strong>若第一層相同，依次比較下一個原子直到有區別</li>
+      <li><strong>雙鍵/三鍵展開：</strong>C=O 視為 C 連 (O)(O)；C=C 視為 C 連 (C)(C)；C≡C 視為 C 連 (C)(C)(C)</li>
+      <li><strong>同位素：</strong>質量數大的優先（D &gt; H）</li>
+    </ol>
+    <h3>指定 R 或 S</h3>
+    <ol>
+      <li>依 CIP 規則排列四個取代基優先順序：1 &gt; 2 &gt; 3 &gt; 4</li>
+      <li>將優先順序最低的基團（4）指向遠離觀察者（放在後方）</li>
+      <li>觀察 1→2→3 的旋轉方向：<strong>順時針 = R（Rectus）；逆時針 = S（Sinister）</strong></li>
+    </ol>
+    <div class="box-note">
+      <strong>技巧：</strong>若最低優先基（通常是 H）在前方（楔形鍵），則最終結果取反：若看到順時針旋轉應為 S，逆時針為 R。
+    </div>
+    <h3>費雪投影（Fischer Projection）中的 R/S</h3>
+    <p>費雪投影中，水平鍵指向觀察者（向前），垂直鍵指向後方。若最低優先基在垂直鍵上（如 H 在上或下），觀察 1→2→3 旋轉方向不用取反；若最低優先基在水平鍵（向前），則取反。</p>
+  </section>
+
+  <section id="optical">
+    <h2>旋光性與比旋光度</h2>
+    <p>手性分子能旋轉平面偏振光的偏振方向，此性質稱為<strong>旋光性（optical activity）</strong>。</p>
+    <ul>
+      <li><strong>(+) 或 d（dextrorotatory）</strong>：旋轉方向為順時針（右旋）</li>
+      <li><strong>(−) 或 l（levorotatory）</strong>：旋轉方向為逆時針（左旋）</li>
+    </ul>
+    <div class="box-key">
+      <strong>重要區別：</strong>R/S 是<em>絕對構型（absolute configuration）</em>，由 CIP 規則決定；(+)/(−) 是<em>旋光方向（optical rotation）</em>，由實驗測定。兩者之間沒有簡單的對應關係——R 構型不一定是右旋！
+    </div>
+    <h3>比旋光度（Specific Optical Rotation）</h3>
+    <p>標準化的旋光測量值：</p>
+    <div class="reaction-scheme">
+    [α]²⁰_D = 測量旋光度（α°） / (濃度 c(g/mL) × 管長 l(dm))</div>
+    <p>一對鏡像異構物的比旋光度<strong>大小相等、符號相反</strong>：(R)-乳酸 [α] = +3.8°，(S)-乳酸 [α] = −3.8°。</p>
+    <p><strong>外消旋混合物（racemic mixture, ±）</strong>：等量的兩個鏡像異構物混合，旋光度互相抵消，[α] = 0，無旋光活性。</p>
+  </section>
+
+  <section id="dl">
+    <h2>D/L 命名法</h2>
+    <p>D/L 命名法主要用於氨基酸和糖類，以<strong>甘油醛（glyceraldehyde）</strong>為參考標準（費雪投影）：</p>
+    <ul>
+      <li><strong>D-甘油醛</strong>：費雪投影中 OH 在右側（(+)-甘油醛，[α] = +13.5°）</li>
+      <li><strong>L-甘油醛</strong>：費雪投影中 OH 在左側（(−)-甘油醛）</li>
+    </ul>
+    <p>氨基酸費雪投影中，NH₂ 在右 → D 型；NH₂ 在左 → L 型。自然界中蛋白質氨基酸幾乎全是 L 型。</p>
+    <div class="box-note">
+      <strong>D/L 與 R/S 無直接對應：</strong>D-甘油醛是 R 構型；L-甘油醛是 S 構型。但 D-絲氨酸（D-serine）是 L 構型（因取代基不同改變了 CIP 優先順序）。
+    </div>
+  </section>
+
+  <section id="diastereomers">
+    <h2>非鏡像異構物與內消旋化合物</h2>
+    <h3>非鏡像異構物（Diastereoisomers）</h3>
+    <p>含有<strong>2個或以上</strong>立體中心的分子，不是鏡像關係的立體異構物，稱為<strong>非鏡像異構物</strong>。它們具有<strong>不同的物理化學性質</strong>（沸點、熔點、溶解度等），可用色譜法分離。</p>
+    <div class="box-example">
+      <strong>酒石酸的四個「立體異構物」：</strong><br>
+      (R,R)-酒石酸；(S,S)-酒石酸（互為鏡像異構物）；meso-酒石酸（內消旋）
+    </div>
+    <h3>內消旋化合物（Meso Compounds）</h3>
+    <p>含有立體中心，但因分子具有<strong>對稱面（plane of symmetry）或對稱中心</strong>，使整體分子與其鏡像完全重疊 → 為<strong>非手性（achiral）</strong>化合物，無旋光活性。</p>
+    <div class="box-key">
+      <strong>内消旋酒石酸：</strong>(2R,3S)-酒石酸含有一個對稱面，雖然兩個碳都是立體中心，但整體分子無手性，[α] = 0。
+    </div>
+  </section>
+
+  <section id="atropisomers">
+    <h2>阻轉異構物（Atropisomers）</h2>
+    <p>某些分子即使沒有立體碳，也可因<strong>旋轉受阻（restricted rotation）</strong>而產生手性。典型例子是聯萘（BINAP）等聯苯類化合物，兩個芳環之間的旋轉受到鄰位取代基的空間阻礙。</p>
+    <p><strong>BINAP</strong>（2,2'-雙（二苯基膦）-1,1'-聯萘）是重要的手性配體，廣泛用於不對稱催化。其 (R)- 和 (S)-BINAP 形成穩定的阻轉異構物，因單鍵旋轉需克服很高的能障。</p>
+    <div class="box-note">
+      阻轉異構物可透過手性 HPLC 分離；高溫下旋轉能障降低，異構物可互相轉化（消旋化）。
+    </div>
+  </section>
+
+  <section id="symmetry">
+    <h2>對稱性分析</h2>
+    <p>以對稱性判斷分子是否為手性：</p>
+    <div class="box-key">
+      <strong>手性的對稱性條件：</strong>
+      <ul>
+        <li>具有<strong>對稱面（plane of symmetry）</strong>或<strong>對稱中心（centre of symmetry）</strong>的分子 → <strong>非手性（achiral）</strong></li>
+        <li>只有<strong>旋轉軸（axis of symmetry）</strong>（無對稱面或對稱中心）的分子 → <strong>手性</strong></li>
+      </ul>
+    </div>
+    <p>這解釋了為何有些含立體中心的分子（如 meso 化合物）無手性——它們具有對稱面；而某些無立體中心的分子（阻轉異構物、螺環化合物）卻具有手性。</p>
+    <table>
+      <tr><th>對稱元素</th><th>結論</th></tr>
+      <tr><td>有對稱面（σ）</td><td>非手性（achiral）</td></tr>
+      <tr><td>有對稱中心（i）</td><td>非手性（achiral）</td></tr>
+      <tr><td>只有 Cn 旋轉軸</td><td>手性（chiral）</td></tr>
+      <tr><td>C₁ 無任何對稱</td><td>手性（chiral）</td></tr>
+    </table>
+  </section>
+
+  <section id="resolution">
+    <h2>外消旋混合物的拆分（Resolution）</h2>
+    <p>化學合成通常產生等量的兩種鏡像異構物（外消旋混合物，±）。拆分（resolution）是將它們分開的過程。</p>
+    <h3>方法一：生成非鏡像異構物鹽</h3>
+    <p>外消旋酸（±酸）與<strong>光學純的鹼</strong>反應，生成兩種<strong>非鏡像異構物鹽</strong>（物理性質不同），然後用色譜或結晶分離，再分別水解回純鏡像異構物酸。</p>
+    <div class="reaction-scheme">
+    (±)-酸  +  光學純鹼  →  (RS)-鹽 + (SS)-鹽（非鏡像異構物）
+                              ↓ 分離
+                         各自水解 → (R)-酸 和 (S)-酸</div>
+
+    <h3>方法二：手性色譜（Chiral Chromatography）</h3>
+    <p>以手性固定相（如氨基酸衍生物鍵合在矽膠上）進行色譜分離。外消旋混合物的兩個鏡像異構物與手性固定相的親和力不同（形成不同的非共價相互作用），因此以不同速度通過柱子而分離。</p>
+
+    <h3>Naproxen（萘普生）的拆分案例</h3>
+    <p>萘普生是 NSAID（非類固醇抗炎藥），只有 (S)-鏡像異構物具有抗炎活性。工業上用糖衍生物 N-丙基葡萄糖胺的胺鹽選擇性結晶 (R)-萘普生鹽，留在溶液中的為 (S)-萘普生鈉鹽。</p>
+    <div class="box-example">
+      <strong>手性藥物的重要性：</strong>Darvon（止痛藥）和 Novrad（止咳藥）互為鏡像異構物，但有截然不同的藥理效果。這說明藥物受體（蛋白質，本身就是手性的）能明確區分兩個鏡像異構物。
+    </div>
+  </section>
+
+  <section id="chiral-drugs">
+    <h2>手性藥物</h2>
+    <p>藥物受體通常是蛋白質，由 L-氨基酸構成，本身具有手性。因此，<strong>兩個鏡像異構物與受體的結合方式不同</strong>，藥效和副作用可能相差甚遠。</p>
+    <table>
+      <tr><th>藥物</th><th>活性鏡像異構物</th><th>非活性/有害鏡像異構物</th></tr>
+      <tr><td>萘普生（Naproxen）</td><td>(S)-(+)，抗炎</td><td>(R) 無活性，但體內可消旋化</td></tr>
+      <tr><td>布洛芬（Ibuprofen）</td><td>(S)-(+)，止痛</td><td>(R) 也有部分活性，售為外消旋</td></tr>
+      <tr><td>Darvon</td><td>止痛</td><td>Novrad（鏡像異構物），止咳</td></tr>
+    </table>
+    <div class="box-note">
+      <strong>消旋化（Racemization）的問題：</strong>即使藥廠只賣純鏡像異構物，若該化合物在體內容易消旋化（如布洛芬），效果等同賣外消旋混合物。
+    </div>
+    <div class="box-summary">
+      <strong>第14章重點回顧</strong>
+      <ul>
+        <li>手性 = 分子與鏡像不可重疊；最常見原因是四個不同取代基的 sp³ 碳（立體中心）</li>
+        <li>CIP 規則指定 R/S（原子序大優先）；(+)/(−) 由實驗測定旋光方向</li>
+        <li>R/S 與 (+)/(−) 無直接對應關係</li>
+        <li>D/L：主要用於氨基酸和糖，以費雪投影為基礎</li>
+        <li><em>n</em> 個立體中心 → 最多 2ⁿ 個立體異構物；meso 化合物因對稱面使實際數目減少</li>
+        <li>非鏡像異構物物理性質不同，可用一般色譜分離</li>
+        <li>阻轉異構物（BINAP）：由旋轉受阻產生手性，無立體碳</li>
+        <li>有對稱面/中心 → achiral（非手性）；只有旋轉軸 → chiral（手性）</li>
+        <li>拆分：生成非鏡像異構物鹽（結晶分離）或手性色譜</li>
+        <li>手性藥物：受體為手性蛋白質，鏡像異構物效果常截然不同</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

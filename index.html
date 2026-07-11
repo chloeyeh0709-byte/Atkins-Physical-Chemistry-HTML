@@ -46,9 +46,9 @@ main{
 }
 .book-grid{
   display:grid;
-  grid-template-columns:1fr 1fr;
+  grid-template-columns:repeat(3,1fr);
   gap:28px;
-  max-width:760px;
+  max-width:1060px;
   width:100%;
 }
 .book-card{
@@ -72,6 +72,7 @@ main{
 }
 .book-card.physical::before{background:#c0392b;}
 .book-card.organic::before{background:#27ae60;}
+.book-card.inorganic::before{background:#2e6f9e;}
 .book-card:hover{
   transform:translateY(-4px);
   box-shadow:0 12px 40px rgba(0,0,0,.4);
@@ -86,6 +87,7 @@ main{
 }
 .book-card.physical .label{color:#c0392b;}
 .book-card.organic .label{color:#27ae60;}
+.book-card.inorganic .label{color:#2e6f9e;}
 .book-card h2{
   font-family:'Noto Sans TC',sans-serif;
   font-size:1.3rem;
@@ -117,6 +119,7 @@ main{
 }
 .book-card.physical .chapter-count strong{color:#c0392b;}
 .book-card.organic .chapter-count strong{color:#27ae60;}
+.book-card.inorganic .chapter-count strong{color:#2e6f9e;}
 .arrow{
   position:absolute;
   bottom:28px;
@@ -126,6 +129,9 @@ main{
   transition:opacity .18s, right .18s;
 }
 .book-card:hover .arrow{opacity:.9;right:24px;}
+@media(max-width:900px){
+  .book-grid{grid-template-columns:1fr 1fr;}
+}
 @media(max-width:600px){
   .book-grid{grid-template-columns:1fr;}
   header{padding:40px 24px 24px;}
@@ -140,6 +146,16 @@ main{
 </header>
 <main>
 <div class="book-grid">
+<a class="book-card inorganic" href="inorganic/index.html">
+<div class="label">無機化學</div>
+<h2>Miessler's Inorganic Chemistry</h2>
+<div class="subtitle">無機分子結構與鍵結理論<br>含對稱性、群論、配位化學、有機金屬</div>
+<div class="chapter-count">
+<strong>1</strong>
+章節・第四章 對稱性與群論
+</div>
+<span class="arrow">→</span>
+</a>
 <a class="book-card physical" href="physical/index.html">
 <div class="label">物理化學</div>
 <h2>Atkins' Physical Chemistry</h2>
@@ -155,8 +171,8 @@ main{
 <h2>Clayden's Organic Chemistry</h2>
 <div class="subtitle">有機結構與反應機制<br>含譜學分析、軌域理論、彎箭頭機制</div>
 <div class="chapter-count">
-<strong>5</strong>
-章節・第一章至第五章
+<strong>14</strong>
+章節・第一章至第十五章（含）
 </div>
 <span class="arrow">→</span>
 </a>

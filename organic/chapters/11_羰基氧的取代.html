@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第11章 羰基氧的親核取代</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh}
+#sidebar{width:260px;min-width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+#sidebar-header{padding:20px 16px 12px;border-bottom:1px solid #333c45}
+#sidebar-header h2{font-size:0.85rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+#sidebar-header p{font-size:0.78rem;color:var(--sidebar-fg-dim);line-height:1.4}
+#toc{padding:12px 0 24px}
+#toc a{display:block;padding:6px 18px;font-size:0.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.04)}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.1)}
+#toc .toc-section{padding:10px 18px 4px;font-size:0.7rem;color:#566270;text-transform:uppercase;letter-spacing:.06em}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer}
+main{flex:1;padding:40px 48px;max-width:860px}
+h1{font-size:1.9rem;font-weight:700;color:#1a1208;margin-bottom:6px}
+.subtitle{color:#7a6a55;font-size:1rem;margin-bottom:32px;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:#1a1208;margin:40px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.1rem;font-weight:700;color:#2d2010;margin:24px 0 10px}
+h4{font-size:0.95rem;font-weight:700;color:#3a2e1a;margin:18px 0 8px}
+p{line-height:1.75;margin-bottom:12px}
+.back-link{display:inline-block;margin-bottom:28px;color:var(--accent);text-decoration:none;font-size:0.88rem}
+.back-link:hover{text-decoration:underline}
+section{background:var(--paper-bg);border:1px solid var(--rule);border-radius:8px;padding:28px 32px;margin-bottom:28px}
+.box-note{background:#f0f7ff;border-left:4px solid var(--accent2);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-example{background:#f6fff0;border-left:4px solid var(--accent);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-key{background:#fff8e6;border-left:4px solid #e6a817;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-selftest{background:#fdf0f8;border-left:4px solid #c0399a;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-summary{background:#f3faf5;border:1px solid #b2dfc0;border-radius:6px;padding:16px 20px;margin:20px 0}
+.reaction-scheme{background:#f8f8f4;border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:14px 0;font-family:'Courier New',monospace;font-size:0.88rem;line-height:1.8;overflow-x:auto;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.91rem}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:#f5f2ec}
+ul,ol{padding-left:22px;margin:10px 0 14px}
+li{line-height:1.7;margin-bottom:4px}
+@media(max-width:900px){
+  #sidebar{position:fixed;left:-260px;top:0;height:100%;z-index:100;transition:left .25s}
+  #sidebar.open{left:0}
+  #menu-btn{display:block}
+  main{padding:24px 18px;padding-top:56px}
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>有機化學</h2>
+    <p>第11章 羰基氧的親核取代</p>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#overview">加成-消除機制概覽</a>
+    <a href="#hemiacetal-acetal">半縮醛與縮醛</a>
+    <a href="#cyclic-acetal">環狀縮醛與保護基</a>
+    <a href="#imine-enamine">亞胺與烯胺</a>
+    <a href="#nitrogen-derivatives">含氮衍生物</a>
+    <a href="#reductive-amination">還原胺化</a>
+    <a href="#wittig">Wittig反應</a>
+  </div>
+</nav>
+<button id="menu-btn">☰ 目錄</button>
+<main>
+  <a class="back-link" href="../index.html">← 返回有機化學目錄</a>
+  <h1>第11章 羰基氧的親核取代</h1>
+  <p class="subtitle">Nucleophilic Substitution at C=O with Loss of Carbonyl Oxygen</p>
+
+  <section id="overview">
+    <h2>加成-消除機制概覽</h2>
+    <p>在第六章中，我們討論了親核加成至羰基（Nu 攻擊後 O 保持），而本章的關鍵區別在於：親核劑攻擊後，<strong>羰基的氧原子以離去基的形式離開</strong>，形成新的雙鍵或杂原子取代物。</p>
+    <p>整體機制為<strong>加成再消除</strong>（addition-then-elimination）：</p>
+    <div class="reaction-scheme">
+    C=O  +  Nu-H  →  [加成中間體：C(OH)(NuH)]  →  C=Nu  +  H₂O</div>
+    <div class="box-key">
+      <strong>關鍵規則：</strong>這類反應只在<strong>酸催化</strong>條件下進行（將 OH 轉化為良好的離去基 H₂O⁺）；鹼催化無法協助消除水。
+    </div>
+    <p>參與反應的親核劑通常帶有孤對電子的 <strong>N 或 O 原子</strong>，且它們本身也可作為離去基（pKₐ 足夠低，使對應的中性分子可以被消除）。</p>
+  </section>
+
+  <section id="hemiacetal-acetal">
+    <h2>半縮醛與縮醛的生成</h2>
+    <h3>步驟一：半縮醛（Hemiacetal）</h3>
+    <p>醇在酸或鹼催化下對醛或酮進行親核加成，生成<strong>半縮醛（hemiacetal）</strong>。平衡偏向醛側（K &lt; 1），除非生成穩定的環狀結構。</p>
+    <div class="reaction-scheme">
+    R-CHO  +  R'OH  ⇌  R-CH(OH)(OR')
+                         半縮醛</div>
+
+    <h3>步驟二：縮醛（Acetal）— 僅酸催化</h3>
+    <p>在酸催化下，半縮醛的 OH 被質子化為<strong>氧鎓離子（oxonium ion）</strong>，成為好的離去基，然後另一個醇分子進行 SN1 型取代，生成<strong>縮醛（acetal）</strong>。</p>
+    <div class="reaction-scheme">
+    R-CH(OH)(OR')  + H⁺  →  R-CH(OH₂⁺)(OR')
+                             ↓ -H₂O（SN1）
+                          R-CH⁺(OR')
+                             ↓ + R'OH, -H⁺
+                          R-CH(OR')₂
+                             縮醛</div>
+    <div class="box-note">
+      <strong>為何只有酸催化？</strong><br>
+      消除 OH 需要先將其質子化為 H₂O（pKₐ = −1.7），使之成為好的離去基。鹼無法催化此步驟，因為 OH⁻ 的 pKₐ 約 15.7，是極差的離去基。
+    </div>
+
+    <h3>縮醛的穩定性</h3>
+    <p>縮醛在<strong>中性或鹼性條件下穩定</strong>（不受親核劑攻擊），但在<strong>酸性水溶液中可水解</strong>回到醛和醇。這使得縮醛成為重要的保護基。</p>
+    <table>
+      <tr><th>化合物</th><th>條件</th><th>穩定性</th></tr>
+      <tr><td>醛/酮</td><td>─</td><td>可被親核劑攻擊</td></tr>
+      <tr><td>半縮醛</td><td>平衡</td><td>通常不穩定，環狀除外</td></tr>
+      <tr><td>縮醛</td><td>中性、鹼性</td><td>穩定；酸性水溶液中水解</td></tr>
+    </table>
+  </section>
+
+  <section id="cyclic-acetal">
+    <h2>環狀縮醛與保護基策略</h2>
+    <h3>環狀縮醛的優勢</h3>
+    <p>使用<strong>二醇（如乙二醇）</strong>與醛/酮反應，生成<strong>五員環狀縮醛（1,3-二氧戊環）</strong>。環狀縮醛比鏈狀縮醛更穩定，因熵利於（兩分子→一分子＋一分子水）且環應變較小。</p>
+    <div class="reaction-scheme">
+    R₂C=O  +  HOCH₂CH₂OH  ⇌  [環狀縮醛]  +  H₂O
+              (乙二醇)       1,3-二氧戊環</div>
+
+    <h3>保護基策略</h3>
+    <p>在多步合成中，若只想對分子中某一羰基進行反應，可先將另一個保護為縮醛：</p>
+    <ol>
+      <li>用乙二醇在酸催化下保護目標羰基 → 縮醛</li>
+      <li>對其他官能基進行所需反應</li>
+      <li>酸性水溶液水解，去保護，恢復羰基</li>
+    </ol>
+    <div class="box-example">
+      <strong>範例：</strong>分子中含有醛和酮，若只想還原酮，先將醛保護為縮醛，還原酮後，再水解去保護醛。
+    </div>
+  </section>
+
+  <section id="imine-enamine">
+    <h2>亞胺與烯胺的生成</h2>
+    <h3>亞胺（Imine）—— 以伯胺（R-NH₂）生成</h3>
+    <p>伯胺與醛/酮在酸催化下先生成<strong>甲醇胺（hemiaminal）</strong>，再消除水生成<strong>亞胺（Schiff鹼，C=N）</strong>。pH 需控制：過酸則胺被質子化而活性降低；過鹼則水不易消除。</p>
+    <div class="reaction-scheme">
+    R₂C=O  +  H₂N-R'  →  R₂C(OH)(NHR')    →  R₂C=N-R'  +  H₂O
+                          甲醇胺（hemiaminal）    亞胺（imine）</div>
+
+    <h3>烯胺（Enamine）—— 以仲胺（R₂NH）生成</h3>
+    <p>仲胺與醛/酮反應，甲醇胺中間體無法消除 NH 形成亞胺（N 無孤 H），而是脫去 α-碳的氫，生成<strong>烯胺（enamine）</strong>。</p>
+    <div class="reaction-scheme">
+    R₂C=O  +  HN(R')₂  →  R₂C(OH)[N(R')₂]  →  RC=CH  +  H₂O
+                           甲醇胺             烯胺（C=C-N）</div>
+    <div class="box-key">
+      <strong>亞胺 vs 烯胺：</strong>
+      <ul>
+        <li><strong>伯胺</strong>（一個 N-H）→ 生成<strong>亞胺</strong>（C=N）</li>
+        <li><strong>仲胺</strong>（無 N-H）→ 生成<strong>烯胺</strong>（C=C-NR₂）</li>
+      </ul>
+    </div>
+
+    <h3>亞胺鎓離子（Iminium Ion）</h3>
+    <p>烯胺在酸中質子化 α 碳，生成<strong>亞胺鎓離子（C⁺=N）</strong>，為重要的親電性中間體，可與親核劑反應。</p>
+  </section>
+
+  <section id="nitrogen-derivatives">
+    <h2>含氮衍生物：肟、腙、縮胺脲</h2>
+    <p>多種含氮親核劑可與羰基反應，產物均為類亞胺的 C=N 化合物，穩定且可結晶，常用於<strong>鑑定醛酮</strong>。</p>
+    <table>
+      <tr><th>試劑</th><th>產物名稱</th><th>結構</th></tr>
+      <tr><td>羥胺（NH₂OH）</td><td>肟（Oxime）</td><td>R₂C=N-OH</td></tr>
+      <tr><td>苯肼（PhNHNH₂）</td><td>苯腙（Phenylhydrazone）</td><td>R₂C=N-NHPh</td></tr>
+      <tr><td>2,4-二硝基苯肼</td><td>2,4-DNP 衍生物（橙色晶體）</td><td>R₂C=N-NHAr</td></tr>
+      <tr><td>縮胺脲（NH₂NHCONH₂）</td><td>縮胺脲（Semicarbazone）</td><td>R₂C=N-NHCONH₂</td></tr>
+    </table>
+    <div class="box-example">
+      <strong>2,4-DNP 測試（Brady's Test）：</strong>醛酮加入 2,4-二硝基苯肼試劑，若出現橙黃色沉澱，代表含有羰基（C=O）。
+    </div>
+  </section>
+
+  <section id="reductive-amination">
+    <h2>還原胺化與Strecker合成</h2>
+    <h3>還原胺化（Reductive Amination）</h3>
+    <p>醛/酮與胺生成亞胺（或亞胺鎓離子），再用<strong>NaCNBH₃（氰基硼氫化鈉）</strong>選擇性還原 C=N 為 C-N，直接生成胺。</p>
+    <div class="reaction-scheme">
+    R₂C=O  +  R'NH₂  →  R₂C=N-R'  →  R₂CH-NH-R'
+                          亞胺      NaCNBH₃  胺</div>
+    <div class="box-note">
+      <strong>為何選用 NaCNBH₃ 而非 NaBH₄？</strong><br>
+      NaCNBH₃ 在 pH 6–7 的弱酸性條件下選擇性還原亞胺鎓離子，不還原未反應的醛/酮（後者需要 pH &lt; 3 才被還原），避免醛酮被還原為醇的副反應。
+    </div>
+
+    <h3>Strecker合成（合成α-胺基酸）</h3>
+    <p>Strecker 合成是以醛為起點，經氰化氫加成和水解，一步得到 α-胺基酸外消旋混合物。</p>
+    <div class="reaction-scheme">
+    R-CHO  + NH₃  →  R-CH(OH)(NH₂)  →  R-CH(NH₂)(CN)  →  R-CH(NH₂)(COOH)
+                      甲醇胺          HCN              H₂O/H⁺
+                                      α-胺基腈        α-胺基酸（外消旋）</div>
+
+    <h3>LiAlH₄ 還原醯胺</h3>
+    <p><strong>LiAlH₄</strong>（四氫化鋁鋰）可直接還原醯胺（R-CO-NR₂）為相應的胺（R-CH₂-NR₂），是合成胺的重要方法。</p>
+    <div class="reaction-scheme">
+    R-CO-NHR'  →[1. LiAlH₄]→  R-CH₂-NHR'
+                [2. H₂O]</div>
+  </section>
+
+  <section id="wittig">
+    <h2>Wittig反應</h2>
+    <h3>原理與試劑</h3>
+    <p>Wittig 反應用<strong>磷葉立德（phosphonium ylide，Ph₃P⁺-CH⁻R）</strong>與醛/酮反應，以<strong>C=C 取代原來的 C=O</strong>，生成烯烴和三苯基氧化膦（Ph₃P=O）。</p>
+    <div class="reaction-scheme">
+    Ph₃P=CH-R  +  R'₂C=O  →  R'₂C=CH-R  +  Ph₃P=O
+    (磷葉立德)                  (烯烴)      (副產物)</div>
+
+    <h3>葉立德的製備</h3>
+    <div class="reaction-scheme">
+    Ph₃P  +  R-CH₂X  →  [Ph₃P-CH₂R]⁺X⁻   →  Ph₃P=CHR
+    三苯基膦   烷基鹵       磷鎓鹽              葉立德（強鹼去質子）</div>
+
+    <h3>Wittig反應的立體化學</h3>
+    <p>穩定化葉立德（含有 EWG 如 CO₂Et）通常給出 <em>trans</em>（E）烯烴，非穩定化葉立德傾向給出 <em>cis</em>（Z）烯烴。Horner-Wadsworth-Emmons（HWE）改良版（使用磷酸酯葉立德）選擇性更高。</p>
+
+    <h3>機制</h3>
+    <p>葉立德的碳原子（C⁻）攻擊羰基碳，形成<strong>氧磷環丁烷（oxaphosphetane）</strong>四員環中間體，再消除生成烯烴和 Ph₃P=O。此步骤稱為逆 [2+2] 反應。</p>
+    <div class="reaction-scheme">
+    Ph₃P=CHR  +  R'₂C=O  →  [四員環中間體]  →  R'₂C=CHR  +  Ph₃P=O
+                              氧磷環丁烷</div>
+
+    <div class="box-summary">
+      <strong>第11章重點回顧</strong>
+      <ul>
+        <li>縮醛生成需<strong>酸催化</strong>（將 OH 活化為離去基）；鹼不能催化</li>
+        <li>縮醛在中性/鹼性中穩定，酸性水中水解 → 重要<strong>保護基</strong></li>
+        <li>環狀縮醛（乙二醇保護）比鏈狀縮醛更穩定</li>
+        <li>伯胺 + 羰基 → <strong>亞胺</strong>；仲胺 + 羰基 → <strong>烯胺</strong></li>
+        <li>NH₂OH → 肟；PhNHNH₂ → 腙；NH₂NHCONH₂ → 縮胺脲</li>
+        <li><strong>還原胺化</strong>：亞胺 + NaCNBH₃ → 胺（溫和選擇性還原）</li>
+        <li><strong>Strecker 合成</strong>：醛 + NH₃ + HCN → α-胺基酸（外消旋）</li>
+        <li><strong>Wittig 反應</strong>：Ph₃P=CHR + C=O → C=C（以烯烴取代羰基）</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

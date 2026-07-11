@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第13章 ¹H NMR：質子核磁共振</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh}
+#sidebar{width:260px;min-width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+#sidebar-header{padding:20px 16px 12px;border-bottom:1px solid #333c45}
+#sidebar-header h2{font-size:0.85rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+#sidebar-header p{font-size:0.78rem;color:var(--sidebar-fg-dim);line-height:1.4}
+#toc{padding:12px 0 24px}
+#toc a{display:block;padding:6px 18px;font-size:0.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.04)}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.1)}
+#toc .toc-section{padding:10px 18px 4px;font-size:0.7rem;color:#566270;text-transform:uppercase;letter-spacing:.06em}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer}
+main{flex:1;padding:40px 48px;max-width:860px}
+h1{font-size:1.9rem;font-weight:700;color:#1a1208;margin-bottom:6px}
+.subtitle{color:#7a6a55;font-size:1rem;margin-bottom:32px;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:#1a1208;margin:40px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.1rem;font-weight:700;color:#2d2010;margin:24px 0 10px}
+h4{font-size:0.95rem;font-weight:700;color:#3a2e1a;margin:18px 0 8px}
+p{line-height:1.75;margin-bottom:12px}
+.back-link{display:inline-block;margin-bottom:28px;color:var(--accent);text-decoration:none;font-size:0.88rem}
+.back-link:hover{text-decoration:underline}
+section{background:var(--paper-bg);border:1px solid var(--rule);border-radius:8px;padding:28px 32px;margin-bottom:28px}
+.box-note{background:#f0f7ff;border-left:4px solid var(--accent2);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-example{background:#f6fff0;border-left:4px solid var(--accent);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-key{background:#fff8e6;border-left:4px solid #e6a817;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-selftest{background:#fdf0f8;border-left:4px solid #c0399a;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-summary{background:#f3faf5;border:1px solid #b2dfc0;border-radius:6px;padding:16px 20px;margin:20px 0}
+.reaction-scheme{background:#f8f8f4;border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:14px 0;font-family:'Courier New',monospace;font-size:0.88rem;line-height:1.8;overflow-x:auto;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.91rem}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:#f5f2ec}
+ul,ol{padding-left:22px;margin:10px 0 14px}
+li{line-height:1.7;margin-bottom:4px}
+.ppm-bar{position:relative;height:36px;background:linear-gradient(to left,#eee 0%,#d4e8ff 30%,#b8d4f8 50%,#ffd4d4 70%,#ffb8b8 85%,#ff9090 95%,#ff6060 100%);border-radius:6px;margin:14px 0;border:1px solid var(--rule)}
+.ppm-label{display:flex;justify-content:space-between;font-size:0.8rem;color:#666;margin-top:4px;font-family:monospace}
+@media(max-width:900px){
+  #sidebar{position:fixed;left:-260px;top:0;height:100%;z-index:100;transition:left .25s}
+  #sidebar.open{left:0}
+  #menu-btn{display:block}
+  main{padding:24px 18px;padding-top:56px}
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>有機化學</h2>
+    <p>第13章 ¹H NMR：質子核磁共振</p>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#basics">NMR基礎與化學位移</a>
+    <a href="#integration">積分與氫原子比例</a>
+    <a href="#shift-regions">化學位移的規律</a>
+    <a href="#ring-current">環電流效應</a>
+    <a href="#coupling">偶合與偶合常數J</a>
+    <a href="#splitting">n+1法則與Pascal三角形</a>
+    <a href="#ax-ab">AX、AB與A₂系統</a>
+    <a href="#j-factors">影響偶合常數的因素</a>
+    <a href="#long-range">長程偶合</a>
+  </div>
+</nav>
+<button id="menu-btn">☰ 目錄</button>
+<main>
+  <a class="back-link" href="../index.html">← 返回有機化學目錄</a>
+  <h1>第13章 ¹H NMR：質子核磁共振</h1>
+  <p class="subtitle">Proton Nuclear Magnetic Resonance Spectroscopy</p>
+
+  <section id="basics">
+    <h2>NMR基礎與化學位移</h2>
+    <p>核磁共振（NMR）是有機化學中最強大的結構鑑定技術。氫原子核（¹H，質子）在外加磁場中會吸收特定頻率的射頻輻射，不同化學環境的氫原子吸收頻率不同，以此區分。</p>
+    <h3>化學位移（δ，ppm）</h3>
+    <p>為排除磁場強度（MHz）的影響，採用相對尺度：以<strong>四甲基矽烷（TMS）</strong>為標準（δ = 0 ppm），所有氫核的位移以「百萬分之一（ppm）」表示。</p>
+    <div class="box-key">
+      <strong>δ（ppm）= (樣品頻率 − TMS頻率) / 磁譜儀頻率（MHz）× 10⁶</strong><br>
+      δ 值越大（越往左）→ 低磁場（downfield），去遮蔽（deshielded）<br>
+      δ 值越小（越往右）→ 高磁場（upfield），遮蔽（shielded）
+    </div>
+    <p>關鍵特性：<strong>化學位移（ppm）不隨磁場強度改變</strong>，但<strong>偶合常數 J（Hz）也不隨磁場強度改變</strong>，這使得在不同儀器上測量的結果可互相比較。</p>
+  </section>
+
+  <section id="integration">
+    <h2>積分與氫原子比例</h2>
+    <p>NMR 訊號的<strong>積分面積</strong>（積分線的高度）與貢獻該訊號的氫原子數目成正比，但只能確定相對比例，不能直接得到絕對數目。</p>
+    <div class="box-example">
+      <strong>範例：</strong>乙酸乙酯 CH₃-CO-O-CH₂-CH₃<br>
+      積分比約為 3:2:3（OMe:OCH₂:CH₃），對應氫原子數比 3:2:3，但需要其他資訊（分子式）才能確定絕對數字。
+    </div>
+  </section>
+
+  <section id="shift-regions">
+    <h2>化學位移的規律</h2>
+    <p>氫原子的化學位移取決於其所在的電子環境。<strong>去遮蔽</strong>（拉電子效應使電子密度降低）→ δ 偏大；<strong>遮蔽</strong>（推電子效應）→ δ 偏小。</p>
+    <table>
+      <tr><th>化學位移範圍（δ, ppm）</th><th>氫原子類型</th></tr>
+      <tr><td>9–10.5</td><td>醛基（RCHO），羧酸（RCOOH）可達 10–12</td></tr>
+      <tr><td>6.5–8.5</td><td>芳香環 Ar-H（苯環）</td></tr>
+      <tr><td>4.5–6.5</td><td>烯烴（C=C-H），部分 O-CH 也在此區</td></tr>
+      <tr><td>3.5–5</td><td>O 旁的 sp³ C-H（醇、醚、酯的 OCH₂/OCH₃）</td></tr>
+      <tr><td>2–3.5</td><td>N 旁 C-H；苄位（Ar-CH₂）；α-羰基 CH（RCOCH₃ ~2.1）</td></tr>
+      <tr><td>0–2</td><td>一般 sp³ C-H（烷基，甲基 ~0.9，亞甲基 ~1.3）</td></tr>
+    </table>
+    <div class="box-note">
+      <strong>估算化學位移的加成法：</strong>以甲烷（δ ~0.2）為基準，每個連接的官能基對相鄰 C-H 都有特定位移增量。例如，相鄰一個 OH 使 δ 增加約 +2.5 ppm；相鄰一個苯環增加約 +1.3 ppm。
+    </div>
+  </section>
+
+  <section id="ring-current">
+    <h2>環電流效應</h2>
+    <p>芳香環中的離域 π 電子在外加磁場下產生環電流，在環的<strong>平面外圍（periphery）形成感應磁場方向與外加磁場相同</strong>，使芳香 H 受到額外去遮蔽 → δ 偏大（6.5–8.5 ppm）。</p>
+    <p>若氫位於環的<strong>軸向正上方/正下方（shielding cone）</strong>，則受到遮蔽，δ 偏小（此現象見於某些輪烯的內部 H，δ 甚至可為負值）。</p>
+    <div class="box-example">
+      <strong>炔基 H：</strong>三鍵 H 位於圓柱形 π 系統的軸方向（shielding cone），因此炔基 H 的 δ 約 2–3 ppm，遠比預期的去遮蔽程度低。
+    </div>
+  </section>
+
+  <section id="coupling">
+    <h2>偶合與偶合常數 J</h2>
+    <h3>偶合（Coupling）的本質</h3>
+    <p>相鄰氫核之間的自旋透過化學鍵傳遞影響（<strong>透鍵偶合，through-bond coupling</strong>），使訊號裂分（splitting）。偶合程度以<strong>偶合常數 J（單位：Hz）</strong>表示。</p>
+    <div class="box-key">
+      <strong>重要性質：</strong>
+      <ul>
+        <li>J 值不隨磁場強度（MHz）改變（與 δ/ppm 不同）</li>
+        <li>偶合是<strong>對稱</strong>的：J(AB) = J(BA)</li>
+        <li>等價質子（化學等同）不互相偶合（但如果它們有所不同才會偶合）</li>
+        <li>通常只觀察到 ³J（vicinal，3根鍵）和部分 ⁴J（長程）偶合</li>
+      </ul>
+    </div>
+    <h3>訊號裂分的描述</h3>
+    <table>
+      <tr><th>縮寫</th><th>名稱</th><th>峰數</th><th>強度比</th></tr>
+      <tr><td>s</td><td>單峰（singlet）</td><td>1</td><td>1</td></tr>
+      <tr><td>d</td><td>雙峰（doublet）</td><td>2</td><td>1:1</td></tr>
+      <tr><td>t</td><td>三重峰（triplet）</td><td>3</td><td>1:2:1</td></tr>
+      <tr><td>q</td><td>四重峰（quartet）</td><td>4</td><td>1:3:3:1</td></tr>
+      <tr><td>qn</td><td>五重峰（quintet）</td><td>5</td><td>1:4:6:4:1</td></tr>
+      <tr><td>dd</td><td>雙重雙峰（doublet of doublets）</td><td>4</td><td>等強度（若J不同）</td></tr>
+      <tr><td>m</td><td>多重峰（multiplet）</td><td>複雜</td><td>─</td></tr>
+    </table>
+  </section>
+
+  <section id="splitting">
+    <h2>n+1 法則與Pascal三角形</h2>
+    <p>若一個氫原子有 <em>n</em> 個等價鄰近氫，其訊號裂分為 <em>n</em> + 1 條峰，強度比由<strong>Pascal三角形</strong>給出（二項展開式係數）。</p>
+    <div class="reaction-scheme">
+    Pascal 三角形：
+    n=0（無鄰H）: 1           → singlet
+    n=1（1個鄰H）: 1  1        → doublet
+    n=2（2個鄰H）: 1  2  1     → triplet
+    n=3（3個鄰H）: 1  3  3  1  → quartet
+    n=4（4個鄰H）: 1  4  6  4  1 → quintet
+    n=5（5個鄰H）: 1  5 10 10  5  1 → sextet
+    n=6（6個鄰H）: 1  6 15 20 15  6  1 → septet</div>
+    <div class="box-example">
+      <strong>乙基 CH₃CH₂- 的典型規律：</strong><br>
+      CH₃（3H）：鄰近 CH₂ 有 2H → n+1 = 3 → 三重峰（triplet，1:2:1）<br>
+      CH₂（2H）：鄰近 CH₃ 有 3H → n+1 = 4 → 四重峰（quartet，1:3:3:1）
+    </div>
+    <div class="box-note">
+      <strong>注意：</strong>n+1 法則只適用於<strong>所有偶合常數相同</strong>的情況（等價鄰接氫）。若有兩個不同 J 的鄰居，就會出現 dd（雙重雙峰）等複雜裂分型態。
+    </div>
+  </section>
+
+  <section id="ax-ab">
+    <h2>AX、AB 與 A₂ 系統</h2>
+    <h3>AX 系統（δ 差異 >> J）</h3>
+    <p>兩個化學位移相差很大（Δδ >> J）的不同質子 H<sup>A</sup> 和 H<sup>X</sup>，每個都顯示為對稱的雙峰（doublet），間距 = J。</p>
+
+    <h3>A₂ 系統（兩個等價氫）</h3>
+    <p>兩個完全等價的氫（如苯的六個 H）只出現一個<strong>單峰</strong>，彼此不偶合（因為等價 H 自旋態差異不造成可觀測的頻率差異）。</p>
+
+    <h3>AB 系統（δ 差異 ≈ J）</h3>
+    <p>當 Δδ 與 J 相近時，兩個雙峰出現<strong>扭曲（roofing effect）</strong>：內側峰增高、外側峰降低。訊號往其所偶合的質子方向「傾斜」——這是指認偶合配對的有用規則。當 Δδ → 0，兩個雙峰完全重疊為一個單峰（A₂）。</p>
+    <div class="box-note">
+      <strong>實用提示：</strong>扭曲的雙峰（或多重峰）的「高峰」那側，就是其偶合夥伴的方向。
+    </div>
+  </section>
+
+  <section id="j-factors">
+    <h2>影響偶合常數的因素</h2>
+    <p>偶合常數 J 取決於三個主要因素：</p>
+    <ol>
+      <li><strong>透鍵距離</strong>：透過三鍵（³J，vicinal）的偶合最常見；四鍵（⁴J）通常接近零，特殊幾何才有長程偶合</li>
+      <li><strong>二面角（C-H 鍵的夾角）</strong>：Karplus 方程：J 與二面角 φ 相關；φ = 0° 或 180° 時 J 最大，φ = 90° 時 J ≈ 0</li>
+      <li><strong>電負性取代基</strong>：電負性原子（O、N）減弱 C-H 鍵電子密度，縮小 J</li>
+    </ol>
+    <table>
+      <tr><th>類型</th><th>典型 J 值（Hz）</th></tr>
+      <tr><td>³J 飽和開鏈（自由旋轉）</td><td>~7 Hz</td></tr>
+      <tr><td>³J 苯環上相鄰 H（ortho）</td><td>8–10 Hz</td></tr>
+      <tr><td>³J 順式烯烴（cis alkene）</td><td>10–12 Hz</td></tr>
+      <tr><td>³J 反式烯烴（trans alkene）</td><td>14–18 Hz</td></tr>
+      <tr><td>²J 孿位（geminal）飽和</td><td>10–16 Hz</td></tr>
+      <tr><td>²J 孿位（geminal）不飽和</td><td>0–3 Hz</td></tr>
+    </table>
+    <div class="box-example">
+      <strong>醇醚的影響：</strong>烯醚（H-C=C-O）的 ³J_cis 和 ³J_trans 均小於普通烯烴，因為氧原子降低了透鍵偶合效率（電子吸引削弱 C-H 鍵 HOMO-LUMO 交互作用）。
+    </div>
+  </section>
+
+  <section id="long-range">
+    <h2>長程偶合（⁴J）</h2>
+    <p>透過四根鍵的偶合（⁴J）通常很小（0–3 Hz），但在兩種特殊幾何形式中可觀察到：</p>
+    <h3>Meta 偶合（芳環）</h3>
+    <p>苯環上間位（meta）的兩個 H 透過 W 形排列的 4 根鍵偶合，⁴J_meta ≈ 1–3 Hz。</p>
+
+    <h3>烯丙偶合（Allylic Coupling）</h3>
+    <p>烯烴的 H-C-C=C-H 系統透過 W 形 4 根鍵偶合，⁴J_allylic ≈ 1–2 Hz（在烯烴的 H² 訊號中常看到額外的小裂分）。</p>
+    <div class="box-note">
+      <strong>W 型幾何：</strong>4 個鍵形成 W 字形排列時，軌域重疊最大，長程偶合最易觀察到。
+    </div>
+
+    <div class="box-summary">
+      <strong>第13章重點回顧</strong>
+      <ul>
+        <li>NMR 位移以 δ（ppm）表示，相對 TMS；ppm 不隨磁場改變</li>
+        <li>積分面積 ∝ 氫原子數（相對比例）</li>
+        <li>醛 H 9–10.5；芳 H 6.5–8.5；烯 H 4.5–6.5；OCH 3.5–5；sp³ CH 0–2.5</li>
+        <li>芳環電流使苯 H <em>去遮蔽</em>（偏大）；軸向 H 受遮蔽（偏小）</li>
+        <li>偶合常數 <em>J</em>（Hz）不隨磁場改變；相互偶合的 J 值相等</li>
+        <li><em>n</em>+1 法則：<em>n</em> 個等價鄰居 → <em>n</em>+1 峰，強度依 Pascal 三角形</li>
+        <li>AB 系統：Δδ ≈ J 時雙峰扭曲（roofing），高峰指向偶合夥伴</li>
+        <li>³J_trans &gt; ³J_cis；飽和 ³J ≈ 7 Hz；電負性取代基降低 J</li>
+        <li>長程 ⁴J（meta、allylic）：1–3 Hz，W 型幾何有利</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

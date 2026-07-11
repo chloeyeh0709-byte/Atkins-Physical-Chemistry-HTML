@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第4章 對稱性與群論</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-bg:#1e2636;--sidebar-fg:#c8d4e8;--sidebar-fg-dim:#7a90b0;
+  --accent:#2e6f9e;--accent2:#1a8a6e;
+  --main-bg:#f4f7fb;--paper-bg:#fafcff;--ink:#1c2430;--rule:#d0dcea;
+}
+body{font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh}
+#sidebar{width:260px;min-width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+#sidebar-header{padding:20px 16px 12px;border-bottom:1px solid #2d3c52}
+#sidebar-header h2{font-size:0.85rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+#sidebar-header p{font-size:0.78rem;color:var(--sidebar-fg-dim);line-height:1.4}
+#toc{padding:12px 0 24px}
+#toc a{display:block;padding:6px 18px;font-size:0.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.04)}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(46,111,158,.15)}
+#toc .toc-section{padding:10px 18px 4px;font-size:0.7rem;color:#4a6080;text-transform:uppercase;letter-spacing:.06em}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer}
+main{flex:1;padding:40px 48px;max-width:880px}
+h1{font-size:1.9rem;font-weight:700;color:#101828;margin-bottom:6px}
+.subtitle{color:#4a6070;font-size:1rem;margin-bottom:32px;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:#101828;margin:40px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.1rem;font-weight:700;color:#1a2840;margin:24px 0 10px}
+h4{font-size:0.95rem;font-weight:700;color:#243040;margin:18px 0 8px}
+p{line-height:1.75;margin-bottom:12px}
+.back-link{display:inline-block;margin-bottom:28px;color:var(--accent);text-decoration:none;font-size:0.88rem}
+.back-link:hover{text-decoration:underline}
+section{background:var(--paper-bg);border:1px solid var(--rule);border-radius:8px;padding:28px 32px;margin-bottom:28px}
+.box-note{background:#eef4ff;border-left:4px solid var(--accent);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-example{background:#f0faf5;border-left:4px solid var(--accent2);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-key{background:#fff8e8;border-left:4px solid #d4a020;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-selftest{background:#fdf0fb;border-left:4px solid #9a3ab0;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-summary{background:#edf6fc;border:1px solid #b0cce0;border-radius:6px;padding:16px 20px;margin:20px 0}
+.reaction-scheme{background:#f4f8ff;border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:14px 0;font-family:'Courier New',monospace;font-size:0.87rem;line-height:1.9;overflow-x:auto;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.91rem}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:#f0f5fb}
+ul,ol{padding-left:22px;margin:10px 0 14px}
+li{line-height:1.7;margin-bottom:4px}
+@media(max-width:900px){
+  #sidebar{position:fixed;left:-260px;top:0;height:100%;z-index:100;transition:left .25s}
+  #sidebar.open{left:0}
+  #menu-btn{display:block}
+  main{padding:24px 18px;padding-top:56px}
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>無機化學</h2>
+    <p>第4章 對稱性與群論</p>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#elements">對稱元素與對稱操作</a>
+    <a href="#flowchart">點群的判斷流程</a>
+    <a href="#special-groups">低對稱與高對稱點群</a>
+    <a href="#matrix">矩陣表示法</a>
+    <a href="#character-tables">特徵標表</a>
+    <a href="#ct-properties">特徵標的性質（7條規則）</a>
+    <a href="#reducible">可約與不可約表示</a>
+    <a href="#chirality">分子的手性</a>
+    <a href="#vibrations">分子振動分析</a>
+    <a href="#ir-raman">IR活性與Raman活性</a>
+  </div>
+</nav>
+<button id="menu-btn">☰ 目錄</button>
+<main>
+  <a class="back-link" href="../index.html">← 返回無機化學目錄</a>
+  <h1>第4章 對稱性與群論</h1>
+  <p class="subtitle">Symmetry and Group Theory — Miessler, Fischer &amp; Tarr, Inorganic Chemistry</p>
+
+  <section id="elements">
+    <h2>對稱元素與對稱操作</h2>
+    <p><strong>對稱元素（symmetry element）</strong>是分子中的幾何物件（點、線、面），對其進行<strong>對稱操作（symmetry operation）</strong>後分子看起來沒有改變。</p>
+    <table>
+      <tr><th>符號</th><th>元素名稱</th><th>操作描述</th><th>範例</th></tr>
+      <tr><td><em>E</em></td><td>恆等元素（Identity）</td><td>什麼都不做（或旋轉 360°）</td><td>所有分子</td></tr>
+      <tr><td><em>C<sub>n</sub></em></td><td>旋轉軸（Rotation axis）</td><td>繞軸旋轉 360°/n</td><td>C₂（H₂O），C₃（BF₃），C₆（苯）</td></tr>
+      <tr><td><em>σ</em></td><td>鏡面（Mirror plane）</td><td>對鏡面作反射</td><td>σ_h（水平），σ_v（垂直），σ_d（二面）</td></tr>
+      <tr><td><em>i</em></td><td>反演中心（Inversion centre）</td><td>每個原子透過中心反演到對稱位置</td><td>SF₆、苯（有 i）；H₂O（無 i）</td></tr>
+      <tr><td><em>S<sub>n</sub></em></td><td>非本徵旋轉軸（Improper rotation）</td><td>旋轉 360°/n 再作水平反射</td><td>S₄（CH₄的 S₄），S₆（椅式環己烷）</td></tr>
+    </table>
+    <h3>鏡面的分類</h3>
+    <ul>
+      <li><strong>σ_h</strong>（水平面）：垂直於主軸（最高 C_n）的鏡面</li>
+      <li><strong>σ_v</strong>（垂直面）：含有主軸的鏡面</li>
+      <li><strong>σ_d</strong>（二面角面）：含主軸且平分兩個 C₂ 軸夾角的鏡面（常見於 D 群）</li>
+    </ul>
+    <h3>對稱操作的組合</h3>
+    <p>所有分子的對稱操作集合構成一個<strong>群（group）</strong>，滿足群論的四個公設：封閉性、結合律、單位元（E）、逆元素。每個分子都屬於唯一的<strong>點群（point group）</strong>。</p>
+  </section>
+
+  <section id="flowchart">
+    <h2>點群的判斷流程</h2>
+    <p>依照以下6步驟流程圖判斷分子點群：</p>
+    <div class="reaction-scheme">
+步驟 1: 分子是線型嗎？
+  → 是：有 i？→ D∞h（CO₂、C₂H₂）；無 i → C∞v（HCl、HCN）
+  → 否：繼續
+
+步驟 2: 是高對稱性點群嗎？（有多個 Cn, n≥3 的旋轉軸）
+  → 是：Td（正四面體）、Oh（正八面體）、Ih（正二十面體）
+
+步驟 3: 有主轉軸 Cn（最高 n）嗎？
+  → 否：只有 σ → Cs；只有 i → Ci；都沒有 → C₁
+
+步驟 4: 有 n 個垂直 Cn 的 C₂ 軸嗎？
+  → 是：進入 D 群；→ 否：進入 C 群
+
+步驟 5a（D 群）：有 σ_h？→ D_nh（如 D₆h，苯）
+               有 n 個 σ_d？→ D_nd（如 D₂d，丙二烯）
+               都沒有 → D_n（如 D₃，三螺旋配合物）
+
+步驟 5b（C 群）：有 σ_h？→ C_nh（如 C₂h，反式-N₂F₂）
+               有 σ_v？→ C_nv（如 C₂v，H₂O；C₃v，NH₃）
+               都沒有 → C_n（如 C₂，H₂O₂）</div>
+    <div class="box-key">
+      <strong>最常見點群記憶口訣：</strong>
+      <ul>
+        <li><strong>C₁</strong>（無對稱）、<strong>Cs</strong>（只有一面）、<strong>Ci</strong>（只有反演中心）</li>
+        <li><strong>C₂v</strong>（H₂O，SO₂）：C₂ + 2σ_v，無 C₂⊥</li>
+        <li><strong>C₃v</strong>（NH₃，PCl₃）：C₃ + 3σ_v</li>
+        <li><strong>D₂h</strong>（乙烯，乙烷交叉）：3個互垂直 C₂ + 3σ + i</li>
+        <li><strong>D₆h</strong>（苯）：C₆ + 6C₂ + σ_h + 6σ_v/d + i</li>
+        <li><strong>Td</strong>（CH₄，CCl₄）：4個 C₃ + 3C₂ + 3S₄ + 6σ_d</li>
+        <li><strong>Oh</strong>（SF₆，[Co(NH₃)₆]³⁺）：4C₃ + 3C₄ + 6C₂ + i + ...</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="special-groups">
+    <h2>低對稱與高對稱點群</h2>
+    <h3>低對稱點群</h3>
+    <table>
+      <tr><th>點群</th><th>對稱元素</th><th>範例</th></tr>
+      <tr><td>C₁</td><td>只有 E（無對稱）</td><td>CHFClBr，大多數手性分子</td></tr>
+      <tr><td>Cs</td><td>E + σ（只有一個鏡面）</td><td>SOCl₂（σ 為分子平面）</td></tr>
+      <tr><td>Ci</td><td>E + i（只有反演中心）</td><td>meso-CHClBr-CHClBr</td></tr>
+    </table>
+    <h3>高對稱點群（Linear &amp; Platonic Solids）</h3>
+    <table>
+      <tr><th>點群</th><th>幾何形狀</th><th>範例</th></tr>
+      <tr><td>C∞v</td><td>線型，無 i</td><td>HCl、HCN、CO</td></tr>
+      <tr><td>D∞h</td><td>線型，有 i</td><td>H₂、CO₂、C₂H₂</td></tr>
+      <tr><td>Td</td><td>正四面體</td><td>CH₄、CCl₄、P₄、[BF₄]⁻</td></tr>
+      <tr><td>Oh</td><td>正八面體</td><td>SF₆、[Co(NH₃)₆]³⁺</td></tr>
+      <tr><td>Ih</td><td>正二十面體</td><td>B₁₂H₁₂²⁻、C₆₀（足球烯）</td></tr>
+    </table>
+  </section>
+
+  <section id="matrix">
+    <h2>矩陣表示法</h2>
+    <p>每個對稱操作都可以用一個<strong>變換矩陣（transformation matrix）</strong>來表示，描述對分子中原子座標（x, y, z）的影響。</p>
+    <h3>常見變換矩陣範例</h3>
+    <div class="reaction-scheme">
+恆等 E：         繞 z 軸旋轉 C₂：      σ_v(xz)鏡面：
+[1  0  0]        [-1  0  0]           [1   0  0]
+[0  1  0]        [ 0 -1  0]           [0  -1  0]
+[0  0  1]        [ 0  0  1]           [0   0  1]
+
+（x→x, y→y, z→z）（x→-x, y→-y, z→z）（x→x, y→-y, z→z）</div>
+
+    <h3>特徵標（Character）</h3>
+    <p><strong>特徵標 χ</strong> 是變換矩陣的<strong>跡（trace）</strong>，即矩陣主對角元素之和。特徵標比完整矩陣更方便使用，且對同一對稱類（class）的所有操作相同。</p>
+    <div class="box-note">
+      <strong>重要：</strong>在對稱操作中，<em>只有原子位置未移動的座標</em>才對特徵標有貢獻：<br>
+      • 座標方向不變 → 貢獻 +1<br>
+      • 座標方向反向 → 貢獻 −1<br>
+      • 座標換到另一個坐標 → 貢獻 0
+    </div>
+    <h3>塊對角化（Block Diagonalization）</h3>
+    <p>大矩陣可以化簡為幾個小塊的矩陣（每塊對應一個不可約表示）。若 C₃ 操作中 x 和 y 相互耦合，矩陣可對角化為一個 2×2 塊（對應 E 不可約表示）和一個 1×1 塊（對應 A₁）。</p>
+  </section>
+
+  <section id="character-tables">
+    <h2>特徵標表</h2>
+    <p>每個點群有唯一的<strong>特徵標表（character table）</strong>，完整列出該群所有不可約表示的特徵標。</p>
+    <h3>C₂v 的特徵標表（以 H₂O 為例）</h3>
+    <table>
+      <tr><th>C₂v</th><th>E</th><th>C₂</th><th>σ_v(xz)</th><th>σ_v'(yz)</th><th>線性函數</th><th>二次函數</th></tr>
+      <tr><td>A₁</td><td>1</td><td>1</td><td>1</td><td>1</td><td>z</td><td>x², y², z²</td></tr>
+      <tr><td>A₂</td><td>1</td><td>1</td><td>−1</td><td>−1</td><td>R_z</td><td>xy</td></tr>
+      <tr><td>B₁</td><td>1</td><td>−1</td><td>1</td><td>−1</td><td>x, R_y</td><td>xz</td></tr>
+      <tr><td>B₂</td><td>1</td><td>−1</td><td>−1</td><td>1</td><td>y, R_x</td><td>yz</td></tr>
+    </table>
+    <h3>C₃v 的特徵標表（以 NH₃ 為例）</h3>
+    <table>
+      <tr><th>C₃v</th><th>E</th><th>2C₃</th><th>3σ_v</th><th>線性函數</th><th>二次函數</th></tr>
+      <tr><td>A₁</td><td>1</td><td>1</td><td>1</td><td>z</td><td>x²+y², z²</td></tr>
+      <tr><td>A₂</td><td>1</td><td>1</td><td>−1</td><td>R_z</td><td>─</td></tr>
+      <tr><td>E</td><td>2</td><td>−1</td><td>0</td><td>(x,y), (R_x,R_y)</td><td>(x²−y², xy), (xz, yz)</td></tr>
+    </table>
+    <h3>特徵標表的符號說明</h3>
+    <table>
+      <tr><th>符號</th><th>含義</th></tr>
+      <tr><td>x, y, z</td><td>座標（及 p 軌域方向）</td></tr>
+      <tr><td>R_x, R_y, R_z</td><td>繞各軸的旋轉</td></tr>
+      <tr><td>R</td><td>任意對稱操作</td></tr>
+      <tr><td>χ</td><td>操作的特徵標</td></tr>
+      <tr><td>h</td><td>群的階（對稱操作總數）</td></tr>
+    </table>
+  </section>
+
+  <section id="ct-properties">
+    <h2>特徵標的 7 條性質</h2>
+    <p>不可約表示的特徵標滿足以下性質（以 C₂v 為例說明）：</p>
+    <table>
+      <tr><th>#</th><th>性質</th><th>C₂v 範例</th></tr>
+      <tr><td>1</td><td>群的<strong>階 h</strong> = 對稱操作總數</td><td>h = 4（E, C₂, σ_v, σ_v'）</td></tr>
+      <tr><td>2</td><td>同類操作（Class）的特徵標相同，可合併為一列</td><td>C₂v 每個操作各自一類（共 4 類 4 行）</td></tr>
+      <tr><td>3</td><td>不可約表示數 = 類數（特徵標表是方形）</td><td>4 類 = 4 個不可約表示（A₁, A₂, B₁, B₂）</td></tr>
+      <tr><td>4</td><td>各不可約表示維數（E 下的字符）的平方和 = h</td><td>1²+1²+1²+1² = 4 ✓</td></tr>
+      <tr><td>5</td><td>任意不可約表示：各類 [N · χ(R)]² 之和 = h</td><td>A₂: 1²+1²+(−1)²+(−1)² = 4 ✓</td></tr>
+      <tr><td>6</td><td>不同不可約表示互相<strong>正交</strong>：Σ_R χᵢ(R)χⱼ(R) = 0 (i≠j)</td><td>B₁ × B₂: (1)(1)+(−1)(−1)+(1)(−1)+(−1)(1) = 0 ✓</td></tr>
+      <tr><td>7</td><td>每個點群必有一個<strong>全對稱表示</strong>（A₁），所有字符均為 +1</td><td>C₂v 的 A₁：全 1</td></tr>
+    </table>
+    <h3>不可約表示的命名規則</h3>
+    <ul>
+      <li><strong>維度</strong>：A/B（1D），E（2D），T（3D）</li>
+      <li><strong>A vs B</strong>：A 對主旋轉對稱（χ(Cn)=+1）；B 對主旋轉反對稱（χ(Cn)=−1）</li>
+      <li><strong>下標 g/u</strong>：g（gerade）對反演對稱（+1）；u（ungerade）對反演反對稱（−1）</li>
+      <li><strong>下標 1/2</strong>：1 對 C₂⊥ 或 σ_v 對稱；2 對 C₂⊥ 或 σ_v 反對稱</li>
+      <li><strong>上標 '/''</strong>：' 對 σ_h 對稱；'' 對 σ_h 反對稱（C_nh、D_nh）</li>
+    </ul>
+  </section>
+
+  <section id="reducible">
+    <h2>可約與不可約表示</h2>
+    <h3>可約表示（Reducible Representation，Γ）</h3>
+    <p>由分子所有座標向量的變換矩陣特徵標組成的表示，通常是多個不可約表示的線性組合。</p>
+    <div class="box-example">
+      <strong>H₂O 的全運動可約表示（C₂v）：</strong>
+      E: χ=9（全部9個座標不變），C₂: χ=−1，σ_v(xz): χ=3，σ_v'(yz): χ=1
+    </div>
+
+    <h3>約化公式（Reduction Formula）</h3>
+    <p>將可約表示 Γ 分解為不可約表示之和：</p>
+    <div class="reaction-scheme">
+某不可約表示 i 的貢獻次數 nᵢ：
+
+        1
+nᵢ = ─── Σ [（某類的操作數 N）×（Γ的特徵標）×（i的特徵標）]
+        h  R</div>
+    <div class="box-example">
+      <strong>H₂O 範例（C₂v，h=4）：</strong>
+      Γ = (9, −1, 3, 1) for (E, C₂, σ_v, σ_v')
+      n(A₁) = ¼[(9)(1)+(−1)(1)+(3)(1)+(1)(1)] = ¼[12] = 3
+      n(A₂) = ¼[(9)(1)+(−1)(1)+(3)(−1)+(1)(−1)] = ¼[4] = 1
+      n(B₁) = ¼[(9)(1)+(−1)(−1)+(3)(1)+(1)(−1)] = ¼[12] = 3
+      n(B₂) = ¼[(9)(1)+(−1)(−1)+(3)(−1)+(1)(1)] = ¼[8] = 2
+      Γ = 3A₁ + A₂ + 3B₁ + 2B₂（全運動）
+      振動 = Γ − 平移 − 旋轉 = 2A₁ + B₁（3 個振動模式）
+    </div>
+  </section>
+
+  <section id="chirality">
+    <h2>分子的手性</h2>
+    <p>從群論觀點判斷分子手性：</p>
+    <div class="box-key">
+      <strong>手性分子的判斷：</strong>若分子的點群只含有<strong>本徵旋轉（proper rotation，E 和 C_n）</strong>，不含有任何<strong>非本徵操作（improper：σ、i、S_n）</strong>，則分子為手性（chiral）。
+    </div>
+    <p>等價說法：分子是手性的，當且僅當它<strong>沒有 σ、i、或 S_n 對稱元素</strong>。</p>
+    <table>
+      <tr><th>點群</th><th>含非本徵元素？</th><th>手性？</th></tr>
+      <tr><td>C₁（無對稱）</td><td>否</td><td>手性</td></tr>
+      <tr><td>Cs（只有 σ）</td><td>是（σ）</td><td>非手性</td></tr>
+      <tr><td>Ci（只有 i）</td><td>是（i）</td><td>非手性</td></tr>
+      <tr><td>C₂, C₃, D₂...（只有 Cn）</td><td>否</td><td>手性</td></tr>
+      <tr><td>C₂v, C₃v（有 σ）</td><td>是（σ_v）</td><td>非手性</td></tr>
+      <tr><td>D₃（只有 Cn）</td><td>否</td><td>手性（[Ru(en)₃]²⁺）</td></tr>
+    </table>
+    <div class="box-example">
+      <strong>範例：</strong>[Ru(NH₂CH₂CH₂NH₂)₃]²⁺ 屬於 D₃ 點群，只有旋轉軸，無鏡面或反演中心 → 手性配合物，其兩種鏡像異構物如螺旋槳葉片，旋光方向相反。
+    </div>
+  </section>
+
+  <section id="vibrations">
+    <h2>分子振動分析</h2>
+    <h3>自由度的分類</h3>
+    <p>含 N 個原子的分子有 <strong>3N 個自由度（total degrees of freedom）</strong>，分為：</p>
+    <table>
+      <tr><th>類型</th><th>線型分子</th><th>非線型分子</th></tr>
+      <tr><td>平移（Translation）</td><td>3</td><td>3</td></tr>
+      <tr><td>旋轉（Rotation）</td><td>2</td><td>3</td></tr>
+      <tr><td>振動（Vibration）</td><td>3N − 5</td><td>3N − 6</td></tr>
+    </table>
+    <div class="box-example">
+      <strong>H₂O（3個原子，非線型）：</strong>3×3 = 9 個自由度；9 − 3 − 3 = <strong>3個振動模式</strong>（2 個 A₁ 對稱伸縮 + 1 個 B₁ 反對稱伸縮）<br>
+      <strong>XeF₄（5個原子，非線型）：</strong>3×5 = 15；15 − 6 = <strong>9個振動模式</strong>
+    </div>
+
+    <h3>分析程序</h3>
+    <ol>
+      <li>對分子中每個原子分配 x, y, z 座標</li>
+      <li>對每個對稱操作，計算可約表示特徵標 Γ（只有原子位置未移動的原子才貢獻）</li>
+      <li>用約化公式將 Γ 分解為不可約表示</li>
+      <li>扣除平移（x, y, z 對應的不可約表示）和旋轉（R_x, R_y, R_z 對應的）</li>
+      <li>剩下的就是振動模式</li>
+    </ol>
+    <div class="box-note">
+      <strong>計算特徵標的捷徑：</strong>
+      <ul>
+        <li>對一個對稱操作，<strong>移動位置的原子</strong>對特徵標貢獻 0</li>
+        <li>座標方向不變 → +1；反向 → −1</li>
+        <li>C_n 旋轉的貢獻 = 2cos(2π/n) + 1（針對未移動的原子）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ir-raman">
+    <h2>IR 活性與 Raman 活性</h2>
+    <h3>IR 活性（紅外活性）</h3>
+    <p>振動模式若引起<strong>偶極矩的變化</strong>，則為 IR 活性。</p>
+    <div class="box-key">
+      <strong>群論判斷：</strong>振動模式若與<em>x, y, 或 z</em> 的不可約表示具有相同對稱性（即特徵標表右側函數欄含有 x, y, z），則為 <strong>IR 活性</strong>。
+    </div>
+    <div class="box-example">
+      <strong>H₂O 的 3 個振動模式：</strong><br>
+      2A₁（z 的對稱性）→ IR 活性 ✓<br>
+      1B₁（x 的對稱性）→ IR 活性 ✓<br>
+      所有 3 個振動都是 IR 活性
+    </div>
+
+    <h3>Raman 活性</h3>
+    <p>振動模式若引起<strong>極化率的變化</strong>，則為 Raman 活性。</p>
+    <div class="box-key">
+      <strong>群論判斷：</strong>振動模式若與<em>xy, xz, yz, x², y², z²</em>（或其線性組合）的對稱性相同，則為 <strong>Raman 活性</strong>。
+    </div>
+
+    <h3>互斥規則（Mutual Exclusion Rule）</h3>
+    <p>若分子具有<strong>反演中心（i）</strong>，則 IR 活性和 Raman 活性的振動模式<strong>互不重疊</strong>（g 類→Raman 活性但 IR 非活性；u 類→IR 活性但 Raman 非活性）。</p>
+    <div class="box-example">
+      <strong>cis- 與 trans-ML₂(CO)₂ 的 C=O 伸縮：</strong><br>
+      cis-ML₂(CO)₂ 屬 C₂v（無 i）：2 個 IR 活性 C=O 伸縮（A₁ + B₁）<br>
+      trans-ML₂(CO)₂ 屬 D₂h（有 i）：只有 1 個 IR 活性 C=O 伸縮（B₃u）；另一個 A_g 為 Raman 活性<br>
+      → 只需 IR 就能區分順反異構物！
+    </div>
+
+    <div class="box-summary">
+      <strong>第4章重點回顧</strong>
+      <ul>
+        <li>對稱元素：E、Cn（旋轉）、σ（鏡面）、i（反演）、Sn（非本徵旋轉）</li>
+        <li>6步判斷流程：線型？高對稱？有Cn？有nC₂⊥？有σ？→ 唯一點群</li>
+        <li>特徵標 = 矩陣對角元素之和（跡）；同類操作特徵標相同</li>
+        <li>7條規則：階 h、類數 = 不可約表示數、維數² 和 = h、正交性、全對稱表示</li>
+        <li>不可約表示標記：A/B（1D），E（2D），T（3D）；g/u（反演對稱性）</li>
+        <li>約化公式：nᵢ = (1/h)Σ N·χ(Γ)·χᵢ(R)；結果必為整數</li>
+        <li>振動 = 3N − 3（平移）− 3（旋轉，線型為 2）</li>
+        <li>IR 活性：與 x, y, z 同對稱性；Raman 活性：與 xy, xz, yz, x², y², z² 同對稱性</li>
+        <li>有 i 的分子：IR 和 Raman 完全互不重疊（互斥規則）</li>
+        <li>手性：只有本徵旋轉（無 σ、i、Sn）→ 手性分子</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

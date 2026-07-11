@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>第15章 飽和碳的親核取代</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh}
+#sidebar{width:260px;min-width:260px;background:var(--sidebar-bg);color:var(--sidebar-fg);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+#sidebar-header{padding:20px 16px 12px;border-bottom:1px solid #333c45}
+#sidebar-header h2{font-size:0.85rem;color:var(--accent);letter-spacing:.04em;text-transform:uppercase;margin-bottom:4px}
+#sidebar-header p{font-size:0.78rem;color:var(--sidebar-fg-dim);line-height:1.4}
+#toc{padding:12px 0 24px}
+#toc a{display:block;padding:6px 18px;font-size:0.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.04)}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.1)}
+#toc .toc-section{padding:10px 18px 4px;font-size:0.7rem;color:#566270;text-transform:uppercase;letter-spacing:.06em}
+#menu-btn{display:none;position:fixed;top:12px;left:12px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 12px;font-size:0.85rem;cursor:pointer}
+main{flex:1;padding:40px 48px;max-width:860px}
+h1{font-size:1.9rem;font-weight:700;color:#1a1208;margin-bottom:6px}
+.subtitle{color:#7a6a55;font-size:1rem;margin-bottom:32px;font-style:italic}
+h2{font-size:1.35rem;font-weight:700;color:#1a1208;margin:40px 0 14px;padding-bottom:6px;border-bottom:2px solid var(--accent)}
+h3{font-size:1.1rem;font-weight:700;color:#2d2010;margin:24px 0 10px}
+h4{font-size:0.95rem;font-weight:700;color:#3a2e1a;margin:18px 0 8px}
+p{line-height:1.75;margin-bottom:12px}
+.back-link{display:inline-block;margin-bottom:28px;color:var(--accent);text-decoration:none;font-size:0.88rem}
+.back-link:hover{text-decoration:underline}
+section{background:var(--paper-bg);border:1px solid var(--rule);border-radius:8px;padding:28px 32px;margin-bottom:28px}
+.box-note{background:#f0f7ff;border-left:4px solid var(--accent2);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-example{background:#f6fff0;border-left:4px solid var(--accent);border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-key{background:#fff8e6;border-left:4px solid #e6a817;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-selftest{background:#fdf0f8;border-left:4px solid #c0399a;border-radius:4px;padding:14px 18px;margin:16px 0;font-size:0.93rem}
+.box-summary{background:#f3faf5;border:1px solid #b2dfc0;border-radius:6px;padding:16px 20px;margin:20px 0}
+.reaction-scheme{background:#f8f8f4;border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:14px 0;font-family:'Courier New',monospace;font-size:0.88rem;line-height:1.8;overflow-x:auto;white-space:pre}
+table{width:100%;border-collapse:collapse;margin:14px 0;font-size:0.91rem}
+th{background:var(--accent);color:#fff;padding:9px 12px;text-align:left}
+td{padding:8px 12px;border-bottom:1px solid var(--rule)}
+tr:nth-child(even) td{background:#f5f2ec}
+ul,ol{padding-left:22px;margin:10px 0 14px}
+li{line-height:1.7;margin-bottom:4px}
+@media(max-width:900px){
+  #sidebar{position:fixed;left:-260px;top:0;height:100%;z-index:100;transition:left .25s}
+  #sidebar.open{left:0}
+  #menu-btn{display:block}
+  main{padding:24px 18px;padding-top:56px}
+}
+</style>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>有機化學</h2>
+    <p>第15章 飽和碳的親核取代</p>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#kinetics">SN1與SN2的動力學</a>
+    <a href="#carbocation">碳陽離子的穩定性</a>
+    <a href="#sn2-stereo">SN2的立體化學</a>
+    <a href="#leaving">離去基的能力</a>
+    <a href="#oh-leaving">羥基的活化</a>
+    <a href="#mitsunobu">Mitsunobu反應</a>
+    <a href="#sn1-nu">SN1中的親核劑</a>
+    <a href="#sn2-nu">SN2中的親核劑</a>
+    <a href="#hard-soft">硬性與軟性親核劑</a>
+    <a href="#iodide-cat">碘化物作為催化劑</a>
+  </div>
+</nav>
+<button id="menu-btn">☰ 目錄</button>
+<main>
+  <a class="back-link" href="../index.html">← 返回有機化學目錄</a>
+  <h1>第15章 飽和碳的親核取代</h1>
+  <p class="subtitle">Nucleophilic Substitution at Saturated Carbon</p>
+
+  <section id="kinetics">
+    <h2>SN1 與 SN2 的動力學區別</h2>
+    <h3>SN2（雙分子親核取代）</h3>
+    <p>速率同時依賴親核劑和底物濃度（<strong>二級動力學</strong>）。</p>
+    <div class="reaction-scheme">
+    速率 = k [RX][Nu]
+    反應進行在一個協同步驟中（鍵的斷裂與生成同時發生）</div>
+    <ul>
+      <li>一步機制，無中間體</li>
+      <li>過渡態為<strong>三角雙錐（trigonal bipyramidal）</strong>構型</li>
+      <li>親核劑從離去基的<strong>背面（backside）</strong>進攻</li>
+      <li>結果：立體構型<strong>完全翻轉（Walden inversion）</strong></li>
+    </ul>
+
+    <h3>SN1（單分子親核取代）</h3>
+    <p>速率只依賴底物濃度（<strong>一級動力學</strong>）。</p>
+    <div class="reaction-scheme">
+    速率 = k [RX]
+    步驟一（慢，決速）：RX → R⁺ + X⁻（離子化）
+    步驟二（快）：R⁺ + Nu → R-Nu</div>
+    <ul>
+      <li>兩步機制，中間體為<strong>碳陽離子（carbocation）</strong></li>
+      <li>親核劑從碳陽離子的兩面進攻，通常得到<strong>外消旋化（racemization）</strong>產物（但在手性離子對存在下可有部分立體選擇性）</li>
+    </ul>
+
+    <h3>比較</h3>
+    <table>
+      <tr><th>項目</th><th>SN2</th><th>SN1</th></tr>
+      <tr><td>速率法則</td><td>k[RX][Nu]（二級）</td><td>k[RX]（一級）</td></tr>
+      <tr><td>中間體</td><td>無（協同）</td><td>碳陽離子</td></tr>
+      <tr><td>立體化學</td><td>構型完全翻轉</td><td>外消旋化（±）</td></tr>
+      <tr><td>底物偏好</td><td>伯碳（少阻礙）</td><td>叔碳（穩定碳陽離子）</td></tr>
+      <tr><td>溶劑偏好</td><td>極性非質子性（DMF、DMSO）</td><td>極性質子性（EtOH、H₂O）</td></tr>
+    </table>
+  </section>
+
+  <section id="carbocation">
+    <h2>碳陽離子的穩定性</h2>
+    <p>SN1 反應的關鍵是碳陽離子的穩定性，穩定性越高，反應越快。</p>
+    <h3>取代基效應</h3>
+    <p><strong>穩定順序（烷基碳陽離子）：</strong>叔 (3°) &gt; 仲 (2°) &gt; 伯 (1°) &gt;&gt; 甲基</p>
+    <p>烷基的推電子效應（超共軛和誘導）穩定正電荷。</p>
+
+    <h3>特殊穩定化碳陽離子</h3>
+    <table>
+      <tr><th>類型</th><th>穩定化原因</th><th>相對活性</th></tr>
+      <tr><td>烯丙型（allylic R-CH=CH-CH₂⁺）</td><td>共振穩定（正電荷離域至烯烴）</td><td>高</td></tr>
+      <tr><td>苄型（benzylic ArCH₂⁺）</td><td>共振穩定（正電荷離域至苯環）</td><td>高</td></tr>
+      <tr><td>氧鎓離子（oxocarbenium，R-O⁺=CHR）</td><td>氧孤對電子離域（p→p 共振）</td><td>非常高</td></tr>
+      <tr><td>亞胺鎓離子（iminium，R₂N⁺=CHR）</td><td>氮孤對電子離域</td><td>高</td></tr>
+    </table>
+    <div class="box-note">
+      <strong>乙縮醛在酸中的水解機制：</strong>縮醛水解時，先生成<strong>氧鎓離子（oxocarbenium ion）</strong>中間體，其穩定性使 SN1 反應快速進行——這正是縮醛在酸性條件下（而非鹼性）水解的原因。
+    </div>
+  </section>
+
+  <section id="sn2-stereo">
+    <h2>SN2 的立體化學：Walden 翻轉</h2>
+    <p>SN2 反應中，親核劑從<strong>離去基的對面（180° backside attack）</strong>進攻，過渡態為三角雙錐：</p>
+    <div class="reaction-scheme">
+    Nu⁻  ...  C  ...  X
+          (三角雙錐過渡態，Nu 和 X 在軸位，
+           三個保留基在赤道位)</div>
+    <p>產物的立體構型<strong>完全翻轉</strong>（如同雨傘翻面）。此翻轉稱為 <strong>Walden 轉化</strong>，是 SN2 反應最關鍵的立體化學特徵。</p>
+
+    <h3>空間阻礙對 SN2 的影響</h3>
+    <p>背面進攻需要接近碳原子，阻礙越大越慢：</p>
+    <table>
+      <tr><th>底物類型</th><th>SN2 活性</th></tr>
+      <tr><td>CH₃X（甲基）</td><td>最快（無阻礙）</td></tr>
+      <tr><td>RCH₂X（伯碳）</td><td>快</td></tr>
+      <tr><td>R₂CHX（仲碳）</td><td>較慢</td></tr>
+      <tr><td>R₃CX（叔碳）</td><td>SN2 幾乎不發生（但 SN1 可以）</td></tr>
+      <tr><td>新戊基（Me₃C-CH₂X）</td><td>極慢（β-阻礙）</td></tr>
+    </table>
+  </section>
+
+  <section id="leaving">
+    <h2>離去基的能力</h2>
+    <p><strong>好的離去基</strong>：其對應的共軛酸 HX pKₐ 越低（酸性越強），離去基越好。</p>
+    <div class="box-key">
+      <strong>規則：pKₐ(HX) 越低 → X⁻ 越穩定 → X 越是好的離去基</strong>
+    </div>
+    <table>
+      <tr><th>離去基 X</th><th>pKₐ(HX)</th><th>C-X 鍵能（kJ/mol）</th><th>離去能力</th></tr>
+      <tr><td>I⁻</td><td>−10</td><td>54</td><td>最好</td></tr>
+      <tr><td>Br⁻</td><td>−9</td><td>67</td><td>好</td></tr>
+      <tr><td>Cl⁻</td><td>−7</td><td>81</td><td>尚可</td></tr>
+      <tr><td>TsO⁻（甲苯磺酸根）</td><td>~−1</td><td>─</td><td>極好</td></tr>
+      <tr><td>MsO⁻（甲磺酸根）</td><td>~−2</td><td>─</td><td>極好</td></tr>
+      <tr><td>F⁻</td><td>+3</td><td>118</td><td>差</td></tr>
+      <tr><td>OH⁻</td><td>15.7</td><td>─</td><td>極差（不能直接離去）</td></tr>
+    </table>
+  </section>
+
+  <section id="oh-leaving">
+    <h2>羥基的活化：轉化為好的離去基</h2>
+    <p>OH⁻ 是極差的離去基，醇不能直接進行 SN 反應。需先活化：</p>
+
+    <h3>酸活化（HBr、HCl）</h3>
+    <div class="reaction-scheme">
+    R-OH  + H⁺  →  R-OH₂⁺  →（Nu:）→  R-Nu  + H₂O
+    （水是好的離去基，pKₐ = -1.7）</div>
+
+    <h3>PBr₃（磷酸溴化物）</h3>
+    <p>醇與 PBr₃ 反應，先在磷上發生 SN2（O 攻擊 P），再在 C 上發生 SN2（Br 攻擊 C，構型翻轉），得到烷基溴（產率高，構型翻轉）。</p>
+    <div class="reaction-scheme">
+    R-OH  + PBr₃  →  R-OPBr₂  →  R-Br  +  Br₂P=O
+                                  SN2（Br 攻擊 C）</div>
+
+    <h3>磺酸酯（Tosylate、Mesylate）</h3>
+    <p>醇 + TsCl（甲苯磺醯氯）+ 吡啶 → 甲苯磺酸酯（OTs），立體構型<strong>保留</strong>（O-C 鍵未斷），OTs 是極好的離去基。</p>
+    <div class="reaction-scheme">
+    R-OH  + TsCl + 吡啶  →  R-OTs  （構型保留）
+    R-OTs + Nu⁻  →  R-Nu  （SN2，構型翻轉）
+    淨結果：從 ROH 到 R-Nu，構型翻轉</div>
+    <div class="box-note">
+      磺酸酯（TsO⁻，MsO⁻）pKₐ 約 -1 至 -2，是絕佳的離去基，幾乎任何親核劑都能取代它們。
+    </div>
+  </section>
+
+  <section id="mitsunobu">
+    <h2>Mitsunobu 反應</h2>
+    <p>Mitsunobu 反應將醇的 OH 直接替換為親核劑，且立體構型<strong>完全翻轉</strong>（SN2 機制）。試劑為 Ph₃P（三苯基膦）和 DEAD（偶氮二甲酸二乙酯，EtO₂C-N=N-CO₂Et）。</p>
+    <div class="reaction-scheme">
+    R-OH  +  HNu  +  Ph₃P  +  DEAD  →  R-Nu（構型翻轉）  +  Ph₃P=O  +  DEAD-H₂</div>
+    <p><strong>機制關鍵（四個步驟）：</strong></p>
+    <ol>
+      <li>Ph₃P 攻擊 DEAD 的 N=N，形成磷鎓中間體，脫質子給親核劑（如苯甲酸）</li>
+      <li>親核劑提供 Nu⁻</li>
+      <li>醇的 O 攻擊磷，形成 R-O-PPh₃⁺（磷活化了 OH）</li>
+      <li>Nu⁻ 從背面 SN2 攻擊 C，構型翻轉，磷氧化物離去</li>
+    </ol>
+    <div class="box-example">
+      <strong>Mitsunobu 的重要性：</strong>一步從醇直接得到構型翻轉的產物，無需先製備離去基再取代，是合成手性分子的強大工具。
+    </div>
+  </section>
+
+  <section id="sn1-nu">
+    <h2>SN1 中的親核劑</h2>
+    <p>SN1 反應的速率決定步驟是碳陽離子的形成，與親核劑<strong>無關</strong>。因此：</p>
+    <ul>
+      <li>親核性強弱<strong>不影響反應速率</strong>（但影響競爭性副反應）</li>
+      <li>很弱的親核劑也可參與 SN1 反應（如水、醇等）</li>
+      <li>SN1 反應常在<strong>酸性條件</strong>下進行（質子化促進離去基離去）</li>
+    </ul>
+    <h3>Ritter 反應</h3>
+    <p>叔醇在強酸中形成碳陽離子，即使腈（nitrile）這種極差的親核劑也能反應，生成醯胺。</p>
+    <div class="reaction-scheme">
+    R₃COH + H⁺ → R₃C⁺ + H₂O
+    R₃C⁺ + R'C≡N → R₃C-N⁺=CR' → (+ H₂O) → R₃C-NH-CO-R'
+                                                仲醯胺（Ritter 反應）</div>
+  </section>
+
+  <section id="sn2-nu">
+    <h2>SN2 中的親核劑</h2>
+    <h3>氮親核劑的問題</h3>
+    <p>胺是好的親核劑，但胺與烷基鹵反應常得到混合物：伯胺可再烷化為仲胺、叔胺，直至季銨鹽。</p>
+    <div class="reaction-scheme">
+    NH₃ + RX → RNH₂ → R₂NH → R₃N → R₄N⁺X⁻（混合物）</div>
+    <p><strong>解決方案一：疊氮化物（Azide，N₃⁻）</strong></p>
+    <p>疊氮離子（N₃⁻）只烷化一次（因為產物 RN₃ 不再是親核劑），再用 LiAlH₄ 或 H₂/Pd 還原疊氮為伯胺：</p>
+    <div class="reaction-scheme">
+    RX + NaN₃ → R-N₃ → (LiAlH₄ 或 H₂/Pd) → R-NH₂（伯胺，乾淨）</div>
+
+    <h3>硫親核劑</h3>
+    <p>硫醇鹽（RS⁻）在 SN2 反應中比對應的氧親核劑（RO⁻）更有效，原因是硫的 3sp³ 孤對電子軌道能量更高，與 C-X σ* 的 HOMO-LUMO 重疊更好。</p>
+    <div class="reaction-scheme">
+    PhSH + NaOH + n-BuBr → PhS-Bu + NaBr  （高效 SN2）</div>
+
+    <h3>解決方法：硫代乙酸鹽路線</h3>
+    <p>用硫代乙酸鉀（KSAc）代替 NaSH，避免雙硫化物生成；再用鹼水解得到硫醇：</p>
+    <div class="reaction-scheme">
+    RX + KSAc → RS-Ac → (NaOH/H₂O) → RSH（硫醇）</div>
+  </section>
+
+  <section id="hard-soft">
+    <h2>硬性與軟性親核劑</h2>
+    <p>親核劑對「飽和碳」和「羰基碳」的親和力不同：</p>
+    <table>
+      <tr><th>特性</th><th>硬性親核劑（Hard）</th><th>軟性親核劑（Soft）</th></tr>
+      <tr><td>大小</td><td>小</td><td>大</td></tr>
+      <tr><td>電荷</td><td>帶電（離子型）</td><td>中性或電荷分散</td></tr>
+      <tr><td>鹼性</td><td>強（HX 的 pKₐ 大）</td><td>弱（HX 的 pKₐ 小）</td></tr>
+      <tr><td>HOMO 能量</td><td>低</td><td>高（更好的軌道重疊）</td></tr>
+      <tr><td>攻擊目標</td><td>羰基碳（C=O，靜電控制）</td><td>飽和碳（HOMO-LUMO 控制）</td></tr>
+      <tr><td>範例</td><td>HO⁻、RO⁻、NH₂⁻、MeLi</td><td>RS⁻、I⁻、R₃P</td></tr>
+    </table>
+    <div class="box-key">
+      <strong>規律：</strong>
+      <ul>
+        <li>軟性親核劑（RS⁻、I⁻、R₃P）對飽和碳的 SN2 特別有效</li>
+        <li>硬性親核劑（HO⁻、RO⁻）對羰基碳（C=O）更有效</li>
+        <li>相對速率（與 MeBr 反應，H₂O = 1）：I⁻: 1.2×10⁵；PhS⁻: 5×10⁷；F⁻: 0.0</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="iodide-cat">
+    <h2>碘化物作為親核催化劑</h2>
+    <p>碘化物（I⁻）既是<strong>最好的 SN2 親核劑之一</strong>，也是<strong>最好的離去基之一</strong>。利用這一雙重性質，碘化物可催化其他 SN2 反應：</p>
+    <div class="reaction-scheme">
+    R-Cl  →（I⁻）→  R-I  →（Ph₃P）→  R-PPh₃⁺ Cl⁻
+    （I⁻ 先取代 Cl，再被 Ph₃P 取代 I；I⁻ 催化循環回收）</div>
+    <div class="box-example">
+      <strong>催化範例：</strong>苄溴與 Ph₃P 在二甲苯中反應需要數天，但加入催化量 LiI 後 2 小時即完成。I⁻ 先形成苄碘（快），再由 Ph₃P 取代 I⁻（也快），I⁻ 不斷循環再生。
+    </div>
+
+    <div class="box-summary">
+      <strong>第15章重點回顧</strong>
+      <ul>
+        <li>SN2 = 二級動力學（k[RX][Nu]），協同，背面進攻，構型<strong>翻轉</strong></li>
+        <li>SN1 = 一級動力學（k[RX]），通過碳陽離子，常<strong>外消旋化</strong></li>
+        <li>SN1 偏好叔碳、烯丙型、苄型、氧鎓離子（穩定碳陽離子）</li>
+        <li>SN2 偏好伯碳（少阻礙）、軟性親核劑（I⁻、RS⁻、R₃P）</li>
+        <li>離去基：I > Br > Cl >> F；OTs⁻、OMs⁻ 極好；OH⁻ 極差</li>
+        <li>活化 OH：質子酸、PBr₃（翻轉）、TsCl（保留），再 SN2 翻轉</li>
+        <li>Mitsunobu：ROH + HNu + Ph₃P + DEAD → R-Nu（構型翻轉）</li>
+        <li>氮親核劑問題：多烷化；用 NaN₃ + 還原 → 乾淨的伯胺</li>
+        <li>軟性親核劑（RS⁻、I⁻、R₃P）對飽和碳更有效；硬性（HO⁻）對 C=O 更有效</li>
+        <li>I⁻ 催化：以 I⁻ 作親核催化劑，加速 SN2 反應</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第七章：離域化與共軛 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第七章：離域化與共軛</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">什麼是離域化</a>
+    <a href="#benzene-mo">苯的分子軌域</a>
+    <a href="#conjugation">共軛的條件</a>
+    <a href="#butadiene">丁二烯的 MO</a>
+    <a href="#uv-color">UV 吸收與顏色</a>
+    <a href="#allyl">烯丙基系統</a>
+    <a href="#carboxylate">羧酸根與醯胺</a>
+    <a href="#aromaticity">芳香性</a>
+    <a href="#huckel">Hückel 規則</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="06_親核加成至羰基.html">← 第六章</a>
+    <a href="08_酸鹼性與pKa.html">第八章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第七章：離域化與共軛</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 7: Delocalization and Conjugation</div>
+
+<p>到目前為止，我們把鍵描述為定域（localized）的——電子對存在於特定的兩個原子之間。但許多分子的性質無法用這種圖像解釋：苯的六個 C–C 鍵完全等長，不是三長三短；丁二烯比兩個孤立乙烯更穩定；β-胡蘿蔔素呈現橙色。這些現象都源自<strong>電子離域化（delocalization）</strong>。</p>
+
+<section id="intro">
+<h2>什麼是離域化</h2>
+<p>電子離域化是指電子的波函數（分子軌域）跨越多個原子，而不局限在兩個原子之間。離域化通常通過相鄰的 p 軌域的側面重疊（π 相互作用）發生，使電子能夠在更大範圍內移動。</p>
+<div class="box-note">
+<strong>三種「雙向箭頭」的辨別</strong>
+<p>（1）<strong>共振箭頭（双頭彎箭頭 ↔）</strong>：表示同一分子的兩個共振結構，不代表實際轉化。<br>
+（2）<strong>平衡箭頭（⇌）</strong>：表示可逆的化學反應，是真實的分子間轉化。<br>
+（3）<strong>普通彎箭頭（→）</strong>：表示反應機制中電子的流動。<br>
+這三種箭頭意義完全不同，絕對不能混用。</p>
+</div>
+<p>離域化的<strong>現實意義</strong>是：苯不是交替單鍵雙鍵的環己三烯——它是一個均勻環，所有鍵長 139.5 pm（介於 C–C 單鍵 154 pm 和 C=C 雙鍵 134 pm 之間）。兩個共振結構都是不完整的描述，真實結構是它們的疊加（量子力學的線性組合）。</p>
+</section>
+
+<section id="benzene-mo">
+<h2>苯的分子軌域</h2>
+<p>苯的六個碳各提供一個垂直的 p 軌域，六個 p 軌域線性組合生成<strong>六個 π 分子軌域</strong>（ψ₁ 至 ψ₆）：</p>
+<ul>
+<li><strong>ψ₁</strong>（最低能量）：全部成鍵，無節點平面（perpendicular to ring）</li>
+<li><strong>ψ₂, ψ₃</strong>（縮并成對，能量相同）：各有一個節點平面，各自有 2 個成鍵相互作用和 0 個反鍵相互作用</li>
+<li><strong>ψ₄, ψ₅</strong>（縮并成對）：各有兩個節點平面，部分反鍵</li>
+<li><strong>ψ₆</strong>（最高能量）：全部反鍵，三個節點平面</li>
+</ul>
+<p>苯有 6 個 π 電子，填入 ψ₁（2e）和 ψ₂, ψ₃（各 2e），全部成鍵軌域填滿，反鍵軌域空置——這是一個<strong>閉殼層</strong>（closed shell）電子構型，特別穩定。</p>
+<div class="box-key">
+<strong>苯的實驗佐證</strong>
+<p>X 射線晶體學顯示苯六個 C–C 鍵長均為 139.5 pm，完全等長。如果苯真的是環己三烯，應有交替的 154 pm（單鍵）和 134 pm（雙鍵）。均勻鍵長是離域化的直接證據。</p>
+</div>
+</section>
+
+<section id="conjugation">
+<h2>共軛的條件</h2>
+<p>並非所有含多個 π 鍵的分子都是共軛的。共軛要求相鄰 π 鍵之間只有<strong>一個</strong> σ 鍵分隔（即 p 軌域能夠側面重疊）：</p>
+<div class="reaction-scheme">
+  共軛體系：    C=C−C=C      （兩個雙鍵之間一個單鍵）
+  非共軛體系：  C=C−C−C=C   （隔了兩個 σ 鍵）
+  累積雙鍵：    C=C=C        （丙二烯型，allene，特殊情況）
+</div>
+<div class="box-example">
+<strong>花生四烯酸（arachidonic acid）與共軛</strong>
+<p>花生四烯酸有四個雙鍵，但它們是甲基隔開的（1,4-二烯型），不是共軛的。因此它不吸收可見光，是無色的。真正共軛需要雙鍵之間只有一個 CH₂（比如 1,3-丁二烯型）。</p>
+</div>
+<p><strong>丙二烯（allene, C=C=C）</strong>是特殊情況：中間碳 sp 雜化，兩端的 π 鍵相互垂直，因此不是共軛的（p 軌域無法同時與兩個 π 鍵重疊）。</p>
+</section>
+
+<section id="butadiene">
+<h2>丁二烯的分子軌域</h2>
+<p>丁二烯（CH₂=CH–CH=CH₂）是最簡單的共軛體系。四個 p 軌域組合成四個 π 分子軌域：</p>
+<table>
+<tr><th>MO</th><th>能量</th><th>節點數</th><th>性質</th></tr>
+<tr><td>ψ₁</td><td>最低</td><td>0</td><td>全成鍵，最穩定</td></tr>
+<tr><td>ψ₂</td><td>成鍵</td><td>1（C2-C3 之間）</td><td>HOMO（最高佔據 MO）</td></tr>
+<tr><td>ψ₃</td><td>反鍵</td><td>2</td><td>LUMO（最低未佔據 MO）</td></tr>
+<tr><td>ψ₄</td><td>最高</td><td>3</td><td>全反鍵</td></tr>
+</table>
+<p>4 個 π 電子填入 ψ₁ 和 ψ₂（各 2 個），HOMO = ψ₂。</p>
+<div class="box-derivation">
+<strong>共軛的穩定化效應</strong>
+<p>丁二烯的氫化焓（−238 kJ/mol）比兩個孤立乙烯（2 × −137 = −274 kJ/mol）少了約 15 kJ/mol。這個差值就是共軛穩定化能（delocalization energy），表示共軛體系比孤立雙鍵更穩定。</p>
+<p>這在 MO 圖像中容易理解：丁二烯的 ψ₁ 能量比乙烯的 π MO 更低（更多成鍵相互作用），所以四個電子填入 ψ₁ 和 ψ₂ 後，總能量低於兩個孤立乙烯。</p>
+</div>
+<h3>共軛對反應性的影響</h3>
+<p>共軛改變了 HOMO 和 LUMO 的能量：</p>
+<ul>
+<li><strong>HOMO 升高</strong>：丁二烯的 HOMO（ψ₂）能量高於乙烯的 HOMO（π）→ 丁二烯<strong>更親核</strong></li>
+<li><strong>LUMO 降低</strong>：丁二烯的 LUMO（ψ₃）能量低於乙烯的 LUMO（π*）→ 丁二烯<strong>更親電</strong></li>
+</ul>
+<p>這解釋了為什麼共軛二烯在 Diels-Alder 反應中既作為親二烯體（親核）又高度活性。</p>
+</section>
+
+<section id="uv-color">
+<h2>UV 吸收與顏色</h2>
+<p>分子吸收光的波長取決於 HOMO-LUMO 能隙（Δε）。共軛鏈越長，能隙越小，吸收波長越長（紅移）：</p>
+<div class="reaction-scheme">
+  更長的共軛 → 更小的 HOMO-LUMO 能隙 → 更長波長的吸收 → 顏色改變
+</div>
+<table>
+<tr><th>共軛雙鍵數 n</th><th>吸收波長（約）</th><th>吸收顏色</th><th>可見顏色（互補色）</th></tr>
+<tr><td>8</td><td>400 nm</td><td>紫色（violet）</td><td>黃綠色</td></tr>
+<tr><td>9</td><td>425 nm</td><td>靛藍色（indigo）</td><td>黃色</td></tr>
+<tr><td>10</td><td>450 nm</td><td>藍色（blue）</td><td>橙色</td></tr>
+<tr><td>11</td><td>490 nm</td><td>藍綠色（blue-green）</td><td>紅色</td></tr>
+</table>
+<div class="box-example">
+<strong>茄紅素（lycopene）的紅色</strong>
+<p>茄紅素是番茄中的紅色色素，含有 11 個共軛雙鍵，吸收約 470 nm 的藍綠光，因此呈現紅色（互補色）。共軛鏈越長，顏色越偏向橙紅。</p>
+</div>
+<div class="box-example">
+<strong>葉綠素（chlorophyll）的綠色</strong>
+<p>葉綠素吸收紅光（~680 nm）和藍光（~430 nm），反射綠光，因此葉子呈綠色。其卟啉環（porphyrin）是一個大型共軛芳香體系，能隙相當於紅光能量。</p>
+</div>
+<div class="box-example">
+<strong>靛藍（indigo）與牛仔褲</strong>
+<p>靛藍吸收約 610–650 nm 的橙紅光，呈藍色。與多烯不同，靛藍的電子躍遷是 n→π*（孤對電子到 π* 軌域），能隙較小，因此吸收可見光範圍。</p>
+</div>
+</section>
+
+<section id="allyl">
+<h2>烯丙基系統</h2>
+<p>丙烯（propene）的烯丙基位（allylic position）可以失去或獲得質子，形成帶電或自由基中間體。</p>
+<h3>烯丙基陰離子</h3>
+<p>丙烯去質子化得到<strong>烯丙基陰離子</strong>。三個 p 軌域組成三個 MO：</p>
+<ul>
+<li>ψ₁（成鍵）：無節點，2e</li>
+<li>ψ₂（非成鍵 NBMO）：一個節點在中間 C，2e — 這是 HOMO；電荷主要分布在兩端碳</li>
+<li>ψ₃（反鍵）：空</li>
+</ul>
+<div class="reaction-scheme">
+  ⊖CH₂−CH=CH₂  ↔  CH₂=CH−CH₂⊖
+  兩個共振結構，負電荷均等分布在兩端 C1 和 C3
+</div>
+<p>非成鍵 MO（NBMO，ψ₂）的係數在 C1 和 C3 最大，在 C2 為零，表示負電荷定域在兩端。</p>
+<h3>烯丙基陽離子</h3>
+<p>烯丙基溴（allyl bromide）失去 Br⁻ 後形成<strong>烯丙基陽離子</strong>，使用相同的三個 MO，但只有 ψ₁ 中有 2 個電子（HOMO = ψ₁），ψ₂ 和 ψ₃ 均空。正電荷同樣分布在兩端碳：</p>
+<div class="reaction-scheme">
+  ⊕CH₂−CH=CH₂  ↔  CH₂=CH−CH₂⊕
+</div>
+<div class="box-key">
+<strong>烯丙基系統的一般原則</strong>
+<p>無論是陰離子、陽離子或自由基：電子密度的差異（電荷）都出現在兩端碳，中間碳的 NBMO 係數為零。這對預測反應位點非常重要——親核劑或親電劑都會攻擊兩端的碳。</p>
+</div>
+</section>
+
+<section id="carboxylate">
+<h2>羧酸根、硝基與醯胺中的離域化</h2>
+<h3>羧酸根（carboxylate）</h3>
+<p>羧酸根離子 RCO₂⁻ 是烯丙基陰離子的類比，只是以兩個 O 代替 C1 和 C3。兩個 C–O 鍵等長（136 pm，介於單鍵 143 pm 和雙鍵 120 pm 之間），負電荷均勻分布在兩個氧上。</p>
+<h3>硝基（nitro group）</h3>
+<p>硝基 –NO₂ 中氮有 5 個鍵（4 個價電子），看似超過了氮的八隅體。真實結構是 N⁺ 帶正電（N–O⁻ 和 N=O），兩個 N–O 鍵等長（125 pm）。離域化是理解其結構的唯一方式。</p>
+<h3>醯胺（amide）</h3>
+<p>醯胺（–CO–NH–）的 N 是 sp² 雜化，孤對電子在 p 軌域中，與 C=O 的 π* 軌域共軛。這帶來幾個重要後果：</p>
+<ul>
+<li>C–N 鍵長 135 pm（介於單鍵 147 pm 和雙鍵 130 pm 之間），具有部分雙鍵性質</li>
+<li>醯胺是<strong>平面</strong>的（所有原子在同一平面）</li>
+<li>C–N 鍵的旋轉能壘約 88 kJ/mol（一般單鍵只有 10–20 kJ/mol）</li>
+<li>在 ¹H NMR 中，N–CH₃ 在室溫下常見兩組峰（順/反異構體的慢交換）</li>
+</ul>
+<div class="box-note">
+<strong>醯胺的質子化位置</strong>
+<p>醯胺（p<i>K</i>ₐ ~ −1）在酸中發生質子化。質子化發生在<strong>氧</strong>而不是氮上，原因是：質子化後的正電荷在 O 上時，可以通過共振分散到 C 和 N，形成穩定的亞胺鎓（iminium）離子；如果質子化在 N 上，電荷無法分散。換言之，O 質子化的產物有共振穩定化，而 N 質子化的產物沒有。</p>
+</div>
+</section>
+
+<section id="aromaticity">
+<h2>芳香性</h2>
+<p>苯的特殊穩定性稱為<strong>芳香性（aromaticity）</strong>。芳香化合物的特徵：</p>
+<ul>
+<li>環狀平面共軛體系</li>
+<li>所有環鍵等長（或接近等長）</li>
+<li>氫化焓比預期小得多（芳香穩定化能）</li>
+<li>優先發生取代反應而非加成反應（保留芳香性）</li>
+</ul>
+<div class="box-example">
+<strong>苯的氫化焓</strong>
+<p>若苯是環己三烯，其氫化焓應為 3 × 120 = 360 kJ/mol（三個孤立雙鍵的氫化焓之和）。但實測苯的氫化焓只有 208 kJ/mol，差值 ~150 kJ/mol 即為<strong>苯的共振能（芳香穩定化能）</strong>。</p>
+</div>
+<h3>環辛四烯（COT）為何不芳香？</h3>
+<p>環辛四烯（cyclooctatetraene，COT，8 個 π 電子）不是平面的，而是「盆形」（tub-shaped），這使得 p 軌域無法有效重疊。即使強迫其為平面，8 個 π 電子也是<strong>反芳香</strong>的（4n = 8）。因此 COT 主動避免平面構型以逃避反芳香的不穩定性。</p>
+</section>
+
+<section id="huckel">
+<h2>Hückel 規則——4n+2 與芳香性</h2>
+<p>Hückel（休克耳）在 1931 年從分子軌域理論推導出芳香性的判斷規則：</p>
+<div class="box-rule">
+<strong>Hückel 規則</strong>
+<p>一個環狀、平面、完全共軛（每個原子提供一個 p 軌域）的體系：</p>
+<ul>
+<li>若有 <strong>4n+2</strong> 個 π 電子（n = 0, 1, 2, ...），則<strong>芳香</strong>（aromatic）——特別穩定</li>
+<li>若有 <strong>4n</strong> 個 π 電子（n = 1, 2, ...），則<strong>反芳香</strong>（antiaromatic）——特別不穩定</li>
+<li>若非完全共軛，則為<strong>非芳香</strong>（non-aromatic）——無特殊穩定化</li>
+</ul>
+</div>
+<table>
+<tr><th>分子</th><th>π 電子數</th><th>芳香性</th></tr>
+<tr><td>苯（benzene）</td><td>6（4×1+2）</td><td>芳香（aromatic）</td></tr>
+<tr><td>萘（naphthalene）</td><td>10（4×2+2）</td><td>芳香</td></tr>
+<tr><td>環丁二烯（cyclobutadiene）</td><td>4（4×1）</td><td>反芳香（antiaromatic）——極不穩定</td></tr>
+<tr><td>環辛四烯（COT）</td><td>8（4×2）</td><td>非芳香（避免平面構型）</td></tr>
+<tr><td>環戊二烯基陰離子（cyclopentadienyl anion）</td><td>6（4×1+2）</td><td>芳香</td></tr>
+<tr><td>環戊二烯基陽離子（cyclopentadienyl cation）</td><td>4（4×1）</td><td>反芳香</td></tr>
+<tr><td>吡咯（pyrrole）</td><td>6（N 貢獻孤對電子）</td><td>芳香</td></tr>
+<tr><td>吡啶（pyridine）</td><td>6（N 的 p 軌域參與）</td><td>芳香</td></tr>
+</table>
+<div class="box-key">
+<strong>雜環的 Hückel 規則應用</strong>
+<p>在雜環（含 N、O、S 的芳香環）中，要判斷雜原子對 π 體系貢獻幾個電子：</p>
+<ul>
+<li><strong>吡咯型 N</strong>（sp² N–H，如吡咯中的 N）：孤對電子在 p 軌域，貢獻 2e 入 π 體系</li>
+<li><strong>吡啶型 N</strong>（sp² N，如吡啶中的 N）：孤對電子在 sp² 軌域，貢獻 1e 的 p 軌域；孤對電子不在 π 體系中（而是在環平面上）</li>
+</ul>
+</div>
+<div class="box-selftest">
+<strong>自我測試</strong>
+<p>1. 解釋為什麼丁二烯比兩個孤立乙烯更穩定，從 MO 角度分析。</p>
+<p>2. 茄紅素有 11 個共軛雙鍵，預測其吸收波長和顏色。</p>
+<p>3. 烯丙基陰離子的 HOMO 是哪個 MO？負電荷主要在哪些碳上？</p>
+<p>4. 用 Hückel 規則判斷：咪唑（imidazole）有多少 π 電子？是否芳香？</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>離域化</strong>：電子跨越多個原子分布，通過相鄰 p 軌域側面重疊實現；三種「雙向箭頭」不可混淆</li>
+<li><strong>苯的 MO</strong>：6 個 p 軌域 → 6 個 MO（ψ₁–ψ₆）；6 個 π 電子填入成鍵 MO → 閉殼層穩定構型；鍵長均一 139.5 pm</li>
+<li><strong>共軛條件</strong>：雙鍵之間只有一個 σ 鍵（1,3-二烯型）；丙二烯和相隔一個 CH₂ 的雙鍵都不是共軛的</li>
+<li><strong>丁二烯 MO</strong>：HOMO = ψ₂，LUMO = ψ₃；共軛使 HOMO 升高（更親核）、LUMO 降低（更親電）；共軛穩定化能 ~15 kJ/mol</li>
+<li><strong>顏色與 UV</strong>：共軛越長 → HOMO-LUMO 能隙越小 → 吸收波長越長 → 更深的顏色</li>
+<li><strong>烯丙基</strong>：陰離子/陽離子均有三個 MO；NBMO 電荷分布在兩端碳；中間碳無電荷</li>
+<li><strong>醯胺</strong>：N sp²，孤對電子與 C=O 共軛；平面構型，旋轉能壘 88 kJ/mol；O 質子化優於 N 質子化</li>
+<li><strong>Hückel 規則</strong>：4n+2 π 電子 → 芳香；4n π 電子 → 反芳香；反芳香體系主動避免平面</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

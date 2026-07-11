@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第六章：親核加成至羰基 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第六章：親核加成至羰基</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">羰基的特性</a>
+    <a href="#hydration">水合反應</a>
+    <a href="#k-values">水合反應的平衡常數</a>
+    <a href="#hemiacetal">半縮醛的形成</a>
+    <a href="#cyclic-hemiacetal">環狀半縮醛</a>
+    <a href="#acid-base-catalysis">酸催化與鹼催化</a>
+    <a href="#bisulfite">亞硫酸氫鈉加成物</a>
+    <a href="#cyanohydrin">氰醇合成</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="05_有機反應.html">← 第五章</a>
+    <a href="07_離域化與共軛.html">第七章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第六章：親核加成至羰基</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 6: Nucleophilic Addition to the Carbonyl Group</div>
+
+<p>羰基（C=O）是有機化學中最重要的官能基之一。碳的親電性和氧的離去傾向，使得羰基成為親核劑攻擊的理想目標。本章探討親核劑如何加成至醛和酮的羰基，形成各種重要的有機產物。</p>
+
+<section id="intro">
+<h2>羰基的特性</h2>
+<p>羰基中的碳原子是 sp² 雜化，與氧形成一個 σ 鍵和一個 π 鍵。氧的電負度（3.5）遠大於碳（2.5），使得 π 電子雲偏向氧，羰基碳呈現正電性，成為親電中心。</p>
+<div class="reaction-scheme">
+      δ⁺  δ⁻
+  R₁—C=O
+      |
+      R₂
+親核劑從碳的上方或下方攻擊（垂直於 sp² 平面）
+</div>
+<p>親核劑攻擊羰基碳時，π 鍵斷裂，碳從 sp² 轉為 sp³，形成<strong>四面體中間體</strong>。</p>
+<div class="box-key">
+<strong>與 SN2 反應的比較</strong>
+<p>親核加成（到羰基）和親核取代（到飽和碳）有一個重要差異：加成反應中，羰基碳先接受親核劑，形成帶負電的氧中間體（烷氧化物），然後再被質子化；而 SN2 反應中，進攻和離去同時發生。</p>
+</div>
+</section>
+
+<section id="hydration">
+<h2>水合反應——形成偕二醇</h2>
+<p>水可以作為親核劑加成至羰基，形成<strong>偕二醇（gem-diol）</strong>，又稱水合物。</p>
+<div class="reaction-scheme">
+        O                    OH
+        ‖                    |
+  R¹—C—R²  +  H₂O  ⇌  R¹—C—R²
+                             |
+                             OH
+    醛/酮                  偕二醇（水合物）
+</div>
+<p>這個反應是<strong>可逆的</strong>。偕二醇在溶液中的含量取決於平衡常數 K（即水合常數）。對大多數酮而言，平衡偏向羰基形式（K &lt;&lt; 1）；但對醛和含電子拉基的化合物，偕二醇可能大量存在。</p>
+<div class="box-note">
+<strong>反應機制</strong>
+<p>水分子的孤對電子攻擊羰基碳，形成烷氧化物中間體，然後質子轉移至氧上，完成反應。整個過程不需要催化劑，但酸或鹼可以加速反應。</p>
+</div>
+</section>
+
+<section id="k-values">
+<h2>水合反應的平衡常數</h2>
+<p>不同羰基化合物的水合平衡常數（K）差異極大，反映出電子效應和立體效應的影響：</p>
+<table>
+<tr><th>化合物</th><th>水合常數 K</th><th>說明</th></tr>
+<tr><td>丙酮（acetone）</td><td>0.001</td><td>幾乎不水合；兩個甲基推電子，降低電正性</td></tr>
+<tr><td>乙醛（acetaldehyde）</td><td>1.06</td><td>約半數水合；一個甲基推電子</td></tr>
+<tr><td>甲醛（formaldehyde）</td><td>2280</td><td>幾乎完全水合；無推電子基</td></tr>
+<tr><td>三氯乙醛（chloral, CCl₃CHO）</td><td>2000</td><td>三個 Cl 強力拉電子，增強親電性</td></tr>
+<tr><td>六氟丙酮（hexafluoroacetone）</td><td>1.2×10⁶</td><td>六個 F 極強拉電子，幾乎完全水合</td></tr>
+</table>
+<div class="box-rule">
+<strong>影響水合程度的因素</strong>
+<p><strong>增加水合（K 增大）：</strong>（1）羰基碳上的電子拉基（F、Cl 等鹵素取代基）——增強親電性；（2）減少取代基——減少立體位阻。</p>
+<p><strong>減少水合（K 減小）：</strong>（1）推電子基（烷基）——降低羰基碳的正電性；（2）大的取代基——立體位阻阻礙親核劑接近。</p>
+</div>
+<div class="box-example">
+<strong>例：三氯乙醛水合物（chloral hydrate）</strong>
+<p>三氯乙醛（CCl₃CHO）與水反應生成穩定的水合物 CCl₃CH(OH)₂，可以分離為固體化合物。三個氯原子的強吸電子效應使羰基碳極度缺電，使得水合物比羰基形式更穩定。</p>
+</div>
+</section>
+
+<section id="hemiacetal">
+<h2>半縮醛的形成</h2>
+<p>醇（ROH）可以像水一樣加成至羰基，形成<strong>半縮醛（hemiacetal）</strong>。反應同樣是可逆的。</p>
+<div class="reaction-scheme">
+        O                        OH
+        ‖                        |
+  R¹—C—H  +  R³OH  ⇌   R¹—C—H
+                               |
+                               OR³
+     醛                      半縮醛
+</div>
+<p>對酮而言，產物稱為<strong>半縮酮（hemiketal）</strong>：</p>
+<div class="reaction-scheme">
+        O                        OH
+        ‖                        |
+  R¹—C—R²  +  R³OH  ⇌   R¹—C—R²
+                               |
+                               OR³
+     酮                      半縮酮
+</div>
+<p>半縮醛通常不穩定，在溶液中以平衡混合物存在。但在酸催化下可進一步脫水，形成縮醛（acetal）。</p>
+<div class="box-note">
+<strong>命名說明</strong>
+<p>半縮醛（hemiacetal）：一個 OH，一個 OR；縮醛（acetal）：兩個 OR，是半縮醛再與一分子醇縮合後的產物。類似地，「半縮酮」對應「縮酮」。現代 IUPAC 將縮酮也稱為縮醛。</p>
+</div>
+</section>
+
+<section id="cyclic-hemiacetal">
+<h2>環狀半縮醛</h2>
+<p>當分子內同時含有羰基和羥基時，可以發生<strong>分子內加成</strong>，形成<strong>環狀半縮醛</strong>（也稱為乳醇，lactol）。環狀半縮醛通常比開鏈形式更穩定。</p>
+<div class="box-example">
+<strong>葡萄糖的環化</strong>
+<p>葡萄糖在水溶液中 &gt;99% 以環狀半縮醛（吡喃糖）形式存在，C1 醛基被 C5 羥基進攻，形成六員環。開鏈形式僅佔約 0.02%。這就是為什麼葡萄糖不像普通醛那樣容易被氧化——大部分醛基被「藏」在環狀半縮醛中。</p>
+</div>
+<div class="box-example">
+<strong>核糖的環化</strong>
+<p>核糖（五碳糖）同樣形成環狀半縮醛，但形成五員環（呋喃糖）。核糖是 RNA 的組成部分，其環狀形式具有特定的立體構型，對 RNA 結構至關重要。</p>
+</div>
+<p>五員環（呋喃糖，5-membered）和六員環（吡喃糖，6-membered）的相對穩定性決定了環化的優先性。通常六員環比五員環更穩定，但具體取決於分子的立體化學。</p>
+<div class="box-key">
+<strong>環狀半縮醛的特徵</strong>
+<p>環狀半縮醛的形成需要：（1）分子鏈足夠長，使 OH 和 C=O 在空間上接近；（2）形成的環是無張力的五員環或六員環；（3）通常自發形成，無需特殊條件。</p>
+</div>
+</section>
+
+<section id="acid-base-catalysis">
+<h2>酸催化與鹼催化</h2>
+<p>雖然親核加成可以在沒有催化劑的情況下發生，但酸或鹼通常能顯著加速反應。</p>
+<h3>酸催化機制</h3>
+<p>酸催化通過<strong>質子化羰基氧</strong>來進行。羰基氧帶有孤對電子，是鹼性的，可以被質子化（pKₐ ~ −6）：</p>
+<div class="reaction-scheme">
+        O                     ⊕OH
+        ‖    H⊕              |
+  R¹—C—R²  ——→   R¹—C—R²
+
+  羰基（弱親電）         質子化羰基（強親電劑！）
+</div>
+<p>質子化後，羰基碳的正電性大大增強，使得即使是弱親核劑（如醇、水）也能有效攻擊。這是酸催化縮醛形成的關鍵。</p>
+<h3>鹼催化機制</h3>
+<p>鹼催化通過<strong>去質子化親核劑</strong>來進行。醇的 pKₐ 約為 15，在鹼作用下轉化為烷氧化物（alkoxide），親核性大大增強：</p>
+<div class="reaction-scheme">
+  ROH  +  HO⁻  →  RO⁻  +  H₂O
+
+  醇（弱親核劑）      烷氧化物（強親核劑）
+</div>
+<p>烷氧化物攻擊羰基碳的速率比醇快得多，因此在鹼性條件下反應更快。</p>
+<div class="box-summary">
+<strong>酸催化 vs 鹼催化的比較</strong>
+<p><strong>酸催化</strong>：活化親電劑（羰基碳），使弱親核劑也能反應。<br>
+<strong>鹼催化</strong>：活化親核劑（形成烷氧化物），使攻擊更有力。<br>
+兩種機制都加速了同一個親核加成步驟，只是從不同方向「補貼」反應。</p>
+</div>
+</section>
+
+<section id="bisulfite">
+<h2>亞硫酸氫鈉加成物</h2>
+<p>亞硫酸氫鈉（NaHSO₃）中的硫原子（S）作為親核劑，攻擊醛和甲基酮的羰基，形成穩定的<strong>亞硫酸氫鈉加成物</strong>。</p>
+<div class="reaction-scheme">
+        O                      OH
+        ‖                      |
+  R—C—H  +  NaHSO₃  →   R—C—H
+  （醛）                      |
+                              SO₃⁻ Na⁺
+
+  （加成物：可結晶的白色固體）
+</div>
+<p>亞硫酸氫鈉加成物具有以下重要性質：</p>
+<ul>
+<li><strong>結晶固體</strong>：易於從反應混合物中析出、過濾</li>
+<li><strong>可逆反應</strong>：用酸或鹼處理可以重新釋放原來的醛或酮</li>
+<li><strong>選擇性</strong>：只與醛和甲基酮（非空間位阻型酮）反應；空間位阻大的酮不反應</li>
+</ul>
+<div class="box-example">
+<strong>應用：純化醛和酮</strong>
+<p>利用亞硫酸氫鈉加成物的結晶性質，可以純化醛和酮：</p>
+<p>（1）加入 NaHSO₃ 水溶液，醛/酮形成固體加成物析出；（2）過濾洗去不反應的雜質；（3）用酸（如 HCl）或鹼（如 Na₂CO₃）水溶液處理加成物，重新得到純淨的醛/酮。</p>
+</div>
+<div class="box-example">
+<strong>應用：氰醇的合成</strong>
+<p>亞硫酸氫鈉可用作「中間人」來實現難以直接進行的反應。例如，丙酮在室溫下不易直接與 HCN 反應，但可先形成亞硫酸氫鈉加成物，再與 NaCN 反應，以 70% 收率得到氰醇（cyanohydrin）：</p>
+</div>
+<div class="reaction-scheme">
+  (CH₃)₂C=O + NaHSO₃ → (CH₃)₂C(OH)SO₃Na
+                                 ↓ + NaCN
+                        (CH₃)₂C(OH)CN  +  Na₂SO₃
+                        丙酮氰醇（70% 收率）
+</div>
+<div class="box-example">
+<strong>臨床應用：氨苯碸（Dapsone）的水溶性前藥</strong>
+<p>氨苯碸（dapsone）是一種重要的抗麻風病藥物，水溶性差，難以靜脈注射。將甲醛的亞硫酸氫鈉加成物（HOCH₂SO₃Na）與氨苯碸的氨基反應，可以製備水溶性的前藥，用於臨床靜脈給藥。體內水解後釋放出活性藥物。</p>
+</div>
+</section>
+
+<section id="cyanohydrin">
+<h2>氰醇合成</h2>
+<p>HCN 中的氰離子（CN⁻）是有效的碳親核劑，可以加成至醛和酮的羰基，形成<strong>氰醇（cyanohydrin）</strong>。</p>
+<div class="reaction-scheme">
+        O                      OH
+        ‖                      |
+  R¹—C—R²  +  HCN  ⇌   R¹—C—R²
+                               |
+                               CN
+                         氰醇
+</div>
+<p>氰醇合成的重要性在於：</p>
+<ul>
+<li>CN 引入一個新的碳原子，使碳鏈延長一個碳</li>
+<li>CN 可以水解成 COOH（羧基）或還原成 CH₂NH₂（氨基）</li>
+<li>氰醇因此是合成 α-羥基酸和 β-氨基醇的前體</li>
+</ul>
+<div class="box-note">
+<strong>反應注意事項</strong>
+<p>HCN 是劇毒氣體（沸點 26°C），操作極其危險。實驗室通常用 NaCN 加 H₂SO₄ 原位生成 HCN，或直接用 KCN 在醋酸緩衝液（pH ~5）中反應，使 CN⁻ 濃度足夠高但 HCN 濃度相對低。</p>
+</div>
+<div class="box-selftest">
+<strong>自我測試</strong>
+<p>1. 解釋為什麼丙酮（acetone）的水合常數 K = 0.001，而甲醛的 K = 2280。</p>
+<p>2. 葡萄糖在水溶液中為什麼幾乎完全以環狀半縮醛形式存在，而不是開鏈醛形式？</p>
+<p>3. 在亞硫酸氫鈉加成物的應用中，若要從混合物中分離苯甲醛，應如何操作？</p>
+<p>4. 丙酮與 KCN 在乙酸緩衝液中反應，寫出產物的結構和可能的後續轉化。</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>羰基的親電性</strong>：C=O 中碳是親電中心（δ⁺），親核劑從垂直於 sp² 平面的方向攻擊</li>
+<li><strong>水合反應</strong>：水 + 羰基 → 偕二醇（可逆）；K 值受電子效應（拉電子基增大 K）和立體效應（位阻增大 K 減小）控制</li>
+<li><strong>半縮醛</strong>：醇 + 醛/酮 → 半縮醛（可逆）；糖類在水溶液中大量以環狀半縮醛存在</li>
+<li><strong>酸催化</strong>：質子化羰基氧 → 增強羰基碳的親電性</li>
+<li><strong>鹼催化</strong>：去質子化親核劑（形成烷氧化物）→ 增強親核能力</li>
+<li><strong>亞硫酸氫鈉加成物</strong>：結晶固體，可逆，用於純化醛/酮；可作合成中間體</li>
+<li><strong>氰醇</strong>：HCN/CN⁻ 加成，使碳鏈增加一個 C；前體合成 α-羥基酸或胺基醇</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

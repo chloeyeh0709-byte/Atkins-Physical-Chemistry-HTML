@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第八章：酸鹼性與 pKa | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第八章：酸鹼性與 pKa</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">酸鹼的基本概念</a>
+    <a href="#pka-scale">pKa 量表</a>
+    <a href="#conjugate-base">共軛鹼的穩定性</a>
+    <a href="#oxygen-acids">含氧酸</a>
+    <a href="#halide-acids">鹵化氫的 pKa</a>
+    <a href="#inductive">誘導效應</a>
+    <a href="#carbon-acids">碳酸</a>
+    <a href="#nitrogen-acids">含氮化合物</a>
+    <a href="#lewis">路易斯酸鹼</a>
+    <a href="#drug-design">pKa 與藥物設計</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="07_離域化與共軛.html">← 第七章</a>
+    <a href="09_有機金屬試劑製備CC鍵.html">第九章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第八章：酸鹼性與 p<i>K</i>a</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 8: Acidity, Basicity, and p<i>K</i>a</div>
+
+<p>酸鹼化學貫穿整個有機化學。理解 p<i>K</i>a 不只是背數字——它告訴我們哪些鍵容易斷裂、哪些中間體穩定、哪些試劑能去質子化哪些分子。本章從基礎出發，建立一個系統性的酸鹼強度框架，並應用於預測反應性和藥物設計。</p>
+
+<section id="intro">
+<h2>酸鹼的基本概念</h2>
+<h3>Brønsted-Lowry 定義</h3>
+<p><strong>酸</strong>：質子（H⁺）的給予者（proton donor）<br>
+<strong>鹼</strong>：質子的接受者（proton acceptor）</p>
+<p>酸給出質子後變為其<strong>共軛鹼</strong>，鹼接受質子後變為其<strong>共軛酸</strong>。</p>
+<div class="reaction-scheme">
+  HA  +  B  ⇌  A⁻  +  BH⁺
+  酸   鹼    共軛鹼  共軛酸
+
+  平衡常數 Ka = [A⁻][BH⁺] / ([HA][B])
+  pKa = −log Ka
+</div>
+<h3>強酸 vs 弱酸</h3>
+<ul>
+<li><strong>強酸</strong>（p<i>K</i>a &lt; 0）：幾乎完全解離；H₂SO₄、HCl、HI 等</li>
+<li><strong>弱酸</strong>（p<i>K</i>a &gt; 0）：部分解離；乙酸（p<i>K</i>a 4.76）、水（p<i>K</i>a 15.7）等</li>
+</ul>
+<div class="box-rule">
+<strong>p<i>K</i>a 的含義</strong>
+<p>p<i>K</i>a 越<strong>小</strong>（或越負），酸性越<strong>強</strong>。<br>
+p<i>K</i>a 越<strong>大</strong>，酸性越<strong>弱</strong>（即共軛鹼越強）。<br>
+「p<i>K</i>a = pH 當酸半解離時」——在 pH = p<i>K</i>a 時，[HA] = [A⁻]，即酸和共軛鹼各佔一半。</p>
+</div>
+</section>
+
+<section id="pka-scale">
+<h2>p<i>K</i>a 量表</h2>
+<p>有機化學中最重要的 p<i>K</i>a 數值（水作溶劑，25°C）：</p>
+<table>
+<tr><th>化合物（酸）</th><th>p<i>K</i>a</th><th>共軛鹼</th></tr>
+<tr><td>H₂SO₄</td><td>−3</td><td>HSO₄⁻</td></tr>
+<tr><td>HCl</td><td>−7</td><td>Cl⁻</td></tr>
+<tr><td>HI</td><td>−10</td><td>I⁻</td></tr>
+<tr><td>H₃O⁺</td><td>−1.7</td><td>H₂O</td></tr>
+<tr><td>CF₃COOH（三氟乙酸）</td><td>~0</td><td>CF₃COO⁻</td></tr>
+<tr><td>CH₃COOH（乙酸）</td><td>4.76</td><td>CH₃COO⁻</td></tr>
+<tr><td>苯酚（phenol）</td><td>10</td><td>苯氧負離子</td></tr>
+<tr><td>NH₄⁺</td><td>9.2</td><td>NH₃</td></tr>
+<tr><td>H₂O</td><td>15.7</td><td>HO⁻</td></tr>
+<tr><td>乙醇（EtOH）</td><td>~16</td><td>EtO⁻</td></tr>
+<tr><td>NH₃</td><td>33</td><td>NH₂⁻</td></tr>
+<tr><td>苯（benzene）</td><td>~43</td><td>Ph⁻</td></tr>
+<tr><td>CH₄</td><td>~48</td><td>CH₃⁻</td></tr>
+</table>
+<div class="box-note">
+<strong>「比較性去質子化」規則</strong>
+<p>酸鹼反應的方向：強酸 + 強鹼 → 弱酸 + 弱鹼（平衡偏向右側）。具體地說：若試劑的 p<i>K</i>a（作為共軛酸）大於底物，則去質子化可以發生。例如，NaH（共軛酸 H₂，p<i>K</i>a ≈ 35）可以去質子化乙醇（p<i>K</i>a 16），但不能去質子化苯。</p>
+</div>
+</section>
+
+<section id="conjugate-base">
+<h2>共軛鹼的穩定性：為什麼有些酸比較強？</h2>
+<p>酸的強度取決於其失去質子後形成的共軛鹼（A⁻）有多穩定。共軛鹼越穩定，酸越強。影響共軛鹼穩定性的因素有三：</p>
+<h3>1. 帶電原子的電負度</h3>
+<p>負電荷放在電負度高的原子上更穩定。因此同週期元素：</p>
+<div class="reaction-scheme">
+  pKa 趨勢（左到右）：CH₄ > NH₃ > H₂O > HF
+  即 C–H 酸性最弱，F–H 酸性最強（在第二週期中）
+</div>
+<h3>2. 共振離域化</h3>
+<p>負電荷通過共振分散到多個原子上，大幅穩定共軛鹼。</p>
+<div class="box-example">
+<strong>乙醇 vs 乙酸</strong>
+<p>乙醇（EtOH，p<i>K</i>a 16）失去 H⁺ 後，負電荷集中在一個 O 原子上（不穩定）。<br>
+乙酸（CH₃COOH，p<i>K</i>a 4.76）失去 H⁺ 後，負電荷通過共振分散到兩個 O 上：<br>
+CH₃COO⁻（兩個 C–O 鍵等長 136 pm，負電荷各佔 50%）<br>
+→ 乙酸比乙醇強約 10¹⁰ 倍！兩個 O 分攤負電荷比一個 O 承擔穩定得多。</p>
+</div>
+<div class="box-example">
+<strong>苯酚 vs 環己醇</strong>
+<p>苯酚（p<i>K</i>a 10）比環己醇（p<i>K</i>a ~16）強約 10⁶ 倍，原因是苯酚的共軛鹼（苯氧負離子）可以通過共振將負電荷分散到苯環中（ortho 和 para 位置），而環己醇的共軛鹼無此穩定化。</p>
+</div>
+<h3>3. 鍵強度（同族元素向下）</h3>
+<p>在同族元素中，向下移動，鍵越長越弱，越容易斷裂：</p>
+<div class="reaction-scheme">
+  HF（pKa 3.2）  >  HCl（pKa −7）  >  HBr（pKa −9）  >  HI（pKa −10）
+  鍵強度：HF 最強，HI 最弱
+</div>
+<p>雖然 I 的電負度最低（本應讓負電荷最不穩定），但 H–I 鍵最弱（容易斷），<strong>鍵強度的貢獻勝過電負度的考量</strong>，使 HI 酸性最強。</p>
+</section>
+
+<section id="oxygen-acids">
+<h2>含氧酸</h2>
+<p>有機化學中最常見的含氧酸：</p>
+<table>
+<tr><th>類型</th><th>代表化合物</th><th>p<i>K</i>a（約）</th><th>說明</th></tr>
+<tr><td>醇（alcohol）</td><td>乙醇</td><td>16</td><td>負電荷在一個 O</td></tr>
+<tr><td>苯酚（phenol）</td><td>苯酚</td><td>10</td><td>共振入苯環</td></tr>
+<tr><td>羧酸（carboxylic acid）</td><td>乙酸</td><td>4.76</td><td>共振分散至兩個 O</td></tr>
+<tr><td>三氟乙酸（TFA）</td><td>CF₃COOH</td><td>~0</td><td>三個 F 強拉電子</td></tr>
+<tr><td>硫酸（sulfuric acid）</td><td>H₂SO₄</td><td>−3</td><td>強酸，幾乎完全解離</td></tr>
+</table>
+<div class="box-derivation">
+<strong>推斷邏輯</strong>
+<p>ROH → RO⁻（負電荷在 O，沒有共振穩定化）→ p<i>K</i>a ~15–16<br>
+ArOH → ArO⁻（負電荷可進入苯環 ortho/para）→ p<i>K</i>a ~10<br>
+RCOOH → RCOO⁻（兩個 O 共享）→ p<i>K</i>a ~5<br>
+每增加一層穩定化（共振、電負度高的原子數增加），p<i>K</i>a 下降 ~5–10。</p>
+</div>
+</section>
+
+<section id="halide-acids">
+<h2>鹵化氫的 p<i>K</i>a</h2>
+<p>鹵化氫的酸性順序在第一印象下可能反直覺（F 最電負卻酸性最弱）：</p>
+<table>
+<tr><th>化合物</th><th>p<i>K</i>a</th><th>鍵鍵能（kJ/mol）</th></tr>
+<tr><td>HF</td><td>3.2</td><td>570（最強）</td></tr>
+<tr><td>HCl</td><td>−7</td><td>432</td></tr>
+<tr><td>HBr</td><td>−9</td><td>362</td></tr>
+<tr><td>HI</td><td>−10</td><td>297（最弱）</td></tr>
+</table>
+<p>HI 酸性最強的關鍵在於：鍵強度沿族向下急劇減弱，使 H–I 鍵最容易斷；I⁻ 的大半徑使負電荷分散更有效（可極化性高）。這兩個因素合起來超過了 I 的電負度低的不利因素。</p>
+</section>
+
+<section id="inductive">
+<h2>誘導效應——電負取代基的影響</h2>
+<p>電子拉基通過 σ 鍵傳遞其拉電子效應，稱為<strong>誘導效應（inductive effect）</strong>，可以增強酸性（穩定負電荷）：</p>
+<div class="box-example">
+<strong>氯乙酸 vs 乙酸</strong>
+<p>ClCH₂COOH（p<i>K</i>a 2.86）比 CH₃COOH（p<i>K</i>a 4.76）強：Cl 拉電子，使羧酸根負電荷分散更好。<br>
+三氯乙酸 Cl₃CCOOH（p<i>K</i>a 0.77）更強。<br>
+三氟乙酸 CF₃COOH（p<i>K</i>a ~0）是有機化學中常用的強酸。</p>
+</div>
+<p>誘導效應隨距離迅速衰減（每隔一個碳約減弱 10 倍）：</p>
+<div class="reaction-scheme">
+  ClCH₂COOH  pKa 2.86    Cl 鄰 COOH
+  Cl(CH₂)₂COOH  pKa 4.06  Cl 隔一個 C
+  Cl(CH₂)₃COOH  pKa 4.52  Cl 隔兩個 C（接近乙酸）
+</div>
+</section>
+
+<section id="carbon-acids">
+<h2>碳酸（C–H 酸）</h2>
+<p>C–H 鍵通常不算作酸（很難去質子化），但某些特殊環境使 C–H 酸性顯著增強：</p>
+<table>
+<tr><th>碳酸類型</th><th>代表</th><th>p<i>K</i>a</th><th>穩定化原因</th></tr>
+<tr><td>普通烷烴</td><td>CH₄</td><td>~48</td><td>無穩定化；sp³ C 電負度低</td></tr>
+<tr><td>末端炔</td><td>HC≡C–H（乙炔）</td><td>25</td><td>sp 軌域電負度高於 sp³（s 特性多）</td></tr>
+<tr><td>苯（sp² C–H）</td><td>C₆H₅–H</td><td>~43</td><td>sp² 比 sp³ 稍酸，但遠不如炔</td></tr>
+<tr><td>α-羰基（酮/醛）</td><td>丙酮 α-H</td><td>20</td><td>烯醇化物負電荷共振至 O</td></tr>
+<tr><td>α-二羰基</td><td>丙二酸二乙酯</td><td>13</td><td>兩個羰基穩定烯醇化物</td></tr>
+</table>
+<div class="box-key">
+<strong>末端炔的酸性</strong>
+<p>乙炔（p<i>K</i>a 25）的 C–H 是有機碳酸中重要的一員。sp 雜化軌域有 50% s 特性（vs sp³ 25% s 特性），電子更靠近碳核，使 C–H 鍵中的 C 更電負，H 更易以 H⁺ 形式離去。這是為什麼烷基鋰和格林試劑能使末端炔去質子化的原因。</p>
+</div>
+<div class="box-example">
+<strong>烯醇化物（enolate）</strong>
+<p>酮 α-H 的 p<i>K</i>a 約 20，強鹼（如 LDA，p<i>K</i>a ~36）可將其完全去質子化，形成烯醇化物：</p>
+<p>CH₃–CO–CH₃ → ⁻CH₂–CO–CH₃ ↔ CH₂=C(O⁻)–CH₃</p>
+<p>烯醇化物中，負電荷通過共振分散至氧（更穩定的位置），這使得酮 α-H 比普通 C–H（p<i>K</i>a 48）強得多。</p>
+</div>
+</section>
+
+<section id="nitrogen-acids">
+<h2>含氮化合物的酸鹼性</h2>
+<h3>胺的鹼性</h3>
+<p>胺（amines）是鹼，其共軛酸（銨離子）的 p<i>K</i>a 決定胺的鹼性強度：</p>
+<table>
+<tr><th>胺</th><th>p<i>K</i>aH（共軛酸）</th><th>說明</th></tr>
+<tr><td>脂肪胺（例如 piperidine）</td><td>~11</td><td>N 孤對電子不共軛，鹼性強</td></tr>
+<tr><td>苯胺（aniline）</td><td>4.6</td><td>孤對電子共軛入苯環，鹼性弱</td></tr>
+<tr><td>吡啶（pyridine）</td><td>5.5</td><td>sp² N，孤對電子不在 π 體系</td></tr>
+<tr><td>醯胺 N（amide）</td><td>~0</td><td>共振：N 的孤對電子拉向 C=O</td></tr>
+</table>
+<div class="box-note">
+<strong>苯胺鹼性弱的原因</strong>
+<p>苯胺中，N 的孤對電子參與苯環的 π 體系（共軛），電子密度被分散，N 上的電荷降低，鹼性因此大大減弱。苯胺的 p<i>K</i>aH 4.6 vs 脂肪胺 ~11，相差 10⁶ 倍！這就是「共軛降低鹼性」的典型案例。</p>
+</div>
+<h3>特殊含氮鹼：脒與胍</h3>
+<p><strong>脒（amidines）</strong>：C=NH 連接兩個 N，質子化後正電荷由兩個 N 分攤（共振穩定），p<i>K</i>aH ~12，鹼性遠強於普通胺。</p>
+<p><strong>胍（guanidines）</strong>：C=NH 連接三個 N，質子化後正電荷由三個 N 分攤，p<i>K</i>aH ~14.5，在生理 pH 下幾乎完全以質子化形式存在。精胺酸（arginine）側鏈即為胍基，在生理條件帶正電。</p>
+<div class="box-key">
+<strong>「共振穩定正電荷」vs「共振穩定負電荷」</strong>
+<p>之前學過，共振穩定負電荷（A⁻）使酸性增強（p<i>K</i>a 降低）。同理，共振穩定正電荷（BH⁺）使鹼性增強（p<i>K</i>aH 升高）。脒和胍的高鹼性就是這個原理。</p>
+</div>
+</section>
+
+<section id="lewis">
+<h2>路易斯酸鹼</h2>
+<p>路易斯（Lewis）定義更廣義的酸鹼：</p>
+<ul>
+<li><strong>路易斯酸</strong>：電子對的接受者（electron pair acceptor），即親電試劑</li>
+<li><strong>路易斯鹼</strong>：電子對的給予者（electron pair donor），即親核試劑</li>
+</ul>
+<p>路易斯酸不一定有可電離的 H⁺，例如 BF₃、AlCl₃ 都是路易斯酸（有空的接受軌域）。</p>
+<div class="box-example">
+<strong>弗里德-克拉夫茲反應（Friedel-Crafts）</strong>
+<p>AlCl₃ 是路易斯酸，從乙醯氯（CH₃COCl）接受 Cl⁻，生成乙醯陽離子（CH₃CO⁺），後者再攻擊苯環（親電芳香取代反應）：</p>
+<p>CH₃COCl + AlCl₃ → CH₃CO⁺ [AlCl₄⁻]</p>
+<p>這裡 AlCl₃ 是路易斯酸（接受電子對），乙醯氯中的 Cl 是路易斯鹼（給予電子對）。</p>
+</div>
+</section>
+
+<section id="drug-design">
+<h2>p<i>K</i>a 與藥物設計</h2>
+<p>理解 p<i>K</i>a 是藥物設計的基本工具，因為分子的荷電狀態直接影響其溶解性、膜滲透性和生物活性。</p>
+<div class="box-example">
+<strong>西咪替丁（cimetidine）的開發——H₂ 受體拮抗劑</strong>
+<p>組胺（histamine）的咪唑基 p<i>K</i>aH 約 6，在生理 pH 下部分帶電荷，能與 H₂ 受體結合。研究人員嘗試以胍基取代咪唑基來增強鹼性，但胍的 p<i>K</i>a 約 14，會完全帶正電荷，反而失去活性。</p>
+<p>解決方案：在胍基上引入強拉電子的 CN 取代基（氰基），p<i>K</i>a 從 14.5 降至 −0.4，在生理 pH 下不帶電荷，能以中性形式進入受體。這個思路最終發展成西咪替丁（cimetidine），1976 年上市，成為史上第一個年銷售額超過 10 億美元的藥物。</p>
+</div>
+<div class="box-selftest">
+<strong>自我測試</strong>
+<p>1. 解釋為什麼乙酸（p<i>K</i>a 4.76）比乙醇（p<i>K</i>a 16）酸性強 10¹⁰ 倍。</p>
+<p>2. 苯胺（aniline，p<i>K</i>aH 4.6）和哌啶（piperidine，p<i>K</i>aH 11）哪個鹼性更強？為什麼？</p>
+<p>3. 乙炔（pKa 25）為什麼比乙烷（pKa ~50）酸性強得多？</p>
+<p>4. 為什麼胍（guanidine）的 p<i>K</i>aH ~14.5？從正電荷的共振穩定性解釋。</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>p<i>K</i>a</strong>：p<i>K</i>a 越小酸性越強；強酸的共軛鹼是弱鹼；p<i>K</i>a = −log Ka</li>
+<li><strong>共軛鹼穩定性三因素</strong>：① 電負度（負電荷在電負度高的原子更穩定）②共振離域化（負電荷分散更穩定）③ 鍵強度（同族向下，鍵越弱越易斷）</li>
+<li><strong>含氧酸</strong>：ROH（~16）&gt; ArOH（~10）&gt; RCOOH（~5）；電子拉基降低 p<i>K</i>a（增強酸性）</li>
+<li><strong>碳酸</strong>：炔（25）&gt;&gt; 酮 α-H（20）&gt;&gt; 苯 C–H（43）&gt;&gt; 烷烴（48）；sp 軌域電負度高</li>
+<li><strong>含氮鹼</strong>：脂肪胺（~11）&gt;&gt; 苯胺（4.6）≈ 吡啶（5.5）；共軛降低鹼性</li>
+<li><strong>脒/胍</strong>：共振穩定正電荷 → 高鹼性（p<i>K</i>aH 12–14.5）</li>
+<li><strong>路易斯酸鹼</strong>：Lewis acid = 電子受體（BF₃、AlCl₃），Lewis base = 電子給體</li>
+<li><strong>藥物設計應用</strong>：調整 p<i>K</i>a 控制荷電狀態 → 影響溶解性和膜通透性</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

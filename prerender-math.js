@@ -34,6 +34,11 @@ const files = [
   'organic/chapters/03_測定有機結構.html',
   'organic/chapters/04_分子結構.html',
   'organic/chapters/05_有機反應.html',
+  'organic/chapters/06_親核加成至羰基.html',
+  'organic/chapters/07_離域化與共軛.html',
+  'organic/chapters/08_酸鹼性與pKa.html',
+  'organic/chapters/09_有機金屬試劑製備CC鍵.html',
+  'organic/chapters/10_羰基的親核取代.html',
 ];
 
 function renderDisplay(latex) {

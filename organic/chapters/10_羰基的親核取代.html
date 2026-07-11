@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第十章：羰基的親核取代 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第十章：羰基的親核取代</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">加成 vs 取代</a>
+    <a href="#leaving-group">離去基</a>
+    <a href="#reactivity-order">羧酸衍生物的反應性</a>
+    <a href="#tetrahedral">四面體中間體</a>
+    <a href="#acid-chloride">醯氯的反應</a>
+    <a href="#ester">酯的反應</a>
+    <a href="#acid-catalysis">酸催化酯化</a>
+    <a href="#saponification">皂化反應</a>
+    <a href="#amide-hydrolysis">醯胺的水解</a>
+    <a href="#nitrile">腈的水解</a>
+    <a href="#acyl-chloride-synthesis">醯氯的合成</a>
+    <a href="#grignard-problem">格氏試劑與酯</a>
+    <a href="#ir">紅外光譜鑑定</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="09_有機金屬試劑製備CC鍵.html">← 第九章</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第十章：羰基的親核取代</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 10: Nucleophilic Substitution at the Carbonyl Group</div>
+
+<p>第六章學了羰基的親核<strong>加成</strong>（親核劑加成後留在分子內，無離去基）。本章的羰基親核<strong>取代</strong>則不同：親核劑加成後，四面體中間體的一個基團作為離去基脫離，最終親核劑「取代」了原來的基團。這是羧酸衍生物（醯氯、酸酐、酯、醯胺等）化學反應的核心機制。</p>
+
+<section id="intro">
+<h2>加成 vs 取代：中間體的命運</h2>
+<p>親核劑攻擊羰基碳後，形成<strong>四面體中間體</strong>（sp² → sp³）：</p>
+<div class="reaction-scheme">
+       O                  O⁻              O
+       ‖      Nu⁻         |      –LG⁻    ‖
+  R—C—LG  →  R—C—LG   →  R—C—Nu
+                  |
+                  Nu
+
+  加成：若 LG 不離去 → 加成產物（Ch6）
+  取代：若 LG 作為陰離子離去 → 取代產物（本章）
+</div>
+<p>區別的關鍵是<strong>離去基（LG）的性質</strong>——LG 必須是能以穩定陰離子形式離去的基團。</p>
+</section>
+
+<section id="leaving-group">
+<h2>離去基：p<i>K</i>a 決定離去能力</h2>
+<p>離去基 LG⁻ 的穩定性由其共軛酸 HLG 的 p<i>K</i>a 決定：<strong>p<i>K</i>a 越低，LG⁻ 越穩定，越容易離去</strong>。</p>
+<table>
+<tr><th>離去基（LG⁻）</th><th>共軛酸（HLG）</th><th>HLG p<i>K</i>a</th><th>離去能力</th></tr>
+<tr><td>Cl⁻</td><td>HCl</td><td>−7</td><td>極佳（excellent）</td></tr>
+<tr><td>RCO₂⁻（羧酸根）</td><td>RCOOH</td><td>~5</td><td>好（good）</td></tr>
+<tr><td>RO⁻（烷氧化物）</td><td>ROH</td><td>~15</td><td>差（poor）→ 需要酸催化</td></tr>
+<tr><td>NH₂⁻（醯胺基）</td><td>NH₃</td><td>~35</td><td>極差，難以離去</td></tr>
+</table>
+<div class="box-rule">
+<strong>p<i>K</i>a 規則</strong>
+<p>若產物的共軛酸 p<i>K</i>a &gt; 起始物，則反應在熱力學上有利（離去基穩定，親核劑不穩定）；反之亦然。酯（LG = OR⁻）水解的熱力學利於羧酸（生成 OH⁻ + RCOOH → RCOO⁻ + H₂O），但動力學上需要催化。</p>
+</div>
+</section>
+
+<section id="reactivity-order">
+<h2>羧酸衍生物的反應性順序</h2>
+<p>四種主要羧酸衍生物的反應活性由高到低：</p>
+<div class="reaction-scheme">
+  醯氯  >  酸酐  >  酯  >  醯胺
+  (acyl   (anhydride) (ester) (amide)
+  chloride)
+  最活潑                     最不活潑
+</div>
+<p>反應性降低的原因：</p>
+<ul>
+<li><strong>醯氯</strong>：Cl⁻ 是最好的離去基（HCl p<i>K</i>a −7），且 Cl 的 p 軌域與 C=O π* 共軛較弱（原子大小不匹配）</li>
+<li><strong>酸酐</strong>：RCO₂⁻ 是好的離去基（RCOOH p<i>K</i>a ~5）</li>
+<li><strong>酯</strong>：RO⁻ 是差的離去基（ROH p<i>K</i>a ~15）；需要催化才能反應</li>
+<li><strong>醯胺</strong>：NH₂⁻ 是極差的離去基（NH₃ p<i>K</i>a ~35）；N 的孤對電子與 C=O 共軛大大穩定了醯胺，使 C 的親電性降低</li>
+</ul>
+<div class="box-key">
+<strong>離域化與反應性的關係</strong>
+<p>醯胺中，N 的孤對電子與 C=O π* 共軛（N sp² 雜化），這使得羰基碳的正電性降低（部分電子由 N 流入），親電性下降，同時 NH₂⁻ 是很差的離去基。兩個因素合起來使醯胺是羧酸衍生物中最不活潑的。</p>
+</div>
+</section>
+
+<section id="tetrahedral">
+<h2>四面體中間體的機制</h2>
+<p>以醯氯與醇的反應為例，詳細機制：</p>
+<div class="reaction-scheme">
+步驟 1（親核加成）：
+  ROH + R'COCl → R'C(OH)(OR)(Cl) ← 四面體中間體（帶 OH, OR, Cl 三個取代基）
+
+步驟 2（鹼去質子）：
+  四面體中間體 → 去掉 H⁺ 形成 R'C(O⁻)(OR)(Cl)
+
+步驟 3（離去基離去）：
+  R'C(O⁻)(OR)(Cl) → R'CO(OR) + Cl⁻
+  （C=O 重新形成，Cl⁻ 離去）
+
+整體：R'COCl + ROH → R'COOR + HCl
+</div>
+<p>反應是<strong>加成-消除（addition-elimination）</strong>機制，不是同時進行的協同反應。四面體中間體是真實的中間體（可通過 NMR 在低溫下檢測到）。</p>
+</section>
+
+<section id="acid-chloride">
+<h2>醯氯的反應</h2>
+<p>醯氯（R–COCl）是最活潑的羧酸衍生物，幾乎能與所有親核劑反應：</p>
+<table>
+<tr><th>親核劑</th><th>產物</th><th>說明</th></tr>
+<tr><td>H₂O（水）</td><td>R–COOH（羧酸）</td><td>醯氯遇水激烈水解</td></tr>
+<tr><td>ROH（醇）</td><td>R–COOR'（酯）</td><td>需要鹼（Et₃N）中和 HCl</td></tr>
+<tr><td>R'NH₂（伯胺）</td><td>R–CONHR'（醯胺）</td><td>需 2 equiv 胺（一個反應，一個中和 HCl）</td></tr>
+<tr><td>R'₂NH（仲胺）</td><td>R–CONR'₂（N,N-二取代醯胺）</td><td>同上</td></tr>
+<tr><td>NH₃（氨）</td><td>R–CONH₂（伯醯胺）</td><td>需 2 equiv NH₃</td></tr>
+</table>
+<div class="box-example">
+<strong>Schotten-Baumann 合成</strong>
+<p>醯氯與胺的反應常用 Schotten-Baumann 條件：兩相體系（CH₂Cl₂/NaOH 水溶液）。醯氯在有機相，胺在水相界面反應；NaOH 中和生成的 HCl，防止胺被質子化（質子化胺不具親核性）。這是工業和實驗室製備醯胺和酯的常用方法。</p>
+</div>
+</section>
+
+<section id="ester">
+<h2>酯的反應——轉酯化與氨解</h2>
+<h3>酯的氨解（aminolysis）</h3>
+<p>酯與氨（或胺）反應，NH₃（NH₂⁻，p<i>K</i>a ~35）作為親核劑攻擊酯，RO⁻（p<i>K</i>a ~15）比 NH₂⁻ 更穩定，因此 RO⁻ 作為離去基：</p>
+<div class="reaction-scheme">
+  R–COOR'  +  NH₃  →  R–CONH₂  +  R'OH
+  酯                    醯胺（伯）
+
+  此反應單向：RO⁻ (pKa 15) < NH₂⁻ (pKa 35)
+  → 酯可以被胺所取代，但醯胺不能被醇取代（逆反應不利）
+</div>
+<h3>轉酯化（transesterification）</h3>
+<p>酯在酸催化或鹼催化下可以交換醇基：</p>
+<div class="reaction-scheme">
+  R–COOR¹  +  R²OH  ⇌  R–COOR²  +  R¹OH
+  （可逆！需要使用過量的一種醇，或蒸去另一種醇以驅動平衡）
+</div>
+<div class="box-example">
+<strong>生物柴油的製備</strong>
+<p>生物柴油是植物油（甘油三酯）在甲醇和 NaOH 催化下的轉酯化產物。甘油（glycerol）作為離去基，三個脂肪酸甲酯（FAME）即為生物柴油。這是工業規模最大的轉酯化應用。</p>
+</div>
+</section>
+
+<section id="acid-catalysis">
+<h2>酸催化酯化</h2>
+<p>羧酸和醇在無催化劑時反應非常慢（RO⁻ 是差的離去基）。酸催化將羰基質子化，大大增強親電性：</p>
+<div class="reaction-scheme">
+              H⁺
+  R–COOH  →  R–C(⁺OH)–OH   （質子化羰基，強親電劑）
+                  ↓ + R'OH（親核劑）
+             四面體中間體（R–C(OH)₂–OR'）
+                  ↓ –H⁺（質子移動）
+                  ↓ –H₂O（水離去）
+             R–COOR'
+</div>
+<div class="box-note">
+<strong>費歇爾酯化（Fischer Esterification）</strong>
+<p>羧酸 + 醇 + 酸催化劑（H₂SO₄ 或 p-TsOH）→ 酯 + 水。平衡常數 K ≈ 1，需要：（1）過量一種反應物（通常過量醇），或（2）除去水（加 CaCl₂ 或分子篩，或迪安-斯塔克裝置蒸去水）來驅動反應完全。</p>
+</div>
+</section>
+
+<section id="saponification">
+<h2>皂化反應——酯的鹼催化水解</h2>
+<p>酯在 NaOH 水溶液中水解（皂化，saponification）是<strong>不可逆</strong>的：</p>
+<div class="reaction-scheme">
+  R–COOR'  +  NaOH  →  R–COO⁻ Na⁺  +  R'OH
+  酯                    羧酸鈉（鹽）
+
+  HO⁻ 攻擊酯羰基 → 四面體中間體 → R'O⁻ 離去
+  羧酸鈉（共軛鹼）是穩定的，不被再度酯化
+  → 反應不可逆（不同於酸催化，後者可逆）
+</div>
+<p>肥皂的製造即是植物油脂（長鏈脂肪酸甘油酯）與 NaOH 的皂化反應，生成長鏈脂肪酸鈉（肥皂）和甘油。</p>
+<div class="box-key">
+<strong>酸催化（可逆）vs 鹼催化（不可逆）</strong>
+<p>酸催化水解：H⁺ 催化，產物是羧酸 + 醇，平衡可逆（K ~1）；用水過量或除去醇可以推動。<br>
+鹼催化水解（皂化）：HO⁻ 作為親核劑，產物是羧酸根（鹽），不能再被醇取代；不可逆，收率通常高。</p>
+</div>
+</section>
+
+<section id="amide-hydrolysis">
+<h2>醯胺的水解——需要強烈條件</h2>
+<p>醯胺是最不活潑的羧酸衍生物，水解需要非常強烈的條件：</p>
+<div class="reaction-scheme">
+  R–CONH₂  +  H₂O  →  R–COOH  +  NH₃  （酸/鹼催化，需回流數小時）
+
+  典型條件：
+  （1）70% H₂SO₄，100°C，數小時
+  （2）濃 NaOH，回流
+  （3）酶（amidase，生物學條件）
+</div>
+<p>醯胺難以水解的原因：</p>
+<ul>
+<li>N 的孤對電子與 C=O 共軛（delocalization）→ 羰基碳親電性降低</li>
+<li>NH₂⁻ 是極差的離去基（NH₃ p<i>K</i>a ~35）→ 中間體崩潰困難</li>
+</ul>
+<div class="box-note">
+<strong>蛋白質水解的重要性</strong>
+<p>蛋白質是由肽鍵（–CO–NH–，即醯胺鍵）連接的氨基酸鏈。醯胺鍵的穩定性使蛋白質在水溶液中可以長期穩定存在（生物降解需要蛋白酶）。若醯胺鍵容易水解，生命將無法存在。</p>
+</div>
+</section>
+
+<section id="nitrile">
+<h2>腈的水解</h2>
+<p>腈（R–C≡N）是另一類含羰基碳的活性物，可以逐步水解：</p>
+<div class="reaction-scheme">
+  R–C≡N  +  H₂O  →  R–C(=NH)–OH  →  R–CONH₂  →  R–COOH
+  腈         (酸催化)    亞胺酸（中間體）  醯胺（可分離）   羧酸
+
+  控制條件可停在醯胺（半水解）或繼續至羧酸（全水解）
+</div>
+<p>腈可由以下方式製備：R–X + NaCN → R–CN（SN2，碳鏈延長 1C）；醯胺脫水 → 腈。</p>
+</section>
+
+<section id="acyl-chloride-synthesis">
+<h2>醯氯的合成——活化羧酸</h2>
+<p>羧酸直接與醇反應困難，需要先將羧酸活化為醯氯（最活潑的衍生物）：</p>
+<table>
+<tr><th>試劑</th><th>反應</th><th>副產物</th></tr>
+<tr><td>SOCl₂（亞硫醯氯，thionyl chloride）</td><td>RCOOH + SOCl₂ → RCOCl + SO₂ + HCl</td><td>SO₂ 和 HCl 均為氣體，容易除去</td></tr>
+<tr><td>PCl₅（五氯化磷）</td><td>RCOOH + PCl₅ → RCOCl + POCl₃ + HCl</td><td>POCl₃ 需蒸餾除去</td></tr>
+<tr><td>草醯氯（(COCl)₂）</td><td>RCOOH + (COCl)₂ → RCOCl + CO + CO₂ + HCl</td><td>氣體副產物易除，但需催化</td></tr>
+</table>
+<div class="box-example">
+<strong>SOCl₂ 的優勢</strong>
+<p>SOCl₂ 是最常用的羧酸 → 醯氯試劑，因為副產物（SO₂ 和 HCl）都是氣體，反應結束後直接從反應混合物中逸出，純化簡單。加入少量 DMF 可以加速反應（Vilsmeier 型催化）。</p>
+</div>
+</section>
+
+<section id="grignard-problem">
+<h2>格氏試劑與酯——過度反應問題</h2>
+<p>嘗試用格氏試劑將酯轉化為酮時，存在「過度反應」問題：</p>
+<div class="reaction-scheme">
+  R¹–COOR  +  R²MgBr  →  R¹–CO–R²  （酮，中間體）
+                                 ↓ + R²MgBr（格氏試劑繼續攻擊！）
+                           R¹–C(R²)₂–OH  （三級醇）
+
+  問題：酮的反應性 > 酯的反應性，所以格氏試劑
+        會先消耗酯，生成酮，酮立刻被第二當量的格氏試劑取代
+        → 最終得到三級醇，而不是酮（即便酯只加 1 equiv 格氏）
+</div>
+<div class="box-key">
+<strong>解決方案：Weinreb 醯胺</strong>
+<p>為了從有機金屬試劑製備酮，使用 Weinreb 醯胺（N-甲氧基-N-甲基醯胺）。Weinreb 醯胺與格氏試劑或有機鋰反應後，生成一個穩定的螯合四面體中間體（N-Me 和 O 與 Mg 螯合），阻止酮離去直到水解。後處理時，酮被釋放，且不再受格氏試劑攻擊（已用完）。</p>
+</div>
+</section>
+
+<section id="ir">
+<h2>紅外光譜（IR）鑑定羧酸衍生物</h2>
+<p>C=O 的 IR 伸縮振動（ν C=O）是鑑定羰基的最直接方法，不同衍生物有特徵頻率：</p>
+<table>
+<tr><th>化合物類型</th><th>ν C=O（cm⁻¹）</th><th>說明</th></tr>
+<tr><td>醯氯（acyl chloride）</td><td>1790–1815</td><td>最高頻率；Cl 吸電子，C=O 鍵強</td></tr>
+<tr><td>酸酐（anhydride）</td><td>1800 和 1750（兩個峰）</td><td>不對稱/對稱伸縮耦合，特徵雙峰</td></tr>
+<tr><td>酯（ester）</td><td>1735–1750</td><td>比醯氯低；OR 給電子少</td></tr>
+<tr><td>羧酸（carboxylic acid）</td><td>1710–1725</td><td>廣泛的 O–H 吸收（2500–3300 cm⁻¹）</td></tr>
+<tr><td>醯胺（amide）</td><td>1680–1690</td><td>最低頻率；N 孤對電子共軛，C=O 鍵弱</td></tr>
+</table>
+<div class="box-derivation">
+<strong>頻率規律的解釋</strong>
+<p>C=O 的伸縮頻率反映 C=O 鍵的強度（鍵越強，頻率越高）：<br>
+（1）離域化削弱 C=O 鍵 → N 的孤對電子共軛最強，醯胺頻率最低<br>
+（2）吸電子基增強 C=O 鍵 → Cl 拉電子，醯氯頻率最高<br>
+（3）OR 有中等的共軛效應 → 酯頻率居中</p>
+</div>
+<div class="box-selftest">
+<strong>自我測試</strong>
+<p>1. 解釋為什麼酯的水解在鹼性條件下是不可逆的，但在酸性條件下是可逆的。</p>
+<p>2. 醯胺（amide）在所有羧酸衍生物中反應性最低，請從 (a) 羰基碳親電性 (b) 離去基能力兩個方面解釋。</p>
+<p>3. 如何從丁酸（butyric acid）合成 N-甲基丁醯胺（N-methylbutyramide）？列出試劑和條件。</p>
+<p>4. 一個化合物的 IR 在 1750 cm⁻¹ 有強吸收，沒有廣泛 O–H 峰，也沒有 N–H 峰，最可能是什麼官能基？</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>加成 vs 取代</strong>：四面體中間體若有合適的離去基（LG⁻），則 LG⁻ 離去，恢復 C=O，完成取代；否則質子化得到加成產物</li>
+<li><strong>離去基能力</strong>：由 HLG 的 p<i>K</i>a 決定；p<i>K</i>a 越低，LG⁻ 越穩定，越容易離去：Cl⁻ &gt; RCO₂⁻ &gt; RO⁻ &gg; NH₂⁻</li>
+<li><strong>反應性順序</strong>：醯氯 &gt; 酸酐 &gt; 酯 &gt; 醯胺；可以從高活性轉化到低活性，反之不行（或需強條件）</li>
+<li><strong>酸催化</strong>：質子化羰基氧 → 增強親電性；酯化反應可逆（K ~1），需過量醇或除水</li>
+<li><strong>鹼催化</strong>：HO⁻ 作親核劑；皂化不可逆（生成羧酸根鹽）</li>
+<li><strong>醯胺水解</strong>：需強酸或強鹼加熱；穩定性是蛋白質存在的基礎</li>
+<li><strong>SOCl₂</strong>：羧酸 → 醯氯；副產物 SO₂ 和 HCl 均為氣體，純化方便</li>
+<li><strong>Weinreb 醯胺</strong>：解決格氏試劑 + 酯 = 三級醇的問題；通過螯合固定四面體中間體，水解後得酮</li>
+<li><strong>IR 特徵</strong>：ν C=O 頻率：醯氯（~1800）&gt; 酸酐（雙峰）&gt; 酯（~1740）&gt; 羧酸（~1715）&gt; 醯胺（~1685）</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

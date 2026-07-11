@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第九章：有機金屬試劑製備 C–C 鍵 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第九章：有機金屬試劑</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">有機金屬鍵</a>
+    <a href="#grignard">格氏試劑</a>
+    <a href="#organolithium">有機鋰試劑</a>
+    <a href="#alkyne-deproton">炔的去質子化</a>
+    <a href="#halogen-metal">鹵素-金屬交換</a>
+    <a href="#transmetallation">轉金屬化</a>
+    <a href="#carbonyl-rxn">與羰基的反應</a>
+    <a href="#synthesis">合成醇：逆合成思路</a>
+    <a href="#oxidation">醇的氧化</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="08_酸鹼性與pKa.html">← 第八章</a>
+    <a href="10_羰基的親核取代.html">第十章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第九章：有機金屬試劑製備 C–C 鍵</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 9: Using Organometallic Reagents to Make C–C Bonds</div>
+
+<p>形成 C–C 鍵是有機合成中最重要的任務之一。有機金屬試劑（organometallic reagents）利用金屬-碳鍵的極性，使碳原子成為親核劑，攻擊羰基碳，實現碳鏈的延長。本章介紹格氏試劑（Grignard reagents）和有機鋰試劑的製備、性質及其在 C–C 鍵形成中的應用。</p>
+
+<section id="intro">
+<h2>有機金屬鍵的本質</h2>
+<p>在有機金屬化合物（R–M）中，碳的電負度（2.5）通常大於金屬（例如 Li 為 1.0，Mg 為 1.2），因此 C–M 鍵中電子雲偏向碳：</p>
+<div class="reaction-scheme">
+      δ⁻  δ⁺
+  R — C — M
+
+  C 帶部分負電荷，表現為親核劑
+</div>
+<p>有機金屬試劑（RMgX、RLi 等）的 HOMO 本質上是 C 的 sp³ 軌域，指向外側。這使得碳原子具有「類碳負離子」的性質——強親核劑，也是強鹼。</p>
+<div class="box-note">
+<strong>注意：有機金屬試劑對水的敏感性</strong>
+<p>有機金屬試劑與水（p<i>K</i>a 15.7）或質子性溶劑劇烈反應，因為其共軛鹼（通常是 R–H，p<i>K</i>a ≫ 15.7）比水更弱，反應不可逆。操作必須在無水無氧條件下進行（乾燥 Et₂O 或 THF，氮氣/氬氣保護）。</p>
+</div>
+</section>
+
+<section id="grignard">
+<h2>格氏試劑（Grignard Reagents）</h2>
+<p>格氏試劑由法國化學家 Victor Grignard 發現（1900年，諾貝爾化學獎 1912年），是鹵代烴與金屬鎂在乾燥乙醚中反應的產物：</p>
+<div class="reaction-scheme">
+  R–X  +  Mg  →  R–MgX     (在 Et₂O 或 THF 中)
+      X = Cl, Br, I
+      R = 烷基、芳基、乙烯基等
+</div>
+<h3>反應機制</h3>
+<p>Mg 插入 R–X 鍵（<strong>氧化插入，oxidative insertion</strong>）：Mg 將兩個電子給予 R–X，Mg 被氧化（0 → +2），鹵素帶走一個電子，碳帶走另一個：</p>
+<div class="reaction-scheme">
+  Mg(0) + R–X → [R• + MgX•] → R–MgX
+  (自由基機制，但整體看是 Mg 嵌入 C–X 鍵)
+</div>
+<h3>格氏試劑的性質</h3>
+<ul>
+<li>溶於醚（Et₂O 的 O 用孤對電子與 Mg 配位）</li>
+<li>反應活性：R–I &gt; R–Br &gt; R–Cl &gt; R–F</li>
+<li>芳基格氏（ArMgBr）可從芳基溴/碘製備</li>
+<li>乙烯基格氏（vinylMgBr）可從乙烯基鹵製備，立體構型保留</li>
+</ul>
+</section>
+
+<section id="organolithium">
+<h2>有機鋰試劑（Organolithium Reagents）</h2>
+<p>有機鋰試劑比格氏試劑反應性更強（Li 比 Mg 更電正性，C–Li 鍵更富電子）：</p>
+<div class="reaction-scheme">
+  R–X  +  2 Li  →  R–Li  +  LiX
+
+  或：R–MgBr  +  n-BuLi  →  R–Li  +  n-BuMgBr
+              （鹵素-金屬交換，較溫和）
+</div>
+<h3>有機鋰作為超強鹼</h3>
+<p>甲烷的 p<i>K</i>a ≈ 50；苯的 p<i>K</i>a ≈ 43。有機鋰（R–Li 的共軛酸 R–H）是超強鹼，可去質子化幾乎所有含 C–H 的分子：</p>
+<table>
+<tr><th>試劑</th><th>共軛酸 p<i>K</i>a</th><th>常用用途</th></tr>
+<tr><td>n-BuLi（正丁基鋰）</td><td>~50</td><td>鹵素-金屬交換；去質子化末端炔</td></tr>
+<tr><td>sec-BuLi（仲丁基鋰）</td><td>~51</td><td>位阻較大，選擇性去質子化</td></tr>
+<tr><td>t-BuLi（叔丁基鋰）</td><td>~53</td><td>最強；不帶 β-H，不與底物進行 E2</td></tr>
+<tr><td>LDA（二異丙基醯胺基鋰）</td><td>~36</td><td>強位阻鹼，常用於酮的去質子化生成烯醇化物</td></tr>
+</table>
+</section>
+
+<section id="alkyne-deproton">
+<h2>炔的去質子化</h2>
+<p>末端炔（R–C≡C–H，p<i>K</i>a 25）可被格氏試劑或有機鋰去質子化，生成炔化物：</p>
+<div class="reaction-scheme">
+  CH₃C≡CH  +  EtMgBr  →  CH₃C≡CMgBr  +  EtH
+  丙炔                    丙炔格氏試劑
+
+  HC≡CH  +  NaNH₂  →  HC≡C⁻ Na⁺  +  NH₃
+  乙炔          氨基化鈉        乙炔鈉（炔化鈉）
+</div>
+<p>反應能進行的原因：EtH 的 p<i>K</i>a (~50) &gt; 末端炔 p<i>K</i>a (25)，平衡強烈偏向產物。炔化物 R–C≡C⁻ 是良好的碳親核劑，可攻擊烷基鹵或羰基，實現碳鏈延長。</p>
+</section>
+
+<section id="halogen-metal">
+<h2>鹵素-金屬交換反應</h2>
+<p>芳基鋰試劑（ArLi）可通過格氏試劑與有機鋰的反應（鹵素-金屬交換，halogen-metal exchange）製備：</p>
+<div class="reaction-scheme">
+  Ph–Br  +  n-BuLi  →  Ph–Li  +  n-BuBr
+
+  驅動力：苯基陰離子（Ph⁻，pKa ~43）比
+           正丁基陰離子（n-Bu⁻，pKa ~50）更穩定
+           → 平衡偏向更穩定的碳負離子
+</div>
+<div class="box-key">
+<strong>交換方向的熱力學規律</strong>
+<p>鹵素-金屬交換從穩定性較低的碳負離子轉移到穩定性較高的碳負離子。sp² 或 sp 碳的 p<i>K</i>a 比 sp³ 碳低，因此 n-BuLi 可以將 Li 轉移到 Ph–Br 上（Ph–Li 更穩定），而不是反過來。</p>
+</div>
+</section>
+
+<section id="transmetallation">
+<h2>轉金屬化（Transmetallation）</h2>
+<p>有機鋰試劑的反應性有時過強，可能與底物中的其他官能基反應。轉金屬化將鋰換成反應性較低的金屬，提高選擇性：</p>
+<div class="reaction-scheme">
+  R–MgBr  +  ZnBr₂  →  R–ZnBr  +  MgBr₂
+       格氏試劑         有機鋅試劑（較溫和）
+
+  有機鋅可用於鈀催化偶聯反應（Negishi coupling）
+</div>
+<p>有機銅試劑（Gilman 試劑，R₂CuLi）也是轉金屬化的產物：銅試劑對 1,4-共軛加成有選擇性（而非 1,2-加成），在合成中有重要應用。</p>
+</section>
+
+<section id="carbonyl-rxn">
+<h2>有機金屬試劑與羰基的反應</h2>
+<p>有機金屬試劑（RMgX 或 RLi）作為碳親核劑攻擊羰基碳，是形成 C–C 鍵最重要的方法之一：</p>
+<h3>與醛/酮的反應（親核加成）</h3>
+<div class="reaction-scheme">
+  格氏試劑 + 醛/酮 → 醇（加 H₂O 後處理）
+
+  R–MgBr  +  RCHO  →  R–CH(OH)–R     （二級醇）
+  R–MgBr  +  R₂CO  →  R₂C(OH)–R     （三級醇）
+  R–MgBr  +  CH₂O  →  R–CH₂OH       （一級醇，延長一個 C）
+</div>
+<table>
+<tr><th>醛/酮</th><th>格氏試劑加成產物</th><th>醇級數</th></tr>
+<tr><td>甲醛（CH₂O）</td><td>R–CH₂OH</td><td>一級醇（延長 1C）</td></tr>
+<tr><td>醛（RCHO）</td><td>R'–CH(OH)–R</td><td>二級醇</td></tr>
+<tr><td>酮（R₂CO）</td><td>R'–C(OH)–R₂</td><td>三級醇</td></tr>
+</table>
+<h3>與 CO₂ 的反應</h3>
+<div class="reaction-scheme">
+  R–MgBr  +  CO₂  →  R–COO⁻MgBr⁺
+                          ↓ H₂O
+                      R–COOH
+                  （羧酸，延長一個 C）
+</div>
+<p>格氏試劑與乾冰（CO₂）反應是合成羧酸的便捷方法，碳鏈延長一個碳。</p>
+</section>
+
+<section id="synthesis">
+<h2>合成醇：逆合成思路（Retrosynthetic Analysis）</h2>
+<p>在設計合成路線時，逆合成（retrosynthesis）從目標分子出發，逐步分析前體。對於一個醇，可以反向切斷 C–OH 附近的 C–C 鍵，確定需要哪個格氏試劑和哪個羰基：</p>
+<div class="box-example">
+<strong>合成二級醇 Ph–CH(OH)–CH₃</strong>
+<p>逆合成：切斷 Ph–C 鍵 → 需要 PhMgBr + 乙醛（CH₃CHO）<br>
+或：切斷 C–CH₃ → 需要 MeMgBr + 苯甲醛（PhCHO）<br>
+兩條路線均可行，選擇取決於原料可得性。</p>
+</div>
+<div class="box-example">
+<strong>炔雌醇（Ethynyloestradiol）的合成</strong>
+<p>炔雌醇是口服避孕藥的活性成分。其合成中，乙炔化鋰（HC≡C–Li）加成至雌酮（oestrone，天然雌激素）的 C17 酮基，引入炔基，得到炔雌醇。這是工業上大規模使用有機金屬反應合成藥物的典型例子。</p>
+</div>
+<div class="box-key">
+<strong>逆合成的核心邏輯</strong>
+<p>（1）認識目標分子中的「斷裂點」：通常在含氧官能基附近；（2）從較易得的出發物選擇路線；（3）考慮立體選擇性（如果目標分子有手性中心）。</p>
+</div>
+</section>
+
+<section id="oxidation">
+<h2>醇的氧化：醛和酮的製備</h2>
+<p>格氏加成通常給出醇，若需要醛或酮，需要氧化。常用氧化劑：</p>
+<table>
+<tr><th>氧化劑</th><th>應用</th><th>說明</th></tr>
+<tr><td>PCC（吡啶氯鉻酸，pyridinium chlorochromate）</td><td>一級醇 → 醛（停在醛）</td><td>溫和，不再氧化醛為羧酸</td></tr>
+<tr><td>PDC（吡啶二鉻酸，pyridinium dichromate）</td><td>一級醇 → 羧酸（完全氧化）</td><td>在濕 DMF 中可直接得羧酸</td></tr>
+<tr><td>次氯酸（NaOCl/水）</td><td>一級醇 → 羧酸</td><td>工業規模，廉價</td></tr>
+<tr><td>任何 Cr(VI) 試劑</td><td>二級醇 → 酮</td><td>酮不被進一步氧化</td></tr>
+<tr><td>Swern 氧化（(COCl)₂, DMSO, Et₃N）</td><td>一級或二級醇 → 醛/酮</td><td>室溫以下，不影響敏感官能基</td></tr>
+</table>
+<div class="box-note">
+<strong>一級醇氧化的選擇性</strong>
+<p>一級醇（RCH₂OH）被 PCC 氧化停在醛（RCHO）是因為 PCC 在無水條件下操作——醛與 PCC 反應很慢；若有水，醛會水合成偕二醇，再被氧化成羧酸。用 PCC 製醛必須嚴格無水。</p>
+</div>
+<div class="box-selftest">
+<strong>自我測試</strong>
+<p>1. 如何從丙醛（propanal）和適當的格氏試劑合成 2-甲基-2-戊醇？</p>
+<p>2. 炔雌醇的合成中，為何選擇炔化鋰（HC≡C–Li）而不是格氏試劑（HC≡C–MgBr）？</p>
+<p>3. 解釋鹵素-金屬交換反應（PhBr + n-BuLi → PhLi + n-BuBr）的驅動力。</p>
+<p>4. 如何從丙酮合成三級醇 2-苯基-2-丙醇？</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>C–M 鍵的極性</strong>：金屬電正性 → C 帶部分負電荷 → 碳親核劑；對水和質子性溶劑高度敏感</li>
+<li><strong>格氏試劑</strong>：R–X + Mg(Et₂O) → R–MgX；氧化插入機制；是有機合成最通用的試劑之一</li>
+<li><strong>有機鋰</strong>：R–X + 2Li → R–Li；或鹵素-金屬交換（需 p<i>K</i>a 熱力學驅動）；比格氏更活潑</li>
+<li><strong>炔去質子化</strong>：末端炔 p<i>K</i>a 25，可被 EtMgBr 或 n-BuLi 去質子化 → 炔化物（碳親核劑）</li>
+<li><strong>轉金屬化</strong>：R–MgBr + ZnBr₂ → R–ZnBr（有機鋅，反應性較低，選擇性好）</li>
+<li><strong>與羰基的反應</strong>：甲醛 → 一級醇；醛 → 二級醇；酮 → 三級醇；CO₂ → 羧酸</li>
+<li><strong>逆合成</strong>：切斷 C–OH 附近的 C–C 鍵，確定格氏試劑 + 羰基的組合</li>
+<li><strong>醇的氧化</strong>：PCC → 一級醇停在醛；Cr(VI) → 二級醇得酮；PDC → 羧酸</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

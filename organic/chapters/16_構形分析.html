@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第16章 構形分析</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;--accent:#27ae60;--accent2:#2e6f9e;--main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #2f3740;}
+#sidebar-header .book-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-fg-dim);margin-bottom:6px;}
+#sidebar-header h2{font-size:15px;font-weight:600;color:#fff;line-height:1.4;}
+#toc{padding:16px 0;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:13px;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;line-height:1.4;transition:color 0.15s,border-color 0.15s;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#3d4750;}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+#toc .toc-section{padding:10px 20px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4a5568;}
+#main{margin-left:270px;flex:1;padding:48px 56px;max-width:calc(100% - 270px);}
+.chapter-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--rule);}
+.chapter-number{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;}
+.chapter-title{font-size:36px;font-weight:700;line-height:1.2;color:#1a1610;}
+.chapter-subtitle{margin-top:10px;font-size:17px;color:#6b5e52;font-style:italic;}
+h2{font-size:24px;font-weight:700;margin:44px 0 16px;color:#1a1610;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:#2b2520;}
+h4{font-size:15px;font-weight:700;margin:20px 0 8px;color:#3d3028;}
+p{line-height:1.8;margin-bottom:14px;font-size:15.5px;}
+ul,ol{padding-left:24px;margin-bottom:14px;}
+li{line-height:1.8;font-size:15.5px;margin-bottom:4px;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:18px 22px;margin:20px 0;font-size:15px;}
+.box-note{background:#e8f4e8;border-left:4px solid var(--accent);}
+.box-example{background:#fff8e8;border-left:4px solid #f39c12;}
+.box-key{background:#e8f0f8;border-left:4px solid var(--accent2);}
+.box-selftest{background:#f4e8f4;border-left:4px solid #8e44ad;}
+.box-summary{background:#f0f0f0;border-left:4px solid #555;}
+.box-note h4,.box-example h4,.box-key h4,.box-selftest h4,.box-summary h4{margin-top:0;margin-bottom:10px;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px 24px;margin:16px 0;font-family:"Courier New",monospace;font-size:14px;line-height:1.8;overflow-x:auto;white-space:pre;}
+.math-block{background:var(--paper-bg);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:14px 0;font-family:"Courier New",monospace;font-size:15px;text-align:center;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f4f0e8;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer;}
+@media(max-width:900px){#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0;padding:24px 20px;max-width:100%;padding-top:56px;}#menu-btn{display:block;}}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第16章 構形分析</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章節</div>
+    <a href="#conf-vs-config">構形 vs 構型</a>
+    <a href="#rotation-barriers">旋轉能障</a>
+    <a href="#newman">Newman 投影圖</a>
+    <a href="#butane">丁烷構形</a>
+    <a href="#ring-strain">環狀化合物與環張力</a>
+    <a href="#cyclohexane">環己烷椅式構形</a>
+    <a href="#axial-equatorial">軸向與赤道鍵</a>
+    <a href="#substituted">取代環己烷</a>
+    <a href="#decalins">十氫萘與固醇類</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="chapter-header">
+    <div class="chapter-number">第十六章</div>
+    <h1 class="chapter-title">構形分析</h1>
+    <p class="chapter-subtitle">Conformational analysis</p>
+  </div>
+
+  <section id="conf-vs-config">
+    <h2>16.1 構形 vs 構型</h2>
+    <p>這兩個術語容易混淆，但有根本區別：</p>
+    <div class="box-key">
+      <h4>構形（Conformation）vs 構型（Configuration）</h4>
+      <table>
+        <tr><th>特徵</th><th>構形（Conformation）</th><th>構型（Configuration）</th></tr>
+        <tr><td>定義</td><td>由可旋轉單鍵的不同空間排列</td><td>由鍵的空間排列決定，需打斷化學鍵才能改變</td></tr>
+        <tr><td>互換條件</td><td>旋轉單鍵即可（室溫下可快速互換）</td><td>需化學反應（打斷/形成鍵）</td></tr>
+        <tr><td>可分離性</td><td>通常不可分離（轉換速率快）</td><td>可分離（鏡像異構物、非鏡像異構物）</td></tr>
+        <tr><td>例子</td><td>乙烷交叉式/重疊式；環己烷椅式/船式</td><td>R/S 立體中心；cis/trans 雙鍵</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="rotation-barriers">
+    <h2>16.2 旋轉能障</h2>
+    <p>圍繞單鍵旋轉並非完全自由，存在能障（torsional barrier）：</p>
+    <table>
+      <tr><th>鍵</th><th>能障 (kJ mol⁻¹)</th><th>來源</th></tr>
+      <tr><td>乙烷 C-C</td><td>12</td><td>H-H 交錯排斥（扭轉張力）</td></tr>
+      <tr><td>1,3-丁二烯 C-C 單鍵</td><td>30</td><td>π 電子的共軛效應</td></tr>
+      <tr><td>醯胺 C-N</td><td>85</td><td>N-C=O 共振（部分雙鍵性質）</td></tr>
+      <tr><td>C=C 雙鍵</td><td>260</td><td>需打斷 π 鍵</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>醯胺鍵的受阻旋轉</h4>
+      <p>由於醯胺 N-C(=O) 具有共振式 N⁺=C-O⁻，C-N 鍵帶有部分雙鍵性質，旋轉能障達 85 kJ mol⁻¹，足以在室溫下 NMR 觀察到兩個獨立的訊號（如 DMF 中兩個甲基信號在室溫可分辨）。</p>
+    </div>
+  </section>
+
+  <section id="newman">
+    <h2>16.3 Newman 投影圖</h2>
+    <p>Newman 投影圖（Newman projection）沿 C-C 鍵軸方向觀察，是展示構形的標準工具：</p>
+    <div class="reaction-scheme">Newman 投影圖規則：
+- 近端碳（closer carbon）= 三條線的交點（Y 形）
+- 遠端碳（farther carbon）= 圓圈
+- 從交點延伸三條線表示近端碳上的三個取代基
+- 從圓圈延伸三條線表示遠端碳上的三個取代基
+
+乙烷的兩個極端構形：
+
+交叉式（Staggered）：        重疊式（Eclipsed）：
+H   H                        H   H
+ \ /                          |   |
+  C ← 近端                    C
+ / \                          |   |
+H   H                        H   H
+   |                          |
+  (O)← 遠端                  (O)
+ / | \                       / | \
+H  H  H                     H  H  H
+        （能量最低）                （能量最高，+12 kJ/mol）</div>
+    <div class="box-key">
+      <h4>二面角（Dihedral angle）</h4>
+      <p>兩個鍵（在 Newman 投影中，前後各一個取代基）之間的角度稱為二面角（φ）：</p>
+      <ul>
+        <li>φ = 0°：syn-periplanar（syn，重疊）</li>
+        <li>φ = 60°：synclinal（gauche，鄰式）</li>
+        <li>φ = 120°：anticlinal（次交叉）</li>
+        <li>φ = 180°：anti-periplanar（anti，對位交叉）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="butane">
+    <h2>16.4 丁烷構形</h2>
+    <p>n-丁烷（CH₃-CH₂-CH₂-CH₃）圍繞 C2-C3 旋轉，按二面角（兩個 CH₃ 之間）有四種極端構形：</p>
+    <div class="reaction-scheme">二面角 φ   名稱                    相對能量
+─────────────────────────────────────────────────
+  0°       syn-periplanar（syn，全重疊） +19 kJ/mol（最高，兩 CH₃ 重疊）
+ 60°       synclinal（gauche，鄰式）    +3.8 kJ/mol（gauche 排斥）
+120°       anticlinal（次交叉，重疊）  +15 kJ/mol
+180°       anti-periplanar（anti）       0 kJ/mol（最穩定）</div>
+    <ul>
+      <li><strong>anti</strong>（φ = 180°）：兩個 CH₃ 相距最遠，最穩定</li>
+      <li><strong>gauche</strong>（φ = 60° 或 300°）：兩個 CH₃ 相鄰，有 gauche 排斥（~3.8 kJ/mol）</li>
+      <li>在液態正丁烷中，anti 與 gauche 的比例約 2:1（ΔG° ≈ 2.5 kJ/mol 有利 anti）</li>
+    </ul>
+    <div class="box-example">
+      <h4>Gauche 排斥的物理來源</h4>
+      <p>gauche 構形中，兩個甲基基團的 C-H 鍵在空間上較接近（van der Waals 排斥），並非電子層面的排斥。此效應稱為 gauche 交互作用（gauche interaction）。</p>
+    </div>
+  </section>
+
+  <section id="ring-strain">
+    <h2>16.5 環狀化合物與環張力</h2>
+    <p>環狀化合物依環大小分類，各有不同的環張力：</p>
+    <table>
+      <tr><th>環大小</th><th>類別</th><th>例子</th><th>特點</th></tr>
+      <tr><td>3–4</td><td>小環（Small）</td><td>環丙烷、環丁烷</td><td>高張力（角張力、扭轉張力）</td></tr>
+      <tr><td>5–7</td><td>正常環（Normal）</td><td>環戊烷、環己烷</td><td>低張力，環己烷最穩定</td></tr>
+      <tr><td>8–14</td><td>中環（Medium）</td><td>環辛烷</td><td>適度張力（跨環交互作用）</td></tr>
+      <tr><td>&gt;14</td><td>大環（Large）</td><td>香料化合物</td><td>接近無張力</td></tr>
+    </table>
+    <h3>小環的幾何特點</h3>
+    <ul>
+      <li><strong>環丙烷</strong>：所有 C-C-C 角 = 60°（sp³ 理想 109.5°），角張力大。C-H 鍵全重疊，扭轉張力高。特殊的「彎曲鍵（banana bond）」。</li>
+      <li><strong>環丁烷</strong>：非平面（蝴蝶形），C-C-C 角約 90°，比環丙烷角張力小，有部分扭轉張力。</li>
+      <li><strong>環戊烷</strong>：「信封構形（envelope）」，四個碳共面，一個碳翹起；無角張力，扭轉張力也小。</li>
+    </ul>
+    <div class="box-note">
+      <h4>環丙烷的特殊性質</h4>
+      <p>環丙烷的彎曲鍵電子密度在環外側，使其略具 C=C 的性質（可與親電試劑反應）。sp³ 碳上的 C-H 鍵偏向 s 特性較高（約 33% s），因此 pKa 較低（約 46）且 ¹H NMR 化學位移較高場（δ −0.44 至 0.22 ppm）。</p>
+    </div>
+  </section>
+
+  <section id="cyclohexane">
+    <h2>16.6 環己烷的椅式構形</h2>
+    <p>環己烷是有機化學中最重要的環，因為固醇類、萜類、醣類等大量天然物均含有此環。</p>
+    <h3>椅式構形（Chair conformation）</h3>
+    <ul>
+      <li>所有 C-C-C 角 = 111°（接近 sp³ 理想角 109.5°），幾乎無角張力</li>
+      <li>相鄰 C-H 鍵全部交叉排列，無扭轉張力</li>
+      <li><strong>最穩定的構形</strong>，比船式低 25 kJ/mol</li>
+    </ul>
+    <div class="reaction-scheme">環己烷椅式構形（側視圖）：
+
+        ax
+        |
+  eq---C---eq
+      / \
+     /   \
+ eq-C     C-eq
+    |     |
+   ax    ax
+    \   /
+     \ /
+  eq--C--eq
+      |
+      ax
+
+ax = 軸向鍵（axial，垂直）
+eq = 赤道鍵（equatorial，水平）</div>
+    <h3>其他構形</h3>
+    <ul>
+      <li><strong>船式（Boat）</strong>：4 對重疊的 C-H 鍵 + 兩個旗桿 H 近距接觸；比椅式高 25 kJ/mol。是過渡態，不是穩定構形。</li>
+      <li><strong>扭曲船式（Twist-boat）</strong>：比船式低 4 kJ/mol（約比椅式高 21 kJ/mol）；是能量局部極小值，能在 −60°C 以下被 NMR 偵測。</li>
+      <li><strong>半椅式（Half-chair）</strong>：環翻轉的過渡態；比椅式高約 43 kJ/mol。</li>
+    </ul>
+    <div class="box-key">
+      <h4>環翻轉（Ring flip）</h4>
+      <p>從一個椅式翻轉到另一個椅式，需通過 43 kJ/mol 的活化能，室溫下快速發生（10⁵ s⁻¹）。翻轉後，原來的軸向鍵變赤道鍵，赤道鍵變軸向鍵。</p>
+    </div>
+    <h3>繪製椅式構形的方法</h3>
+    <div class="reaction-scheme">步驟：
+1. 畫一個 V 形（兩根向右斜線），兩端往左斜上接兩根線
+2. 最右的 C 往左右各斜出一根線，形成 M 形
+3. 左端的兩個 C 連接，完成椅式輪廓
+4. 軸向鍵：交替向上（C1，C3，C5）和向下（C2，C4，C6）
+5. 赤道鍵：與相鄰的兩個環鍵大致平行（W/M 形）</div>
+  </section>
+
+  <section id="axial-equatorial">
+    <h2>16.7 軸向鍵與赤道鍵</h2>
+    <p>每個環己烷的碳原子都帶有一個軸向（axial，ax）和一個赤道（equatorial，eq）的取代基位置：</p>
+    <ul>
+      <li><strong>軸向鍵（ax）</strong>：大致垂直於環平面，交替向上和向下</li>
+      <li><strong>赤道鍵（eq）</strong>：大致平行於環平面，略微傾斜（約 20°）</li>
+    </ul>
+    <h3>1,3-二直立交互作用</h3>
+    <p>軸向取代基與兩個環上 C3 位置的軸向 H（同側）發生空間排斥，稱為 <strong>1,3-二直立交互作用（1,3-diaxial interaction）</strong>。這使得大基團傾向於占據赤道位置。</p>
+    <div class="reaction-scheme">1,3-二直立交互作用示意（C1 有軸向甲基）：
+
+   CH₃（C1，ax）
+    |
+----C1----
+   / \
+  C6   C2
+ /     \
+C5      C3
+ \     /
+  C4--/
+
+  C1-ax CH₃ 與 C3-ax H 和 C5-ax H 的距離只有約 2.5 Å
+  （van der Waals 半徑之和約 2.4 Å），產生排斥</div>
+  </section>
+
+  <section id="substituted">
+    <h2>16.8 取代環己烷</h2>
+    <p>一取代環己烷（如甲基環己烷）存在兩種椅式構形：取代基軸向或赤道。大基團傾向赤道位置（避免 1,3-二直立排斥）。</p>
+    <table>
+      <tr><th>取代基</th><th>K_eq（eq/ax）</th><th>ΔG° (kJ mol⁻¹)</th><th>赤道比例 (%)</th></tr>
+      <tr><td>F</td><td>1.5</td><td>1.0</td><td>60</td></tr>
+      <tr><td>OMe</td><td>2.7</td><td>2.5</td><td>73</td></tr>
+      <tr><td>Me</td><td>19</td><td>7.3</td><td>95</td></tr>
+      <tr><td>Et</td><td>40</td><td>9.2</td><td>98</td></tr>
+      <tr><td>i-Pr</td><td>250</td><td>13.9</td><td>&gt;99</td></tr>
+      <tr><td>t-Bu</td><td>&gt;3000</td><td>&gt;20</td><td>&gt;99.9</td></tr>
+      <tr><td>Ph</td><td>110</td><td>11.7</td><td>99</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>t-Bu 基：鎖環劑（conformational lock）</h4>
+      <p>t-Bu 基太大，只能占據赤道位置（K &gt; 3000，&gt; 99.9% 赤道）。含 t-Bu 環己烷的環幾乎不翻轉，是研究立體化學的理想模型。</p>
+    </div>
+    <h3>二取代環己烷</h3>
+    <div class="box-example">
+      <h4>1,4-二取代環己烷的 cis/trans 分析</h4>
+      <div class="reaction-scheme">trans-1,4-二甲基環己烷：
+  兩個 CH₃ 在環的兩側（一上一下）
+  → 椅式A：C1 ax，C4 eq → 不利（一個 ax）
+  → 椅式B：C1 eq，C4 ax → 不利（一個 ax）
+  → 兩種構形等能，但都有一個 ax CH₃
+  等等...實際上：
+  trans-1,4 意味著 C1 和 C4 取代基在「同側」（對位取代）→
+
+  更正：cis = 同側，trans = 反側
+  cis-1,4-二甲基環己烷：
+    兩 CH₃ 同側 → 一個 ax，一個 eq（兩個構形相同能量）
+  trans-1,4-二甲基環己烷：
+    兩 CH₃ 反側 → 兩個 eq（有利）或兩個 ax（不利）
+    → trans 構形以 diequatorial 為主（更穩定）</div>
+      <p>一般規律：<strong>trans-1,4</strong>（或 trans-1,2、cis-1,3）可以 diequatorial ≫ diaxial；<strong>cis-1,4</strong>（或 cis-1,2、trans-1,3）只能 ax+eq，兩種椅式能量相同。</p>
+    </div>
+  </section>
+
+  <section id="decalins">
+    <h2>16.9 十氫萘與固醇類</h2>
+    <h3>十氫萘（Decalin）</h3>
+    <p>十氫萘是兩個環己烷稠合（融合）的雙環系統，環接合處（ring junction）的立體化學決定其構形行為：</p>
+    <ul>
+      <li><strong>cis-十氫萘</strong>：環接合處的兩個 H 在同側（一個 ax，一個 eq）；可以發生環翻轉，兩個椅式互換。</li>
+      <li><strong>trans-十氫萘</strong>：環接合處的兩個 H 在反側（都 eq）；環翻轉後兩個 H 都 ax，能量大幅升高，因此<strong>幾乎不發生環翻轉</strong>，構形鎖定。</li>
+    </ul>
+    <div class="box-key">
+      <h4>trans-十氫萘構形鎖定的原因</h4>
+      <p>trans 融合的兩個環在 diequatorial 構形下非常穩定；翻轉到 diaxial 需克服約 60 kJ/mol 的能障（兩個 1,3-diaxial 交互作用），實際上構形固定。</p>
+    </div>
+    <h3>固醇類（Steroids）</h3>
+    <p>固醇骨架（如膽固醇）由 A、B、C、D 四個環組成（三個六元環 + 一個五元環）：</p>
+    <ul>
+      <li>B-C 和 C-D 接合處：<strong>全為 trans</strong></li>
+      <li>A-B 接合處：大多數固醇為 trans（如膽固醇），但某些（如 5β-固醇，如膽汁酸）為 cis</li>
+      <li>由於三個 trans-融合的六元環，固醇骨架幾乎完全剛性（無法翻轉）</li>
+      <li>在岩石中找到的固醇（約 1.5 × 10⁹ 年）仍保持環接合的立體化學，說明 trans-融合極度穩定</li>
+    </ul>
+    <div class="box-example">
+      <h4>固醇與十氫萘的立體化學</h4>
+      <div class="reaction-scheme">固醇基本骨架：
+
+    CH₃  CH₃
+     |    |
+  A--B---C---D
+ (6) (6) (6)(5)
+
+A-B, B-C, C-D：反式稠合（trans）
+→ 所有環都是 all-eq diequatorial
+→ 整體幾乎平面（與 cis-固醇的「曲折」形對比）</div>
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <h4>第16章 核心概念</h4>
+      <ul>
+        <li><strong>構形 vs 構型</strong>：構形由旋轉改變；構型需打斷化學鍵</li>
+        <li><strong>旋轉能障</strong>：乙烷 12 kJ/mol；醯胺 C-N 85 kJ/mol；C=C 260 kJ/mol</li>
+        <li><strong>Newman 投影</strong>：前碳為 Y 形，後碳為圓圈</li>
+        <li><strong>丁烷構形</strong>：anti（180°）最穩定；gauche（60°）高 3.8 kJ/mol；syn（0°）最不穩定</li>
+        <li><strong>環張力</strong>：小環（3-4）&gt; 中環（8-14）&gt; 正常環（5-7）；環己烷最穩定</li>
+        <li><strong>椅式環己烷</strong>：全交叉、無角張力；比船式低 25 kJ/mol</li>
+        <li><strong>ax vs eq</strong>：大取代基偏好赤道位置（避免 1,3-diaxial）；t-Bu &gt; 99.9% eq</li>
+        <li><strong>trans-稠合</strong>（十氫萘、固醇）：構形鎖定，無法翻轉</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第17章 消除反應</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;--accent:#27ae60;--accent2:#2e6f9e;--main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #2f3740;}
+#sidebar-header .book-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-fg-dim);margin-bottom:6px;}
+#sidebar-header h2{font-size:15px;font-weight:600;color:#fff;line-height:1.4;}
+#toc{padding:16px 0;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:13px;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;line-height:1.4;transition:color 0.15s,border-color 0.15s;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#3d4750;}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+#toc .toc-section{padding:10px 20px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4a5568;}
+#main{margin-left:270px;flex:1;padding:48px 56px;max-width:calc(100% - 270px);}
+.chapter-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--rule);}
+.chapter-number{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;}
+.chapter-title{font-size:36px;font-weight:700;line-height:1.2;color:#1a1610;}
+.chapter-subtitle{margin-top:10px;font-size:17px;color:#6b5e52;font-style:italic;}
+h2{font-size:24px;font-weight:700;margin:44px 0 16px;color:#1a1610;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:#2b2520;}
+h4{font-size:15px;font-weight:700;margin:20px 0 8px;color:#3d3028;}
+p{line-height:1.8;margin-bottom:14px;font-size:15.5px;}
+ul,ol{padding-left:24px;margin-bottom:14px;}
+li{line-height:1.8;font-size:15.5px;margin-bottom:4px;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:18px 22px;margin:20px 0;font-size:15px;}
+.box-note{background:#e8f4e8;border-left:4px solid var(--accent);}
+.box-example{background:#fff8e8;border-left:4px solid #f39c12;}
+.box-key{background:#e8f0f8;border-left:4px solid var(--accent2);}
+.box-selftest{background:#f4e8f4;border-left:4px solid #8e44ad;}
+.box-summary{background:#f0f0f0;border-left:4px solid #555;}
+.box-note h4,.box-example h4,.box-key h4,.box-selftest h4,.box-summary h4{margin-top:0;margin-bottom:10px;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px 24px;margin:16px 0;font-family:"Courier New",monospace;font-size:14px;line-height:1.8;overflow-x:auto;white-space:pre;}
+.math-block{background:var(--paper-bg);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:14px 0;font-family:"Courier New",monospace;font-size:15px;text-align:center;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f4f0e8;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer;}
+@media(max-width:900px){#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0;padding:24px 20px;max-width:100%;padding-top:56px;}#menu-btn{display:block;}}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第17章 消除反應</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章節</div>
+    <a href="#intro">消除反應概論</a>
+    <a href="#e2">E2 雙分子消去</a>
+    <a href="#e1">E1 單分子消去</a>
+    <a href="#elim-vs-sub">消去 vs 取代</a>
+    <a href="#bredt">Bredt 定律</a>
+    <a href="#e2-stereochemistry">E2 的立體化學</a>
+    <a href="#e2-cyclohexane">環己烷的 E2</a>
+    <a href="#regioselectivity">區位選擇性</a>
+    <a href="#e1cb">E1cB 消去</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="chapter-header">
+    <div class="chapter-number">第十七章</div>
+    <h1 class="chapter-title">消除反應</h1>
+    <p class="chapter-subtitle">Elimination reactions</p>
+  </div>
+
+  <section id="intro">
+    <h2>17.1 消除反應概論</h2>
+    <p>消除反應（β-elimination）從底物中同時移除兩個基團，形成不飽和鍵（通常是 C=C 雙鍵）。離去的兩個原子/基團必須在<strong>β 位</strong>（β-H 在 α-碳的隔壁，即 β-碳上）：</p>
+    <div class="reaction-scheme">β-H 消除通式：
+
+H          LG
+|           |
+C(β)-----C(α)   + 鹼 →  C=C  + HB  + LG⁻
+|           |
+           （α = 帶離去基的碳；β = 帶被消除 H 的碳）</div>
+    <p>消除反應有三種主要機制：E2（雙分子）、E1（單分子）、E1cB（共軛鹼型）。</p>
+  </section>
+
+  <section id="e2">
+    <h2>17.2 E2 雙分子消去</h2>
+    <p>E2 反應是<strong>協同的（concerted）</strong>、一步反應：鹼攻擊 β-H 的同時，離去基離去，形成雙鍵。</p>
+    <div class="reaction-scheme">E2 機制（協同，一步）：
+
+B:  H     LG
+    |      |
+    C(β)--C(α)  →  [B···H···Cβ=Cα···LG]‡  →  BH + C=C + LG⁻
+
+速率 = k₂[RX][鹼]  （二級速率定律）</div>
+    <div class="box-key">
+      <h4>E2 的必要條件</h4>
+      <ul>
+        <li>需要<strong>鹼</strong>（不必是親核劑）</li>
+        <li>β-H 和離去基必須呈<strong>反式共面（anti-periplanar）</strong>排列，二面角 = 180°</li>
+        <li>速率對鹼濃度和底物均為一級（整體二級）</li>
+      </ul>
+    </div>
+    <h3>E2 所需的鹼</h3>
+    <table>
+      <tr><th>試劑</th><th>pKa（共軛酸）</th><th>特點</th></tr>
+      <tr><td>KOH / NaOH</td><td>15.7</td><td>常用強鹼</td></tr>
+      <tr><td>NaOEt（乙醇鈉）</td><td>16</td><td>普通 E2 鹼</td></tr>
+      <tr><td>KOt-Bu（叔丁醇鉀）</td><td>18</td><td>大體積，傾向 Hofmann 產物</td></tr>
+      <tr><td>DBU（1,8-二氮雜雙環）</td><td>12.5</td><td>位阻大，不親核，適用於敏感底物</td></tr>
+      <tr><td>LDA（雙異丙基胺基鋰）</td><td>36</td><td>超強鹼，低溫不可逆消去</td></tr>
+    </table>
+  </section>
+
+  <section id="e1">
+    <h2>17.3 E1 單分子消去</h2>
+    <p>E1 反應分兩步：先形成碳陽離子（慢步驟，速率決定），再失去質子（快步驟）：</p>
+    <div class="reaction-scheme">E1 機制（兩步）：
+
+步驟1（慢，速率決定）：
+  R-C(α)-X  →  R-C(α)⁺  +  X⁻
+
+步驟2（快）：
+  B: + H-C(β)-C(α)⁺  →  BH  +  C=C
+
+速率 = k₁[RX]  （一級速率定律，與鹼濃度無關）</div>
+    <div class="box-key">
+      <h4>E1 的底物要求</h4>
+      <ul>
+        <li>需要能形成穩定碳陽離子的底物：<strong>三級、烯丙基、苄基</strong></li>
+        <li>α-雜原子取代（增加鄰近效應）也有利</li>
+        <li><strong>一級碳不發生 E1</strong>（一級碳陽離子太不穩定）</li>
+        <li>E1 常伴隨 SN1（競爭反應）</li>
+      </ul>
+    </div>
+    <h3>E1 的立體選擇性</h3>
+    <p>E1 形成的烯烴立體選擇性（E vs Z）由兩個過渡態（TS）的相對穩定性決定（Hammond 假說，late TS 近似中間體）：</p>
+    <ul>
+      <li>一般偏向 <strong>E（反式）烯烴</strong>（Saytzev 規則），因 E 比 Z 少位阻</li>
+      <li>Tamoxifen（乳癌藥）由 E1 生成，約 1:1 E/Z 混合物</li>
+    </ul>
+  </section>
+
+  <section id="elim-vs-sub">
+    <h2>17.4 消去 vs 取代的競爭</h2>
+    <p>消去（E）和取代（SN）競爭同一底物，條件決定哪個為主：</p>
+    <table>
+      <tr><th>條件</th><th>有利消去</th><th>有利取代</th></tr>
+      <tr><td>試劑</td><td>強鹼（KOH、KOt-Bu）</td><td>親核劑（I⁻、RS⁻）</td></tr>
+      <tr><td>試劑大小</td><td>大體積（t-BuOK、DBU）</td><td>小型親核劑（Cl⁻、OH⁻稀）</td></tr>
+      <tr><td>溫度</td><td>高溫（ΔS 有利消去）</td><td>低溫</td></tr>
+      <tr><td>底物</td><td>三級底物</td><td>一級底物</td></tr>
+      <tr><td>溶劑</td><td>極性較低</td><td>極性非質子（DMF、DMSO）</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>溫度選擇消去的熱力學根據</h4>
+      <p>消去反應增加分子數（固體→液態烯烴 + HX），ΔS° &gt; 0。</p>
+      <p>由 ΔG° = ΔH° − TΔS°，高溫使 −TΔS° 貢獻更大，消去在熱力學上更有利。取代反應 ΔS° ≈ 0，對溫度不敏感。</p>
+    </div>
+  </section>
+
+  <section id="bredt">
+    <h2>17.5 Bredt 定律</h2>
+    <p>Bredt 定律規定：在橋接雙環（bicyclic）系統中，雙鍵<strong>不能</strong>形成在橋頭碳（bridgehead carbon）上。</p>
+    <div class="reaction-scheme">Bredt 定律示意（雙環[2.2.1]庚烷即降冰片烷）：
+
+       橋頭碳
+      /    \
+     /      \
+    C---------C     ← 不能在此形成雙鍵（空 p 軌道無法平面化）
+     \      /
+      \    /
+       橋頭碳</div>
+    <div class="box-key">
+      <h4>Bredt 規則的原因</h4>
+      <p>橋頭碳若形成 C=C，需要 sp² 雜化（平面三角形），但橋接系統的幾何限制迫使鍵角遠小於 120°，導致 p 軌道無法互相平行重疊（π 鍵幾乎為零），應變能極高。環越小，違反程度越大。</p>
+    </div>
+    <p>推論：E2 不能在橋頭碳上發生；SN1 生成的橋頭碳陽離子也極不穩定（空 p 軌道不能平面化）。</p>
+  </section>
+
+  <section id="e2-stereochemistry">
+    <h2>17.6 E2 的立體化學</h2>
+    <p>E2 要求 H 和 LG 呈<strong>反式共面（anti-periplanar）</strong>，即二面角 φ ≈ 180°。這使 E2 具有<strong>立體專一性（stereospecific）</strong>：不同的起始非鏡像異構物給出不同立體化學的烯烴。</p>
+    <div class="box-example">
+      <h4>meso vs (±)-2,3-二溴丁烷的 E2</h4>
+      <div class="reaction-scheme">meso-2,3-二溴丁烷 + KOH（EtOH）:
+  H 和 Br 呈 anti-periplanar → 只能形成 (Z)-但-2-烯
+  （因為 meso 物的 anti 排列讓兩個 CH₃ 在同側）
+
+(±)-2,3-二溴丁烷 + KOH（EtOH）:
+  H 和 Br anti → 形成 (E)-但-2-烯
+  （(±) 物的 anti 排列讓兩個 CH₃ 在反側）</div>
+      <p>E2 的立體專一性可用來確定底物的相對立體化學。</p>
+    </div>
+    <h3>syn-periplanar 排列（輔助方式）</h3>
+    <p>少數情況（特別是五元環或剛性體系中無法達到 anti-periplanar）可發生 syn-periplanar（φ = 0°）E2，但效率大幅降低（通常慢 10–100 倍）。</p>
+  </section>
+
+  <section id="e2-cyclohexane">
+    <h2>17.7 環己烷上的 E2</h2>
+    <p>在環己烷中，anti-periplanar 要求 H（β-C）和 LG（α-C）<strong>都在軸向（axial）</strong>位置——只有這樣，兩個軸向鍵才能互相反式共面（φ = 180°）：</p>
+    <div class="reaction-scheme">E2 在環己烷的要求：
+
+         H（ax，β-C）
+         |
+    C(β)---C(α)       只有 ax-ax 才能 anti-periplanar
+              |
+             LG（ax，α-C）</div>
+    <div class="box-example">
+      <h4>薄荷醇衍生物的 E2 速率差異</h4>
+      <div class="reaction-scheme">異構物 A：Cl 軸向，i-Pr 赤道（最穩定構形）
+  → Cl 已在 ax；兩個 β-H 分別在 ax
+  → 快速 E2，形成兩種烯烴（1:3 比）
+
+異構物 B：Cl 赤道，i-Pr 赤道（稍穩定構形）
+  → Cl 在 eq，必須翻轉到 Cl ax（不穩定構形）
+  → 反應速率比 A 慢 ~250 倍</div>
+      <p>此例說明 E2 必須從「正確的構形異構物」反應，構形能量直接影響反應速率。</p>
+    </div>
+  </section>
+
+  <section id="regioselectivity">
+    <h2>17.8 E2 的區位選擇性</h2>
+    <p>當底物有多個 β-H 可選，E2 可形成不同的烯烴異構物：</p>
+    <ul>
+      <li><strong>Saytzev（Zaitsev）規則</strong>：普通鹼（NaOEt）傾向形成<strong>較多取代</strong>的烯烴（更穩定，熱力學控制）</li>
+      <li><strong>Hofmann 規則</strong>：大體積鹼（KOt-Bu、DBU）傾向形成<strong>較少取代</strong>的烯烴（β-H 位阻較小）</li>
+    </ul>
+    <div class="box-example">
+      <h4>2-溴-2-甲基丁烷的 E2</h4>
+      <div class="reaction-scheme">    CH₃
+     |
+CH₃-C-CH₂CH₃  +  鹼
+     |
+     Br
+
+Saytzev（NaOEt）:
+  → (CH₃)₂C=CHCH₃（較多取代的 2-甲基-2-丁烯，主要）
+
+Hofmann（KOt-Bu）:
+  → CH₂=C(CH₃)CH₂CH₃（較少取代的 2-甲基-1-丁烯，主要）</div>
+    </div>
+    <h3>E1 的區位選擇性</h3>
+    <p>E1 遵循 Saytzev 規則：形成最穩定（最多取代）的烯烴，因為碳陽離子先形成，再失去鄰近 H，選擇生成較穩定烯烴的路徑（late TS ≈ 烯烴）。</p>
+  </section>
+
+  <section id="e1cb">
+    <h2>17.9 E1cB 消去反應</h2>
+    <p>E1cB（elimination–unimolecular–conjugate base）在 β-H 特別酸性時（如鄰近吸電子基）發生：先去質子形成穩定的碳陰離子（速率決定步驟），再失去離去基。</p>
+    <div class="reaction-scheme">E1cB 機制（兩步）：
+
+步驟1（慢，速率決定）：
+  鹼 + H-C(β)-C(α)-LG  →  鹼H⁺ + ⁻C(β)-C(α)-LG
+
+步驟2（快）：
+  ⁻C(β)-C(α)-LG  →  C=C  +  LG⁻
+
+速率 = k₁[底物][鹼]
+（看起來也是二級，但 β-H 的 pKa 決定機制）</div>
+    <div class="box-key">
+      <h4>E1cB 的特徵</h4>
+      <ul>
+        <li>β-H 的 pKa 低（~20 左右），因相鄰 C=O、CN、NO₂ 等使其酸性增強</li>
+        <li><strong>OH⁻ 可以是離去基</strong>（E1cB 中可接受弱離去基）</li>
+        <li>典型底物：β-羰基鹵化物（如 BrCH₂C(=O)R）、β-硝基鹵化物</li>
+        <li>醛醇縮合的脫水（aldol dehydration）屬於 E1cB 機制</li>
+      </ul>
+    </div>
+    <div class="box-example">
+      <h4>β-羥羰基的脫水（醛醇縮合後的消去）</h4>
+      <div class="reaction-scheme">          OH   O
+          |    ||
+    R-CH-CH₂-C-R'   + OH⁻
+
+E1cB 步驟1：OH⁻ 去掉 α-H（鄰近 C=O，pKₐ ~20）
+    → ⁻CH-CH(OH)-... 或
+  更精確：
+    OH⁻ 去掉 β-H（相對於 C=O 的 β 碳）→ 穩定陰離子
+
+步驟2：OH⁻ 離去
+    → 形成 α,β-不飽和羰基（共軛烯酮）</div>
+    </div>
+    <h3>三種消去機制比較</h3>
+    <table>
+      <tr><th>機制</th><th>速率決定步驟</th><th>鹼需求</th><th>離去基需求</th><th>立體化學</th></tr>
+      <tr><td>E2</td><td>協同（一步）</td><td>強鹼，高濃度</td><td>好的離去基</td><td>anti-periplanar，立體專一</td></tr>
+      <tr><td>E1</td><td>C-LG 鍵斷（去碳陽離子）</td><td>弱鹼或無</td><td>好的離去基</td><td>無（可自由旋轉後失 H）</td></tr>
+      <tr><td>E1cB</td><td>C-H 鍵斷（去質子）</td><td>強鹼，β-H 酸性</td><td>可以是弱離去基（OH⁻）</td><td>通常 syn 或無特定</td></tr>
+    </table>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <h4>第17章 核心概念</h4>
+      <ul>
+        <li><strong>E2</strong>（協同）：速率 = k₂[RX][鹼]；需 anti-periplanar H 和 LG；立體專一性</li>
+        <li><strong>E1</strong>（兩步）：速率 = k₁[RX]；需穩定碳陽離子（三級、烯丙、苄基）；立體選擇性（Saytzev）</li>
+        <li><strong>消去 vs 取代</strong>：強鹼、大體積試劑、高溫、三級底物 → 消去；親核劑、低溫、一級底物 → 取代</li>
+        <li><strong>Bredt 定律</strong>：橋頭碳不能形成雙鍵（環太小時）</li>
+        <li><strong>環己烷的 E2</strong>：H 和 LG 都必須在軸向（axial-axial）</li>
+        <li><strong>區位選擇性</strong>：Saytzev（較多取代）= 正常鹼；Hofmann（較少取代）= 大體積鹼</li>
+        <li><strong>E1cB</strong>：β-H 酸性高；先失 H 形成穩定碳陰離子；OH⁻ 可為離去基</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

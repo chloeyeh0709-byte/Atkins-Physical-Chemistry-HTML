@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第19章 親電加成至烯烴</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;--accent:#27ae60;--accent2:#2e6f9e;--main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #2f3740;}
+#sidebar-header .book-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-fg-dim);margin-bottom:6px;}
+#sidebar-header h2{font-size:15px;font-weight:600;color:#fff;line-height:1.4;}
+#toc{padding:16px 0;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:13px;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;line-height:1.4;transition:color 0.15s,border-color 0.15s;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#3d4750;}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+#toc .toc-section{padding:10px 20px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4a5568;}
+#main{margin-left:270px;flex:1;padding:48px 56px;max-width:calc(100% - 270px);}
+.chapter-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--rule);}
+.chapter-number{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;}
+.chapter-title{font-size:36px;font-weight:700;line-height:1.2;color:#1a1610;}
+.chapter-subtitle{margin-top:10px;font-size:17px;color:#6b5e52;font-style:italic;}
+h2{font-size:24px;font-weight:700;margin:44px 0 16px;color:#1a1610;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:#2b2520;}
+h4{font-size:15px;font-weight:700;margin:20px 0 8px;color:#3d3028;}
+p{line-height:1.8;margin-bottom:14px;font-size:15.5px;}
+ul,ol{padding-left:24px;margin-bottom:14px;}
+li{line-height:1.8;font-size:15.5px;margin-bottom:4px;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:18px 22px;margin:20px 0;font-size:15px;}
+.box-note{background:#e8f4e8;border-left:4px solid var(--accent);}
+.box-example{background:#fff8e8;border-left:4px solid #f39c12;}
+.box-key{background:#e8f0f8;border-left:4px solid var(--accent2);}
+.box-selftest{background:#f4e8f4;border-left:4px solid #8e44ad;}
+.box-summary{background:#f0f0f0;border-left:4px solid #555;}
+.box-note h4,.box-example h4,.box-key h4,.box-selftest h4,.box-summary h4{margin-top:0;margin-bottom:10px;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px 24px;margin:16px 0;font-family:"Courier New",monospace;font-size:14px;line-height:1.8;overflow-x:auto;white-space:pre;}
+.math-block{background:var(--paper-bg);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:14px 0;font-family:"Courier New",monospace;font-size:15px;text-align:center;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f4f0e8;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer;}
+@media(max-width:900px){#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0;padding:24px 20px;max-width:100%;padding-top:56px;}#menu-btn{display:block;}}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第19章 親電加成至烯烴</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章節</div>
+    <a href="#alkene-nucleophile">烯烴作為親核劑</a>
+    <a href="#bromine-addition">溴加成與溴鎓離子</a>
+    <a href="#epoxidation">環氧化（Peracid 法）</a>
+    <a href="#hbr-addition">HBr 加成與 Markovnikov</a>
+    <a href="#bromohydrin">溴醇（Bromohydrin）</a>
+    <a href="#diene-addition">二烯的親電加成</a>
+    <a href="#dihydroxylation">二羥化反應</a>
+    <a href="#ozonolysis">臭氧化裂解</a>
+    <a href="#hydration">烯烴水合</a>
+    <a href="#hydroboration">硼氫化反應</a>
+    <a href="#alkyne-addition">炔烴的親電加成</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="chapter-header">
+    <div class="chapter-number">第十九章</div>
+    <h1 class="chapter-title">親電加成至烯烴</h1>
+    <p class="chapter-subtitle">Electrophilic addition to alkenes</p>
+  </div>
+
+  <section id="alkene-nucleophile">
+    <h2>19.1 烯烴作為親核劑</h2>
+    <p>烯烴的 π 鍵是親核劑：HOMO 是填充的 π 軌道，可以提供電子給親電試劑（LUMO）：</p>
+    <div class="reaction-scheme">π 電子 → 親電試劑（E⁺）
+
+HOMO（π）  +  LUMO（σ* of E-LG）
+  ↓
+E 與一個 C 形成新鍵，正電荷轉移到另一個 C
+  ↓
+Nu⁻ 攻擊碳陽離子</div>
+    <p>整體機制：親電試劑（E⁺）加到一個碳，親核試劑（Nu⁻）加到另一個碳，完成 1,2-加成。</p>
+    <h3>烯烴的反應性（相對於 Br₂ 環氧化速率）</h3>
+    <table>
+      <tr><th>烯烴類型</th><th>相對速率（m-CPBA 環氧化）</th></tr>
+      <tr><td>乙烯（CH₂=CH₂）</td><td>1（基準）</td></tr>
+      <tr><td>一取代（RCH=CH₂）</td><td>~24×</td></tr>
+      <tr><td>二取代（RCH=CHR 或 R₂C=CH₂）</td><td>~500×</td></tr>
+      <tr><td>三取代（R₂C=CHR）</td><td>~5000×</td></tr>
+      <tr><td>四取代（R₂C=CR₂）</td><td>&gt;6500×</td></tr>
+    </table>
+    <p>取代基越多 → π HOMO 能量越高（超共軛效應）→ 與親電試劑 LUMO 能量差越小 → 更快反應。</p>
+  </section>
+
+  <section id="bromine-addition">
+    <h2>19.2 溴加成與溴鎓離子</h2>
+    <p>烯烴與 Br₂ 的加成是教科書中最重要的親電加成反應：</p>
+    <div class="reaction-scheme">機制（兩步）：
+
+步驟1：π 電子端攻擊 Br-Br σ*（LUMO）
+  → 形成溴鎓離子（bromonium ion，三元環 Br⁺）
+  → Br⁻ 離去
+
+      Br⁺
+     / \
+    C   C    （三元環，環張力大）
+   （對稱，若兩個 C 不等價則不對稱）
+
+步驟2：Br⁻ 由背面進行 SN2 攻擊（在位阻較小端）
+  → 反式（anti）加成 Br 和 Br⁻
+
+整體：Br₂ 反式加成至 C=C</div>
+    <div class="box-key">
+      <h4>Bromonium 離子的立體化學後果</h4>
+      <ul>
+        <li>溴鎓離子是環狀中間體，Br⁻ 只能從背面攻擊（SN2）</li>
+        <li>結果：<strong>anti 加成</strong>（兩個 Br 在雙鍵的反面）</li>
+        <li>立體專一性：Z-但-2-烯 + Br₂ → (±)-內消旋（anti 反式）；E-但-2-烯 + Br₂ → meso 化合物</li>
+      </ul>
+    </div>
+    <div class="box-example">
+      <h4>Z-but-2-ene 與 E-but-2-ene 的 Br₂ 加成</h4>
+      <div class="reaction-scheme">Z-但-2-烯 + Br₂：
+  bromonium 形成，Br⁻ 攻擊
+  → 一對鏡像異構物（(2R,3R) 和 (2S,3S)）[(±) 外消旋混合物]
+
+E-但-2-烯 + Br₂：
+  → meso-2,3-二溴丁烷（有對稱面，光學活性消失）</div>
+    </div>
+    <h3>不對稱烯烴的溴鎓離子開環</h3>
+    <p>若兩個 C 不等價，溴鎓離子是非對稱的；Br⁻ 優先攻擊帶更多部分正電荷的碳（通常是較多取代的碳）：</p>
+    <div class="reaction-scheme">CH₂=CHCH₃ + Br₂ →
+  bromonium 離子（較多 δ⁺ 在 C2）
+  Br⁻ 攻擊 C2（SN2）
+  → BrCH₂-CHBr-CH₃（1,2-二溴丙烷）</div>
+  </section>
+
+  <section id="epoxidation">
+    <h2>19.3 環氧化（Peracid 法）</h2>
+    <p>過酸（peracid，如 m-CPBA）將 O 轉移給烯烴，形成環氧化物（epoxide）：</p>
+    <div class="reaction-scheme">m-CPBA（過間氯苯甲酸）
+
+    O                 O⁻
+    ‖                /
+Ar-C-O-O-H  +  C=C  →  Ar-C=O  +  /C-C\
+                              (epoxide，三元環)</div>
+    <p>機制：π 電子攻擊 O-O 鍵的 σ*（親電加成）；兩個 C-O 鍵在同一個面同時形成：</p>
+    <div class="box-key">
+      <h4>環氧化立體化學</h4>
+      <ul>
+        <li><strong>syn 加成</strong>：O 從同一面加到兩個碳</li>
+        <li><strong>立體專一性</strong>：cis-烯烴 → cis-環氧化物；trans-烯烴 → trans-環氧化物</li>
+      </ul>
+    </div>
+    <h3>環氧化物的開環</h3>
+    <div class="reaction-scheme">酸性條件（H₃O⁺）：SN1-like，Nu 攻擊較多取代端
+  (但整體仍 anti 加成，因從外面進攻)
+
+鹼性條件（NaOH/Nu⁻）：SN2，Nu 攻擊較少取代端
+  → anti 加成
+
+總結：無論酸鹼，環氧化物開環的兩個新基團呈 trans（anti）關係</div>
+    <div class="box-example">
+      <h4>m-CPBA 環氧化 + NaOH 的整體立體化學</h4>
+      <p>m-CPBA（syn 環氧化）→ 環氧化物（Nu⁻ 親核取代，anti）→ 最終 diol：<strong>syn 環氧化 + anti 開環 = trans-diol（anti 二醇）</strong>。</p>
+    </div>
+  </section>
+
+  <section id="hbr-addition">
+    <h2>19.4 HBr 加成與 Markovnikov 規則</h2>
+    <p>HBr 加成是最基本的親電加成，說明了區位選擇性（Markovnikov 規則）：</p>
+    <div class="reaction-scheme">機制（兩步）：
+
+步驟1（慢，速率決定）：
+  H⁺ 加到 C=C（π 作為親核劑），形成碳陽離子
+  → H 加到取代基較少的碳（形成較穩定的碳陽離子）
+
+步驟2（快）：
+  Br⁻ 從外面攻擊碳陽離子
+  → Br 加到帶正電的碳</div>
+    <div class="box-key">
+      <h4>Markovnikov 規則</h4>
+      <p><strong>H 加到取代基較少的 C；Br（鹵素）加到取代基較多的 C。</strong></p>
+      <p>根本原因：較多取代的碳陽離子（三級 &gt; 二級 &gt; 一級）更穩定（超共軛效應），因此 H 加到少取代碳形成的碳陽離子優先形成。</p>
+    </div>
+    <div class="box-example">
+      <h4>丙烯的 HBr 加成</h4>
+      <div class="reaction-scheme">CH₃-CH=CH₂ + HBr
+
+H⁺ 加到 C3（少取代端）→ CH₃-CH⁺-CH₃（二級碳陽離子，穩定）
+或
+H⁺ 加到 C2（多取代端）→ CH₃-CH₂-CH₂⁺（一級碳陽離子，不穩定）
+
+Br⁻ 攻擊二級碳陽離子 →  CH₃-CHBr-CH₃  (Markovnikov 產物)</div>
+    </div>
+  </section>
+
+  <section id="bromohydrin">
+    <h2>19.5 溴醇（Bromohydrin）</h2>
+    <p>在 Br₂/H₂O 條件下，H₂O 作為親核劑攻擊溴鎓離子，形成溴醇（bromohydrin）：</p>
+    <div class="reaction-scheme">烯烴 + Br₂/H₂O
+
+1. 形成溴鎓離子
+2. H₂O（而非 Br⁻）攻擊（SN2，anti）
+3. 失去 H⁺
+
+結果：
+  Br 和 OH 呈 anti 加成
+  OH 加到較多取代端（H₂O 攻擊較多 δ⁺ 的碳）</div>
+    <div class="box-example">
+      <h4>溴醇 → 環氧化物</h4>
+      <div class="reaction-scheme">溴醇（anti 加成的 Br 和 OH 相鄰）
+
++ NaOH → 分子內 SN2（O 攻擊 Cβ-Br）
+→ 環氧化物（inverted at Br carbon）
+
+整體：Br₂/H₂O 然後 NaOH = 環氧化</div>
+    </div>
+  </section>
+
+  <section id="diene-addition">
+    <h2>19.6 二烯的親電加成</h2>
+    <p>共軛二烯（如 1,3-丁二烯）與親電試劑的加成可得到 1,2-加成或 1,4-加成產物：</p>
+    <div class="reaction-scheme">CH₂=CH-CH=CH₂  +  HBr
+
+H⁺ 加到 C1 → 烯丙基碳陽離子（共振穩定）：
+  CH₃-CH=CH-CH₂⁺  ↔  CH₃-CH⁺-CH=CH₂
+    (C4+)                  (C2+)
+
+Br⁻ 攻擊 C4（1,2-加成）：
+  CH₃-CHBr-CH=CH₂   (動力學，低溫)
+
+Br⁻ 攻擊 C2（1,4-加成）：
+  CH₃-CH=CH-CH₂Br   (熱力學，高溫，較穩定的內烯烴)</div>
+    <div class="box-note">
+      <h4>1,2 vs 1,4 加成的控制</h4>
+      <ul>
+        <li><strong>動力學控制</strong>（低溫）→ 1,2-加成（Br⁻ 攻擊更近的碳 C4，TS 能量較低）</li>
+        <li><strong>熱力學控制</strong>（高溫）→ 1,4-加成（較取代的、更穩定的烯烴）</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="dihydroxylation">
+    <h2>19.7 二羥化反應</h2>
+    <p>兩種路線將烯烴轉化為鄰二醇（vicinal diol），立體化學相反：</p>
+    <h3>Anti 二羥化（反式二醇）</h3>
+    <div class="reaction-scheme">方法：m-CPBA → 環氧化物，然後 H₂O/H⁺ 或 NaN₃ 等親核劑
+  （syn 環氧化 + anti 開環 = anti 二醇）
+
+m-CPBA    H₃O⁺
+烯烴 ────→ 環氧化物 ────→ trans-diol</div>
+    <h3>Syn 二羥化（順式二醇）</h3>
+    <div class="reaction-scheme">方法1：OsO₄（四氧化鋨，化學計量）
+  OsO₄ + 烯烴 → 環狀 osmate 酯（Os-O 同面 → syn 加成）
+  H₂O 水解 → syn-diol + Os(VI)
+
+方法2：OsO₄（催化量）+ NMO（N-甲基嗎啉-N-氧化物）
+  NMO 再氧化 Os(VI) → Os(VIII)，循環使用
+  → 仍給 syn-diol（Upjohn 法）</div>
+    <div class="box-key">
+      <h4>Anti vs Syn 二羥化對比</h4>
+      <table>
+        <tr><th>方法</th><th>試劑</th><th>立體化學</th><th>機制</th></tr>
+        <tr><td>Anti</td><td>m-CPBA → H₃O⁺/H₂O</td><td>Trans diol</td><td>Epoxide SN2 開環</td></tr>
+        <tr><td>Syn</td><td>OsO₄（+ NMO）</td><td>Cis diol</td><td>協同[3+2]環加成</td></tr>
+      </table>
+    </div>
+    <h3>碘酸鹽裂解（Periodate cleavage）</h3>
+    <div class="reaction-scheme">syn-diol + NaIO₄ →
+  C-C 鍵斷裂 + 兩個羰基化合物（醛或酮）
+  （可用於確認 diol 位置，或合成特定羰基）
+
+OsO₄ / NaIO₄ 一鍋反應：
+  烯烴直接裂解為兩個羰基（稱為「氧化裂解」）</div>
+  </section>
+
+  <section id="ozonolysis">
+    <h2>19.8 臭氧化裂解（Ozonolysis）</h2>
+    <p>O₃ 與烯烴反應，裂解 C=C 雙鍵形成兩個羰基化合物：</p>
+    <div class="reaction-scheme">步驟：
+  1. O₃ + 烯烴 → 臭氧化物（molozonide）→ 重排為 ozonide
+  2. 還原/氧化開環
+
+後處理試劑決定最終產物：
+  + Me₂S（二甲基硫）：  → 醛或酮（還原後處理）
+  + PPh₃（三苯基磷）：  → 醛或酮（溫和還原）
+  + H₂O₂（過氧化氫）：  → 羧酸（氧化後處理）
+  + NaBH₄（硼氫化鈉）：→ 醇（強還原）</div>
+    <div class="box-example">
+      <h4>臭氧化的應用</h4>
+      <div class="reaction-scheme">CH₃CH=CHCH₂CH₃ + O₃，然後 Me₂S：
+  → CH₃CHO（乙醛）+ OHC-CH₂CH₃（丙醛）
+
+環狀烯烴的臭氧化：
+  cyclohexene → OHC(CH₂)₄CHO（己二醛）
+  （一個分子，但原來 C=C 兩端都變醛）</div>
+    </div>
+  </section>
+
+  <section id="hydration">
+    <h2>19.9 烯烴水合</h2>
+    <h3>直接酸催化水合</h3>
+    <div class="reaction-scheme">烯烴 + H₂SO₄(稀) + H₂O → 醇（Markovnikov）
+
+適用：三級或穩定碳陽離子
+限制：一級和二級烯烴常發生重排</div>
+    <h3>氧汞化-去汞（Oxymercuration-demercuration）</h3>
+    <div class="reaction-scheme">步驟1：Hg(OAc)₂ / H₂O
+  → 汞鎓離子（mercurinium，類似 bromonium）
+  → H₂O anti 攻擊較多取代碳
+  → β-羥基有機汞化合物
+
+步驟2：NaBH₄
+  → 還原 C-Hg 為 C-H（保留構形，未必）
+
+整體：Markovnikov 加 OH，無重排
+立體化學：形式上 anti（但 NaBH₄ 步驟可消去立體資訊）</div>
+    <div class="box-key">
+      <h4>氧汞化的優點</h4>
+      <ul>
+        <li>沒有碳陽離子中間體 → 無重排</li>
+        <li>Markovnikov 選擇性</li>
+        <li>適用各種烯烴底物</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="hydroboration">
+    <h2>19.10 硼氫化反應</h2>
+    <p>硼氫化（hydroboration）是烯烴最重要的反應之一，由 H. C. Brown 發展（諾貝爾獎 1979）：</p>
+    <div class="reaction-scheme">步驟1（硼氫化）：
+  BH₃（或 9-BBN、其他烷基硼烷）+ 烯烴
+  → 協同（concerted）[2+2] 環加成
+  → B 和 H 從同面加成（syn 加成）
+  → B 加到取代基較少的碳（anti-Markovnikov 電子效應 + 立體效應）
+
+步驟2（氧化）：
+  NaOH + H₂O₂（or OOH⁻）
+  → C-B 轉化為 C-OH（保留構形）
+
+整體結果：
+  anti-Markovnikov 的 syn 加成
+  OH 在取代基較少的碳（立體選擇且具 syn 特性）</div>
+    <div class="box-key">
+      <h4>硼氫化立體化學規則</h4>
+      <ul>
+        <li><strong>B 加到取代基較少的碳</strong>（anti-Markovnikov，電子 + 空間效應）</li>
+        <li><strong>H 和 B 從同面加成（syn）</strong></li>
+        <li><strong>氧化保留構形</strong>（NaOH/H₂O₂ 是保留構形的氧化）</li>
+        <li>最終：末端烯烴 → 一級醇（Markovnikov 只給二級醇）</li>
+      </ul>
+    </div>
+    <div class="box-example">
+      <h4>1-甲基環戊烯的硼氫化</h4>
+      <div class="reaction-scheme">     CH₃          CH₃
+      |               |
+  BH₃ 從同面（syn）加 B 和 H
+      |               |
+   1-methylcyclopentene → B 在 C2，H 在 C1（syn，少取代端 B）
+                       → NaOH/H₂O₂ → OH 在 C2，H 在 C1
+                       → syn-2-methylcyclopentan-1-ol（順式）</div>
+    </div>
+    <h3>9-BBN（9-Borabicyclo[3.3.1]nonane）</h3>
+    <p>9-BBN 是更位阻更大的硼試劑，比 BH₃ 更具有區位選擇性：</p>
+    <ul>
+      <li>對末端烯烴選擇性更高（99% anti-Markovnikov）</li>
+      <li>對內烯烴具有更高立體選擇性</li>
+      <li>常用於天然物合成中需要精確控制立體中心的情況</li>
+    </ul>
+  </section>
+
+  <section id="alkyne-addition">
+    <h2>19.11 炔烴的親電加成</h2>
+    <h3>炔烴的水合（Markovnikov，Hg²⁺ 催化）</h3>
+    <div class="reaction-scheme">R-C≡C-H + H₂O / H⁺ / Hg²⁺ 催化
+
+→ 烯醇（enol）中間體（Markovnikov：OH 在較多取代碳）
+→ 互變異構（keto-enol tautomerism）→ 酮
+
+R-C≡C-H → R-C(OH)=CH₂（烯醇）→ R-C(=O)-CH₃（甲基酮）
+末端炔 → 甲基酮（Markovnikov）</div>
+    <h3>炔烴的硼氫化（anti-Markovnikov）</h3>
+    <div class="reaction-scheme">R-C≡C-H + BH₃（或 9-BBN）→ 乙烯基硼烷（syn 加成）
+  → NaOH/H₂O₂ → 烯醇（anti-Markovnikov 端）
+  → 互變異構 → 醛（末端炔 → 醛）
+
+R-C≡C-H → RCH₂-CHO（醛，anti-Markovnikov）</div>
+    <div class="box-key">
+      <h4>炔烴水合的選擇性</h4>
+      <table>
+        <tr><th>方法</th><th>試劑</th><th>產物（末端炔）</th></tr>
+        <tr><td>Hg²⁺ 催化水合</td><td>H₂O, H₂SO₄, HgSO₄</td><td>甲基酮 R-CO-CH₃（Markovnikov）</td></tr>
+        <tr><td>硼氫化-氧化</td><td>BH₃/THF 或 9-BBN, 然後 H₂O₂/NaOH</td><td>醛 R-CH₂-CHO（anti-Markovnikov）</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <h4>第19章 核心反應一覽</h4>
+      <table>
+        <tr><th>反應</th><th>試劑</th><th>立體化學</th><th>選擇性</th></tr>
+        <tr><td>Br₂ 加成</td><td>Br₂/CCl₄</td><td>Anti（溴鎓離子）</td><td>—</td></tr>
+        <tr><td>溴醇</td><td>Br₂/H₂O</td><td>Anti，OH 在多取代端</td><td>Markovnikov OH</td></tr>
+        <tr><td>環氧化</td><td>m-CPBA</td><td>Syn（保留構形）</td><td>—</td></tr>
+        <tr><td>HBr</td><td>HBr</td><td>非立體專一（碳陽離子）</td><td>Markovnikov</td></tr>
+        <tr><td>Anti 二羥化</td><td>m-CPBA → H₃O⁺</td><td>Anti（trans diol）</td><td>—</td></tr>
+        <tr><td>Syn 二羥化</td><td>OsO₄/NMO</td><td>Syn（cis diol）</td><td>—</td></tr>
+        <tr><td>臭氧化（還原）</td><td>O₃，Me₂S</td><td>—（切斷 C=C）</td><td>→ 醛/酮</td></tr>
+        <tr><td>臭氧化（氧化）</td><td>O₃，H₂O₂</td><td>—</td><td>→ 羧酸</td></tr>
+        <tr><td>氧汞化-去汞</td><td>Hg(OAc)₂/H₂O; NaBH₄</td><td>形式上 anti，但無重排</td><td>Markovnikov OH</td></tr>
+        <tr><td>硼氫化-氧化</td><td>BH₃/THF; H₂O₂/NaOH</td><td>Syn（OH 保留構形）</td><td>Anti-Markovnikov OH</td></tr>
+      </table>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

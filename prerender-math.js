@@ -40,9 +40,14 @@ const files = [
   'organic/chapters/09_有機金屬試劑製備CC鍵.html',
   'organic/chapters/10_羰基的親核取代.html',
   'organic/chapters/11_羰基氧的取代.html',
+  'organic/chapters/12_平衡速率與機制.html',
   'organic/chapters/13_質子核磁共振.html',
   'organic/chapters/14_立體化學.html',
   'organic/chapters/15_飽和碳的親核取代.html',
+  'organic/chapters/16_構形分析.html',
+  'organic/chapters/17_消除反應.html',
+  'organic/chapters/18_光譜學方法複習.html',
+  'organic/chapters/19_親電加成至烯烴.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第18章 光譜學方法複習</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;--accent:#27ae60;--accent2:#2e6f9e;--main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #2f3740;}
+#sidebar-header .book-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-fg-dim);margin-bottom:6px;}
+#sidebar-header h2{font-size:15px;font-weight:600;color:#fff;line-height:1.4;}
+#toc{padding:16px 0;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:13px;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;line-height:1.4;transition:color 0.15s,border-color 0.15s;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#3d4750;}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+#toc .toc-section{padding:10px 20px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4a5568;}
+#main{margin-left:270px;flex:1;padding:48px 56px;max-width:calc(100% - 270px);}
+.chapter-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--rule);}
+.chapter-number{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;}
+.chapter-title{font-size:36px;font-weight:700;line-height:1.2;color:#1a1610;}
+.chapter-subtitle{margin-top:10px;font-size:17px;color:#6b5e52;font-style:italic;}
+h2{font-size:24px;font-weight:700;margin:44px 0 16px;color:#1a1610;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:#2b2520;}
+h4{font-size:15px;font-weight:700;margin:20px 0 8px;color:#3d3028;}
+p{line-height:1.8;margin-bottom:14px;font-size:15.5px;}
+ul,ol{padding-left:24px;margin-bottom:14px;}
+li{line-height:1.8;font-size:15.5px;margin-bottom:4px;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:18px 22px;margin:20px 0;font-size:15px;}
+.box-note{background:#e8f4e8;border-left:4px solid var(--accent);}
+.box-example{background:#fff8e8;border-left:4px solid #f39c12;}
+.box-key{background:#e8f0f8;border-left:4px solid var(--accent2);}
+.box-selftest{background:#f4e8f4;border-left:4px solid #8e44ad;}
+.box-summary{background:#f0f0f0;border-left:4px solid #555;}
+.box-note h4,.box-example h4,.box-key h4,.box-selftest h4,.box-summary h4{margin-top:0;margin-bottom:10px;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px 24px;margin:16px 0;font-family:"Courier New",monospace;font-size:14px;line-height:1.8;overflow-x:auto;white-space:pre;}
+.math-block{background:var(--paper-bg);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:14px 0;font-family:"Courier New",monospace;font-size:15px;text-align:center;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f4f0e8;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer;}
+@media(max-width:900px){#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0;padding:24px 20px;max-width:100%;padding-top:56px;}#menu-btn{display:block;}}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第18章 光譜學方法複習</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章節</div>
+    <a href="#c13-carbonyl">¹³C NMR 羰基</a>
+    <a href="#h1-aldehyde">¹H NMR 醛基</a>
+    <a href="#ir-carbonyl">IR 羰基頻率</a>
+    <a href="#ir-corrections">IR 修正規則</a>
+    <a href="#small-ring-nmr">小環的 NMR</a>
+    <a href="#alkyne-nmr">炔烴的 NMR</a>
+    <a href="#cyclohexane-coupling">環己烷偶合常數</a>
+    <a href="#heteronuclear">異核偶合</a>
+    <a href="#c13-satellites">¹³C 衛星峰</a>
+    <a href="#structure-id">結構鑑定案例</a>
+    <a href="#shift-tables">化學位移參考表</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="chapter-header">
+    <div class="chapter-number">第十八章</div>
+    <h1 class="chapter-title">光譜學方法複習</h1>
+    <p class="chapter-subtitle">Review of spectroscopic methods</p>
+  </div>
+
+  <section id="c13-carbonyl">
+    <h2>18.1 ¹³C NMR 羰基化學位移</h2>
+    <p>¹³C NMR 能區分不同類型的羰基化合物，但酸衍生物之間有重疊：</p>
+    <table>
+      <tr><th>化合物類型</th><th>¹³C δ (ppm)</th><th>備註</th></tr>
+      <tr><td>酮（Ketone）</td><td>195–215</td><td>最低場羰基</td></tr>
+      <tr><td>醛（Aldehyde）</td><td>195–205</td><td>與酮重疊</td></tr>
+      <tr><td>酯（Ester）</td><td>164–175</td><td>酸衍生物範圍</td></tr>
+      <tr><td>羧酸（Carboxylic acid）</td><td>170–185</td><td>酸衍生物範圍</td></tr>
+      <tr><td>醯氯（Acid chloride）</td><td>165–175</td><td>酸衍生物範圍</td></tr>
+      <tr><td>醯胺（Amide）</td><td>165–175</td><td>酸衍生物範圍</td></tr>
+      <tr><td>酸酐（Anhydride）</td><td>165–170</td><td>酸衍生物範圍</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>¹³C 的限制</h4>
+      <p>所有酸衍生物（酯、酸、醯氯、醯胺、酸酐）的羰基 ¹³C 都落在 164–185 ppm，互相重疊，無法僅靠 ¹³C 化學位移區分。需配合 IR 或 ¹H NMR 判斷。</p>
+    </div>
+  </section>
+
+  <section id="h1-aldehyde">
+    <h2>18.2 ¹H NMR 醛基訊號</h2>
+    <p>醛基（CHO）的質子在 ¹H NMR 出現在特徵性的低場位置，<strong>是區分醛與酮的最直接方法</strong>：</p>
+    <div class="math-block">醛基 CHO 的 ¹H 化學位移：δ = 9.0–10.5 ppm</div>
+    <ul>
+      <li>此範圍遠離其他 H（最接近的是芳香 H 在 6.5–8.5 ppm）</li>
+      <li>芳香醛（苯甲醛型）通常在 δ ≈ 9.8–10.0 ppm</li>
+      <li>脂肪醛通常在 δ ≈ 9.4–9.8 ppm</li>
+      <li>不飽和醛（α,β-不飽和）在 δ ≈ 9.2–9.5 ppm（共軛去屏蔽）</li>
+    </ul>
+    <div class="box-key">
+      <h4>醛的完整鑑定</h4>
+      <ul>
+        <li>¹H NMR：CHO 在 δ 9–10.5 ppm（通常單峰或 d，若鄰 H 存在）</li>
+        <li>IR：C-H 伸縮（兩個峰，~2720 和 2820 cm⁻¹）；C=O ~1720–1740 cm⁻¹</li>
+        <li>¹³C NMR：C=O 在 195–205 ppm</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="ir-carbonyl">
+    <h2>18.3 IR 羰基伸縮頻率</h2>
+    <p>羰基的 IR 頻率是快速鑑定官能基類型的強大工具：</p>
+    <table>
+      <tr><th>化合物</th><th>ν(C=O) (cm⁻¹)</th><th>特點</th></tr>
+      <tr><td>醯氯</td><td>~1815</td><td>最高頻，強烈吸電子 Cl</td></tr>
+      <tr><td>酸酐</td><td>~1790 + ~1810</td><td>兩個 C=O 峰（對稱+不對稱伸縮）</td></tr>
+      <tr><td>酯</td><td>~1745</td><td>寬峰；C-O-C 伸縮在 ~1200 cm⁻¹</td></tr>
+      <tr><td>羧酸</td><td>~1710–1725</td><td>寬峰；O-H 伸縮寬峰 2500–3300 cm⁻¹</td></tr>
+      <tr><td>酮（六元環）</td><td>~1715</td><td>基準參考值</td></tr>
+      <tr><td>醛</td><td>~1720–1740</td><td>C-H 伸縮在 2720, 2820 cm⁻¹</td></tr>
+      <tr><td>醯胺</td><td>~1650–1680</td><td>最低頻，N-H 1580 cm⁻¹；N 的共振降頻</td></tr>
+    </table>
+    <h3>IR 頻率的決定因素</h3>
+    <ul>
+      <li><strong>電感效應（Inductive）</strong>：C=O 上的吸電子基（Cl、OR）降低 C 的電子密度，使 C=O 鍵增強，頻率升高</li>
+      <li><strong>共振（Resonance）</strong>：N 孤對電子共振到 C=O，降低 C=O 鍵級，頻率降低（醯胺最低）</li>
+      <li><strong>共軛（Conjugation）</strong>：C=C 或苯環與 C=O 共振，頻率降低約 30 cm⁻¹</li>
+      <li><strong>環張力（Ring strain）</strong>：五元環 +30；四元環 +65；三元環 +100 cm⁻¹</li>
+    </ul>
+  </section>
+
+  <section id="ir-corrections">
+    <h2>18.4 IR 羰基頻率修正規則</h2>
+    <p>以六元酮（1715 cm⁻¹）為基準，加上各修正量估算任意羰基化合物的頻率：</p>
+    <table>
+      <tr><th>修正項目</th><th>修正量 (cm⁻¹)</th></tr>
+      <tr><td>取代 Cl（如醯氯）</td><td>+85 → +100</td></tr>
+      <tr><td>取代 OCOR（如酸酐）</td><td>+100（每個 C=O +50）</td></tr>
+      <tr><td>取代 OR（如酯）</td><td>+30</td></tr>
+      <tr><td>取代 OH（如羧酸）</td><td>+15（二聚效應拉低）</td></tr>
+      <tr><td>取代 H（如醛）</td><td>+15</td></tr>
+      <tr><td>C=C 共軛</td><td>−30</td></tr>
+      <tr><td>苯環共軛（芳香羰基）</td><td>−30</td></tr>
+      <tr><td>NH₂ 取代（醯胺）</td><td>−85</td></tr>
+      <tr><td>五元環（+ring strain）</td><td>+30</td></tr>
+      <tr><td>四元環</td><td>+65</td></tr>
+      <tr><td>三元環</td><td>+100</td></tr>
+    </table>
+    <div class="box-example">
+      <h4>β-內醯胺（β-Lactam，四元環醯胺）的計算</h4>
+      <div class="reaction-scheme">基準（六元酮）：          1715 cm⁻¹
++ NH₂ 取代（醯胺效應）：  −85
++ 四元環張力：            +65
+─────────────────────────────
+估算值：                  1695 cm⁻¹
+
+實際青黴素 β-內醯胺 C=O：約 1715 cm⁻¹
+（高於普通六元環醯胺的 ~1680 cm⁻¹）
+→ 四元環+共振作用相抵，最終比六元環醯胺高 ~35 cm⁻¹</div>
+    </div>
+  </section>
+
+  <section id="small-ring-nmr">
+    <h2>18.5 小環化合物的 NMR 特點</h2>
+    <h3>環丙烷（Cyclopropane）</h3>
+    <p>環丙烷的 C-H 氫出現在異常高場（比正常烷烴 CH₂ 更高場）：</p>
+    <div class="math-block">環丙烷 CH₂ ¹H 化學位移：δ ≈ 0 至 −0.44 ppm</div>
+    <p>原因：環丙烷的 C-C 鍵有較高 s 字符（彎曲鍵），C-H σ 鍵電子密度增加（更多 s 特性 → 更大 Fermi 接觸 → C-H 電子在 C 附近聚集），屏蔽效應使 H 更高場。</p>
+    <div class="box-note">
+      <h4>¹³C 的 J 偶合</h4>
+      <p>環丙烷 ¹J_CH ≈ 160 Hz（比正常 CH₂ ~125 Hz 大），也反映較高 s 字符。</p>
+    </div>
+  </section>
+
+  <section id="alkyne-nmr">
+    <h2>18.6 炔烴的 NMR 特點</h2>
+    <h3>末端炔烴 ≡C-H</h3>
+    <p>炔烴末端 C-H 在 ¹H NMR 出現在中高場（比烯烴更高場）：</p>
+    <div class="math-block">末端炔 ≡C-H 的 ¹H δ ≈ 1.8–2.5 ppm</div>
+    <p><strong>原因</strong>：炔烴 π 電子形成圓柱形（cylindrical）雲，在 C≡C 鍵軸方向產生反磁性各向異性（沿軸方向屏蔽）。末端 H 位於此軸上，受到屏蔽，比同類型烯烴 H（δ 4.5–6.5 ppm）更高場。</p>
+    <h3>炔烴的 ¹³C 化學位移</h3>
+    <div class="math-block">炔烴 ≡C 的 ¹³C δ ≈ 60–90 ppm（sp 碳）</div>
+    <ul>
+      <li>比烯烴（sp² 碳 100–150 ppm）更高場</li>
+      <li>比烷烃（sp³ 碳 0–50 ppm）更低場</li>
+      <li>末端炔的兩個 C 在 NMR 中通常可以區分（≡CH 約 68–70 ppm；≡CR 約 80–90 ppm）</li>
+    </ul>
+  </section>
+
+  <section id="cyclohexane-coupling">
+    <h2>18.7 環己烷的偶合常數</h2>
+    <p>在環己烷系統中，³J（H-C-C-H）偶合常數對構形分析極為有用（Karplus 方程）：</p>
+    <table>
+      <tr><th>鄰H-H關係（在椅式環己烷）</th><th>二面角 φ</th><th>³J (Hz)</th></tr>
+      <tr><td>二直立（diaxial，ax-ax）</td><td>~180°</td><td>10–12</td></tr>
+      <tr><td>直立-赤道（ax-eq）</td><td>~60°</td><td>3–5</td></tr>
+      <tr><td>二赤道（diequatorial，eq-eq）</td><td>~60°</td><td>2–3</td></tr>
+    </table>
+    <div class="box-key">
+      <h4>Karplus 方程</h4>
+      <div class="math-block">³J ≈ A cos²φ − B cosφ + C
+（A ≈ 10, B ≈ 1, C ≈ 0 為近似值）
+
+φ = 0° → ³J ≈ 9–10 Hz（syn-periplanar）
+φ = 90° → ³J ≈ 0 Hz
+φ = 180° → ³J ≈ 10–12 Hz（anti-periplanar）</div>
+      <p>環己烷 ax-ax 偶合（180°）≫ ax-eq 或 eq-eq（60°）；利用此差異可判斷 H 的軸向/赤道位置。</p>
+    </div>
+    <div class="box-example">
+      <h4>由偶合常數推論構形</h4>
+      <p>若 C1-H 顯示大偶合（³J = 10 Hz 與相鄰 H），表示 C1-H 為軸向（ax-ax 關係）；小偶合（³J = 3 Hz）表示赤道。</p>
+    </div>
+  </section>
+
+  <section id="heteronuclear">
+    <h2>18.8 異核偶合（¹⁹F 和 ³¹P）</h2>
+    <p>¹⁹F（100% 天然豐度）和 ³¹P（100% 天然豐度）都是 I = 1/2 核，與 ¹H 和 ¹³C 均會偶合：</p>
+    <h3>¹H-¹⁹F 偶合</h3>
+    <ul>
+      <li>²J_HF（geminal）：通常 45–55 Hz</li>
+      <li>³J_HF（vicinal）：通常 5–25 Hz</li>
+      <li>¹⁹F NMR 本身範圍寬（CF₄ = 0 ppm 參考），化學位移差異大（CF₃ ≈ −65 ppm；ArF ≈ −115 ppm）</li>
+    </ul>
+    <h3>¹H-³¹P 偶合</h3>
+    <ul>
+      <li>¹J_PH（直接 P-H 鍵）：高達 693 Hz（如 dimethyl phosphite）</li>
+      <li>²J_PH（P-C-H）：通常 10–15 Hz</li>
+      <li>³J_PH（P-C-C-H）：通常 5–12 Hz</li>
+    </ul>
+    <h3>¹³C-¹⁹F 偶合</h3>
+    <table>
+      <tr><th>偶合類型</th><th>典型值（氟苯）</th></tr>
+      <tr><td>¹J_CF（直接 C-F 鍵）</td><td>~244 Hz（ipso C）</td></tr>
+      <tr><td>²J_CF</td><td>~21 Hz（ortho C）</td></tr>
+      <tr><td>³J_CF</td><td>~8 Hz（meta C）</td></tr>
+      <tr><td>⁴J_CF</td><td>~3 Hz（para C）</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>¹³C 常規記錄為寬帶去偶（Broadband decoupled）</h4>
+      <p>標準 ¹³C NMR 使用 ¹H 寬帶去偶（BBD）照射所有頻率的 ¹H，移除 ¹H-¹³C 偶合，所有 ¹³C 訊號都顯示為單峰。但 ¹⁹F 和 ³¹P 的偶合<strong>不</strong>被 BBD 消除，因此仍可見 ¹³C-¹⁹F 和 ¹³C-³¹P 分裂。</p>
+    </div>
+  </section>
+
+  <section id="c13-satellites">
+    <h2>18.9 ¹³C 衛星峰（Satellite peaks）</h2>
+    <p>在 ¹H NMR 中，¹³C（1.1% 天然豐度）與 ¹H 的偶合產生「衛星峰（satellites）」：</p>
+    <ul>
+      <li>主峰兩側各有一個衛星峰，相距各 ¹J_CH/2</li>
+      <li>每個衛星峰的強度約為主峰的 0.55%（= 1.1% × 1/2）</li>
+      <li>一對衛星峰合計約 1.1% 的主峰高度</li>
+      <li>在濃度高、測量精確時可見；通常用於確認高純度樣品或鑑定溶劑峰</li>
+    </ul>
+    <div class="box-example">
+      <h4>TMS（四甲基矽烷）的衛星峰</h4>
+      <p>TMS（參考峰）也有 ¹³C 衛星峰。¹J_CH(TMS) ≈ 120 Hz，衛星峰位於 δ 0 ± 60 Hz（在 500 MHz NMR 上即 ± 0.12 ppm）。</p>
+    </div>
+  </section>
+
+  <section id="structure-id">
+    <h2>18.10 結構鑑定案例</h2>
+    <div class="box-example">
+      <h4>案例：Lycorea 蝴蝶的性費洛蒙</h4>
+      <p>分子式 C₇H₉NO，不飽和度 = (2×7 + 2 − 9 + 1)/2 = 4，含氮不計。高不飽和度暗示芳香環（3個不飽和度）＋一個 C=O（1個）。</p>
+      <div class="reaction-scheme">¹H NMR 資料：
+  δ 2.4 ppm (3H, s)：CH₃（甲基，與環相連）
+  δ 2.5 ppm (3H, s)：COCH₃（乙醯甲基）
+  δ 6.1 ppm (1H, m, J = 2.5, 3.5 Hz)：吡咯環 H
+  δ 6.6 ppm (1H, m, J = 2.5, 3.5 Hz)：吡咯環 H
+  δ 8.8 ppm (1H, 寬，NH)：吡咯 N-H
+
+結構推論：
+  → 吡咯環（J = 2.5 Hz 為相鄰 H，J = 3.5 Hz 為間位 H）
+  → 帶甲基（δ 2.4）和乙醯基（δ 2.5 的 COCH₃）
+  → 3-甲基-4-乙醯吡咯（N-甲基位置由化學位移和分子式確認）</div>
+    </div>
+  </section>
+
+  <section id="shift-tables">
+    <h2>18.11 化學位移參考表</h2>
+    <h3>¹H NMR 加成化學位移估算</h3>
+    <p>可用加成法估算多取代化合物的 ¹H 化學位移（以 CH₄ 的 δ 0.23 ppm 為基準）：</p>
+    <table>
+      <tr><th>取代基</th><th>增量（每個，ppm）</th></tr>
+      <tr><td>烷基（Alkyl，第一個）</td><td>+0.44</td></tr>
+      <tr><td>苯環（Phenyl）</td><td>+1.6</td></tr>
+      <tr><td>腈（Nitrile）</td><td>+1.2</td></tr>
+      <tr><td>醛/酮（C=O）</td><td>+1.2</td></tr>
+      <tr><td>硝基（NO₂）</td><td>+3.0</td></tr>
+      <tr><td>氟（F）</td><td>+3.0</td></tr>
+      <tr><td>氯（Cl）</td><td>+2.0</td></tr>
+      <tr><td>溴（Br）</td><td>+2.0</td></tr>
+      <tr><td>碘（I）</td><td>+1.5</td></tr>
+      <tr><td>羥基（OH）</td><td>+2.0</td></tr>
+      <tr><td>醚（OR）</td><td>+2.0</td></tr>
+      <tr><td>胺（NR₂）</td><td>+1.8</td></tr>
+    </table>
+    <h3>常見官能基的 ¹H 化學位移</h3>
+    <table>
+      <tr><th>質子類型</th><th>δ 範圍（ppm）</th></tr>
+      <tr><td>TMS（參考）</td><td>0</td></tr>
+      <tr><td>環丙烷 CH₂</td><td>−0.5 到 0.5</td></tr>
+      <tr><td>烷基 CH₃、CH₂、CH</td><td>0.5–2.5</td></tr>
+      <tr><td>末端炔 ≡C-H</td><td>1.8–2.5</td></tr>
+      <tr><td>炔丙基（-C≡C-CH₂-）</td><td>2.0–2.5</td></tr>
+      <tr><td>苄基（ArCH₂）</td><td>2.3–2.5</td></tr>
+      <tr><td>N-CH₃、N-CH₂</td><td>2.2–2.6</td></tr>
+      <tr><td>O-CH₃（甲氧基）</td><td>3.3–3.5</td></tr>
+      <tr><td>OCH₂（醚）</td><td>3.4–4.0</td></tr>
+      <tr><td>烯烴（C=C-H）</td><td>4.5–6.5</td></tr>
+      <tr><td>芳香（ArH）</td><td>6.5–8.5</td></tr>
+      <tr><td>醛（CHO）</td><td>9.0–10.5</td></tr>
+      <tr><td>羧酸（COOH）</td><td>10–13</td></tr>
+    </table>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <h4>第18章 核心概念</h4>
+      <ul>
+        <li><strong>¹³C 羰基</strong>：酮/醛 195–215 ppm；酸衍生物全部重疊在 164–185 ppm</li>
+        <li><strong>醛鑑定</strong>：¹H δ 9–10.5 ppm；IR 2720 + 2820 cm⁻¹（C-H 伸縮）</li>
+        <li><strong>IR 羰基頻率</strong>：醯氯 1815 &gt; 酸酐 1790+1810 &gt; 酯 1745 &gt; 酮 1715 &gt; 醛 1725 &gt; 醯胺 1650 cm⁻¹</li>
+        <li><strong>IR 修正</strong>：共軛 −30；環張力 +30/+65/+100（五/四/三元環）；N 共振 −85</li>
+        <li><strong>環丙烷 ¹H</strong>：δ ≈ 0 至 −0.44 ppm（高場，高 s 字符）</li>
+        <li><strong>炔烴 ≡C-H</strong>：¹H δ ≈ 1.8–2.5 ppm；¹³C ≡C 在 60–90 ppm</li>
+        <li><strong>環己烷偶合</strong>：ax-ax ³J = 10–12 Hz；ax-eq = 3–5 Hz；eq-eq = 2–3 Hz</li>
+        <li><strong>異核偶合</strong>：¹⁹F 和 ³¹P 均為 I = 1/2，¹J 可達數百 Hz，不被 BBD 消除</li>
+        <li><strong>¹³C 衛星峰</strong>：¹H NMR 主峰兩側各 J/2 處，強度各 0.55%</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

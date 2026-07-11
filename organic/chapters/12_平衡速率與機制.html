@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第12章 平衡、速率與機制</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{--sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;--accent:#27ae60;--accent2:#2e6f9e;--main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{position:fixed;top:0;left:0;width:270px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform 0.3s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #2f3740;}
+#sidebar-header .book-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--sidebar-fg-dim);margin-bottom:6px;}
+#sidebar-header h2{font-size:15px;font-weight:600;color:#fff;line-height:1.4;}
+#toc{padding:16px 0;flex:1;}
+#toc a{display:block;padding:7px 20px;font-size:13px;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;line-height:1.4;transition:color 0.15s,border-color 0.15s;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#3d4750;}
+#toc a.active{color:var(--accent);border-left-color:var(--accent);font-weight:600;}
+#toc .toc-section{padding:10px 20px 4px;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#4a5568;}
+#main{margin-left:270px;flex:1;padding:48px 56px;max-width:calc(100% - 270px);}
+.chapter-header{margin-bottom:40px;padding-bottom:28px;border-bottom:2px solid var(--rule);}
+.chapter-number{font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:10px;}
+.chapter-title{font-size:36px;font-weight:700;line-height:1.2;color:#1a1610;}
+.chapter-subtitle{margin-top:10px;font-size:17px;color:#6b5e52;font-style:italic;}
+h2{font-size:24px;font-weight:700;margin:44px 0 16px;color:#1a1610;padding-bottom:8px;border-bottom:1px solid var(--rule);}
+h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:#2b2520;}
+h4{font-size:15px;font-weight:700;margin:20px 0 8px;color:#3d3028;}
+p{line-height:1.8;margin-bottom:14px;font-size:15.5px;}
+ul,ol{padding-left:24px;margin-bottom:14px;}
+li{line-height:1.8;font-size:15.5px;margin-bottom:4px;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:18px 22px;margin:20px 0;font-size:15px;}
+.box-note{background:#e8f4e8;border-left:4px solid var(--accent);}
+.box-example{background:#fff8e8;border-left:4px solid #f39c12;}
+.box-key{background:#e8f0f8;border-left:4px solid var(--accent2);}
+.box-selftest{background:#f4e8f4;border-left:4px solid #8e44ad;}
+.box-summary{background:#f0f0f0;border-left:4px solid #555;}
+.box-note h4,.box-example h4,.box-key h4,.box-selftest h4,.box-summary h4{margin-top:0;margin-bottom:10px;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px 24px;margin:16px 0;font-family:"Courier New",monospace;font-size:14px;line-height:1.8;overflow-x:auto;white-space:pre;}
+.math-block{background:var(--paper-bg);border:1px solid var(--rule);border-radius:4px;padding:14px 20px;margin:14px 0;font-family:"Courier New",monospace;font-size:15px;text-align:center;}
+table{width:100%;border-collapse:collapse;margin:18px 0;font-size:14.5px;}
+th{background:var(--accent);color:#fff;padding:10px 14px;text-align:left;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f4f0e8;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--accent);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:14px;cursor:pointer;}
+@media(max-width:900px){#sidebar{transform:translateX(-100%);}#sidebar.open{transform:translateX(0);}#main{margin-left:0;padding:24px 20px;max-width:100%;padding-top:56px;}#menu-btn{display:block;}}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第12章 平衡、速率與機制</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章節</div>
+    <a href="#thermodynamic-kinetic">熱力學 vs 動力學控制</a>
+    <a href="#gibbs-energy">Gibbs 自由能與平衡</a>
+    <a href="#rate-equations">速率方程式</a>
+    <a href="#energy-profiles">能量圖與過渡態</a>
+    <a href="#hammond">Hammond 假說</a>
+    <a href="#catalysis">酸鹼催化</a>
+    <a href="#curtin-hammett">Curtin-Hammett 原理</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<main id="main">
+  <div class="chapter-header">
+    <div class="chapter-number">第十二章</div>
+    <h1 class="chapter-title">平衡、速率與機制</h1>
+    <p class="chapter-subtitle">Equilibria, rates and mechanisms</p>
+  </div>
+
+  <section id="thermodynamic-kinetic">
+    <h2>12.1 熱力學控制 vs 動力學控制</h2>
+    <p>有機反應常能形成多種可能的產物。哪種產物主導，取決於反應條件：<strong>熱力學控制</strong>讓最穩定的產物累積；<strong>動力學控制</strong>讓活化能最低的產物佔優勢。</p>
+    <ul>
+      <li><strong>熱力學控制</strong>：反應可逆；長時間或高溫下，最穩定的產物（ΔG° 最低）比例最大。</li>
+      <li><strong>動力學控制</strong>：低溫、短時間，活化能（Ea）最小的產物先累積，不一定是最穩定的。</li>
+    </ul>
+    <div class="box-example">
+      <h4>範例：1,3-丁二烯與 HBr 加成</h4>
+      <div class="reaction-scheme">CH₂=CH-CH=CH₂ + HBr
+
+低溫 (–80 °C)：動力學控制
+  → CH₃-CHBr-CH=CH₂   (1,2-加成，~80%)
+
+高溫 (40 °C)：熱力學控制
+  → CH₃-CH=CH-CH₂Br   (1,4-加成，~80%)</div>
+      <p>中間體為共振穩定的烯丙基碳陽離子。低溫下 Br⁻ 攻擊近端碳（1,2）；高溫下可逆，最終由熱力學較穩定的 1,4-加成產物主導。</p>
+    </div>
+    <div class="box-note">
+      <h4>判斷要點</h4>
+      <ul>
+        <li>低溫、短時間、不可逆條件 → 動力學控制</li>
+        <li>高溫、長時間、可逆條件 → 熱力學控制</li>
+        <li>若動力學最快產物 ＝ 熱力學最穩定產物，則兩種控制給出相同結果</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="gibbs-energy">
+    <h2>12.2 Gibbs 自由能與平衡</h2>
+    <p>反應方向和平衡位置由 Gibbs 自由能 ΔG° 決定：</p>
+    <div class="math-block">ΔG° = ΔH° − TΔS°</div>
+    <div class="math-block">ΔG° = −RT ln K</div>
+    <p>其中 K 為平衡常數，R = 8.314 J mol⁻¹ K⁻¹，T 為絕對溫度。</p>
+    <ul>
+      <li>ΔG° &lt; 0：反應自發，K &gt; 1，產物占優</li>
+      <li>ΔG° &gt; 0：反應不自發，K &lt; 1，反應物占優</li>
+      <li>ΔG° = 0：K = 1，反應物與產物各半</li>
+    </ul>
+    <h3>溫度對平衡的影響</h3>
+    <p>由 ΔG° = ΔH° − TΔS° 可知：</p>
+    <ul>
+      <li><strong>放熱反應</strong>（ΔH° &lt; 0）：升溫使 −TΔS° 項貢獻增大，若 ΔS° &lt; 0 則升溫不利產物；若 ΔS° &gt; 0 效果視大小而定。</li>
+      <li><strong>吸熱反應</strong>（ΔH° &gt; 0）：升溫使 ΔG° 降低（若 ΔS° &gt; 0），有利反應。</li>
+    </ul>
+    <div class="box-key">
+      <h4>消去 vs 取代的溫度效應</h4>
+      <p>消去反應產生多個分子（氣態烯烴），ΔS° &gt; 0；取代反應 ΔS° 接近零。升溫有利消去（−TΔS° 對 ΔG° 的貢獻更顯著），這是高溫傾向消去的熱力學根據。</p>
+    </div>
+    <h3>平衡常數 K 的計算</h3>
+    <div class="math-block">K = [products]/[reactants]   (適用於稀溶液)</div>
+    <table>
+      <tr><th>ΔG° (kJ mol⁻¹)</th><th>K (25 °C)</th><th>意義</th></tr>
+      <tr><td>−40</td><td>~10⁷</td><td>幾乎完全轉化</td></tr>
+      <tr><td>−20</td><td>~3000</td><td>強烈偏向產物</td></tr>
+      <tr><td>0</td><td>1</td><td>各半</td></tr>
+      <tr><td>+20</td><td>~0.0003</td><td>強烈偏向反應物</td></tr>
+      <tr><td>+40</td><td>~10⁻⁷</td><td>幾乎不反應</td></tr>
+    </table>
+  </section>
+
+  <section id="rate-equations">
+    <h2>12.3 速率方程式</h2>
+    <p>反應速率以速率定律描述，速率依賴於反應物濃度和速率常數 k：</p>
+    <div class="math-block">速率 = k[A]ᵐ[B]ⁿ   （m, n 為反應級數，由實驗決定）</div>
+    <h3>常見反應級數</h3>
+    <ul>
+      <li><strong>一級（First order）</strong>：速率 = k[A]，半衰期 t₁/₂ = ln2/k，與[A]無關</li>
+      <li><strong>二級（Second order）</strong>：速率 = k[A][B] 或 k[A]²</li>
+      <li><strong>偽一級（Pseudo first-order）</strong>：當[B]大量過量時，k[A][B] ≈ k'[A]（k' = k[B]為表觀速率常數）</li>
+    </ul>
+    <div class="box-example">
+      <h4>SN1 vs SN2 的速率差異</h4>
+      <div class="reaction-scheme">SN2（雙分子，二級）：
+  速率 = k₂[RX][Nu⁻]
+  機制：一步協同，Nu⁻ 在背面攻擊的同時 X 離去
+
+SN1（單分子，一級）：
+  速率 = k₁[RX]   （與 Nu⁻ 濃度無關）
+  機制：RX 先形成碳陽離子（慢步驟），然後 Nu⁻ 快速攻擊</div>
+    </div>
+    <h3>速率決定步驟</h3>
+    <p>多步反應中，<strong>速率決定步驟（rate-determining step）</strong>是最慢的一步，其前的步驟在速率決定步驟的時間尺度上已達到平衡（前平衡假設）。</p>
+    <div class="box-note">
+      <h4>前平衡假設（Pre-equilibrium）</h4>
+      <p>若第一步快速可逆（K₁），第二步緩慢（k₂），則：</p>
+      <div class="reaction-scheme">A ⇌ B   (K₁ = k₁/k₋₁)
+B → C   (k₂，速率決定步驟)
+
+觀測速率 = k₂ × K₁ × [A] = k_obs[A]</div>
+    </div>
+    <h3>Arrhenius 方程式</h3>
+    <p>速率常數 k 與溫度的關係：</p>
+    <div class="math-block">k = A × exp(−Ea/RT)   或   ln k = ln A − Ea/RT</div>
+    <p>Ea 為活化能，A 為指前因子（頻率因子）。升溫使 k 增大，反應加速。</p>
+  </section>
+
+  <section id="energy-profiles">
+    <h2>12.4 能量圖與過渡態</h2>
+    <p>反應能量圖（energy profile）描述反應沿反應座標（reaction coordinate）的位能變化。</p>
+    <h3>關鍵特徵</h3>
+    <ul>
+      <li><strong>過渡態（Transition state，TS）</strong>：能量最高點，是不穩定的極大值，不能被分離。用 ‡ 標記（如 ΔG‡）。</li>
+      <li><strong>中間體（Intermediate）</strong>：能量的局部極小值，比過渡態穩定，原則上可分離（但通常壽命短）。</li>
+      <li><strong>活化能 Ea（ΔG‡）</strong>：反應物到過渡態的能量差；越低，反應越快。</li>
+      <li><strong>反應焓 ΔH（ΔG°）</strong>：反應物到產物的能量差；決定平衡位置。</li>
+    </ul>
+    <div class="box-key">
+      <h4>過渡態 vs 中間體的辨別</h4>
+      <table>
+        <tr><th>特徵</th><th>過渡態</th><th>中間體</th></tr>
+        <tr><td>能量圖</td><td>局部最高點（極大值）</td><td>局部最低點（極小值）</td></tr>
+        <tr><td>壽命</td><td>無（約 10⁻¹³ s，振動時間尺度）</td><td>短暫（可偵測）</td></tr>
+        <tr><td>可分離性</td><td>不可</td><td>理論上可（通常困難）</td></tr>
+        <tr><td>典型例子</td><td>SN2 的五配位碳</td><td>SN1 的碳陽離子</td></tr>
+      </table>
+    </div>
+    <h3>多步反應的能量圖</h3>
+    <p>多步反應在能量圖上出現多個極大值（每步一個 TS）和中間體（極小值）。速率決定步驟對應最高的活化能屏障。</p>
+    <div class="reaction-scheme">能量
+  ^
+  |      TS₁          TS₂
+  |       *            *
+  |      / \          / \
+  |     /   \  Int  /   \
+  |    /     *----*     \
+  |   /                  \
+  |  /    (中間體)         \
+  | / 反應物               產物
+  +--------------------------------> 反應座標</div>
+  </section>
+
+  <section id="hammond">
+    <h2>12.5 Hammond 假說</h2>
+    <p>Hammond 假說（Hammond postulate，1955）提供過渡態結構的洞見：</p>
+    <div class="box-key">
+      <h4>Hammond 假說陳述</h4>
+      <p><strong>若兩個相鄰的物種在反應座標上能量相近，它們的結構也相近。</strong></p>
+      <ul>
+        <li><strong>放熱步驟</strong>：過渡態能量接近反應物 → TS 結構<em>類似反應物</em>（early TS）</li>
+        <li><strong>吸熱步驟</strong>：過渡態能量接近產物 → TS 結構<em>類似產物</em>（late TS）</li>
+      </ul>
+    </div>
+    <h3>實際應用</h3>
+    <p>對 SN1 中碳陽離子的形成（吸熱步驟）：TS 類似碳陽離子。因此，任何穩定碳陽離子的因素（超共軛、共振、溶劑化）也穩定 TS，降低 Ea，加快反應。</p>
+    <div class="box-example">
+      <h4>親電加成的 Hammond 分析</h4>
+      <div class="reaction-scheme">烯烴 + H⁺ → 碳陽離子（吸熱，late TS）
+
+Markovnikov 規則：H⁺ 加到較少取代的碳
+  → 形成較穩定的三級碳陽離子（TS 似碳陽離子）
+  → 較低 TS 能量，較快反應
+
+反 Markovnikov 方向：形成較不穩定的一級碳陽離子
+  → 較高 TS 能量，較慢</div>
+    </div>
+  </section>
+
+  <section id="catalysis">
+    <h2>12.6 酸鹼催化</h2>
+    <p>催化劑提供活化能較低的替代路徑，加速反應但不改變平衡位置（不影響 ΔG°）。</p>
+    <h3>廣義酸催化（General acid catalysis）</h3>
+    <p>任何質子供體（不限於 H₃O⁺）都能催化反應：</p>
+    <div class="reaction-scheme">HA + 底物 → HA-底物複合物 → 產物 + A⁻</div>
+    <p>速率 = k[底物][HA]，多種酸同時存在時速率加成（Brønsted 酸催化）。</p>
+    <h3>廣義鹼催化（General base catalysis）</h3>
+    <p>任何質子受體都能催化：</p>
+    <div class="reaction-scheme">B + 底物-H → [BH⁺...底物⁻]‡ → BH⁺ + 產物</div>
+    <h3>特定酸/鹼催化 vs 廣義酸/鹼催化</h3>
+    <table>
+      <tr><th>類型</th><th>催化劑</th><th>速率依賴</th></tr>
+      <tr><td>特定酸催化</td><td>僅 H⁺（H₃O⁺）</td><td>k[S][H⁺]</td></tr>
+      <tr><td>廣義酸催化</td><td>任何酸 HA</td><td>k[S][HA]</td></tr>
+      <tr><td>特定鹼催化</td><td>僅 OH⁻</td><td>k[S][OH⁻]</td></tr>
+      <tr><td>廣義鹼催化</td><td>任何鹼 B</td><td>k[S][B]</td></tr>
+    </table>
+    <div class="box-note">
+      <h4>酵素與緩衝液的角色</h4>
+      <p>生物體中許多酵素同時提供廣義酸（His-H⁺、Tyr-OH）和廣義鹼（His、Asp⁻），在近中性 pH 實現高效率催化。緩衝液中改變緩衝劑濃度而維持 pH 不變，可以區分廣義催化 vs 特定催化。</p>
+    </div>
+  </section>
+
+  <section id="curtin-hammett">
+    <h2>12.7 Curtin-Hammett 原理</h2>
+    <p>當底物存在兩種可快速互換的構形（如可旋轉的單鍵），且各自通過不同 TS 反應時，產物比例<strong>不</strong>由構形比例決定，而是由兩條路徑的 ΔΔG‡ 決定。</p>
+    <div class="box-key">
+      <h4>Curtin-Hammett 原理</h4>
+      <p>設 A 和 B 為兩個快速平衡的構形異構物，分別以速率常數 k_A 和 k_B 反應生成 P 和 Q：</p>
+      <div class="reaction-scheme">     k_A
+A ----→ P
+|
+K_eq（快速）
+|
+B ----→ Q
+     k_B
+
+產物比 [P]/[Q] = (k_A/k_B) × K_eq</div>
+      <p>即使 B（低能構形）遠多於 A（高能構形），只要從 A 到 TS_A 的絕對能量低於從 B 到 TS_B 的絕對能量，P 仍是主要產物。</p>
+    </div>
+    <h3>實際意義</h3>
+    <ul>
+      <li>不能僅從分子模型或構形比例預測立體選擇性，必須知道各 TS 的能量。</li>
+      <li>在鏈狀分子、環的翻轉等情況均適用。</li>
+      <li>解釋了某些反應為何從「不穩定」構形反應效率更高。</li>
+    </ul>
+    <div class="box-example">
+      <h4>應用：含氮化合物的反應立體選擇性</h4>
+      <p>手性胺的 N-烷化或 N-氧化：氮的快速翻轉（氮反轉，N-inversion）使兩種構形快速平衡，產物比由 TS 能量差決定，而非由平衡構形比例預測。</p>
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <h4>第12章 核心概念</h4>
+      <ul>
+        <li><strong>動力學控制</strong>：快速、低溫、不可逆 → 活化能最低的產物</li>
+        <li><strong>熱力學控制</strong>：緩慢、高溫、可逆 → 最穩定的產物</li>
+        <li><strong>ΔG° = ΔH° − TΔS°</strong>；ΔG° = −RT ln K</li>
+        <li><strong>速率定律</strong>：由實驗決定級數；一級 t₁/₂ = ln2/k</li>
+        <li><strong>過渡態（TS）</strong>：能量極大，不能分離；<strong>中間體</strong>：能量極小，原則上可分離</li>
+        <li><strong>Hammond 假說</strong>：放熱步驟 → early TS（像反應物）；吸熱步驟 → late TS（像產物）</li>
+        <li><strong>酸鹼催化</strong>：提供替代路徑，降低 Ea，不改變 ΔG°</li>
+        <li><strong>Curtin-Hammett 原理</strong>：快速平衡構形的產物比由 ΔΔG‡ 決定，非構形比</li>
+      </ul>
+    </div>
+  </section>
+</main>
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

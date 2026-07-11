@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二章：有機結構 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-rule{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-rule strong{color:#4a2a8a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.struct-demo{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.95rem;line-height:2;}
+ol li,ul li{margin-bottom:6px;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二章：有機結構</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#frameworks">烴類骨架</a>
+    <a href="#drawing">結構式的畫法</a>
+    <a href="#functional-groups">官能基</a>
+    <a href="#oxidation">氧化態</a>
+    <a href="#naming">命名</a>
+    <a href="#abbreviations">有機元素縮寫</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="01_有機化學是什麼.html">← 第一章</a>
+    <a href="03_測定有機結構.html">第三章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第二章：有機結構</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 2: Organic Structures</div>
+
+<section id="frameworks">
+<h2>烴類骨架</h2>
+<p>有機分子的核心是<strong>烴類骨架</strong>（hydrocarbon framework）——由碳與氫原子構成的骨架。所有其他官能基都連接在這個骨架上。</p>
+<p>烴類可分為：</p>
+<ul>
+<li><strong>烷烴（alkanes）</strong>：只有 C–C 單鍵和 C–H 鍵，如甲烷 (CH₄)、乙烷 (C₂H₆)</li>
+<li><strong>烯烴（alkenes）</strong>：含 C=C 雙鍵，如乙烯 (C₂H₄)、丙烯 (C₃H₆)</li>
+<li><strong>炔烴（alkynes）</strong>：含 C≡C 三鍵，如乙炔 (C₂H₂)</li>
+<li><strong>芳香烴（arenes）</strong>：含苯環，如苯 (C₆H₆)、甲苯</li>
+</ul>
+<div class="box-note">
+<strong>烴類骨架的重要性</strong>
+<p>烴類骨架本身的化學活性很低（C–C 和 C–H 鍵不易斷裂），它的主要作用是提供分子的三維架構，並決定官能基之間的相對位置。官能基才是反應發生的地方。</p>
+</div>
+</section>
+
+<section id="drawing">
+<h2>結構式的畫法</h2>
+<p>有機化學家使用骨架結構式（skeletal structure / line-bond structure）來快速表示分子。畫法遵循三條規則：</p>
+
+<div class="box-rule">
+<strong>骨架結構式的三條規則</strong>
+<ol>
+<li><strong>折線表示碳鏈</strong>：每個折點代表一個碳原子，線段代表 C–C 鍵（呈鋸齒狀）</li>
+<li><strong>省略碳上的氫</strong>：每個碳上的氫原子不明確畫出（默認補滿四個鍵）</li>
+<li><strong>省略碳的符號</strong>：折點和線段端點的 C 符號不寫，只有非碳原子（N、O、S 等）要標出</li>
+</ol>
+</div>
+
+<h3>範例對照</h3>
+<div class="box-example">
+<strong>丁烷（正丁烷，n-butane）的不同表示方式</strong>
+<div class="struct-demo">
+分子式：    C₄H₁₀
+展開式：    CH₃–CH₂–CH₂–CH₃
+縮合式：    CH₃CH₂CH₂CH₃
+骨架式：    ∧∨  （四個碳的折線，端點為 CH₃，中間節點為 CH₂）
+</div>
+</div>
+
+<h3>雙鍵與三鍵的畫法</h3>
+<p>雙鍵用雙線 (=) 表示，三鍵用三線 (≡) 表示：</p>
+<div class="struct-demo">
+乙烯（ethene/ethylene）：  H₂C=CH₂
+乙炔（ethyne/acetylene）： HC≡CH
+丙烯（propene/propylene）：CH₂=CH–CH₃（骨架式：折點在中間碳，左端雙鍵）
+</div>
+
+<h3>環狀結構</h3>
+<p>環狀化合物畫成多邊形：</p>
+<ul>
+<li>環丙烷：正三角形</li>
+<li>環己烷：正六邊形（椅式構型在骨架式中常省略）</li>
+<li>苯：正六邊形內含圓圈（或交替雙鍵）</li>
+</ul>
+</section>
+
+<section id="functional-groups">
+<h2>官能基</h2>
+<p>官能基是決定分子反應性的特定原子或基團。以下是最重要的官能基列表：</p>
+
+<table>
+<tr><th>官能基</th><th>英文名稱</th><th>結構特徵</th><th>出現於</th></tr>
+<tr><td>C=C 雙鍵</td><td>alkene</td><td>兩個碳以雙鍵相連</td><td>烯烴</td></tr>
+<tr><td>C≡C 三鍵</td><td>alkyne</td><td>兩個碳以三鍵相連</td><td>炔烴</td></tr>
+<tr><td>苯環</td><td>arene</td><td>六員芳香環</td><td>芳香族</td></tr>
+<tr><td>–OH</td><td>alcohol / phenol</td><td>連在 C 上的羥基</td><td>醇/酚</td></tr>
+<tr><td>–O–</td><td>ether</td><td>氧橋接兩個碳</td><td>醚</td></tr>
+<tr><td>–CHO</td><td>aldehyde</td><td>羰基在鏈端</td><td>醛</td></tr>
+<tr><td>C=O（中間）</td><td>ketone</td><td>羰基在鏈中</td><td>酮</td></tr>
+<tr><td>–COOH</td><td>carboxylic acid</td><td>羰基 + 羥基</td><td>羧酸</td></tr>
+<tr><td>–COO–</td><td>ester</td><td>羧酸 + 醇（脫水）</td><td>酯</td></tr>
+<tr><td>–CONH–</td><td>amide</td><td>羰基 + 胺基</td><td>醯胺</td></tr>
+<tr><td>–NH₂, –NHR, –NR₂</td><td>amine</td><td>氮接在碳上</td><td>胺</td></tr>
+<tr><td>–CN</td><td>nitrile</td><td>C≡N 三鍵</td><td>腈</td></tr>
+<tr><td>–NO₂</td><td>nitro</td><td>N 接兩個 O</td><td>硝基化合物</td></tr>
+<tr><td>–X（X=F,Cl,Br,I）</td><td>halide</td><td>C–X 鍵</td><td>鹵烷</td></tr>
+<tr><td>–SH</td><td>thiol</td><td>S–H 鍵</td><td>硫醇</td></tr>
+</table>
+
+<div class="box-selftest">
+<strong>練習：辨認官能基</strong>
+<p>阿斯匹靈（acetylsalicylic acid）的結構包含哪些官能基？答：苯環 (arene)、酯基 (ester)、羧酸 (carboxylic acid)。</p>
+</div>
+</section>
+
+<section id="oxidation">
+<h2>有機分子的氧化態</h2>
+<p>在有機化學中，碳的氧化態（oxidation level）由其與電負性原子（O、N、鹵素）相連的鍵數決定。連結到更多電負性原子的碳，氧化態更高。</p>
+
+<table>
+<tr><th>化合物類型</th><th>碳的鍵結</th><th>氧化態（相對）</th></tr>
+<tr><td>烷烴 –CH₃</td><td>全部與 C、H 相連</td><td>最低（最還原）</td></tr>
+<tr><td>醇 –CH₂OH</td><td>一個 O</td><td>↑</td></tr>
+<tr><td>醛 –CHO</td><td>一個雙鍵 O</td><td>↑↑</td></tr>
+<tr><td>羧酸 –COOH</td><td>兩個 O</td><td>↑↑↑</td></tr>
+<tr><td>CO₂</td><td>兩個雙鍵 O</td><td>最高（最氧化）</td></tr>
+</table>
+
+<div class="box-note">
+<strong>氧化還原在有機化學中的意義</strong>
+<p>有機氧化反應通常是在碳上增加 O（或去除 H），還原則相反。例如：乙醇 → 乙醛 → 乙酸（連續氧化）；乙酸 → 乙醛 → 乙醇（連續還原）。</p>
+</div>
+</section>
+
+<section id="naming">
+<h2>有機化合物命名</h2>
+<p>有機化合物的命名有三個層次：</p>
+
+<h3>1. IUPAC 系統命名法</h3>
+<p>國際純化學與應用化學聯合會（IUPAC）制定的系統命名規則：</p>
+<ol>
+<li>找出最長的碳鏈（主鏈），確定其英文詞幹（meth-/eth-/prop-/but-/pent-/hex-...）</li>
+<li>加上後綴表示官能基（-ane=烷, -ene=烯, -yne=炔, -ol=醇, -al=醛, -one=酮, -oic acid=羧酸）</li>
+<li>取代基以數字標明位置，從靠近官能基的端點開始編號</li>
+</ol>
+
+<div class="box-example">
+<strong>IUPAC 命名範例</strong>
+<ul>
+<li>CH₃CH₂OH → 乙醇 (ethanol)</li>
+<li>CH₃COCH₃ → 丙酮 (propan-2-one)</li>
+<li>CH₃CH(OH)CH₃ → 丙-2-醇 (propan-2-ol)</li>
+<li>(CH₃)₃CCl → 2-氯-2-甲基丙烷 (2-chloro-2-methylpropane)</li>
+</ul>
+</div>
+
+<h3>2. 俗名（Trivial Names）</h3>
+<p>歷史沿用的慣用名，在工業和日常中廣泛使用：</p>
+<table>
+<tr><th>俗名</th><th>IUPAC 名</th></tr>
+<tr><td>丙酮 (acetone)</td><td>丙-2-酮 (propan-2-one)</td></tr>
+<tr><td>甲醛 (formaldehyde)</td><td>甲醛 (methanal)</td></tr>
+<tr><td>乙酸 (acetic acid)</td><td>乙酸 (ethanoic acid)</td></tr>
+<tr><td>氯仿 (chloroform)</td><td>三氯甲烷 (trichloromethane)</td></tr>
+<tr><td>苯酚 (phenol)</td><td>苯-1-醇 (benzene-1-ol)</td></tr>
+</table>
+
+<h3>3. 縮寫與首字母縮略詞</h3>
+<p>大型生物分子常用縮寫：ATP (adenosine triphosphate)、DNA、NAD⁺ 等。有機反應中的試劑也常有縮寫，如 LDA (lithium diisopropylamide)、DIBAL (diisobutylaluminium hydride)。</p>
+</section>
+
+<section id="abbreviations">
+<h2>常用有機元素縮寫</h2>
+<p>有機化學文獻中頻繁出現以下縮寫，必須熟記：</p>
+
+<table>
+<tr><th>縮寫</th><th>全名</th><th>結構</th></tr>
+<tr><td>Me</td><td>methyl（甲基）</td><td>–CH₃</td></tr>
+<tr><td>Et</td><td>ethyl（乙基）</td><td>–CH₂CH₃</td></tr>
+<tr><td>Pr</td><td>propyl（丙基）</td><td>–CH₂CH₂CH₃</td></tr>
+<tr><td>Bu</td><td>butyl（丁基）</td><td>–CH₂CH₂CH₂CH₃</td></tr>
+<tr><td>i-Pr</td><td>isopropyl（異丙基）</td><td>–CH(CH₃)₂</td></tr>
+<tr><td>i-Bu</td><td>isobutyl（異丁基）</td><td>–CH₂CH(CH₃)₂</td></tr>
+<tr><td>s-Bu</td><td>sec-butyl（仲丁基）</td><td>–CH(CH₃)CH₂CH₃</td></tr>
+<tr><td>t-Bu</td><td>tert-butyl（叔丁基）</td><td>–C(CH₃)₃</td></tr>
+<tr><td>Ph</td><td>phenyl（苯基）</td><td>–C₆H₅</td></tr>
+<tr><td>Ar</td><td>aryl（芳基）</td><td>通稱芳香環</td></tr>
+<tr><td>Bn</td><td>benzyl（苄基）</td><td>–CH₂C₆H₅</td></tr>
+<tr><td>Ac</td><td>acetyl（乙醯基）</td><td>–COCH₃</td></tr>
+<tr><td>vinyl</td><td>乙烯基</td><td>–CH=CH₂</td></tr>
+<tr><td>allyl</td><td>烯丙基</td><td>–CH₂CH=CH₂</td></tr>
+<tr><td>X</td><td>halide（鹵素）</td><td>–F, –Cl, –Br, –I</td></tr>
+<tr><td>R</td><td>alkyl（烷基）</td><td>通稱烷基取代基</td></tr>
+</table>
+
+<div class="box-selftest">
+<strong>自我測驗</strong>
+<p>寫出下列縮寫式代表的完整結構：</p>
+<ol>
+<li>MeOH → CH₃OH（甲醇）</li>
+<li>EtOAc → CH₃COOCH₂CH₃（乙酸乙酯）</li>
+<li>Ph–CH₂–OH → PhCH₂OH（苄醇）= BnOH</li>
+<li>t-BuOK → (CH₃)₃COK（叔丁醇鉀）</li>
+</ol>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li>骨架結構式以折線簡潔表示有機分子：折點=碳、省略 C 和其上的 H、標出雜原子</li>
+<li>烴骨架（烷/烯/炔/芳）提供分子架構；官能基決定反應性</li>
+<li>碳的氧化態越高，與電負性原子的連結越多（烷 < 醇 < 醛 < 酸）</li>
+<li>IUPAC 命名：主鏈 → 取代基位置 → 官能基後綴</li>
+<li>熟記常用縮寫（Me、Et、Ph、Bu、Ac 等）是閱讀有機文獻的基本技能</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

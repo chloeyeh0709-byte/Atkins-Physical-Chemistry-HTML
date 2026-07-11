@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第一章：有機化學是什麼 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+
+/* sidebar */
+#sidebar{
+  position:fixed;top:0;left:0;width:260px;height:100vh;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;
+  font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);
+  text-decoration:none;border-left:3px solid transparent;
+  transition:color .15s,border-color .15s;line-height:1.45;
+}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+
+/* main */
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+
+/* typography */
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+
+/* boxes */
+.box-note,.box-example,.box-selftest,.box-derivation,.box-impact,.box-summary{
+  border-radius:6px;padding:18px 22px;margin:24px 0;
+}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-impact{background:#fff5f2;border:1px solid #e07050;padding:16px 20px;border-radius:6px;}
+.box-impact strong{color:#a0340a;}
+
+/* connections box at chapter start */
+.connections-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:0 0 32px;}
+.connections-grid .conn-col{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:14px 16px;}
+.connections-grid .conn-col h4{font-family:'Noto Sans TC',sans-serif;font-size:.78rem;color:var(--accent2);margin:0 0 8px;text-transform:uppercase;letter-spacing:.08em;}
+.connections-grid .conn-col ul{margin:0;padding:0 0 0 16px;font-size:.85rem;line-height:1.6;}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  .connections-grid{grid-template-columns:1fr;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第一章：有機化學是什麼</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#intro">有機化學與你</a>
+    <a href="#compounds">有機化合物</a>
+    <a href="#industry">有機化學與工業</a>
+    <a href="#periodic-table">週期表的角色</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="02_有機結構.html">第二章：有機結構 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第一章：有機化學是什麼</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 1: What is Organic Chemistry?</div>
+
+<div class="connections-grid">
+  <div class="conn-col">
+    <h4>建立在…</h4>
+    <ul>
+      <li>高中化學基礎</li>
+      <li>元素與週期表</li>
+      <li>化學鍵基本概念</li>
+    </ul>
+  </div>
+  <div class="conn-col">
+    <h4>本章學習目標</h4>
+    <ul>
+      <li>有機化學的定義與範疇</li>
+      <li>有機化合物的特徵</li>
+      <li>有機化學在工業上的重要性</li>
+      <li>週期表中有機化學相關元素</li>
+    </ul>
+  </div>
+  <div class="conn-col">
+    <h4>往後看…</h4>
+    <ul>
+      <li>有機結構的畫法 (Ch2)</li>
+      <li>測定有機結構 (Ch3)</li>
+      <li>分子結構與軌域 (Ch4)</li>
+    </ul>
+  </div>
+</div>
+
+<section id="intro">
+<h2>有機化學與你</h2>
+<p>有機化學是研究含碳化合物的化學。這個定義雖然簡單，但其涵蓋的範圍卻極為廣泛——從構成生命的分子到藥物、材料、食品添加劑，無所不包。</p>
+<p>為什麼是碳？碳原子有一個獨特的能力：它可以與自身以及幾乎所有其他元素形成強而穩定的共價鍵，並能串聯成長鏈、環狀或支鏈結構。這使得以碳為骨架的分子數量幾乎是無限的。</p>
+<div class="box-note">
+<strong>有機化學的核心特徵</strong>
+<ul>
+<li>以碳原子為骨架</li>
+<li>多樣化的官能基賦予不同的反應性</li>
+<li>分子的形狀（立體化學）影響性質</li>
+<li>反應機制描述電子的流動</li>
+</ul>
+</div>
+<p>Marcellin Berthelot（1827–1907）在1860年指出，化學的創造能力使其有別於自然科學與歷史科學——化學家可以創造出自然界從未存在的全新分子。</p>
+</section>
+
+<section id="compounds">
+<h2>有機化合物</h2>
+<p>有機化合物的特徵：</p>
+<ul>
+<li><strong>主要由 C、H、O、N、S、P、鹵素</strong>等元素組成</li>
+<li>通常具有共價鍵（非離子鍵）</li>
+<li>可燃，且加熱後常分解</li>
+<li>分子量範圍極廣：從甲烷（<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mtext>CH</mtext><mn>4</mn></msub></mrow><annotation encoding="application/x-tex">\text{CH}_4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">CH</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，16 g/mol）到蛋白質（數百萬 g/mol）</li>
+</ul>
+<p>早期化學家認為有機物只能由生命體產生（「生命力論」），但1828年 Friedrich Wöhler 以無機物氰酸銨合成了尿素，打破了這個迷思：</p>
+<div class="box-example">
+<strong>Wöhler 合成尿素（1828）</strong>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><msub><mtext>NH</mtext><mn>4</mn></msub><mtext>CNO</mtext><mover><mo stretchy="true" minsize="3.0em">→</mo><mpadded width="+0.6em" lspace="0.3em"><mi mathvariant="normal">Δ</mi></mpadded></mover><mo stretchy="false">(</mo><msub><mtext>NH</mtext><mn>2</mn></msub><msub><mo stretchy="false">)</mo><mn>2</mn></msub><mtext>C=O</mtext></mrow><annotation encoding="application/x-tex">\text{NH}_4\text{CNO} \xrightarrow{\Delta} (\text{NH}_2)_2\text{C=O}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.2503em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord text"><span class="mord">NH</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">4</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord text"><span class="mord">CNO</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel x-arrow"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.1003em;"><span style="top:-3.322em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight x-arrow-pad"><span class="mord mtight"><span class="mord mtight">Δ</span></span></span></span><span class="svg-align" style="top:-2.689em;"><span class="pstrut" style="height:2.7em;"></span><span class="hide-tail" style="height:0.522em;min-width:1.469em;"><svg xmlns="http://www.w3.org/2000/svg" width="400em" height="0.522em" viewBox="0 0 400000 522" preserveAspectRatio="xMaxYMin slice"><path d="M0 241v40h399891c-47.3 35.3-84 78-110 128
+-16.7 32-27.7 63.7-33 95 0 1.3-.2 2.7-.5 4-.3 1.3-.5 2.3-.5 3 0 7.3 6.7 11 20
+ 11 8 0 13.2-.8 15.5-2.5 2.3-1.7 4.2-5.5 5.5-11.5 2-13.3 5.7-27 11-41 14.7-44.7
+ 39-84.5 73-119.5s73.7-60.2 119-75.5c6-2 9-5.7 9-11s-3-9-9-11c-45.3-15.3-85
+-40.5-119-75.5s-58.3-74.8-73-119.5c-4.7-14-8.3-27.3-11-40-1.3-6.7-3.2-10.8-5.5
+-12.5-2.3-1.7-7.5-2.5-15.5-2.5-14 0-21 3.7-21 11 0 2 2 10.3 6 25 20.7 83.3 67
+ 151.7 139 205zm0 0v40h399900v-40z"/></svg></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.011em;"><span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord"><span class="mord text"><span class="mord">NH</span></span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose"><span class="mclose">)</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord text"><span class="mord">C=O</span></span></span></span></span></span></p>
+<p>氰酸銨（無機物）→ 尿素（有機物）。這是有機化學史上的里程碑。</p>
+</div>
+
+<h3>有機分子的骨架</h3>
+<p>有機分子的骨架由碳鏈或碳環組成：</p>
+<ul>
+<li><strong>鏈狀（脂肪族）</strong>：直鏈或支鏈，如正丁烷、異丁烷</li>
+<li><strong>環狀（環烴）</strong>：如環己烷、苯（芳香族）</li>
+<li><strong>雜環</strong>：環中含有 N、O、S 等原子，如吡啶、四氫呋喃</li>
+</ul>
+
+<h3>官能基決定反應性</h3>
+<p>同一碳骨架若帶有不同官能基，其化學性質截然不同。有機化學的學習策略是：<strong>認識官能基，掌握對應的反應類型</strong>。主要官能基包括：</p>
+<table>
+<tr><th>官能基</th><th>結構特徵</th><th>類別</th></tr>
+<tr><td>烷基 (alkyl)</td><td>C–C、C–H 鍵</td><td>烷烴</td></tr>
+<tr><td>雙鍵 C=C</td><td>π 鍵</td><td>烯烴</td></tr>
+<tr><td>三鍵 C≡C</td><td>兩個 π 鍵</td><td>炔烴</td></tr>
+<tr><td>羥基 –OH</td><td>C–O–H</td><td>醇、酚</td></tr>
+<tr><td>羰基 C=O</td><td>C=O π 鍵</td><td>醛、酮</td></tr>
+<tr><td>羧基 –COOH</td><td>C=O + OH</td><td>羧酸</td></tr>
+<tr><td>胺基 –NH₂</td><td>C–N 鍵</td><td>胺</td></tr>
+<tr><td>鹵素 –X</td><td>C–X 鍵（X=F,Cl,Br,I）</td><td>鹵烷</td></tr>
+</table>
+</section>
+
+<section id="industry">
+<h2>有機化學與工業</h2>
+<p>有機化學是現代工業的基石，其應用遍及：</p>
+<ul>
+<li><strong>製藥業</strong>：設計、合成藥物分子（如阿斯匹靈、抗生素、抗癌藥）</li>
+<li><strong>農業化學</strong>：殺蟲劑、除草劑、肥料</li>
+<li><strong>高分子材料</strong>：塑膠、橡膠、纖維（聚乙烯、尼龍、聚酯）</li>
+<li><strong>染料與色素</strong>：從天然靛藍到合成染料</li>
+<li><strong>香料與食品</strong>：香料、防腐劑、抗氧化劑</li>
+<li><strong>電子材料</strong>：有機半導體、有機LED</li>
+<li><strong>生物技術</strong>：核酸（DNA/RNA）、蛋白質、糖類</li>
+</ul>
+<div class="box-impact">
+<strong>有機化學的社會衝擊</strong>
+<p>全球製藥業年產值超過1兆美元，幾乎所有藥物分子都含有碳骨架。有機化學家每年合成並篩選數百萬種新化合物，尋找具有治療效果的候選藥物。沒有有機化學，現代醫學將無從發展。</p>
+</div>
+</section>
+
+<section id="periodic-table">
+<h2>週期表的角色</h2>
+<p>有機化學雖以碳為中心，但理解元素週期律有助於預測分子性質。幾個關鍵規律：</p>
+
+<h3>碳為何如此特別？</h3>
+<ul>
+<li>碳位於週期表正中間（電負度 2.55）——既不太電正性也不太電負性</li>
+<li>因此碳幾乎能與所有元素形成強共價鍵</li>
+<li>碳–碳鍵強度高（約 350 kJ/mol），可自我串連形成長鏈</li>
+<li>碳有四個價電子，可形成四個鍵，構建三維骨架</li>
+</ul>
+
+<h3>常見有機元素的電負度</h3>
+<table>
+<tr><th>元素</th><th>電負度 (Pauling)</th><th>有機化學中的角色</th></tr>
+<tr><td>Li</td><td>0.98</td><td>金屬有機試劑（強親核劑）</td></tr>
+<tr><td>B</td><td>2.04</td><td>Lewis 酸、親電劑</td></tr>
+<tr><td>C</td><td>2.55</td><td>骨架主體</td></tr>
+<tr><td>N</td><td>3.04</td><td>胺類、鹼、親核劑</td></tr>
+<tr><td>O</td><td>3.44</td><td>醇、醚、羰基</td></tr>
+<tr><td>F</td><td>3.98</td><td>最強電負性，藥物設計常用</td></tr>
+<tr><td>Cl/Br/I</td><td>3.16/2.96/2.66</td><td>離去基、親電劑</td></tr>
+</table>
+
+<div class="box-note">
+<strong>電負度趨勢</strong>
+<p>週期表中，電負度從左到右遞增、從下到上遞增。了解電負度可以預測鍵的極性（δ+ 在電正性原子，δ− 在電負性原子），進而預測哪個原子是親電中心、哪個是親核中心。</p>
+</div>
+
+<h3>外層軌域的重要性</h3>
+<p>第二週期元素（C、N、O、F）只使用 2s 和 2p 軌域成鍵，最多可有八個電子（八隅律）。第三週期以下的元素（P、S、Si）可使用 d 軌域，允許超過八個電子的結構（如 PCl₅、SF₆）。</p>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li>有機化學是研究含碳化合物的化學，分子種類幾乎無限</li>
+<li>碳因位於電負度刻度中央，能與幾乎所有元素形成強共價鍵</li>
+<li>官能基決定分子的化學反應性，是有機化學的組織原則</li>
+<li>有機化學在製藥、材料、農業、食品等工業中不可或缺</li>
+<li>週期表中電負度趨勢決定鍵的極性，進而影響反應機制</li>
+<li>有機化學的兩種語言：<strong>結構</strong>（原子、鍵、軌域）與<strong>反應性</strong>（機制、親核劑、親電劑）</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

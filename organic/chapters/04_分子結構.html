@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第四章：分子結構 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.orbital-diagram{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:20px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.88rem;line-height:2.2;}
+.energy-level{display:flex;align-items:center;gap:12px;margin:4px 0;}
+.el-line{border-top:2px solid #333;width:60px;}
+.el-line.bonding{border-color:var(--accent2);}
+.el-line.antibonding{border-color:#c0392b;border-style:dashed;}
+.el-label{font-family:'Noto Sans TC',sans-serif;font-size:.82rem;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第四章：分子結構</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#atomic-spectra">原子光譜與量子化</a>
+    <a href="#atomic-orbitals">原子軌域</a>
+    <a href="#mo-theory">分子軌域理論</a>
+    <a href="#bonding-antibonding">成鍵與反鍵軌域</a>
+    <a href="#electronegativity">電負度與鍵極性</a>
+    <a href="#hybridization">軌域雜化</a>
+    <a href="#sp3">sp³ 雜化</a>
+    <a href="#sp2">sp² 雜化</a>
+    <a href="#sp">sp 雜化</a>
+    <a href="#any-atom">其他原子的雜化</a>
+    <a href="#carbonyl">羰基的電子結構</a>
+    <a href="#rotation">旋轉與剛性</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="03_測定有機結構.html">← 第三章</a>
+    <a href="05_有機反應.html">第五章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第四章：分子結構</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 4: Structure of Molecules</div>
+
+<p>要理解有機分子的反應性，必須了解電子在分子中的分布方式。本章從量子力學的基本概念出發，建立分子軌域理論和雜化的概念，為後續章節的反應機制分析奠定基礎。</p>
+
+<section id="atomic-spectra">
+<h2>原子光譜與量子化能量</h2>
+<p>19世紀末，物理學家發現原子只在特定波長發出光，形成<strong>線狀光譜</strong>（而非連續光譜）。這說明原子中電子的能量是<strong>量子化</strong>的——只允許特定的離散能量值。</p>
+<p>玻耳（Bohr）提出氫原子模型，電子只能在特定軌道上運動。電子從高能轉跳至低能時，釋放出特定波長的光子：</p>
+<div class="box-derivation">
+<strong>光子能量與波長</strong>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mi>E</mi><mo>=</mo><mi>h</mi><mi>ν</mi><mo>=</mo><mfrac><mrow><mi>h</mi><mi>c</mi></mrow><mi>λ</mi></mfrac></mrow><annotation encoding="application/x-tex">E = h\nu = \frac{hc}{\lambda}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.0576em;">E</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">h</span><span class="mord mathnormal" style="margin-right:0.0637em;">ν</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0574em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3714em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">λ</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord mathnormal">h</span><span class="mord mathnormal">c</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span>
+<p>其中 <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>h</mi></mrow><annotation encoding="application/x-tex">h</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">h</span></span></span></span> = 普朗克常數（6.626×10⁻³⁴ J·s），<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ν</mi></mrow><annotation encoding="application/x-tex">\nu</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal" style="margin-right:0.0637em;">ν</span></span></span></span> = 頻率，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi></mrow><annotation encoding="application/x-tex">\lambda</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6944em;"></span><span class="mord mathnormal">λ</span></span></span></span> = 波長，<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi></mrow><annotation encoding="application/x-tex">c</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.4306em;"></span><span class="mord mathnormal">c</span></span></span></span> = 光速。高能躍遷對應短波長（藍/紫光），低能躍遷對應長波長（紅光）。</p>
+</div>
+<p>量子力學（Schrödinger 方程式）對電子進行更精確的描述：電子的行為具有波動性，其位置由<strong>波函數 ψ</strong> 描述，而 |ψ|² 代表在某位置找到電子的<strong>機率密度</strong>。</p>
+</section>
+
+<section id="atomic-orbitals">
+<h2>原子軌域</h2>
+<p>解 Schrödinger 方程式得到的電子允許狀態稱為<strong>原子軌域（atomic orbitals，AO）</strong>，每個軌域有特定的能量和形狀。</p>
+
+<h3>主要軌域形狀</h3>
+<ul>
+<li><strong>1s 軌域</strong>：球形，最低能量，緊貼原子核</li>
+<li><strong>2s 軌域</strong>：球形但較大，有一個徑向節點（nodal surface），能量高於 1s</li>
+<li><strong>2p 軌域</strong>：啞鈴形，有三個（2p<sub>x</sub>、2p<sub>y</sub>、2p<sub>z</sub>）互相垂直，能量高於 2s；每個 2p 軌域有一個節面通過原子核</li>
+</ul>
+
+<div class="box-note">
+<strong>節點的意義</strong>
+<p>節點（node）是波函數 ψ = 0 的地方，代表電子密度為零的區域。節點數越多，能量越高。2s 有一個徑向節點；2p 有一個角度節點（通過核的平面）。</p>
+</div>
+
+<h3>電子填入規則</h3>
+<ul>
+<li><strong>Aufbau 原則</strong>：電子優先填入能量最低的軌域</li>
+<li><strong>Pauli 不相容原理</strong>：每個軌域最多容納 2 個電子，且自旋相反 (↑↓)</li>
+<li><strong>Hund 規則</strong>：能量相同的軌域（如三個 2p），電子先各填一個（自旋相同），再配對</li>
+</ul>
+
+<div class="box-example">
+<strong>碳原子電子構型（基態）</strong>
+<p>C（6 個電子）：1s² 2s² 2p<sub>x</sub>¹ 2p<sub>y</sub>¹</p>
+<div class="orbital-diagram">
+2p:   [↑ ] [↑ ] [  ]   ← Hund 規則：兩個 2p 各填一個電子
+2s:   [↑↓]
+1s:   [↑↓]
+</div>
+<p>碳有 2 個未配對電子（在 2p<sub>x</sub> 和 2p<sub>y</sub>），理論上只能形成 2 個鍵——但實際甲烷有 4 個等價 C–H 鍵！這就需要雜化理論來解釋。</p>
+</div>
+</section>
+
+<section id="mo-theory">
+<h2>分子軌域理論</h2>
+<p>當兩個原子靠近形成分子時，它們的原子軌域相互作用形成<strong>分子軌域（molecular orbitals，MO）</strong>。基本思想是<strong>線性組合原子軌域（LCAO）</strong>：</p>
+<div class="box-key">
+<strong>LCAO 基本原理</strong>
+<p>n 個原子軌域組合得到 n 個分子軌域（守恆）。軌域組合有兩種方式：</p>
+<ul>
+<li><strong>同相疊加（+）</strong>→ <strong>成鍵軌域（bonding MO）</strong>：兩核之間電子密度增加，能量<em>低於</em>原子軌域</li>
+<li><strong>反相疊加（−）</strong>→ <strong>反鍵軌域（antibonding MO，標記為 *）</strong>：兩核之間有節點，能量<em>高於</em>原子軌域</li>
+</ul>
+</div>
+</section>
+
+<section id="bonding-antibonding">
+<h2>成鍵與反鍵軌域：σ 與 π</h2>
+
+<h3>σ 鍵與 π 鍵</h3>
+<p>根據軌域重疊方式，分子軌域分為：</p>
+<ul>
+<li><strong>σ（sigma）鍵</strong>：軌域沿鍵軸「頭對頭」（end-on）重疊，電子密度沿鍵軸對稱分布；圓柱對稱</li>
+<li><strong>π（pi）鍵</strong>：p 軌域「側對側」（sideways）重疊，電子密度在鍵軸上下；有一個通過鍵軸的節面</li>
+</ul>
+
+<h3>鍵序（Bond Order）</h3>
+<div class="box-derivation">
+<strong>鍵序計算</strong>
+<span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>鍵序</mtext><mo>=</mo><mfrac><mrow><mo stretchy="false">(</mo><mtext>成鍵電子數</mtext><mo stretchy="false">)</mo><mo>−</mo><mo stretchy="false">(</mo><mtext>反鍵電子數</mtext><mo stretchy="false">)</mo></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\text{鍵序} = \frac{(\text{成鍵電子數}) - (\text{反鍵電子數})}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord cjk_fallback">鍵序</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.113em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.427em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">成鍵電子數</span></span><span class="mclose">)</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mopen">(</span><span class="mord text"><span class="mord cjk_fallback">反鍵電子數</span></span><span class="mclose">)</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span>
+<p>鍵序 = 1 → 單鍵；= 2 → 雙鍵；= 3 → 三鍵；= 0 → 不成鍵（分子不穩定，如 He₂）</p>
+</div>
+
+<div class="box-example">
+<strong>典型分子的 MO 分析</strong>
+<table>
+<tr><th>分子</th><th>電子構型（σ/π）</th><th>鍵序</th><th>特點</th></tr>
+<tr><td>H₂</td><td>σ(1s)²</td><td>1</td><td>穩定單鍵</td></tr>
+<tr><td>He₂</td><td>σ(1s)² σ*(1s)²</td><td>0</td><td>不成鍵，He₂ 不存在</td></tr>
+<tr><td>N₂</td><td>…σ² π⁴</td><td>3</td><td>超強三鍵，N≡N 鍵能 945 kJ/mol</td></tr>
+<tr><td>NO</td><td>…σ² π⁴ π*¹</td><td>2.5</td><td>奇電子分子，有未配對電子</td></tr>
+</table>
+</div>
+
+<h3>極性鍵：不等價 MO</h3>
+<p>當兩個不同原子（如 H 和 Cl）形成鍵時，它們的軌域能量不同。電負度較高的原子（Cl）的 AO 能量更低，因此成鍵 MO 更像 Cl 的 AO——電子雲偏向 Cl，形成極性鍵（δ+H–Clδ−）。</p>
+</section>
+
+<section id="electronegativity">
+<h2>電負度與鍵極性</h2>
+<p>電負度（electronegativity）衡量原子吸引共用電子對的能力。電負度差越大，鍵的極性越強：</p>
+<table>
+<tr><th>元素</th><th>電負度 (Pauling)</th></tr>
+<tr><td>Li</td><td>0.98</td></tr>
+<tr><td>Al</td><td>1.61</td></tr>
+<tr><td>B</td><td>2.04</td></tr>
+<tr><td>H</td><td>2.20</td></tr>
+<tr><td>C</td><td>2.55</td></tr>
+<tr><td>N</td><td>3.04</td></tr>
+<tr><td>O</td><td>3.44</td></tr>
+<tr><td>F</td><td>3.98</td></tr>
+</table>
+<div class="box-note">
+<strong>碳的特殊地位</strong>
+<p>碳的電負度（2.55）恰好居中：比氫（2.20）稍強，比氮、氧、鹵素弱。這使碳幾乎能與所有元素形成共價鍵，並具備作為親核劑（與電正性元素鍵合時）或親電劑（與電負性元素鍵合時）的雙重能力。</p>
+</div>
+</section>
+
+<section id="hybridization">
+<h2>軌域雜化的概念</h2>
+<p>單純的 AO 無法解釋甲烷（CH₄）的四個等價 C–H 鍵（每個鍵能均等、鍵角均為 109.5°）。<strong>雜化（hybridization）</strong>是將能量相近的 AO 線性組合成一套新的、等價的<strong>雜化軌域</strong>，以描述成鍵更直觀的模型。</p>
+<div class="box-note">
+<strong>雜化的實質</strong>
+<p>雜化不是自然界中真正發生的過程，而是一種<strong>數學表示方法</strong>。MO 理論給出非等價的電子分布，而雜化提供了一個與 MO 理論<em>等效</em>的直觀圖像，非常適合用來快速分析大分子的成鍵。</p>
+</div>
+
+<h3>快速判斷雜化狀態的規則</h3>
+<p>只需計算每個碳上連接的原子數（稱為「配位數」）：</p>
+<ul>
+<li>連接 <strong>4 個原子</strong>（無 π 鍵）→ <strong>sp³ 雜化</strong>（四面體形，鍵角 109.5°）</li>
+<li>連接 <strong>3 個原子</strong>（有 1 個 π 鍵）→ <strong>sp² 雜化</strong>（平面三角形，鍵角 120°）</li>
+<li>連接 <strong>2 個原子</strong>（有 2 個 π 鍵）→ <strong>sp 雜化</strong>（線形，鍵角 180°）</li>
+</ul>
+</section>
+
+<section id="sp3">
+<h2>sp³ 雜化</h2>
+<p>將 2s + 2p<sub>x</sub> + 2p<sub>y</sub> + 2p<sub>z</sub> 混合，得到 4 個等價的 <strong>sp³ 雜化軌域</strong>，每個含 ¼ 的 s 特性和 ¾ 的 p 特性。</p>
+<ul>
+<li>4 個 sp³ 軌域指向正四面體的 4 個頂角，夾角 109.5°</li>
+<li>每個 sp³ 軌域形狀：一端大（參與成鍵）、一端小（節面後方），比純 p 軌域更有方向性</li>
+</ul>
+<div class="box-example">
+<strong>甲烷（CH₄）：sp³ 成鍵</strong>
+<p>C 的 4 個 sp³ 軌域各與 H 的 1s 軌域重疊，形成 4 個 C–H σ 成鍵軌域（和 4 個對應的 σ* 反鍵軌域）。8 個電子填入 4 個成鍵 σ 軌域，形成 4 個等價的 C–H σ 鍵，鍵角 109.5°。</p>
+</div>
+<div class="box-example">
+<strong>乙烷（C₂H₆）：C–C σ 鍵</strong>
+<p>每個碳各用 3 個 sp³ 軌域與 H 結合，剩餘 1 個 sp³ 軌域互相重疊形成 C–C σ 鍵。σ 鍵是圓柱對稱的，因此乙烷的兩端可以<strong>自由旋轉</strong>（σ 鍵旋轉不損失軌域重疊）。</p>
+</div>
+</section>
+
+<section id="sp2">
+<h2>sp² 雜化</h2>
+<p>將 2s + 2p<sub>y</sub> + 2p<sub>z</sub> 混合（保留 2p<sub>x</sub> 未雜化），得到 3 個等價的 <strong>sp² 雜化軌域</strong>（各含 ⅓ s 特性、⅔ p 特性），加上 1 個未雜化的 2p<sub>x</sub> 軌域。</p>
+<ul>
+<li>3 個 sp² 軌域位於同一平面，夾角 120°（平面三角形）</li>
+<li>未雜化的 2p<sub>x</sub> 垂直於這個平面</li>
+</ul>
+<div class="box-example">
+<strong>乙烯（ethene，C₂H₄）：C=C 雙鍵</strong>
+<p>每個 C 用 2 個 sp² 軌域與 H 結合（形成 C–H σ 鍵），1 個 sp² 軌域與另一個 C 的 sp² 重疊（形成 C–C σ 鍵）。</p>
+<p>剩下的 2 個 2p<sub>x</sub> 軌域（一個在每個 C 上）側向平行重疊，形成 C–C <strong>π 鍵</strong>（1 個 π 成鍵軌域 + 1 個 π* 反鍵軌域）。</p>
+<p>結果：乙烯是平面分子，所有原子在同一平面；鍵角約 120°。</p>
+</div>
+<div class="box-note">
+<strong>π 鍵弱於 σ 鍵</strong>
+<p>p 軌域側向重疊（π 鍵）的效率不如頭對頭重疊（σ 鍵）。C–C π 鍵鍵能約 260 kJ/mol，C–C σ 鍵鍵能約 350 kJ/mol。這就是為什麼雙鍵的總鍵能（約 610 kJ/mol）並不是單鍵的兩倍。</p>
+</div>
+</section>
+
+<section id="sp">
+<h2>sp 雜化</h2>
+<p>將 2s + 2p<sub>z</sub> 混合，得到 2 個等價的 <strong>sp 雜化軌域</strong>（各含 ½ s 特性、½ p 特性），保留 2p<sub>x</sub> 和 2p<sub>y</sub> 未雜化。</p>
+<ul>
+<li>2 個 sp 軌域指向相反方向（線形，180°）</li>
+<li>2 個未雜化的 2p 軌域互相垂直，且都垂直於 sp 軸</li>
+</ul>
+<div class="box-example">
+<strong>乙炔（ethyne，C₂H₂）：C≡C 三鍵</strong>
+<p>每個 C 用 1 個 sp 軌域與 H 結合，另 1 個 sp 軌域與另一個 C 的 sp 重疊（C–C σ 鍵）。</p>
+<p>2p<sub>x</sub> 軌域側向重疊形成 1 個 π 鍵；2p<sub>y</sub> 軌域側向重疊形成另 1 個 π 鍵（兩個 π 鍵互相垂直）。</p>
+<p>結果：乙炔是線形分子（H–C≡C–H，180°）。C≡C 三鍵 = 1σ + 2π。</p>
+</div>
+
+<h3>根據鍵數快速判斷雜化</h3>
+<div class="box-key">
+<strong>不需看 AO，直接數 π 鍵：</strong>
+<ul>
+<li>無 π 鍵 → sp³（如 C–C 單鍵、–OH、–NH₂）</li>
+<li>有 1 個 π 鍵 → sp²（如 C=C、C=O）</li>
+<li>有 2 個 π 鍵 → sp（如 C≡C、C≡N）</li>
+</ul>
+</div>
+</section>
+
+<section id="any-atom">
+<h2>其他原子的雜化</h2>
+<p>雜化概念可應用於任何原子：</p>
+
+<h3>等電子體</h3>
+<p><strong>等電子體（isoelectronic）</strong>：具有相同電子數和鍵結方式的分子/離子，雜化相同。</p>
+<ul>
+<li>BH₄⁻、CH₄、NH₄⁺：都是 sp³，四面體形（均有 8 個成鍵電子）</li>
+<li>BH₃、CH₃⁺（甲基正離子）：都是 sp²，平面三角形，有一個空 p 軌域</li>
+</ul>
+
+<h3>氨（NH₃）</h3>
+<p>氨有 8 個電子（5 來自 N，3 來自 H），可以雜化為 sp³（孤對電子在一個 sp³ 軌域），也可以雜化為 sp²（孤對電子在 p 軌域）。</p>
+<p>實驗測量 H–N–H 鍵角為 107.3°——接近 sp³ 的 109.5° 而非 sp² 的 120°。因此 NH₃ 是 sp³ 雜化，孤對電子在 sp³ 軌域（s 特性多、能量低）中更穩定。</p>
+<div class="box-note">
+<strong>孤對電子的位置影響鍵角</strong>
+<p>NH₃ 的鍵角 (107.3°) 比甲烷 (109.5°) 小，因為孤對電子對比較佔空間，稍微壓縮了 N–H 鍵的夾角。這是 VSEPR 理論的預測，與雜化模型一致。</p>
+</div>
+</section>
+
+<section id="carbonyl">
+<h2>羰基（C=O）的電子結構</h2>
+<p>羰基是有機化學中最重要的官能基。甲醛（H₂C=O）的結構分析：</p>
+<ul>
+<li>C 和 O 都是 sp² 雜化（各有 3 個 sp² 軌域 + 1 個未雜化 2p）</li>
+<li>C–H σ 鍵：C 的 sp² 軌域與 H 的 1s 重疊</li>
+<li>C–O σ 鍵：C 的 sp² 軌域與 O 的 sp² 軌域重疊</li>
+<li>C=O π 鍵：C 的 2p 軌域與 O 的 2p 軌域側向重疊</li>
+<li>O 剩餘 2 個 sp² 軌域：容納 O 的 2 對孤對電子</li>
+</ul>
+
+<h3>電負度的影響：C=O 的極性</h3>
+<p>O 的電負度（3.44）遠高於 C（2.55），因此：</p>
+<ul>
+<li>C=O σ 鍵偏向 O（σ 軌域能量低，更像 O 的 AO）</li>
+<li>C=O π 鍵偏向 O（π 成鍵軌域偏向 O）</li>
+<li>結果：C 端帶部分正電（δ+），O 端帶部分負電（δ−）→ <strong>C=O 偶極矩</strong></li>
+</ul>
+<div class="box-key">
+<strong>C=O 的雙重反應性</strong>
+<ul>
+<li>碳（δ+，C 端 π* 軌域能量低）→ <strong>親電中心</strong>（親核劑攻擊碳）</li>
+<li>氧（δ−，孤對電子能量高）→ <strong>親核中心</strong>（親電劑與氧反應）</li>
+</ul>
+<p>與 C=C 雙鍵相比：烯烴的 π 鍵對稱，是親核劑；羰基的 π* 軌域能量低，是親電劑。</p>
+</div>
+</section>
+
+<section id="rotation">
+<h2>旋轉與剛性</h2>
+
+<h3>雙鍵的剛性</h3>
+<p>要圍繞 C=C 雙鍵旋轉，必須使兩個 p 軌域從平行（π 鍵形成）轉到垂直（π 鍵斷裂）。這需要打破 π 鍵，大約需要 260 kJ/mol 的能量。因此：</p>
+<div class="box-key">
+<strong>烯烴是剛性的，不能繞雙鍵自由旋轉</strong>
+<p>這就是為什麼 cis/trans（Z/E）異構體可以穩定存在。例如：<br>
+• 反丁烯（trans/E-but-2-ene）和順丁烯（cis/Z-but-2-ene）是兩個不同的化合物，不會互相轉化（室溫下）。</p>
+</div>
+
+<div class="box-example">
+<strong>馬來酸與富馬酸：歷史案例</strong>
+<p>馬來酸（maleic acid，順式）和富馬酸（fumaric acid，反式）是 C₄H₄O₄ 的兩個幾何異構體。加熱馬來酸時，它失去水形成馬來酸酐——證明兩個 COOH 在同側（順式）。富馬酸加熱則無此反應。</p>
+</div>
+
+<h3>單鍵的自由旋轉</h3>
+<p>σ 鍵是圓柱對稱的，旋轉不會改變軌域重疊的程度。因此：</p>
+<ul>
+<li>乙烷的 C–C σ 鍵可以自由旋轉：兩端 CH₃ 可相對旋轉</li>
+<li>乙烯是平面剛性分子；乙烷兩端可自由轉動</li>
+<li>這個差異對有機化學的反應性和立體選擇性有重大影響</li>
+</ul>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li>電子能量量子化 → 原子軌域（s、p 形狀）；填入遵循 Aufbau/Pauli/Hund 規則</li>
+<li>LCAO：n 個 AO → n 個 MO（成鍵 + 反鍵）；成鍵 MO 能量低，反鍵 MO 能量高</li>
+<li>σ 鍵：頭對頭重疊，圓柱對稱，可自由旋轉；π 鍵：側向重疊，有節面，旋轉受限</li>
+<li>鍵序 = (成鍵電子 − 反鍵電子) / 2</li>
+<li>電負度決定鍵極性：電負度高的原子帶 δ−，低的帶 δ+</li>
+<li>雜化快速判斷：4 配位=sp³(109.5°)、3 配位=sp²(120°)、2 配位=sp(180°)</li>
+<li>C=O 羰基：sp² 雜化，π 鍵偏向 O（C 端δ+是親電中心）；π* 軌域偏向 C</li>
+<li>烯烴（C=C）因 π 鍵存在而剛性不旋轉 → 幾何異構體（Z/E）穩定存在</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

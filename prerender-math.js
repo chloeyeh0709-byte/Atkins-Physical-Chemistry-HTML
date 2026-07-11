@@ -29,6 +29,11 @@ const files = [
   'chapters/23_複雜反應動力學.html',
   'chapters/24_分子反應動力學.html',
   'chapters/25_固體表面過程.html',
+  'organic/chapters/01_有機化學是什麼.html',
+  'organic/chapters/02_有機結構.html',
+  'organic/chapters/03_測定有機結構.html',
+  'organic/chapters/04_分子結構.html',
+  'organic/chapters/05_有機反應.html',
 ];
 
 function renderDisplay(latex) {

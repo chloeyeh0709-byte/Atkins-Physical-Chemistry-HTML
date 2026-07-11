@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第五章：有機反應 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-key,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+.box-key{background:#f5f0ff;border-left:5px solid #7c4dbd;}
+.box-key strong{color:#4a2a8a;}
+.box-rule{background:#fff2f2;border-left:5px solid #c0392b;}
+.box-rule strong{color:#8a1a0a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.reaction-scheme{background:var(--paper-bg);border:1px solid var(--rule);border-radius:6px;padding:16px 24px;margin:16px 0;font-family:'JetBrains Mono',monospace;font-size:.92rem;line-height:2;overflow-x:auto;}
+.curly-rule{background:#fff8e6;border:2px solid #e67e22;border-radius:6px;padding:16px 20px;margin:16px 0;}
+.curly-rule p{margin:4px 0;}
+.curly-rule strong{color:#8a4a00;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第五章：有機反應</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#reactions">化學反應</a>
+    <a href="#why-react">為什麼分子會反應？</a>
+    <a href="#orbital-overlap">軌域重疊帶動反應</a>
+    <a href="#mechanism">反應機制：電子流動</a>
+    <a href="#homo-lumo">HOMO 與 LUMO</a>
+    <a href="#nucleophiles">親核劑的辨認</a>
+    <a href="#electrophiles">親電劑的辨認</a>
+    <a href="#curly-arrows">彎箭頭表示反應機制</a>
+    <a href="#curly-rules">彎箭頭的規則</a>
+    <a href="#pi-nucleophile">π 鍵作為親核劑</a>
+    <a href="#sigma-nucleophile">σ 鍵作為親核劑</a>
+    <a href="#drawing-mechanisms">自己畫反應機制</a>
+    <a href="#multistep">多步驟機制</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="04_分子結構.html">← 第四章</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第五章：有機反應</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 5: Organic Reactions</div>
+
+<p>大多數分子在靜置時相當穩定。硫酸、氫氧化鈉、水、丙酮在實驗室儲存多年也不會改變。但當這些物質混合，化學反應就可能發生。本章是有機分子反應行為的入門：為何有些分子會反應而有些不會？如何用電荷、軌域和電子流動來理解並預測反應性？</p>
+
+<section id="reactions">
+<h2>化學反應</h2>
+<p>要理解有機化學，需要熟悉兩種語言：</p>
+<ol>
+<li><strong>結構語言</strong>：原子、鍵、軌域（Ch2–Ch4 的內容）</li>
+<li><strong>反應性語言</strong>：反應機制、親核劑、親電劑</li>
+</ol>
+<p>化學是關於<em>動態</em>的學問——如何從舊分子創造新分子。分子因電子的移動而發生反應。</p>
+<div class="box-note">
+<strong>Berthelot（1827–1907）的洞察</strong>
+<p>化學的創造能力——能合成自然界從未存在的全新分子——使其與自然科學和歷史科學截然不同。有機化學家每年合成數百萬種全新化合物。</p>
+</div>
+</section>
+
+<section id="why-react">
+<h2>為什麼分子會反應？</h2>
+
+<h3>並非所有碰撞都導致化學變化</h3>
+<p>分子表面覆蓋著佔據成鍵和非成鍵軌域的電子——表面帶負電。因此大多數分子在碰撞時會互相排斥，像撞球一樣彈開。只有具備足夠能量克服這個靜電排斥的分子對才能反應。這個最低能量需求稱為<strong>活化能（activation energy）</strong>。</p>
+
+<h3>電荷吸引使分子靠近</h3>
+<p>離子之間的靜電吸引可以幫助分子克服電子排斥。但純粹的有機陰離子很少見，更常見的是<strong>偶極-偶極吸引</strong>——帶偶極的試劑（陽離子或陰離子）與有機化合物的偶極相互吸引。</p>
+<div class="box-example">
+<strong>氰化物攻擊甲醛</strong>
+<p>氰化鈉（NaCN）中的氰化物陰離子（⁻CN）被甲醛（HCHO）的正端吸引：</p>
+<div class="reaction-scheme">⁻C≡N  +  H₂C=O  →  HO–CH₂–CN
+（氰化物         甲醛         氰醇）
+← 電荷吸引 →    ← C=O 偶極，C 端δ+ →</div>
+<p>氰化物陰離子（帶負電）被甲醛羰基的 δ+ 碳端吸引，完成反應。</p>
+</div>
+
+<h3>靜電摘要</h3>
+<div class="box-key">
+<strong>分子反應的三種驅動力：</strong>
+<ul>
+<li>大多數有機反應涉及<strong>填充軌域與空軌域之間的相互作用</strong></li>
+<li>許多（但非全部）同時涉及電荷相互作用，幫助克服電子排斥</li>
+<li>少數離子反應完全依靠電荷吸引</li>
+</ul>
+</div>
+</section>
+
+<section id="orbital-overlap">
+<h2>軌域重疊帶動反應</h2>
+<p>即使兩個分子完全不帶電、沒有偶極，只要它們的分子軌域能相互作用，反應就可能發生。</p>
+<div class="box-example">
+<strong>乙烯與溴的反應</strong>
+<p>乙烯（H₂C=CH₂）和溴（Br–Br）都不帶電、無偶極，但它們仍然反應！</p>
+<p>原因：溴分子有一個低能量的空軌域（Br–Br 的 σ* 反鍵軌域），可以接受乙烯 π 鍵中的電子。軌域相互作用克服了靜電排斥，使反應得以進行。</p>
+</div>
+<p>這說明電荷和偶極不是反應的必要條件——軌域重疊本身就可以驅動反應。</p>
+</section>
+
+<section id="mechanism">
+<h2>反應機制：電子流動</h2>
+<p>當一對分子因靜電吸引或軌域重疊而靠近時，電子可以從一個分子移動到另一個分子，形成或斷裂化學鍵。這個過程的詳細描述就是<strong>反應機制（mechanism）</strong>。</p>
+
+<p>在大多數有機反應中，電子從一個分子流向另一個分子：</p>
+<ul>
+<li>接受電子的分子：<strong>親電劑（electrophile，E）</strong>——電子的「愛好者」，用希臘文 philos（愛）+ 電子 = 愛電子者</li>
+<li>提供電子的分子：<strong>親核劑（nucleophile，Nu）</strong>——原子核的「愛好者」，傾向靠近正電荷（原子核）</li>
+</ul>
+
+<div class="box-key">
+<strong>有機反應的核心原則</strong>
+<p>當電子從親核劑流向親電劑時，就形成新鍵：</p>
+<div class="reaction-scheme">親核劑 (Nu)  ──電子流動──→  親電劑 (E 或 E⁺)
+親核劑提供電子；親電劑接受電子。</div>
+</div>
+</section>
+
+<section id="homo-lumo">
+<h2>HOMO 與 LUMO：軌域能量決定反應性</h2>
+<p>填充軌域傾向於能量低；空軌域傾向於能量高。最重要的相互作用發生在：</p>
+<ul>
+<li>親核劑的<strong>最高佔據分子軌域（HOMO，Highest Occupied MO）</strong></li>
+<li>親電劑的<strong>最低未佔據分子軌域（LUMO，Lowest Unoccupied MO）</strong></li>
+</ul>
+
+<div class="box-derivation">
+<strong>為什麼是 HOMO–LUMO 相互作用？</strong>
+<p>當 HOMO 與 LUMO 能量接近時，相互作用最強，能量增益最大（形成新鍵獲得的穩定化能最多）。當兩者能量差距很大時，相互作用弱，反應不易發生。</p>
+<p>因此：<strong>最好的反應是 HOMO 和 LUMO 能量接近的反應。</strong></p>
+</div>
+
+<div class="box-key">
+<strong>HOMO–LUMO 原則：</strong>
+<ul>
+<li>最好的親核劑具有<strong>高能量的 HOMO</strong>（電子容易給出）</li>
+<li>最好的親電劑具有<strong>低能量的 LUMO</strong>（電子容易接受）</li>
+</ul>
+</div>
+
+<p>反應發生的三個必要條件：</p>
+<ol>
+<li>克服電子排斥（靠電荷吸引或軌域重疊）</li>
+<li>有適當能量的軌域相互作用（HOMO 在親核劑，LUMO 在親電劑）</li>
+<li>分子以正確方向碰撞（軌域需要有效重疊）</li>
+</ol>
+</section>
+
+<section id="nucleophiles">
+<h2>親核劑的辨認</h2>
+<p>親核劑是帶有電子對（高能量 HOMO）的分子或離子，能夠提供電子給親電劑。</p>
+
+<h3>類型一：帶孤對電子的中性分子</h3>
+<p>最常見的親核劑帶有<strong>非成鍵孤對電子</strong>：</p>
+<table>
+<tr><th>親核劑</th><th>HOMO</th><th>親核位點</th></tr>
+<tr><td>氨（NH₃）</td><td>N 上的非成鍵 sp³ 軌域</td><td>N</td></tr>
+<tr><td>胺類（R–NH₂、R₂NH）</td><td>N 上的孤對電子</td><td>N</td></tr>
+<tr><td>水（H₂O）</td><td>O 上的孤對電子（sp³）</td><td>O</td></tr>
+<tr><td>醇（R–OH）</td><td>O 上的孤對電子</td><td>O</td></tr>
+<tr><td>三甲基磷（Me₃P）</td><td>P 上的孤對電子（3p，能量較高）</td><td>P</td></tr>
+<tr><td>硫醇（PhSH）</td><td>S 上的孤對電子（3p，能量高）</td><td>S</td></tr>
+</table>
+<div class="box-note">
+<strong>第三週期親核劑更強</strong>
+<p>磷和硫的孤對電子使用 3s/3p 軌域，能量比 N、O 的 2s/2p 高（因屏蔽效應），因此 P 和 S 通常是比 N 和 O 更好的親核劑。</p>
+</div>
+
+<h3>類型二：帶負電荷的陰離子</h3>
+<p>帶負電的物種通常是很好的親核劑（兼有靜電吸引和高能 HOMO）：</p>
+<table>
+<tr><th>陰離子親核劑</th><th>說明</th></tr>
+<tr><td>OH⁻（氫氧根）</td><td>O 上有孤對電子；三個等價孤對對</td></tr>
+<tr><td>Br⁻（溴離子）</td><td>Br 上有孤對電子</td></tr>
+<tr><td>⁻CN（氰化物）</td><td>最重要的碳親核劑；親核位點在碳（C 端 sp 軌域能量高）</td></tr>
+</table>
+<div class="box-note">
+<strong>注意：氰化物攻擊位點</strong>
+<p>氰化物（⁻C≡N）雖然線形，N 和 C 都帶孤對電子，但親核攻擊通常發生在<strong>碳</strong>端——因為碳的 sp 軌域能量（HOMO）高於更電負的氮。</p>
+</div>
+
+<h3>類型三：π 鍵（C=C 雙鍵）</h3>
+<p>π 鍵的電子能量高於 σ 鍵（因側向重疊效率低），因此 <strong>C=C π 鍵可以作為親核劑</strong>的 HOMO。簡單烯烴是弱親核劑，但含有電子推給基團的烯烴親核性更強。</p>
+
+<h3>類型四：σ 鍵（連接電正性原子）</h3>
+<p>當 σ 鍵連接電正性原子（B、Si、Li 等），該 σ 鍵的能量較高，可作為親核劑：</p>
+<ul>
+<li><strong>氫化硼（BH₄⁻）</strong>：B–H σ 鍵能量高（B 電正性），是強親核劑；HOMO 是 B–H σ 軌域</li>
+<li><strong>甲基鋰（LiCH₃）</strong>：C–Li σ 鍵能量高（Li 極電正性）；碳作為親核劑</li>
+</ul>
+
+<div class="box-summary">
+<strong>親核劑提供電子的四種方式（彎箭頭從這裡出發）</strong>
+<ol>
+<li>孤對電子（NH₃、OH⁻ 等）</li>
+<li>負電荷（代表孤對電子）</li>
+<li>C=C π 鍵（π 軌域電子）</li>
+<li>連接電正性原子的 σ 鍵（B–H、Li–C）</li>
+</ol>
+</div>
+</section>
+
+<section id="electrophiles">
+<h2>親電劑的辨認</h2>
+<p>親電劑是帶有空軌域（低能量 LUMO）的分子或離子，能夠接受親核劑提供的電子。</p>
+
+<h3>類型一：帶空原子軌域的物種</h3>
+<table>
+<tr><th>親電劑</th><th>LUMO</th><th>說明</th></tr>
+<tr><td>H⁺（質子）</td><td>空 1s 軌域</td><td>最簡單的親電劑；幾乎所有親核劑都能與 H⁺ 反應</td></tr>
+<tr><td>BH₃（硼烷）</td><td>空 2p 軌域在 B 上</td><td>sp² 雜化，p 軌域完全空</td></tr>
+<tr><td>BF₃（三氟化硼）</td><td>空 p 軌域</td><td>強 Lewis 酸；LUMO 是 B 的 p 軌域</td></tr>
+<tr><td>AlCl₃（三氯化鋁）</td><td>空 p 軌域</td><td>強 Lewis 酸，Friedel-Crafts 反應常用</td></tr>
+</table>
+
+<h3>類型二：低能量反鍵軌域（π* 或 σ*）</h3>
+<p>大多數有機親電劑的 LUMO 是與電負性原子相連的反鍵軌域——電負性原子使反鍵軌域能量降低，更易接受電子：</p>
+
+<table>
+<tr><th>親電劑</th><th>LUMO</th><th>例子</th></tr>
+<tr><td>雙鍵接電負性原子（C=O、C=N）</td><td>π* 軌域（能量低）</td><td>酮、醛、酯、醯胺</td></tr>
+<tr><td>單鍵接電負性原子（H–Cl、C–Br）</td><td>σ* 軌域（能量低）</td><td>HCl、CH₃Br</td></tr>
+<tr><td>Br–Br（溴分子）</td><td>σ* 軌域（大原子，能量低）</td><td>烯烴的親溴反應</td></tr>
+</table>
+
+<div class="box-example">
+<strong>羰基：最重要的有機親電劑</strong>
+<p>羰基化合物（酮、醛、酯、醯胺）的 C=O π* 軌域能量低（因 O 電負），且 C=O 偶極使碳帶部分正電（δ+），雙重增強親電性。幾乎有機化學的每一章都涉及羰基的親核加成或類似反應。</p>
+</div>
+
+<div class="box-note">
+<strong>Br₂ 的特殊性</strong>
+<p>溴雖然略帶電負性，但 4s/4p 軌域大而擴散，重疊效率低 → Br–Br σ 鍵弱，σ* 軌域能量也低 → 容易接受電子 → 溴是強親電劑。相比之下，C–C 鍵的 σ* 能量很高 → C–C 鍵幾乎不是親電劑。</p>
+</div>
+
+<div class="box-summary">
+<strong>親電劑接受電子的四種方式（彎箭頭指向這裡）</strong>
+<ol>
+<li>正電荷（代表空軌域，如 H⁺）</li>
+<li>中性分子帶空原子軌域（BH₃、BF₃）</li>
+<li>雙鍵到電負性原子（C=O 的 π* 軌域）</li>
+<li>單鍵到電負性原子（H–Cl 的 σ* 軌域，Br–Br 的 σ*）</li>
+</ol>
+</div>
+</section>
+
+<section id="curly-arrows">
+<h2>彎箭頭表示反應機制</h2>
+<p><strong>彎箭頭（curly arrow）</strong>是有機化學最強大的符號工具——一支彎曲的箭頭代表一對電子的移動。它簡潔地表達了反應的本質：電子從哪裡來（HOMO），到哪裡去（LUMO）。</p>
+
+<div class="box-key">
+<strong>彎箭頭 vs 直箭頭</strong>
+<ul>
+<li><strong>彎箭頭</strong>：表示<em>電子對的移動</em>（機制箭頭）</li>
+<li><strong>直箭頭</strong>（→）：表示<em>反應方向</em>（方程式箭頭）</li>
+</ul>
+</div>
+
+<h3>最簡單的例子：Cl⁻ + H⁺</h3>
+<div class="reaction-scheme">Cl⁻  +  H⁺  →  H–Cl
+↑ 彎箭頭從 Cl 的負電荷出發（代表孤對），指向 H（空 1s 軌域）
+彎箭頭的尾部 = 電子的來源（HOMO）
+彎箭頭的頭部 = 電子的目的地（LUMO / 新鍵形成處）</div>
+
+<h3>氨攻擊硼烷（NH₃ + BH₃）</h3>
+<div class="reaction-scheme">  H      H                H    H
+  |      |                |    |
+H-N: + B-H  →  H-N⊕-B⊖-H
+  |      |                |    |
+  H      H                H    H
+(孤對 sp³)  (空 p 軌域)
+
+彎箭頭：N 的孤對 → B 的空 p 軌域（形成 N–B σ 鍵）</div>
+<div class="box-note">
+<strong>配位共價鍵（dative bond）</strong>
+<p>氨與硼烷形成的 N–B 鍵，兩個電子都來自 N（氮「贈送」）。這類鍵稱為配位共價鍵，但本質上與普通 σ 鍵無異。氮帶正電，硼帶負電（各少/多一個電子）。</p>
+</div>
+</section>
+
+<section id="curly-rules">
+<h2>彎箭頭的規則</h2>
+
+<div class="curly-rule">
+<strong>彎箭頭必須從代表電子對的符號出發：</strong>
+<p>✓ 負電荷（代表孤對電子）</p>
+<p>✓ 孤對電子（用點或弧線表示）</p>
+<p>✓ π 鍵（從鍵中間出發）</p>
+<p>✓ σ 鍵（從鍵中間出發）</p>
+<p>✗ 正電荷（不代表電子，不能作為箭頭起點）</p>
+</div>
+
+<div class="curly-rule">
+<strong>電荷在每個步驟中必須守恆：</strong>
+<p>起始物的總電荷 = 產物的總電荷</p>
+<p>例：NH₃（0）+ BH₃（0）→ H₃N⁺–BH₃⁻（整體仍為 0）✓</p>
+</div>
+
+<h3>斷鍵的規則</h3>
+<p>當電子流入反鍵軌域（σ* 或 π*）時，相應的鍵會斷裂。需要用<strong>第二條彎箭頭</strong>表示斷裂鍵的電子去向：</p>
+
+<div class="box-example">
+<strong>NH₃ 攻擊 HCl（酸鹼反應）</strong>
+<div class="reaction-scheme">H     H                H    H
+|     |                |    |
+H-N: H-Cl  →  H-N⊕-H  +  Cl⁻
+|                       |
+H                       H
+
+箭頭1：N 孤對 → H（新 N–H σ 鍵形成）
+箭頭2：H–Cl σ 鍵中心 → Cl（H–Cl 鍵斷裂，Cl 獲得電子對）</div>
+<p>注意：第一條箭頭將電子打入 H–Cl 的 σ*，導致 H–Cl 斷裂，所以必須同時畫第二條箭頭。</p>
+</div>
+
+<h3>π 鍵斷裂的規則</h3>
+<p>當親電劑攻擊 π 鍵時（如羰基被親核劑攻擊），π 鍵斷裂，電子移到較電負的原子（O）：</p>
+<div class="box-example">
+<strong>OH⁻ 攻擊羰基</strong>
+<div class="reaction-scheme">        O⊖                    O⊖
+        ‖                      |
+HO⁻ +  C  →  HO–C–           碳負離子中間體
+
+箭頭1：OH⁻ 的負電荷（孤對）→ C 端（LUMO = π* 軌域，C 端）
+箭頭2：C=O π 鍵中心 → O（π 鍵斷裂，O 獲得負電荷）
+結果：C 上形成新 C–O 鍵，原 C=O π 鍵斷裂，O 帶負電</div>
+</div>
+
+<div class="box-rule">
+<strong>彎箭頭健康檢查清單</strong>
+<ul>
+<li>✓ 每條彎箭頭從代表電子對的地方出發</li>
+<li>✓ 箭尾 = 填充軌域（HOMO）：孤對、負電荷、π 鍵、σ 鍵</li>
+<li>✓ 箭頭 = 空軌域（LUMO）或新鍵形成位置</li>
+<li>✓ 每步驟電荷守恆</li>
+<li>✓ C、N、O 不能超過 4 個鍵（八隅律）——若形成新鍵必須同時斷一個鍵</li>
+</ul>
+</div>
+</section>
+
+<section id="pi-nucleophile">
+<h2>π 鍵作為親核劑</h2>
+<p>烯烴的 π 鍵可以作為親核劑的 HOMO，攻擊親電劑。</p>
+<div class="box-example">
+<strong>烯烴 + HBr（親電加成）</strong>
+<p>步驟 1：乙烯的 π 鍵攻擊 HBr 的 H（H 是親電劑，LUMO = H–Br σ*）</p>
+<div class="reaction-scheme">第一步：π 鍵攻擊 H
+H₂C=CH₂  +  H–Br  →  H₃C–CH₂⊕  +  Br⁻
+    ↑                      碳正離子
+    π 鍵出發            (空 p 軌域)
+
+彎箭頭1：π 鍵中心 → H（穿過 H 原子）[新 C–H 鍵形成]
+彎箭頭2：H–Br σ 鍵 → Br [H–Br 鍵斷裂，Br⁻ 離去]</div>
+<p>步驟 2：Br⁻（親核劑）攻擊碳正離子（親電劑，空 p 軌域）</p>
+<div class="reaction-scheme">第二步：Br⁻ 攻擊碳正離子
+Br⁻  +  CH₃–CH₂⊕  →  CH₃–CH₂–Br
+彎箭頭：Br⁻ 的負電荷 → 碳正離子的空 p 軌域</div>
+</div>
+<div class="box-note">
+<strong>碳正離子（carbocation）</strong>
+<p>碳正離子是 sp² 雜化的碳帶正電（6 個電子，空 p 軌域）。它是強親電劑，幾乎所有含孤對電子的分子都能攻擊它。</p>
+</div>
+</section>
+
+<section id="sigma-nucleophile">
+<h2>σ 鍵作為親核劑</h2>
+<p>連接電正性原子的 σ 鍵（如 B–H）可以作為親核劑，提供 σ 鍵電子給親電劑。</p>
+<div class="box-example">
+<strong>NaBH₄ 還原醛酮（σ 鍵親核反應）</strong>
+<div class="reaction-scheme">第一步：B–H σ 鍵攻擊 C=O 的碳（LUMO = π*）
+
+     H                H  O⊖
+     |                |  |
+H₂B-H  +  R₂C=O  →  H₂B⊕  +  R₂C–H
+     ↑
+B–H σ 鍵出發（箭頭從 B–H 中心指向 C）
+同時 C=O π 鍵電子 → O（π 鍵斷裂，O 帶負電）
+
+第二步：烷氧化物中間體在水中接受質子
+R₂C–O⁻  +  H₂O  →  R₂CHOH  +  OH⁻</div>
+</div>
+</section>
+
+<section id="drawing-mechanisms">
+<h2>自己畫反應機制</h2>
+<p>遇到一個新反應，按以下兩步走：</p>
+<ol>
+<li><strong>確定哪些鍵形成、哪些鍵斷裂</strong></li>
+<li><strong>確定哪個分子是親核劑，哪個是親電劑</strong></li>
+</ol>
+<div class="box-example">
+<strong>範例：Ph₃P + MeI（三苯基磷 + 碘甲烷）</strong>
+<div class="reaction-scheme">Ph₃P  +  CH₃–I  →  Ph₃P⊕–CH₃  +  I⁻
+
+分析：
+• 形成 P–C 新鍵（P 是親核劑，C 是親電中心）
+• 斷裂 C–I 鍵（I 是離去基）
+• P 有孤對電子（高能 HOMO）→ P 是親核劑
+• CH₃–I 的 C–I σ* 能量低（I 電負）→ CH₃I 是親電劑
+
+彎箭頭1：P 孤對 → C（新 P–C 鍵形成）
+彎箭頭2：C–I 鍵中心 → I（C–I 鍵斷裂，I⁻ 離去）</div>
+</div>
+
+<h3>重要警告：碳不能有五個鍵！</h3>
+<div class="box-rule">
+<strong>B、C、N、O 最多四個鍵</strong>
+<p>如果你在不帶電的 C（或 H、N、O）上形成新鍵，必須同時斷裂一個既有的鍵——否則碳就有五個鍵（10 個電子），這在 2s/2p 軌域中是不可能的。</p>
+<p>錯誤：Ph₃P 直接加到 CH₃I，如果不斷 C–I 鍵，得到五鍵碳 ✗</p>
+<p>正確：P 攻擊 C 的同時，C–I 鍵斷裂 ✓</p>
+</div>
+</section>
+
+<section id="multistep">
+<h2>多步驟機制</h2>
+<p>許多有機反應需要多個步驟才能完成。每一步都是獨立的親核劑–親電劑反應，必須逐步畫出。</p>
+
+<div class="box-example">
+<strong>氰化物加成到乙醛（多步驟）</strong>
+<div class="reaction-scheme">反應：CH₃CHO + NaCN → CH₃CH(OH)CN
+
+步驟1：⁻CN 攻擊 C=O 的碳（親核加成）
+          O⊖  CN
+⁻CN + CH₃-CHO → CH₃-CH⟨    （烷氧陰離子中間體）
+         |
+彎箭頭1：CN⁻ 負電荷 → C（新 C–C 鍵形成）
+彎箭頭2：C=O π 鍵 → O（π 鍵斷裂，O 帶負電）
+
+步驟2：O⁻ 從水中摘取質子
+⁻O–CH(CH₃)CN + H₂O → HO–CH(CH₃)CN + OH⁻
+彎箭頭1：O⁻ → H（新 O–H 鍵）
+彎箭頭2：O–H 鍵（水）→ O（O–H 斷裂，OH⁻ 離去）</div>
+</div>
+
+<div class="box-example">
+<strong>乙醇在酸性條件下形成二乙醚（更複雜的多步驟）</strong>
+<div class="reaction-scheme">2 EtOH + H⁺（酸催化）→ Et–O–Et（二乙醚）+ H₂O
+
+步驟1：OH 的孤對攻擊 H⁺（質子化）
+EtOH + H⁺ → EtOH₂⁺（氧鎓離子）
+彎箭頭：O 孤對 → H⁺
+
+步驟2：第二個乙醇的 O 攻擊氧鎓離子的 C（C–O σ* 能量低）
+EtOH + EtOH₂⁺ → Et–O⊕–Et–OH₂⁺ 中間體（並排去水）
+→ 最終脫質子得到 Et–O–Et</div>
+</div>
+
+<h3>自己畫機制的八步指南</h3>
+<ol>
+<li>按 Ch2 的規則畫出清晰的試劑結構（確認溶劑條件：鹼性？酸性？）</li>
+<li>比較起始物與產物：哪些鍵形成了？哪些鍵斷裂了？有無原子加入/離去？</li>
+<li>辨識所有親核中心（孤對、負電荷、π 鍵、電正性 σ 鍵）</li>
+<li>辨識所有親電中心（空軌域、正電荷、C=O π*、C–X σ*）</li>
+<li>組合兩個最可能的中心，畫出彎箭頭（從親核到親電）</li>
+<li>檢查：有無原子超過 4 個鍵？若有，同步斷一個鍵</li>
+<li>寫出步驟產物；驗證電荷守恆；若非最終產物，繼續重複步驟 3–6</li>
+<li>重複直至得到穩定的最終產物</li>
+</ol>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li>分子反應需要克服<strong>活化能</strong>；驅動力包括靜電吸引和軌域重疊</li>
+<li>有機反應 = 電子從<strong>親核劑</strong>（HOMO，高能填充軌域）流向<strong>親電劑</strong>（LUMO，低能空軌域）</li>
+<li>最好的反應：HOMO（親核劑）與 LUMO（親電劑）能量接近</li>
+<li>親核劑 HOMO 可以是：孤對電子、負電荷、C=C π 鍵、連電正性原子的 σ 鍵</li>
+<li>親電劑 LUMO 可以是：空原子軌域（H⁺、BH₃）、C=O π* 軌域、C–X σ* 軌域</li>
+<li><strong>彎箭頭</strong>：尾部 = HOMO（電子來源），頭部 = LUMO（電子目的地）；每步電荷守恆</li>
+<li>C、N、O 最多 4 個鍵——形成新鍵必須同步斷舊鍵</li>
+<li>彎箭頭是有機化學最重要的符號工具，貫穿全書所有章節</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三章：測定有機結構 | Clayden 有機化學</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --sidebar-bg:#22282f; --sidebar-fg:#cfd6dd; --sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60; --accent2:#2e6f9e;
+  --main-bg:#faf6ee; --paper-bg:#fffdf8; --ink:#2b2520; --rule:#e2d8c5;
+}
+*{box-sizing:border-box;}
+body{margin:0;font-family:'Noto Serif TC',serif;background:var(--main-bg);color:var(--ink);line-height:1.9;}
+a{color:var(--accent2);}
+#sidebar{position:fixed;top:0;left:0;width:260px;height:100vh;background:var(--sidebar-bg);color:var(--sidebar-fg);overflow-y:auto;z-index:100;display:flex;flex-direction:column;transition:transform .25s ease;}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c47;}
+#sidebar-header .book-label{font-size:.7rem;color:var(--sidebar-fg-dim);font-family:'Noto Sans TC',sans-serif;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+#sidebar-header h2{margin:0;font-size:.95rem;font-family:'Noto Sans TC',sans-serif;font-weight:700;color:#fff;line-height:1.4;}
+#toc{padding:16px 0 40px;}
+#toc a{display:block;padding:7px 20px;font-size:.82rem;font-family:'Noto Sans TC',sans-serif;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:color .15s,border-color .15s;line-height:1.45;}
+#toc a:hover{color:var(--sidebar-fg);border-left-color:#555f6b;}
+#toc a.active{color:#fff;border-left-color:var(--accent);}
+#toc .toc-section{padding:12px 20px 4px;font-size:.68rem;color:#555f6b;letter-spacing:.1em;text-transform:uppercase;font-family:'Noto Sans TC',sans-serif;}
+#content{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+#menu-btn{display:none;position:fixed;top:14px;left:14px;z-index:200;background:var(--sidebar-bg);color:#fff;border:none;border-radius:6px;padding:8px 14px;font-size:.85rem;font-family:'Noto Sans TC',sans-serif;cursor:pointer;}
+h1{font-family:'Noto Sans TC',sans-serif;font-size:2rem;font-weight:700;color:#1a1a1a;margin:0 0 8px;line-height:1.3;}
+.chapter-meta{font-family:'Noto Sans TC',sans-serif;font-size:.85rem;color:#8a7a5e;margin-bottom:48px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+h2{font-family:'Noto Sans TC',sans-serif;font-size:1.35rem;font-weight:700;color:#1a4a2e;margin:48px 0 16px;padding-top:8px;border-bottom:2px solid var(--rule);padding-bottom:8px;}
+h3{font-family:'Noto Sans TC',sans-serif;font-size:1.05rem;font-weight:700;color:#2b2520;margin:28px 0 10px;}
+p{margin:0 0 16px;}
+.box-note,.box-example,.box-selftest,.box-derivation,.box-summary,.box-rule{border-radius:6px;padding:18px 22px;margin:24px 0;}
+.box-note{background:#fff8e6;border-left:5px solid #e67e22;}
+.box-note strong{color:#b7510a;}
+.box-example{background:#eaf5ea;border-left:5px solid #27ae60;}
+.box-example strong{color:#1a6b3a;}
+.box-selftest{background:#eaf3fb;border-left:5px solid #2e6f9e;}
+.box-selftest strong{color:#1a4a6b;}
+.box-derivation{background:#fdfaf2;border:2px dashed #c9a84c;padding:16px 20px;}
+.box-derivation strong{color:#8a6a0a;}
+.box-summary{background:#f0f4ff;border-left:5px solid #5b6fbd;}
+.box-summary strong{color:#2b3a8a;}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:.9rem;}
+th{background:#3a4a3e;color:#fff;padding:10px 14px;text-align:left;font-family:'Noto Sans TC',sans-serif;}
+td{padding:9px 14px;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+.spectrum-bar{display:flex;height:32px;border-radius:4px;overflow:hidden;margin:12px 0;font-size:.78rem;font-family:'Noto Sans TC',sans-serif;}
+.spectrum-bar div{display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;}
+.s-xh{background:#c0392b;flex:2;}
+.s-triple{background:#8e44ad;flex:1.5;}
+.s-double{background:#2980b9;flex:2;}
+.s-fp{background:#27ae60;flex:4.5;}
+@media(max-width:900px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #content{margin-left:0;padding:24px 20px 60px;}
+  #menu-btn{display:block;}
+  h1{font-size:1.5rem;}
+}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三章：測定有機結構</h2>
+  </div>
+  <div id="toc">
+    <div class="toc-section">本章目錄</div>
+    <a href="#xray">X 射線晶體學</a>
+    <a href="#ms">質譜法 (MS)</a>
+    <a href="#c13nmr">¹³C 核磁共振</a>
+    <a href="#h1nmr">¹H 核磁共振</a>
+    <a href="#ir">紅外光譜 (IR)</a>
+    <a href="#dbe">不飽和度 DBE</a>
+    <a href="#combined">綜合結構解析</a>
+    <a href="#summary">本章總結</a>
+    <div class="toc-section">其他章節</div>
+    <a href="../index.html">← 返回目錄</a>
+    <a href="02_有機結構.html">← 第二章</a>
+    <a href="04_分子結構.html">第四章 →</a>
+  </div>
+</nav>
+
+<main id="content">
+<h1>第三章：測定有機結構</h1>
+<div class="chapter-meta">Clayden's Organic Chemistry, 2nd Edition &nbsp;·&nbsp; Chapter 3: Determining Organic Structures</div>
+
+<p>現代有機化學家合成一個新化合物後，必須證明其結構。本章介紹四種主要分析技術，它們互補使用，可以確定有機分子的完整結構。</p>
+
+<section id="xray">
+<h2>X 射線晶體學</h2>
+<p>X 射線晶體學是直接觀測分子三維結構的黃金標準。當 X 射線穿過結晶固體，被規律排列的原子衍射，從衍射圖案可以重建電子密度，進而確定所有原子的位置。</p>
+<div class="box-note">
+<strong>X 射線晶體學的特點</strong>
+<ul>
+<li>可以直接確定所有原子位置（包括相對立體化學）</li>
+<li>需要長出適合衍射的單晶——這有時很難做到</li>
+<li>給出的是<strong>固態結構</strong>，溶液中的構型可能不同</li>
+<li>適合確定複雜天然產物的完整三維結構</li>
+</ul>
+</div>
+<p>實際上，大多數有機結構鑑定不使用 X 射線（因需結晶），而靠譜學方法（MS + NMR + IR）在溶液中完成。</p>
+</section>
+
+<section id="ms">
+<h2>質譜法 (Mass Spectrometry, MS)</h2>
+<p>質譜法測量分子的<strong>質量與電荷比 (m/z)</strong>，提供分子量和分子式資訊，以及片段化模式（碎片峰）幫助推斷結構。</p>
+
+<h3>游離方法</h3>
+<table>
+<tr><th>方法</th><th>英文縮寫</th><th>特點</th><th>適用對象</th></tr>
+<tr><td>電子游離</td><td>EI</td><td>硬游離，產生大量碎片</td><td>揮發性小分子</td></tr>
+<tr><td>化學游離</td><td>CI</td><td>軟游離，主要給 [M+H]⁺</td><td>揮發性中等分子</td></tr>
+<tr><td>電灑游離</td><td>ESI</td><td>最軟，可產生多電荷離子</td><td>生物大分子（蛋白質、DNA）</td></tr>
+</table>
+
+<h3>分子離子峰與同位素峰</h3>
+<p>質譜中最重要的峰是<strong>分子離子峰 (M⁺)</strong>，給出分子量。由於天然同位素的存在，M⁺ 旁邊會出現 (M+1)⁺、(M+2)⁺ 等同位素峰：</p>
+<div class="box-example">
+<strong>溴的同位素特徵</strong>
+<p>⁷⁹Br（50.7%）和 ⁸¹Br（49.3%）幾乎等比例存在。含一個 Br 的化合物，M⁺ 和 (M+2)⁺ 峰強度比約為 1:1；含兩個 Br 則比為 1:2:1。這是判斷分子含 Br 的特征指紋。</p>
+<p>氯：³⁵Cl（75.5%）/ ³⁷Cl（24.5%）→ M⁺:(M+2)⁺ ≈ 3:1</p>
+</div>
+
+<h3>高分辨率質譜（High-Resolution MS）</h3>
+<p>精確測量 m/z（精度至 0.001 Da 以上）可以區分相同標稱質量但不同分子式的化合物，直接給出<strong>精確分子式</strong>：</p>
+<div class="box-example">
+<strong>精確質量範例</strong>
+<p>CO、C₂H₄、N₂ 標稱質量都是 28，但精確質量不同：</p>
+<ul>
+<li>CO：27.9949</li>
+<li>C₂H₄：28.0313</li>
+<li>N₂：28.0061</li>
+</ul>
+<p>高分辨 MS 可以明確區分，直接確定分子式。</p>
+</div>
+</section>
+
+<section id="c13nmr">
+<h2>¹³C 核磁共振（¹³C NMR）</h2>
+<p>¹³C NMR 利用 ¹³C 原子核的磁共振信號，提供分子中不同碳原子的化學環境資訊。</p>
+
+<h3>化學位移 δ</h3>
+<p>化學位移（chemical shift，δ）以 ppm 為單位，以四甲基矽烷（TMS，δ = 0 ppm）為參考標準。δ 越大（向低場偏移），代表該碳受到更強的<strong>去屏蔽效應</strong>（周圍電子密度低）。</p>
+
+<table>
+<tr><th>碳的類型</th><th>δ 範圍 (ppm)</th></tr>
+<tr><td>烷基碳 (sp³, C–C, C–H)</td><td>0–50</td></tr>
+<tr><td>連氧烷基碳 (C–O, C–N)</td><td>50–90</td></tr>
+<tr><td>炔碳 (C≡C)</td><td>70–100</td></tr>
+<tr><td>烯碳 / 芳碳 (C=C, Ar)</td><td>100–160</td></tr>
+<tr><td>羰基碳–酮、醛 (C=O)</td><td>190–220</td></tr>
+<tr><td>羰基碳–酸、酯、醯胺</td><td>160–180</td></tr>
+</table>
+
+<div class="box-note">
+<strong>TMS 與 δ 刻度</strong>
+<p>¹³C NMR 的化學位移：δ = 0 ppm 定義為 TMS（四甲基矽烷）的碳信號。信號出現在 0 ppm 右側（高場）表示屏蔽效應強；出現在左側（低場）表示去屏蔽效應強，電子密度低。</p>
+</div>
+
+<h3>¹³C NMR 的特點</h3>
+<ul>
+<li>每種化學環境不同的碳給出<strong>一個峰</strong></li>
+<li>峰的數目 = 分子中化學不等價碳的種類數（對稱性影響）</li>
+<li>DEPT 實驗可區分 CH₃、CH₂、CH、C（四季碳）</li>
+<li>¹³C 天然豐度僅 1.1%，靈敏度低，但可提供所有碳的資訊</li>
+</ul>
+
+<div class="box-selftest">
+<strong>¹³C NMR 練習</strong>
+<p>乙酸乙酯（CH₃COOCH₂CH₃）有幾種不等價碳？答：4 種（CH₃CO 的 CH₃、羰基 C=O、O–CH₂、末端 CH₃），應出現 4 個 ¹³C 峰。</p>
+</div>
+</section>
+
+<section id="h1nmr">
+<h2>¹H 核磁共振（¹H NMR）</h2>
+<p>¹H NMR 是有機結構鑑定最常用的技術。¹H 原子核（質子）的天然豐度接近 100%，靈敏度高。</p>
+
+<h3>¹H 化學位移範圍</h3>
+<table>
+<tr><th>質子類型</th><th>δ 範圍 (ppm)</th></tr>
+<tr><td>TMS（參考標準）</td><td>0</td></tr>
+<tr><td>烷基 CH₃, CH₂, CH</td><td>0.5–3.5</td></tr>
+<tr><td>烯丙基 –CH₂– 鄰接 C=C</td><td>1.5–2.5</td></tr>
+<tr><td>炔基末端 ≡C–H</td><td>2.0–3.5</td></tr>
+<tr><td>氧鄰接 –O–CH–</td><td>3.3–5.0</td></tr>
+<tr><td>烯基 C=C–H</td><td>4.5–6.5</td></tr>
+<tr><td>芳基 Ar–H</td><td>6.5–8.5</td></tr>
+<tr><td>醛基 –CHO</td><td>9.4–10.0</td></tr>
+<tr><td>羧酸 –COOH</td><td>10–12</td></tr>
+</table>
+
+<h3>¹H NMR 的三個關鍵資訊</h3>
+<ol>
+<li><strong>化學位移</strong>：判斷質子所處的化學環境（官能基類型）</li>
+<li><strong>積分面積</strong>：峰面積正比於該類質子的數目</li>
+<li><strong>偶合裂分（coupling）</strong>：鄰近的非等價質子使信號裂分（n+1 規則：n 個鄰位 H 使信號裂分為 n+1 條線）；偶合常數 J 反映距離和幾何關係</li>
+</ol>
+
+<div class="box-example">
+<strong>乙醇的 ¹H NMR 分析</strong>
+<p>CH₃–CH₂–OH</p>
+<ul>
+<li>CH₃（3H，δ ≈ 1.2 ppm）：與相鄰 CH₂ 的 2H 偶合 → 裂分為三重峰 (triplet)</li>
+<li>CH₂（2H，δ ≈ 3.7 ppm）：與相鄰 CH₃ 的 3H 偶合 → 裂分為四重峰 (quartet)</li>
+<li>OH（1H，δ ≈ 2.6 ppm）：寬峰（氫鍵交換快，偶合消失）</li>
+</ul>
+</div>
+</section>
+
+<section id="ir">
+<h2>紅外光譜 (IR)</h2>
+<p>紅外光譜偵測分子的振動（伸縮振動、彎曲振動）。不同的化學鍵在特定波數（wavenumber，cm⁻¹）吸收紅外光，形成特徵吸收峰。</p>
+
+<h3>IR 光譜的四大區域</h3>
+<div class="spectrum-bar">
+  <div class="s-xh">X–H 伸縮<br>4000–2500</div>
+  <div class="s-triple">三鍵<br>2500–2000</div>
+  <div class="s-double">雙鍵<br>2000–1500</div>
+  <div class="s-fp">指紋區<br>1500–400</div>
+</div>
+
+<table>
+<tr><th>官能基</th><th>振動類型</th><th>波數 (cm⁻¹)</th><th>特徵</th></tr>
+<tr><td>O–H（醇）</td><td>伸縮</td><td>3200–3600</td><td>寬、強（氫鍵）</td></tr>
+<tr><td>N–H</td><td>伸縮</td><td>3100–3500</td><td>尖（伯胺雙峰）</td></tr>
+<tr><td>C–H（sp³）</td><td>伸縮</td><td>2850–2960</td><td>幾乎所有有機物都有</td></tr>
+<tr><td>C–H（醛 –CHO）</td><td>伸縮</td><td>~2720（雙峰）</td><td>特徵性</td></tr>
+<tr><td>C≡N</td><td>伸縮</td><td>2200–2260</td><td>強、尖</td></tr>
+<tr><td>C≡C</td><td>伸縮</td><td>2100–2260</td><td>中等（末端炔強）</td></tr>
+<tr><td>C=O（酮/醛）</td><td>伸縮</td><td>1705–1730</td><td>強、尖——最重要吸收</td></tr>
+<tr><td>C=O（酯）</td><td>伸縮</td><td>1735–1750</td><td>高波數</td></tr>
+<tr><td>C=O（醯胺）</td><td>伸縮</td><td>1630–1680</td><td>低波數</td></tr>
+<tr><td>C=C（烯）</td><td>伸縮</td><td>1620–1680</td><td>中等</td></tr>
+</table>
+
+<div class="box-note">
+<strong>IR 最重要的原則</strong>
+<p>羰基 C=O 的伸縮振動（~1700 cm⁻¹附近的強吸收）是 IR 中最容易辨認、也最有診斷價值的峰。具體波數受取代基影響：連接到更多電負性基團（酯 > 酮 > 醯胺）使 C=O 伸縮頻率升高。</p>
+</div>
+</section>
+
+<section id="dbe">
+<h2>不飽和度（DBE）計算</h2>
+<p>不飽和度（degrees of unsaturation，DBE），又稱雙鍵等效數（double bond equivalents），計算分子中環和 π 鍵的總數。</p>
+<div class="box-derivation">
+<strong>DBE 計算公式</strong>
+<p>對分子式 C<sub>n</sub>H<sub>m</sub>N<sub>p</sub>O<sub>q</sub>X<sub>r</sub>（X = 鹵素）：</p>
+<p><span class="katex-display"><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block"><semantics><mrow><mtext>DBE</mtext><mo>=</mo><mfrac><mrow><mn>2</mn><mi>n</mi><mo>+</mo><mn>2</mn><mo>+</mo><mi>p</mi><mo>−</mo><mi>m</mi><mo>−</mo><mi>r</mi></mrow><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">\text{DBE} = \frac{2n + 2 + p - m - r}{2}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord text"><span class="mord">DBE</span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:2.0074em;vertical-align:-0.686em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.3214em;"><span style="top:-2.314em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.677em;"><span class="pstrut" style="height:3em;"></span><span class="mord"><span class="mord">2</span><span class="mord mathnormal">n</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">p</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal">m</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222em;"></span><span class="mord mathnormal" style="margin-right:0.0278em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.686em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span></span></p>
+<p>氧和硫不影響 DBE（O、S 不計入）。每個環或 π 鍵貢獻 1 個 DBE；苯環貢獻 4（3個雙鍵 + 1個環）。</p>
+</div>
+
+<div class="box-example">
+<strong>DBE 計算範例</strong>
+<ul>
+<li>苯（C₆H₆）：DBE = (2×6 + 2 − 6)/2 = 8/2 = 4（3 個雙鍵 + 1 個環）✓</li>
+<li>乙醇（C₂H₆O）：DBE = (2×2 + 2 − 6)/2 = 0（無不飽和度）✓</li>
+<li>萘（C₁₀H₈）：DBE = (2×10 + 2 − 8)/2 = 14/2 = 7（5個雙鍵 + 2個環）✓</li>
+<li>C₅H₉N：DBE = (2×5 + 2 + 1 − 9)/2 = 5/2 = 2.5 → 不是整數，說明分子式有誤；N 計入應為 +p 而非 −p</li>
+</ul>
+</div>
+</section>
+
+<section id="combined">
+<h2>綜合結構解析</h2>
+<p>實際工作中，結構鑑定是將四種技術的資訊整合起來的過程：</p>
+
+<div class="box-example">
+<strong>綜合解析流程</strong>
+<ol>
+<li><strong>先看 MS</strong>：確定分子量和分子式（高分辨 MS 直接給分子式）→ 計算 DBE</li>
+<li><strong>看 IR</strong>：確認或排除主要官能基（有無 C=O？有無 O–H？有無 N–H？）</li>
+<li><strong>看 ¹³C NMR</strong>：確定碳的種類和數目（烷/烯/芳/羰基碳）</li>
+<li><strong>看 ¹H NMR</strong>：確定質子環境、數目和相互連結（偶合常數）</li>
+<li><strong>拼圖</strong>：綜合所有資訊提出可能結構，驗證是否自洽</li>
+</ol>
+</div>
+
+<div class="box-selftest">
+<strong>自我測驗：結構解析</strong>
+<p>分子式 C₃H₆O，DBE = 1。IR 顯示 ~1715 cm⁻¹ 強吸收（C=O，無 O–H）。¹H NMR 顯示僅有一個信號（6H 單峰）。</p>
+<p>分析：DBE = 1 → 一個 C=O 或一個環；IR 確認 C=O 為酮或醛（無 O–H 排除醇）；¹H NMR 一個 6H 單峰 → 分子高度對稱，兩個相同的 CH₃ 無鄰位 H 可偶合。</p>
+<p>答案：丙酮（acetone，CH₃COCH₃）✓</p>
+</div>
+</section>
+
+<section id="summary">
+<h2>本章總結</h2>
+<div class="box-summary">
+<strong>核心概念回顧</strong>
+<ul>
+<li><strong>MS</strong>：確定分子量和分子式；同位素峰識別 Cl/Br；高分辨 MS 直接確定精確分子式</li>
+<li><strong>¹³C NMR</strong>：每種不等價碳給一個峰；δ 範圍識別碳的類型（sp³/sp²/C=O）</li>
+<li><strong>¹H NMR</strong>：化學位移、積分（質子數比）、偶合裂分（n+1 規則）三要素</li>
+<li><strong>IR</strong>：四區域；C=O 伸縮（1600–1750 cm⁻¹）是最重要特征峰；O–H / N–H 在 3000–3600 cm⁻¹</li>
+<li><strong>DBE</strong> = (2C + 2 + N − H − X) / 2；每個環或 π 鍵 +1</li>
+<li>實際結構解析需要 MS + IR + NMR 互相印證，缺一不可</li>
+</ul>
+</div>
+</section>
+</main>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

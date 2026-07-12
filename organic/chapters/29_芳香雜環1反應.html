@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十九章：芳香雜環（一）— 反應</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十九章<br>芳香雜環（一）— 反應</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">芳香雜環概論</a>
+    <a href="#pyridine">吡啶（Pyridine）</a>
+    <a href="#pyridine-eas" class="toc-sub">吡啶的 EAS</a>
+    <a href="#pyridine-snar" class="toc-sub">吡啶的親核取代</a>
+    <a href="#pyridone" class="toc-sub">吡啶酮</a>
+    <a href="#pyridine-noxide" class="toc-sub">吡啶 N-氧化物</a>
+    <a href="#pyrrole">吡咯（Pyrrole）</a>
+    <a href="#pyrrole-eas" class="toc-sub">吡咯的 EAS</a>
+    <a href="#furan">呋喃（Furan）</a>
+    <a href="#thiophene">噻吩（Thiophene）</a>
+    <a href="#lithiation">呋喃/噻吩的金屬化</a>
+    <a href="#pyrrole-anion">吡咯陰離子的反應</a>
+    <a href="#imidazole">咪唑（Imidazole）</a>
+    <a href="#triazoles">三唑與四唑</a>
+    <a href="#indole">吲哚（Indole）</a>
+    <a href="#indole-eas" class="toc-sub">吲哚的 EAS</a>
+    <a href="#hobt">HOBt — 縮肽試劑</a>
+    <a href="#diazines">二嗪類</a>
+    <a href="#quinoline">喹啉與異喹啉</a>
+    <a href="#purines">嘌呤類</a>
+    <a href="#mixed-heteroatoms">混合雜原子環</a>
+    <a href="#porphyrin">卟啉類</a>
+    <a href="#folic-acid">葉酸與磺胺藥</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十九章</div>
+    <h1>芳香雜環（一）— 反應</h1>
+    <div class="subtitle">Aromatic Heterocycles 1: Reactions</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">芳香雜環概論</h2>
+  <p><strong>雜環（heterocycle）</strong>是含有非碳原子（N、O、S 等）的環狀化合物。<strong>芳香雜環</strong>符合 Hückel 4n+2 規則，具有環狀共軛 π 電子系統。根據雜原子對芳香性的貢獻方式，雜環分為兩大類：</p>
+
+  <div class="box-key">
+    <strong>兩大類芳香雜環</strong>
+    <table>
+      <tr><th>類型</th><th>代表</th><th>雜原子孤對電子</th><th>反應性</th></tr>
+      <tr><td>吡啶型（pyridine-type）</td><td>吡啶、喹啉</td><td>不在 π 系統中（平面外）</td><td>親電芳香取代較弱（缺電子）</td></tr>
+      <tr><td>吡咯型（pyrrole-type）</td><td>吡咯、呋喃、噻吩</td><td>參與 π 系統（貢獻兩個 π 電子）</td><td>親電芳香取代活潑（富電子）</td></tr>
+    </table>
+    <p>等效地：「用 N 取代 C-H」得到吡啶型；「用 N 取代 C=C（N 的孤對電子在 π 中）」得到吡咯型。</p>
+  </div>
+
+  <!-- ===== PYRIDINE ===== -->
+  <h2 id="pyridine">吡啶（Pyridine）</h2>
+  <p>吡啶（C₅H₅N）是最重要的含氮六員芳香雜環。N 原子的孤對電子在平面內（sp²雜化），不參與 π 系統，故吡啶是良好的鹼（pKₐ(BH⁺) = 5.5）且是<strong>親核劑</strong>（在 N 上）。</p>
+
+  <div class="box-note">
+    <strong>DMAP（4-二甲胺基吡啶）</strong>
+    <p>DMAP 是吡啶的強親核性衍生物（4 位有 NMe₂ 供電子基），常用作醯化反應的催化劑（親核催化）。</p>
+  </div>
+
+  <h3 id="pyridine-eas">吡啶的親電芳香取代（EAS）</h3>
+  <p>吡啶的 EAS 非常困難，原因：</p>
+  <ol>
+    <li>N 原子的電子吸引效應使苯環缺電子（特別是 2、4 位）</li>
+    <li>親電試劑容易在 N 上先發生親電攻擊，使環帶正電，更難進行 EAS</li>
+    <li>EAS 中間體（arenium ion，Wheland 中間體）能量高</li>
+  </ol>
+  <p>吡啶本身幾乎不進行 EAS。要在吡啶環上進行 EAS，必須先在<strong>3 位</strong>引入強給電子基（如 NH₂、OMe）來活化環。</p>
+
+  <div class="reaction-scheme">
+3-胺基吡啶的 EAS：
+    NH₂              NH₂
+     |    Br₂/H₂O     |  Br
+N   (3位給電子)  →   N   (取代發生在富電子位置)
+  吡啶 EAS 需活化</div>
+
+  <h3 id="pyridine-snar">吡啶的親核芳香取代（SNAr）</h3>
+  <p>吡啶的 2 位和 4 位對<strong>親核取代</strong>活潑（N 穩定 Meisenheimer 中間體）：</p>
+
+  <div class="reaction-scheme">
+2-氯吡啶 + NaNH₂  →  2-胺基吡啶  (2 位親核取代)
+4-氯吡啶 + NaOMe  →  4-甲氧基吡啶  (4 位親核取代)
+
+機制：親核劑攻擊 2/4 位 → Meisenheimer 中間體（N 穩定）→ 消除 Cl⁻</div>
+
+  <h3 id="pyridone">吡啶酮（Pyridone）</h3>
+  <p>2-羥基吡啶存在互變異構平衡，但以<strong>2(1H)-吡啶酮（酰胺型）</strong>為主（類似醯胺，穩定），而非 2-羥基吡啶（烯醇型）：</p>
+
+  <div class="reaction-scheme">
+        OH                  O
+        |                   ‖
+    N               H-N
+2-羥基吡啶（烯醇型）  ⇌  2(1H)-吡啶酮（酰胺型，主要形式）</div>
+
+  <p>用 POCl₃ 可將 2-吡啶酮轉化為 2-氯吡啶（OH → Cl），這是製備含氯吡啶的重要方法。</p>
+
+  <h3 id="pyridine-noxide">吡啶 N-氧化物</h3>
+  <p>吡啶用 mCPBA 氧化可得<strong>吡啶 N-氧化物</strong>。N-氧化物既可進行 EAS（在 2/4 位），也可進行親核取代（N-O 使 2 位更親電），後續脫氧（用 PCl₃ 或 (EtO)₃P）可得 2/4-取代吡啶。</p>
+
+  <!-- ===== PYRROLE ===== -->
+  <h2 id="pyrrole">吡咯（Pyrrole）</h2>
+  <p>吡咯（C₄H₄NH）的 N 孤對電子完全參與芳香 π 系統（貢獻 2 個 π 電子），因此：</p>
+  <ul>
+    <li>吡咯 N 的<strong>鹼性極弱</strong>（pKₐ(BH⁺) = -4）——質子化會破壞芳香性</li>
+    <li>吡咯 N-H 具有一定<strong>酸性</strong>（pKₐ(NH) = 16.5）</li>
+    <li>吡咯環<strong>富電子</strong>，EAS 活性遠高於苯</li>
+  </ul>
+
+  <h3 id="pyrrole-eas">吡咯的親電芳香取代</h3>
+  <p>吡咯的 EAS 優先發生在 <strong>2 位</strong>（α 位），原因是 2 位的過渡態中間體（arenium ion）更穩定（線性共軛 vs. 3 位的交叉共軛）：</p>
+
+  <div class="reaction-scheme">
+                N-H
+               /   \
+              2     3
+             /       \
+            (α)       (β)
+  EAS 優先 → 2 位（α）：中間體為線性共軛，更穩定</div>
+
+  <div class="box-example">
+    <strong>吡咯的典型反應</strong>
+    <ul>
+      <li><strong>溴化</strong>：Br₂ → 四溴吡咯（過度溴化，無選擇性），但在 -78°C 可控制在 2 位</li>
+      <li><strong>強酸條件</strong>：吡咯在強酸下會在 2 位質子化，並迅速聚合</li>
+      <li><strong>Vilsmeier 甲醯化</strong>：POCl₃/DMF → 2-甲醯吡咯（CHO 在 2 位）</li>
+    </ul>
+  </div>
+
+  <p><strong>脫羧策略</strong>：如果需要在 3 位引入取代基，可先在 2 位引入 CO₂H（羧基），待反應後再加熱脫羧，利用 2 位選擇性間接實現 3 位取代。</p>
+
+  <!-- ===== FURAN ===== -->
+  <h2 id="furan">呋喃（Furan）</h2>
+  <p>呋喃（C₄H₄O）是含氧的五員芳香雜環，O 孤對電子參與 π 系統。呋喃比苯更活潑，但比吡咯穩定，因 O 電負性較高。</p>
+
+  <div class="box-note">
+    <strong>呋喃的特殊反應</strong>
+    <ul>
+      <li><strong>Br₂/MeOH 反應</strong>：得到 2,5-二甲氧基-2,5-二氫呋喃（縮醛產物）而非 EAS，因為 1,4-加成更有利</li>
+      <li><strong>酸水解</strong>：呋喃環水解為 1,4-二羰基化合物（丁二醛衍生物）——烯醇醚水解</li>
+      <li><strong>Diels-Alder 反應</strong>：呋喃可作為二烯體，與親二烯體反應（可逆！需低溫，exo 為熱力學產物）</li>
+    </ul>
+  </div>
+
+  <!-- ===== THIOPHENE ===== -->
+  <h2 id="thiophene">噻吩（Thiophene）</h2>
+  <p>噻吩（C₄H₄S）是含硫的五員芳香雜環，是類似苯的穩定芳香族化合物，比呋喃和吡咯更穩定：</p>
+
+  <div class="box-example">
+    <strong>噻吩的典型反應</strong>
+    <ul>
+      <li><strong>Friedel-Crafts 醯化</strong>：Ac₂O/SnCl₄ → 2-乙醯噻吩（2 位選擇性）</li>
+      <li><strong>Raney Ni 脫硫</strong>：噻吩環在 Raney Ni 催化下去硫，轉化為烷烴（用於去硫保護）</li>
+      <li><strong>噻吩碸 Diels-Alder</strong>：噻吩砜（thiophene sulfone, SO₂ 形式）可作 Diels-Alder 二烯體（不可逆，SO₂ 脫去）</li>
+    </ul>
+  </div>
+
+  <!-- ===== LITHIATION ===== -->
+  <h2 id="lithiation">呋喃與噻吩的直接金屬化（Directed Metalation）</h2>
+  <p>呋喃和噻吩可用 n-BuLi 在 <strong>2 位選擇性鋰化</strong>（C-H 直接取代），形成有機鋰試劑，再進行親電取代（加 E⁺）：</p>
+
+  <div class="reaction-scheme">
+呋喃 + n-BuLi →  2-鋰呋喃（2-lithiofuran）
+              + E⁺（如 CO₂、醛、RX）
+              → 2-取代呋喃</div>
+
+  <!-- ===== PYRROLE ANION ===== -->
+  <h2 id="pyrrole-anion">吡咯陰離子（Pyrrole Anion）的反應</h2>
+  <p>吡咯 N-H 的 pKₐ = 16.5，可被強鹼（KH、NaH）去質子化，形成吡咯陰離子（pyrrole anion）。吡咯陰離子是兩性親核劑：</p>
+
+  <ul>
+    <li><strong>軟性親電體（如烷基鹵）</strong>→ N-烷基化（N 為親核劑）</li>
+    <li><strong>硬性親電體（如 CO₂、甲醯氯）</strong>→ C-烷基化（2 位）</li>
+  </ul>
+
+  <p>金屬（K、Na）的吡咯鹽在親電底物的選擇上展現獨特的 N vs C 選擇性，是合成 N-取代與 C-取代吡咯的重要工具。</p>
+
+  <!-- ===== IMIDAZOLE ===== -->
+  <h2 id="imidazole">咪唑（Imidazole）</h2>
+  <p>咪唑（C₃H₄N₂）含兩個 N：一個為吡咯型（N-H，孤對電子在 π 中）、一個為吡啶型（孤對電子在平面外，可質子化）：</p>
+
+  <div class="box-key">
+    <strong>咪唑的性質</strong>
+    <ul>
+      <li>pKₐ(BH⁺) = 7.0（比吡啶強鹼）</li>
+      <li>pKₐ(NH) = 14.5（比吡咯弱酸）</li>
+      <li>快速 N-H 互變異構（tautomerism），使 N1 = N3（除非一個 N 被取代）</li>
+    </ul>
+  </div>
+
+  <div class="box-example">
+    <strong>咪唑的重要應用</strong>
+    <ul>
+      <li><strong>CDI（羰基二咪唑）</strong>：縮肽/醯胺化試劑；咪唑作為離去基</li>
+      <li><strong>矽基化催化</strong>：咪唑催化 TMS 等矽保護基的引入</li>
+      <li><strong>組胺酸（Histidine）</strong>：含咪唑側鏈的氨基酸，在酶的催化活性位點中作廣義酸/鹼</li>
+    </ul>
+  </div>
+
+  <p><strong>咪唑的硝化</strong>：在 H₂SO₄/HNO₃ 下，硝基進入<strong>4 位</strong>（最少受 N 吸電子影響的位置）。<strong>甲硝唑（Metronidazole）</strong>合成即利用此反應。</p>
+
+  <!-- ===== TRIAZOLES ===== -->
+  <h2 id="triazoles">三唑與四唑</h2>
+  <p>含三個 N 的五員環稱為<strong>三唑</strong>：</p>
+  <ul>
+    <li><strong>1,2,3-三唑</strong>：可由疊氮化物 + 炔烴（Huisgen 環加成，「點擊化學」）合成</li>
+    <li><strong>1,2,4-三唑</strong>：用於製備殺菌劑，許多重要抗黴藥含此環（如 fluconazole）</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>氟康唑（Fluconazole）合成</strong>
+    <p>氟康唑（抗黴藥）含 1,2,4-三唑環，由 1,2,4-三唑 + 含 F 的環氧化物開環後合成。</p>
+  </div>
+
+  <p><strong>四唑（Tetrazole）</strong>含四個 N，pKₐ ≈ 5（類似羧酸，可作 CO₂H 生物等效體（bioisostere））。四唑極度不穩定（高氮含量），具爆炸危險，在藥物設計中作為羧酸的非代謝性等效體。</p>
+
+  <div class="box-example">
+    <strong>Indomethacin 四唑類似物</strong>
+    <p>將消炎藥 Indomethacin 的 COOH 替換為四唑，得到代謝更穩定的類似物（四唑的 pKₐ ≈ 5 ≈ 羧酸）。</p>
+  </div>
+
+  <!-- ===== INDOLE ===== -->
+  <h2 id="indole">吲哚（Indole）</h2>
+  <p>吲哚（C₈H₇N）是苯環與吡咯稠合的雙環芳香化合物（10π 電子），是重要的天然產物骨架：</p>
+  <ul>
+    <li><strong>色胺酸（Tryptophan）</strong>：含吲哚的必需胺基酸</li>
+    <li><strong>LSD</strong>（麥角醯二乙胺）</li>
+    <li><strong>士的寧（Strychnine）</strong></li>
+    <li><strong>血清素（Serotonin）</strong></li>
+  </ul>
+
+  <h3 id="indole-eas">吲哚的親電芳香取代</h3>
+  <p>吲哚的 EAS 發生在 <strong>3 位</strong>（C3，β 位），而非 2 位：</p>
+
+  <div class="reaction-scheme">
+吲哚 EAS 機制：
+    E⁺ → 攻擊 3 位 → spiro（螺環）中間體（有實驗證據）
+         → N-H 去質子化 → 3-取代吲哚（芳香性恢復）
+
+  原因：3 位親電加成的中間體能量低於 2 位（3 位中間體可由相鄰 C2=C3 鍵參與穩定）</div>
+
+  <div class="box-example">
+    <strong>吲哚的典型 EAS 反應</strong>
+    <ul>
+      <li><strong>Vilsmeier 甲醯化</strong>：POCl₃/DMF → 3-甲醯吲哚（3-CHO）</li>
+      <li><strong>Friedel-Crafts（分子內）</strong>：含 γ,δ-不飽和吲哚進行分子內 Friedel-Crafts</li>
+      <li><strong>Mannich 反應</strong>：吲哚 + HCHO + 胺 → 3-Mannich 鹼，98% 產率</li>
+    </ul>
+  </div>
+
+  <p>吲哚 N 的 NaCN 反應：在特定條件下，N 上的 NMe₂ 基可被 NaCN 取代（N-脫烷基化/置換），用於製備 N-氰基吲哚。</p>
+
+  <!-- ===== HOBT ===== -->
+  <h2 id="hobt">HOBt — 1-羥基苯並三唑（縮肽試劑）</h2>
+  <p><strong>HOBt（1-hydroxybenzotriazole）</strong>是苯環與 1,2,3-三唑稠合的雜環，含有 N-OH 基，是縮肽合成（peptide coupling）中防止消旋化的重要試劑：</p>
+
+  <div class="reaction-scheme">
+縮肽反應：
+DCC（二環己基碳醯亞胺）+ R-COOH → O-醯基異脲 （活性太高，易消旋）
+  → + HOBt → HOBt 活化酯（N-氧基酯，活性適中，不消旋）
+  → + H₂N-R' → 醯胺 (不消旋化的縮肽)</div>
+
+  <!-- ===== DIAZINES ===== -->
+  <h2 id="diazines">二嗪類（Diazines）</h2>
+  <p>含兩個 N 的六員芳香雜環稱為<strong>二嗪</strong>，有三種異構體，鹼性（pKₐ）依序降低：</p>
+
+  <table>
+    <tr><th>化合物</th><th>位置</th><th>pKₐ(BH⁺)</th><th>用途</th></tr>
+    <tr><td>嗒嗪（Pyridazine）</td><td>1,2-N</td><td>2.3</td><td>農藥、藥物</td></tr>
+    <tr><td>嘧啶（Pyrimidine）</td><td>1,3-N</td><td>1.3</td><td>DNA/RNA 鹼基（胞嘧啶、尿嘧啶、胸腺嘧啶）</td></tr>
+    <tr><td>吡嗪（Pyrazine）</td><td>1,4-N</td><td>0.65</td><td>香味化合物（甜椒香）</td></tr>
+  </table>
+
+  <p>二嗪類的 2/4 位含 Cl（磺酰氯等）可進行<strong>親核取代（SNAr）</strong>，用胺/醇置換 Cl，是合成藥物類嘧啶衍生物的重要方法。</p>
+
+  <div class="box-example">
+    <strong>馬來醯肼（Malehydrazide）→ 二氯嗒嗪</strong>
+    <p>馬來醯肼（malehydrazide）用 POCl₃ 轉化為 3,6-二氯嗒嗪，再用不同胺進行<strong>依序取代</strong>（先取代活性高的位置，再取代活性低的位置），合成多種嗒嗪衍生物。</p>
+  </div>
+
+  <!-- ===== QUINOLINE ===== -->
+  <h2 id="quinoline">喹啉（Quinoline）與異喹啉（Isoquinoline）</h2>
+  <p>喹啉和異喹啉是苯環與吡啶稠合的 benzo 雜環，共 10 π 電子：</p>
+
+  <div class="box-note">
+    <strong>EAS 位置選擇</strong>
+    <ul>
+      <li><strong>喹啉</strong>：EAS 在苯環側（5 位和 8 位，N 影響較弱），SNAr 在吡啶環 2/4 位</li>
+      <li><strong>異喹啉</strong>：5 位硝化（72%，0°C 控制條件）</li>
+    </ul>
+  </div>
+
+  <p><strong>喹啉 N-氧化物</strong>：可進行 N-氧化物驅動的 2 位親核取代（如 NaCN/Ac₂O → 2-氰基喹啉）。</p>
+  <p>喹啉的<strong>氧化反應</strong>：KMnO₄ 等強氧化劑可破壞苯環，得到吡啶-2,3-二羧酸（Quinolinic acid）；臭氧化可切斷特定雙鍵。</p>
+
+  <div class="box-note">
+    <strong>吲哚里西（Indolizine）</strong>
+    <p>吲哚里西是 N 在環連接處的稠合雙環（10π），其 EAS 優先在 5 員環一側（富電子）。</p>
+  </div>
+
+  <!-- ===== PURINES ===== -->
+  <h2 id="purines">嘌呤類（Purines）</h2>
+  <p>嘌呤（Purine）是嘧啶與咪唑稠合的雙環含氮雜環（9 個原子，4 個 N），是核酸中的重要組成：</p>
+
+  <table>
+    <tr><th>嘌呤衍生物</th><th>功能/特點</th></tr>
+    <tr><td>腺嘌呤（Adenine）</td><td>DNA、RNA、ATP 的組成部分</td></tr>
+    <tr><td>鳥嘌呤（Guanine）</td><td>DNA、RNA 的組成部分</td></tr>
+    <tr><td>咖啡因（Caffeine）</td><td>黃嘌呤衍生物，中樞神經興奮劑</td></tr>
+    <tr><td>尿酸（Uric acid）</td><td>嘌呤代謝終產物（痛風相關）</td></tr>
+    <tr><td>Allopurinol</td><td>黃嘌呤氧化酶抑制劑，治療痛風</td></tr>
+  </table>
+
+  <!-- ===== MIXED HETEROATOMS ===== -->
+  <h2 id="mixed-heteroatoms">含混合雜原子的五員環</h2>
+  <p>一個芳香環中最多可容納一個 O 或 S（兩個 O 或兩個 S 在同一環中不穩定，但 N+O 或 N+S 可以）：</p>
+
+  <table>
+    <tr><th>化合物</th><th>雜原子</th><th>重要性</th></tr>
+    <tr><td>噁唑（Oxazole）</td><td>N + O（1,3）</td><td>天然產物</td></tr>
+    <tr><td>噻唑（Thiazole）</td><td>N + S（1,3）</td><td>Vitamin B₁（硫胺素）</td></tr>
+    <tr><td>異噁唑（Isoxazole）</td><td>N-O（1,2，N-O 鍵不穩定）</td><td>農藥</td></tr>
+    <tr><td>異噻唑（Isothiazole）</td><td>N-S（1,2）</td><td>藥物</td></tr>
+    <tr><td>1,2,5-噻二唑</td><td>N + N + S（1,2,5）</td><td>含於 Timolol（β-受體阻斷劑）</td></tr>
+  </table>
+
+  <div class="box-example">
+    <strong>甜椒香氣成分</strong>
+    <p>甜椒（green pepper）的特徵香氣來自<strong>2-甲氧基-3-烷基吡嗪</strong>，通過 NMR 鑑定結構（甲氧基 + 吡嗪 + 烷基）。這是雜環化合物在食品化學中的著名例子。</p>
+  </div>
+
+  <!-- ===== PORPHYRIN ===== -->
+  <h2 id="porphyrin">卟啉類（Porphyrins）</h2>
+  <p>卟啉是由 4 個吡咯環與 4 個醛通過甲橋（-CH=）連接成的大環芳香化合物（18π 電子，4n+2 規則），是生命中最重要的金屬配體：</p>
+
+  <ul>
+    <li><strong>血紅素（Heme）</strong>：Fe-porphyrin，攜帶 O₂</li>
+    <li><strong>葉綠素（Chlorophyll）</strong>：Mg-porphyrin，光合作用</li>
+    <li><strong>Vitamin B₁₂</strong>：Co-corrin（類卟啉）</li>
+  </ul>
+
+  <p>卟啉的合成：4 個吡咯 + 4 個醛 → 卟啉（酸催化縮合）。</p>
+
+  <!-- ===== FOLIC ACID ===== -->
+  <h2 id="folic-acid">葉酸與磺胺藥物</h2>
+  <p><strong>葉酸（Folic acid）</strong>由三部分組成：</p>
+  <ol>
+    <li>蝶啶（Pteridine，嘌呤 + 嘧啶稠合雙環）</li>
+    <li>對胺苯甲酸（PABA，para-aminobenzoic acid）</li>
+    <li>麩胺酸（Glutamic acid）</li>
+  </ol>
+
+  <div class="box-key">
+    <strong>磺胺藥（Sulfa drugs）與 DHFR 抑制劑</strong>
+    <ul>
+      <li><strong>磺胺藥</strong>：結構類似 PABA，抑制細菌合成葉酸（競爭抑制 PABA）</li>
+      <li><strong>Trimethoprim</strong>：抑制二氫葉酸還原酶（DHFR），阻止葉酸活化為四氫葉酸（THF）</li>
+      <li>Trimethoprim + 磺胺（聯用）→ 雙重阻斷葉酸合成（協同殺菌）</li>
+    </ul>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>必須熟記的芳香雜環</strong>
+    <table>
+      <tr><th>雜環</th><th>類型</th><th>特性</th><th>主要反應</th></tr>
+      <tr><td>吡啶</td><td>6員，吡啶型</td><td>缺電子，鹼性（pKₐ 5.5）</td><td>SNAr（2/4 位），難 EAS</td></tr>
+      <tr><td>吡咯</td><td>5員，吡咯型</td><td>富電子，弱鹼（pKₐ -4），NH 酸（16.5）</td><td>EAS 在 2 位（α）</td></tr>
+      <tr><td>呋喃</td><td>5員，吡咯型（O）</td><td>富電子，烯醇醚類</td><td>EAS，Diels-Alder，水解→1,4-二酮</td></tr>
+      <tr><td>噻吩</td><td>5員，吡咯型（S）</td><td>富電子，最像苯</td><td>EAS 在 2 位，Raney Ni 脫硫</td></tr>
+      <tr><td>咪唑</td><td>5員，混合型</td><td>pKₐ 7，快速互變</td><td>N-親核，CDI，催化作用</td></tr>
+      <tr><td>嘧啶</td><td>6員，二嗪</td><td>pKₐ 1.3，DNA 鹼基</td><td>SNAr（含 Cl）</td></tr>
+      <tr><td>喹啉</td><td>6+6，稠合</td><td>吡啶+苯稠合</td><td>EAS（苯環），SNAr（N 環）</td></tr>
+      <tr><td>異喹啉</td><td>6+6，稠合</td><td>吡啶+苯稠合</td><td>5-硝化（72%）</td></tr>
+      <tr><td>吲哚</td><td>5+6，稠合</td><td>10π，富電子</td><td>EAS 在 3 位（β），Mannich</td></tr>
+    </table>
+    <p><strong>記憶要點</strong>：5員富電子環（吡咯、呋喃、噻吩）EAS 在 2 位（α）；吲哚 EAS 在 3 位（β）；吡啶類缺電子，進行 SNAr 在 2/4 位。</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

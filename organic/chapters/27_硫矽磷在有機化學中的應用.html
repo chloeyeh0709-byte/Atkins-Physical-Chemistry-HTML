@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十七章：硫、矽、磷在有機化學中的應用</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十七章<br>硫、矽、磷的應用</h2>
+  </div>
+  <div id="toc">
+    <a href="#sulfur">硫在有機化學中的應用</a>
+    <a href="#thiol-groups" class="toc-sub">含硫官能基</a>
+    <a href="#sulfur-anions" class="toc-sub">硫穩定陰離子</a>
+    <a href="#dithiane">二硫環（Umpolung）</a>
+    <a href="#ylids">硫葉立德</a>
+    <a href="#swern">Swern 氧化</a>
+    <a href="#silicon">矽在有機化學中的應用</a>
+    <a href="#protecting-groups" class="toc-sub">矽保護基</a>
+    <a href="#peterson">Peterson 消除</a>
+    <a href="#beta-silicon">β-矽效應</a>
+    <a href="#fleming-tamao">Fleming-Tamao 氧化</a>
+    <a href="#allylsilane">烯丙基矽烷</a>
+    <a href="#alkene-synthesis">立體選擇性烯烴合成</a>
+    <a href="#equilibration">E/Z 平衡化</a>
+    <a href="#alkyne-reduction">炔烴還原</a>
+    <a href="#sulfoxide-elim">亞碸消除</a>
+    <a href="#julia">Julia 烯烴化</a>
+    <a href="#peterson-stereo">Peterson 反應的立體化學</a>
+    <a href="#wittig">Wittig 反應</a>
+    <a href="#hwe">HWE 反應</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十七章</div>
+    <h1>硫、矽、磷在有機化學中的應用</h1>
+    <div class="subtitle">Sulfur, Silicon, and Phosphorus in Organic Chemistry</div>
+  </div>
+
+  <!-- ===== SULFUR ===== -->
+  <h2 id="sulfur">硫在有機化學中的應用</h2>
+  <p>硫原子在有機化學中表現出獨特的性質：它是<strong>軟性親核劑/親電劑</strong>，可形成多種氧化態的官能基（從硫醇到磺酸），且能穩定相鄰的碳負離子。</p>
+
+  <h3 id="thiol-groups">含硫官能基的氧化態</h3>
+  <table>
+    <tr><th>氧化態</th><th>官能基</th><th>名稱</th></tr>
+    <tr><td>最低</td><td>R-SH</td><td>硫醇（thiol）</td></tr>
+    <tr><td></td><td>R-S-R'</td><td>硫醚（sulfide）</td></tr>
+    <tr><td></td><td>R-S(=O)-R'</td><td>亞碸（sulfoxide）</td></tr>
+    <tr><td></td><td>R-SO₂-R'</td><td>碸（sulfone）</td></tr>
+    <tr><td>最高</td><td>R-SO₂Cl</td><td>磺醯氯（sulfonyl chloride）</td></tr>
+  </table>
+
+  <p><strong>硫醇鹽（thiolate, RS⁻）</strong>是軟性親核劑，反應性高於 RO⁻。<strong>氯化硫醯（sulfenyl chloride, RSCl）</strong>是軟性親電劑，可對烯烴進行親電加成。</p>
+
+  <h3 id="sulfur-anions">硫穩定的碳陰離子</h3>
+  <p>硫原子（特別是多氧化態）能有效穩定相鄰碳的負電荷，酸性（α-H 的 pKₐ）比較：</p>
+
+  <div class="box-key">
+    <strong>硫穩定陰離子的酸性</strong>
+    <ul>
+      <li>碸（sulfone，R-SO₂-CHR'₂）：pKₐ ≈ 29</li>
+      <li>亞碸（sulfoxide，R-S(=O)-CHR'₂）：pKₐ ≈ 35</li>
+      <li>硫醚（sulfide，R-S-CHR'₂）：pKₐ ≈ 48</li>
+    </ul>
+    <p>穩定化機制：硫的 3d 軌域接受碳負離子的電子（p-d π 鍵）；穩定性：碸 > 亞碸 > 硫醚。</p>
+  </div>
+
+  <!-- ===== DITHIANE ===== -->
+  <h2 id="dithiane">1,3-二硫環（Dithiane）— Umpolung 反應</h2>
+  <p><strong>1,3-二硫環（1,3-dithiane）</strong>由 1,3-丙二硫醇與醛縮合生成，其 C2 位 H 可被 n-BuLi 去質子化，形成<strong>d¹ 試劑（umpolung 試劑）</strong>，即「反極性」的類醛碳負離子：</p>
+
+  <div class="reaction-scheme">
+RCHO + 1,3-丙二硫醇 → [1,3-dithiane-R] （環縮醛）
+                n-BuLi → C2 碳陰離子 （d¹ 試劑，umpolung）
+                + R'X  → C2 被烷基化
+                水解（Hg²⁺ 或氧化法）→ R'-CHR-CHO （羰基重生，兩端相連）</div>
+
+  <p>Umpolung 策略改變了醛碳的正常反應極性（原本為 a¹ 親電劑），使其成為 d¹ 親核劑，可在醛碳上引入新的碳鏈。</p>
+
+  <div class="box-example">
+    <strong>生物素（Biotin）合成中的 Dithiane 應用</strong>
+    <p>生物素（維生素 B₇）合成利用 1,3-二硫環作為 umpolung 試劑，建構含硫的雜環骨架，關鍵步驟高效且立體選擇性好。</p>
+  </div>
+
+  <!-- ===== YLIDS ===== -->
+  <h2 id="ylids">硫葉立德（Sulfur Ylids）</h2>
+  <p>硫葉立德（sulfur ylid）含有相鄰的正電荷 S 和負電荷 C，有兩種類型：</p>
+
+  <div class="box-key">
+    <strong>硫葉立德的兩種類型與產物</strong>
+    <table>
+      <tr><th>類型</th><th>結構</th><th>與醛/酮反應</th><th>產物</th></tr>
+      <tr><td>硫鎓葉立德（sulfonium ylid）</td><td>R₂S⁺-CH₂⁻</td><td>α,β-不飽和羰基</td><td>環氧化物</td></tr>
+      <tr><td>亞碸鎓葉立德（sulfoxonium ylid）</td><td>R₂S(=O)⁺-CH₂⁻</td><td>α,β-不飽和羰基</td><td>環丙烷</td></tr>
+    </table>
+  </div>
+
+  <div class="reaction-scheme">
+硫鎓葉立德 + 醛 → 環氧化物（Corey-Chaykovsky）：
+   Me₂S⁺—CH₂⁻ + R-CHO → 環氧化物（epoxide）
+
+亞碸鎓葉立德 + α,β-不飽和酮 → 環丙烷（Johnson-Corey-Chaykovsky）：
+   Me₂S(O)⁺—CH₂⁻ + CH₂=CH-COR → 環丙烷酮</div>
+
+  <!-- ===== SWERN ===== -->
+  <h2 id="swern">Swern 氧化</h2>
+  <p><strong>Swern 氧化</strong>利用草醯氯（(COCl)₂）活化 DMSO（二甲亞碸），再與醇反應，生成醛或酮（醇 → 醛/酮），在溫和條件（-78°C）下進行，無 Cr 污染：</p>
+
+  <div class="reaction-scheme">
+Swern 氧化機制：
+DMSO + (COCl)₂ → Me₂S⁺-Cl  （活化型 DMSO）
++ R-CH₂-OH →  R-CH₂-O-S⁺Me₂  （烷氧基硫鎓鹽）
++ Et₃N (鹼)  →  [5-員環 TS：Ei 消除] →  R-CHO + Me₂S + Et₃N·HCl
+                                          （醛）</div>
+
+  <!-- ===== SILICON ===== -->
+  <h2 id="silicon">矽在有機化學中的應用</h2>
+  <p>矽（Si）在有機化學中的主要應用：保護基、立體選擇性烯烴合成（Peterson 消除、Wittig 磷）、穩定相鄰碳正離子（β-矽效應）。</p>
+
+  <h3 id="protecting-groups">矽保護基（Silicon Protecting Groups）</h3>
+  <p>矽保護基通過 Si-O 鍵保護醇羥基，用 F⁻ 或酸水解脫保護：</p>
+
+  <table>
+    <tr><th>保護基</th><th>縮寫</th><th>穩定性（相對）</th><th>脫保護</th></tr>
+    <tr><td>三甲基矽基</td><td>TMS</td><td>最低</td><td>F⁻、稀酸</td></tr>
+    <tr><td>三乙基矽基</td><td>TES</td><td>低</td><td>F⁻</td></tr>
+    <tr><td>叔丁基二甲基矽基</td><td>TBS/TBDMS</td><td>中（最常用）</td><td>TBAF（F⁻）</td></tr>
+    <tr><td>三異丙基矽基</td><td>TIPS</td><td>高</td><td>TBAF</td></tr>
+    <tr><td>叔丁基二苯基矽基</td><td>TBDPS</td><td>最高</td><td>TBAF</td></tr>
+  </table>
+
+  <p>所有矽保護基均可被 <strong>F⁻（如 TBAF）</strong>脫保護（Si-F 鍵能比 Si-O 強），是矽保護基脫保護的普遍試劑。</p>
+
+  <!-- ===== PETERSON ===== -->
+  <h2 id="peterson">Peterson 消除（Peterson Elimination）</h2>
+  <p><strong>Peterson 消除</strong>：β-羥基矽烷（β-hydroxysilane）在酸或鹼條件下消除，生成烯烴，且<strong>完全區位選擇性</strong>（regiospesific）：</p>
+
+  <div class="reaction-scheme">
+      SiR₃  OH               SiR₃    O⁻
+      |     |     鹼（-OH⁻）  |      |
+R—CH—CH—R'   ———→    R—CH—CH—R'  → syn 消除 → 特定 E/Z 烯烴
+
+      SiR₃  OH
+      |     |     酸（-H₂O）
+R—CH—CH—R'   ———→    抗式消除（anti elimination） → 相反 E/Z 烯烴</div>
+
+  <p>Peterson 消除是完全立體特異性（stereospecific）的：同一非對映異構體 + 不同反應條件 → 不同烯烴幾何異構體。</p>
+
+  <!-- ===== BETA-SILICON ===== -->
+  <h2 id="beta-silicon">β-矽效應（Beta-Silicon Effect）</h2>
+  <p>矽原子可穩定相鄰（β 位）的<strong>碳正離子</strong>，原因是 Si-C 鍵的 σ 鍵軌域與空的碳正離子 p 軌域形成超共軛（hyperconjugation）：</p>
+
+  <div class="reaction-scheme">
+β-矽效應：
+    SiR₃                SiR₃
+    |                    |
+R—CH—CH₂⁺  ←→  R—CH=CH₂  + SiR₃⁺
+   (穩定碳正離子)    (矽基離去後生成烯烴)</div>
+
+  <p>應用：芳基/乙烯基矽烷的 ipso 取代（親電試劑攻擊矽所在碳，Si 作為離去基）。</p>
+
+  <!-- ===== FLEMING-TAMAO ===== -->
+  <h2 id="fleming-tamao">Fleming-Tamao 氧化</h2>
+  <p><strong>Fleming-Tamao 氧化</strong>（Tamao-Fleming oxidation）：將有機矽基（ArSiR₂ 或含 F/OMe 的矽基）氧化為羥基（Si → OH），相當於 C-Si 到 C-OH 的轉化：</p>
+
+  <div class="reaction-scheme">
+C—SiR₂Ph  →（氧化：KF/H₂O₂）→  C—OH
+(ArSi 或 FSi)                   (等效於 C-H → C-OH)</div>
+
+  <p>Fleming-Tamao 氧化與前期的有機矽烷合成結合，可實現對特定碳的立體選擇性羥化。</p>
+
+  <!-- ===== ALLYLSILANE ===== -->
+  <h2 id="allylsilane">烯丙基矽烷（Allylsilane）</h2>
+  <p>烯丙基矽烷（allylsilane, CH₂=CH-CH₂-SiR₃）是重要的親核試劑，比乙烯基矽烷（vinyl silane）更活潑：</p>
+
+  <div class="box-key">
+    <strong>烯丙基矽烷的反應規律</strong>
+    <ul>
+      <li>Lewis 酸（TiCl₄、BF₃）活化親電體（如醛）</li>
+      <li>親核攻擊發生在 <strong>γ 碳</strong>（遠離 Si 的末端碳）</li>
+      <li>中間體：β-矽基碳正離子（β-silyl cation）</li>
+      <li>Si 基最終脫去，產物為高烯丙醇（homoallylic alcohol）</li>
+    </ul>
+  </div>
+
+  <div class="reaction-scheme">
+烯丙基矽烷 + RCHO（TiCl₄）：
+     SiR₃                      OH
+     |       TiCl₄             |
+CH₂=CH-CH₂ + RCHO → R-CH-CH₂-CH=CH₂  （高烯丙醇）
+   γ端攻擊                  （β-矽中間體消除）</div>
+
+  <div class="box-example">
+    <strong>矽縮醛（Silyl Acetal）</strong>
+    <p>醛/酮與 TMSOTf（三甲矽基三氟甲磺酸酯）反應，生成矽縮醛，可進行類似烯丙基矽烷的 Lewis 酸活化反應。</p>
+  </div>
+
+  <!-- ===== ALKENE SYNTHESIS ===== -->
+  <h2 id="alkene-synthesis">立體選擇性烯烴合成</h2>
+  <p>立體選擇性合成特定 E 或 Z 烯烴的四種主要策略：</p>
+  <ol>
+    <li><strong>環系限制（ring constraint）</strong>：用小環限制幾何構型</li>
+    <li><strong>平衡法（equilibration）</strong>：利用熱力學使 E/Z 互轉達到平衡</li>
+    <li><strong>立體選擇性法（stereoselective）</strong>：反應的過渡態偏好某一立體化學</li>
+    <li><strong>立體特異性法（stereospecific）</strong>：機制決定唯一的立體化學結果</li>
+  </ol>
+
+  <!-- ===== EQUILIBRATION ===== -->
+  <h2 id="equilibration">E/Z 平衡化策略</h2>
+  <p>利用異構化（isomerization）達到熱力學最穩定的 E 烯烴：</p>
+  <ul>
+    <li><strong>非共軛烯烴</strong>：I₂ 催化 Z→E（碘自由基使雙鍵旋轉）</li>
+    <li><strong>Michael 受體（共軛烯烴）</strong>：鹼（胺/MeOH）催化加成-消除異構化（E 更穩定）</li>
+    <li><strong>光化學</strong>：光照（hv）使 E→Z，達到光穩態（photostationary state），富含 Z 異構體</li>
+  </ul>
+
+  <!-- ===== ALKYNE REDUCTION ===== -->
+  <h2 id="alkyne-reduction">從炔烴合成 Z 或 E 烯烴</h2>
+  <p>炔烴還原是製備立體純烯烴的重要方法：</p>
+
+  <table>
+    <tr><th>還原方法</th><th>機制</th><th>產物</th></tr>
+    <tr><td>Lindlar 催化氫化（H₂/Pd/CaCO₃/Pb(OAc)₂）</td><td>syn 加氫</td><td><strong>Z 烯烴</strong></td></tr>
+    <tr><td>Na 或 Li 溶於液氨（Birch 型）</td><td>anti 還原（電子加成）</td><td><strong>E 烯烴</strong></td></tr>
+    <tr><td>LiAlH₄ 還原炔丙醇</td><td>syn 加氫</td><td>E 烯丙醇（含 OH 導向）</td></tr>
+    <tr><td>Red-Al（DIBAL 類）</td><td>syn 加氫</td><td>E 烯丙醇</td></tr>
+  </table>
+
+  <div class="box-example">
+    <strong>炔醇的親核加成（MeOH/鹼）</strong>
+    <p>醇對炔烴的 anti-Markovnikov 加成得到 Z 烯醇醚（Z-vinyl ether），機制為鹼催化的 anti-加成。</p>
+  </div>
+
+  <!-- ===== SULFOXIDE ELIM ===== -->
+  <h2 id="sulfoxide-elim">亞碸消除 → E 烯烴</h2>
+  <p>β-羥基亞碸或 β-氫亞碸在加熱下發生<strong>周環消除（pericyclic syn elimination）</strong>，得到 E 烯烴：</p>
+
+  <div class="reaction-scheme">
+    H    S(O)Ph
+    |    |         Δ（pericyclic syn elim）
+ R-CH—CH-R'   ———→   R-CH=CH-R'（E 為主）+ PhSOH
+   β-氫亞碸              （5-員環 TS，syn 消除）</div>
+
+  <div class="box-example">
+    <strong>Queen Bee Substance 合成</strong>
+    <p>蜜蜂蜂王物質（E-9-oxodec-2-enoic acid）的合成利用亞碸消除建立 E 雙鍵，立體選擇性高。</p>
+  </div>
+
+  <!-- ===== JULIA ===== -->
+  <h2 id="julia">Julia 烯烴化（Julia Olefination）</h2>
+  <p><strong>Julia 烯烴化</strong>利用苯碸陰離子與醛反應，生成 E 烯烴，是合成長鏈 E 烯烴的重要方法：</p>
+
+  <div class="reaction-scheme">
+傳統 Julia（3步）：
+PhSO₂-CH₂R + BuLi → PhSO₂-CHR⁻
+              + R'CHO → β-羥基碸
+              + AcCl → 乙酸酯化
+              + Na/Hg（還原消除）→ E 烯烴
+
+機制：乙酸酯中間體 → 自由基陰離子（via Na/Hg）→ 碸基消除（E2）→ E 烯烴</div>
+
+  <div class="box-example">
+    <strong>Julia-Kocienski 改良（一步法）</strong>
+    <p>使用<strong>四唑基碸（tetrazolyl sulfone）</strong>取代苯碸，加入 KHMDS 和醛，直接一步得到 E 烯烴（不需要還原步驟，SO₂ 直接脫去）。這是現代合成中廣泛使用的一步 Julia 烯烴化。</p>
+  </div>
+
+  <!-- ===== PETERSON STEREO ===== -->
+  <h2 id="peterson-stereo">Peterson 反應的立體化學</h2>
+  <p>Peterson 消除的立體化學完全立體特異：同一 β-羥基矽烷的非對映異構體，酸/鹼條件下得到<strong>相反</strong>的 E/Z 烯烴：</p>
+
+  <div class="box-key">
+    <strong>Peterson 立體化學規則</strong>
+    <table>
+      <tr><th>β-羥基矽烷</th><th>鹼（anti 消除）</th><th>酸（syn 消除）</th></tr>
+      <tr><td>syn（erythro）</td><td>Z 烯烴</td><td>E 烯烴</td></tr>
+      <tr><td>anti（threo）</td><td>E 烯烴</td><td>Z 烯烴</td></tr>
+    </table>
+    <p>機制：鹼 → anti-periplanar 消除（E2 型，Si/OH 反式）；酸 → syn-periplanar 消除（Ei 型，Si/OH 順式）。</p>
+  </div>
+
+  <!-- ===== WITTIG ===== -->
+  <h2 id="wittig">Wittig 反應</h2>
+  <p><strong>Wittig 反應</strong>：磷葉立德（phosphorus ylid，Ph₃P=CHR）與醛/酮反應，生成烯烴 + Ph₃P=O（三苯基膦氧化物）：</p>
+
+  <div class="reaction-scheme">
+Ph₃P=CHR  +  R'CHO  →  RCH=CHR'  +  Ph₃P=O
+ 磷葉立德                (烯烴)     (副產物)</div>
+
+  <div class="box-key">
+    <strong>Wittig 反應的立體選擇性</strong>
+    <table>
+      <tr><th>葉立德類型</th><th>R 基</th><th>E/Z 選擇性</th><th>原因（過渡態）</th></tr>
+      <tr><td>非穩定化（unstabilized）</td><td>烷基</td><td>Z（cis）</td><td>syn 氧磷雜環丁烷（oxaphosphetane）</td></tr>
+      <tr><td>穩定化（stabilized）</td><td>CO₂R、COR</td><td>E（trans）</td><td>anti 氧磷雜環丁烷</td></tr>
+    </table>
+  </div>
+
+  <div class="box-example">
+    <strong>Bombykol（蠶蛾費洛蒙）合成</strong>
+    <p>利用非穩定化 Wittig 葉立德（R=烷基）→ Z 烯烴，合成蠶蛾性費洛蒙 bombykol（含 Z,E 二烯）。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Capsaicin（辣椒素）E/Z 異構體</strong>
+    <p>辣椒素分子含烯基側鏈；穩定化 Wittig（R=NHCO）→ E 異構體（天然型）；非穩定化 → Z 異構體（無辣感）。</p>
+  </div>
+
+  <!-- ===== HWE ===== -->
+  <h2 id="hwe">HWE 反應（Horner-Wadsworth-Emmons）</h2>
+  <p><strong>HWE 反應</strong>使用<strong>磷酸酯葉立德</strong>（phosphonate ester ylid，(EtO)₂P(O)-CHR⁻）代替三苯基膦，有以下優點：</p>
+  <ul>
+    <li>反應條件更溫和（可用 NaH 或 K₂CO₃ 去質子化）</li>
+    <li>副產物（磷酸二酯）水溶性高，易分離</li>
+    <li>穩定化（含 EWG）時高選擇性得到 <strong>E 烯烴</strong></li>
+  </ul>
+
+  <div class="reaction-scheme">
+HWE 反應：
+(EtO)₂P(O)—CHR⁻  +  R'CHO  →  RCH=CHR'（E 為主）+ (EtO)₂P(O)O⁻
+ 磷酸酯葉立德                      烯烴（穩定化 → E）</div>
+
+  <p>HWE 是合成 α,β-不飽和酯/酮的首選方法（對應穩定化的磷酸酯葉立德，E 選擇性好）。</p>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>摘要：E/Z 烯烴合成方法</strong>
+    <table>
+      <tr><th>方法</th><th>主要產物</th><th>條件/試劑</th></tr>
+      <tr><td>Lindlar 氫化（炔）</td><td>Z 烯烴</td><td>H₂/Pd-CaCO₃-Pb(OAc)₂</td></tr>
+      <tr><td>Na/NH₃（炔）</td><td>E 烯烴</td><td>溶解金屬還原</td></tr>
+      <tr><td>Wittig（非穩定化葉立德）</td><td>Z 烯烴</td><td>Ph₃P=CHR（R=alkyl）</td></tr>
+      <tr><td>Wittig（穩定化葉立德）</td><td>E 烯烴</td><td>Ph₃P=CHCO₂R</td></tr>
+      <tr><td>HWE 反應</td><td>E 烯烴</td><td>(EtO)₂P(O)CHR⁻ + NaH</td></tr>
+      <tr><td>亞碸消除</td><td>E 烯烴</td><td>β-OH 亞碸，Δ</td></tr>
+      <tr><td>Julia 烯烴化</td><td>E 烯烴</td><td>PhSO₂-CH₂R + RCHO + Na/Hg</td></tr>
+      <tr><td>Julia-Kocienski</td><td>E 烯烴（一步）</td><td>四唑基碸 + KHMDS + RCHO</td></tr>
+      <tr><td>Peterson（同一 syn-diol + 鹼）</td><td>Z 烯烴</td><td>β-羥基矽烷，NaH</td></tr>
+      <tr><td>Peterson（同一 syn-diol + 酸）</td><td>E 烯烴</td><td>β-羥基矽烷，H⁺</td></tr>
+      <tr><td>I₂ 催化異構化</td><td>E 烯烴</td><td>I₂，非共軛系統</td></tr>
+      <tr><td>光照異構化</td><td>Z 烯烴（富集）</td><td>hν，光穩態</td></tr>
+    </table>
+    <p><strong>硫/矽/磷的共同主題</strong>：作為暫時的官能基，在反應後可移除（Si 作為保護基/消除推手，S 作為 umpolung/氧化工具，P 作為烯烴化推動力）。</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

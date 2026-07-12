@@ -53,6 +53,11 @@ const files = [
   'organic/chapters/22_共軛加成與親核芳香取代.html',
   'organic/chapters/23_化學選擇性與保護基.html',
   'organic/chapters/24_區位選擇性.html',
+  'organic/chapters/25_烯醇鹽的烷基化.html',
+  'organic/chapters/26_烯醇鹽與羰基化合物的反應_羥醛與克萊森反應.html',
+  'organic/chapters/27_硫矽磷在有機化學中的應用.html',
+  'organic/chapters/28_逆合成分析.html',
+  'organic/chapters/29_芳香雜環1反應.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

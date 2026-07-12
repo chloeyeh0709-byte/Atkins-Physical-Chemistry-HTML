@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十六章：烯醇鹽與羰基化合物的反應 — 羥醛與克萊森反應</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十六章<br>羥醛與克萊森反應</h2>
+  </div>
+  <div id="toc">
+    <a href="#aldol-intro">羥醛反應簡介</a>
+    <a href="#aldol-mechanism" class="toc-sub">機制與脫水</a>
+    <a href="#acid-aldol" class="toc-sub">酸催化羥醛</a>
+    <a href="#cross-aldol">交叉羥醛反應</a>
+    <a href="#mannich">Mannich 反應</a>
+    <a href="#specific-enolates">特定烯醇鹽等效物</a>
+    <a href="#li-enolate" class="toc-sub">鋰烯醇鹽</a>
+    <a href="#silyl-mukaiyama" class="toc-sub">矽烯醇醚（Mukaiyama）</a>
+    <a href="#knoevenagel">Knoevenagel 縮合</a>
+    <a href="#ester-enolates">酯烯醇鹽等效物</a>
+    <a href="#reformatsky" class="toc-sub">Reformatsky 反應</a>
+    <a href="#control-aldol">控制酮的羥醛</a>
+    <a href="#gingerol">Gingerol 合成</a>
+    <a href="#intramolecular-aldol">分子內羥醛</a>
+    <a href="#robinson">Robinson 環化</a>
+    <a href="#claisen">Claisen 酯縮合</a>
+    <a href="#blocked-claisen" class="toc-sub">阻斷 Claisen</a>
+    <a href="#crossed-claisen">交叉 Claisen</a>
+    <a href="#ketone-ester">酮 + 酯縮合</a>
+    <a href="#acylation-control">醯化位置控制</a>
+    <a href="#intramolecular-claisen">分子內交叉 Claisen</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十六章</div>
+    <h1>烯醇鹽與羰基化合物的反應</h1>
+    <div class="subtitle">Reactions of Enolates with Carbonyl Compounds: Aldol and Claisen</div>
+  </div>
+
+  <!-- ===== ALDOL ===== -->
+  <h2 id="aldol-intro">羥醛反應（Aldol Reaction）</h2>
+  <p>當烯醇鹽攻擊另一個羰基化合物（醛或酮）的親電性羰基碳時，發生<strong>羥醛反應</strong>，產生 β-羥基羰基化合物（aldol product）：</p>
+
+  <div class="reaction-scheme">
+烯醇鹽攻擊醛：
+       O⁻                OH   O
+       |                 |    ‖
+R-C=CHR'  +  R''CHO  →  R''-CH—CHR'—C—R
+                          β-羥基羰基（aldol 產物）</div>
+
+  <h3 id="aldol-mechanism">機制與脫水（E1cB）</h3>
+  <p>在鹼性條件下，aldol 產物可脫水（E1cB 機制）生成 α,β-不飽和羰基化合物（烯酮）：</p>
+
+  <div class="reaction-scheme">
+       OH   O                  O
+       |    ‖     -H₂O         ‖
+R''-CH—CHR'—C—R  ————→  R''-CH=CR'—C—R
+   β-羥基羰基          E1cB (鹼)     α,β-不飽和羰基（烯酮）
+
+在酸性條件下：E1 機制脫水</div>
+
+  <h3 id="acid-aldol">酸催化羥醛反應</h3>
+  <p>酸催化羥醛的機制與鹼催化不同：酸先質子化羰基，活化其親電性；另一羰基化合物的烯醇式（enol form）作為親核劑進攻：</p>
+
+  <div class="reaction-scheme">
+酸催化：
+R₂C=O  + H⁺ → R₂C(OH)⁺  （活化親電性）
++
+R'CH₂COR  → R'CH=C(OH)R  （烯醇形式，親核劑）
+→ aldol 產物</div>
+
+  <!-- ===== CROSS ALDOL ===== -->
+  <h2 id="cross-aldol">交叉羥醛反應（Cross-Aldol）</h2>
+  <p>使用兩種不同的羰基化合物進行羥醛，但必須避免自縮合。成功的交叉羥醛需滿足：</p>
+
+  <div class="box-key">
+    <strong>交叉羥醛成功的兩個條件</strong>
+    <ol>
+      <li><strong>一方提供烯醇鹽</strong>（可烯醇化）、<strong>另一方提供電子親受體</strong>（不可烯醇化，或更親電）</li>
+      <li><strong>電子親受體更易被親核攻擊</strong>（更強親電性）</li>
+    </ol>
+    <p>常見不可烯醇化的醛：甲醛（HCHO）、苯甲醛（PhCHO）、三氯乙醛（CCl₃CHO）</p>
+  </div>
+
+  <!-- ===== MANNICH ===== -->
+  <h2 id="mannich">Mannich 反應</h2>
+  <p>Mannich 反應是烯醇化羰基化合物（或烯醇等效物）、甲醛（HCHO）和仲胺（R₂NH）三組分縮合，生成 <strong>Mannich 鹼（β-胺基羰基）</strong>：</p>
+
+  <div class="reaction-scheme">
+HCHO + R₂NH + RCH₂COR' → R₂N-CH₂-CHR-COR'  (Mannich 鹼)
+                               E1cB (-NR₂H)  → R'CO-CR=CH₂  (烯酮)</div>
+
+  <p>Mannich 鹼在鹼性條件下可進一步發生 E1cB 消除，生成 α,β-不飽和羰基（烯酮），是有機合成中引入亞甲基的常用方法。</p>
+
+  <!-- ===== SPECIFIC ENOLATES ===== -->
+  <h2 id="specific-enolates">特定烯醇鹽等效物在羥醛中的應用</h2>
+
+  <h3 id="li-enolate">鋰烯醇鹽（-78°C 環化）</h3>
+  <p>LDA 在 -78°C 下對環酮生成<strong>動力學鋰烯醇鹽</strong>，再與醛反應，得到特定區位的 aldol 產物。鋰烯醇鹽結構（環狀過渡態通過六員環 Li 配位）決定立體選擇性。</p>
+
+  <h3 id="silyl-mukaiyama">矽烯醇醚 — Mukaiyama aldol</h3>
+  <p><strong>Mukaiyama aldol</strong> 使用矽烯醇醚（silyl enol ether）+ Lewis 酸（TiCl₄）與醛反應。這種方法可獨立控制烯醇鹽的區位及立體化學，是現代不對稱合成的重要工具：</p>
+
+  <div class="reaction-scheme">
+OSiR₃         O
+|             ‖    TiCl₄       OH   O
+R-C=CH₂  +  R'CH  ——→  R'-CH—CH₂-C-R
+矽烯醇醚       醛    CH₂Cl₂      (β-羥基羰基產物)</div>
+
+  <div class="box-example">
+    <strong>Manicone 合成</strong>
+    <p>以矽烯醇醚 + TiCl₄ 完成昆蟲費洛蒙 manicone 的高效合成，立體選擇性好。</p>
+  </div>
+
+  <!-- ===== KNOEVENAGEL ===== -->
+  <h2 id="knoevenagel">Knoevenagel 縮合</h2>
+  <p>活潑亞甲基化合物（1,3-二羰基）與醛（或酮）在仲胺（R₂NH）或乙酸催化下縮合，直接得到 α,β-不飽和產物（加脫水），稱為 <strong>Knoevenagel 縮合</strong>：</p>
+
+  <div class="reaction-scheme">
+EtO₂C-CH₂-CO₂Et + RCHO → EtO₂C-CR=CHO + ... → 脫羧 → R-CH=CH-CO₂Et
+ 丙二酸二乙酯       醛       R₂NH/HOAc              (Knoevenagel + 脫羧)</div>
+
+  <p>若使用含兩個 EWG 的活潑亞甲基化合物，縮合後可再脫羧，得到單活化的 α,β-不飽和產物（特別適合製備丙烯酸衍生物）。</p>
+
+  <!-- ===== ESTER ENOLATES ===== -->
+  <h2 id="ester-enolates">酯烯醇鹽等效物</h2>
+  <p>酯的羥醛反應較困難，常用三種等效物：</p>
+  <ul>
+    <li><strong>鋰烯醇鹽</strong>（LDA/LiHMDS）：直接去質子化酯</li>
+    <li><strong>矽烯醇醚</strong>：Lewis 酸活化</li>
+    <li><strong>Reformatsky 鋅試劑</strong></li>
+  </ul>
+
+  <h3 id="reformatsky">Reformatsky 反應</h3>
+  <p>Reformatsky 反應使用 α-溴代酯與鋅在溫和條件下生成<strong>有機鋅烯醇鹽</strong>，再與醛（或酮）反應，得到 β-羥基酯：</p>
+
+  <div class="reaction-scheme">
+BrCH₂CO₂Et + Zn → BrZn-CH₂CO₂Et  （Reformatsky 試劑）
+          + R'CHO
+          THF, Δ
+          → HO-CHR'-CH₂CO₂Et  （β-羥基酯）</div>
+
+  <p>優點：鋅烯醇鹽活性溫和，不會自縮合，適合對醛/酮進行選擇性加成。</p>
+
+  <!-- ===== CONTROL ALDOL ===== -->
+  <h2 id="control-aldol">控制酮的羥醛反應</h2>
+  <p>不對稱酮的兩側都可形成烯醇鹽，需控制烷基化位置：</p>
+  <ul>
+    <li><strong>動力學條件（LDA，-78°C）</strong>：優先在取代少側去質子化（甲基側）</li>
+    <li><strong>熱力學條件（Me₃SiCl，HMPA）</strong>：優先得到取代多側（更穩定）的矽烯醇醚</li>
+  </ul>
+
+  <!-- ===== GINGEROL ===== -->
+  <h2 id="gingerol">Gingerol 合成</h2>
+
+  <div class="box-example">
+    <strong>薑辣素（Gingerol）的合成</strong>
+    <p>以羥醛反應策略合成薑辣素（生薑辛辣成分）：</p>
+    <ul>
+      <li><strong>路線 A</strong>：保護羥基，LiHMDS 動力學烯醇鹽（甲基側）+ 戊醛，57% 產率</li>
+      <li><strong>路線 B</strong>：TiCl₄ + 矽烯醇醚（Mukaiyama），92% 產率（更優）</li>
+    </ul>
+  </div>
+
+  <!-- ===== INTRAMOLECULAR ALDOL ===== -->
+  <h2 id="intramolecular-aldol">分子內羥醛反應</h2>
+  <p>二羰基化合物可通過<strong>分子內羥醛</strong>形成環，優先生成 5 或 6 員環：</p>
+
+  <div class="box-example">
+    <strong>代表性例子</strong>
+    <ul>
+      <li>環癸-1,6-二酮（cyclodeca-1,6-dione）分子內羥醛，100% 產率（形成 6-5 稠環）</li>
+      <li>壬-2,8-二酮（nona-2,8-dione）在 NaOH 下環化，85% 產率（6 員環）</li>
+      <li>複雜二酮環化，90% 產率（雙環骨架）</li>
+    </ul>
+  </div>
+
+  <!-- ===== ROBINSON ===== -->
+  <h2 id="robinson">Robinson 環化（Robinson Annulation）</h2>
+  <p>Robinson 環化 = Michael 加成 + 分子內羥醛，是構建六員環（特別是甾體 A-B 環）的經典反應：</p>
+
+  <div class="reaction-scheme">
+           O          O               O
+           ‖          ‖               ‖
+   酮  +  CH₂=CH-C-Me → Michael 加成 → 1,5-二酮
+                              → 分子內 aldol (鹼) → 環烯酮
+                                     （6-員含 α,β-不飽和羰基）</div>
+
+  <div class="box-key">
+    <strong>Robinson 環化的應用</strong>
+    <ul>
+      <li>Hajos-Parrish 酮（甾體 A-B 環前驅體）</li>
+      <li>廣泛用於天然產物合成（如甾體、萜烯）</li>
+      <li>R₂NH 催化（烯胺路徑）可得高對映選擇性</li>
+      <li>Darzens 反應（縮水甘油酸酯縮合）</li>
+    </ul>
+  </div>
+
+  <!-- ===== CLAISEN ===== -->
+  <h2 id="claisen">Claisen 酯縮合（Claisen Condensation）</h2>
+  <p>兩分子酯（含 α-H）在強鹼（NaOEt）下縮合，生成 β-酮酯（β-keto ester）。這是一個<strong>親核加成-消除</strong>反應（酯的羥醛類似物）：</p>
+
+  <div class="reaction-scheme">
+2 EtOAc  ——NaOEt——→  EtO₂C-CH₂-COCH₃  + EtOH
+乙酸乙酯                  乙醯乙酸乙酯        (β-酮酯)
+
+機制：
+1. NaOEt 去質子化 α-H → 烯醇鹽
+2. 烯醇鹽攻擊另一酯分子的 C=O → 四面體中間體
+3. 消除 EtO⁻ → β-酮酯 (還有 α-H, pKa~11)
+4. NaOEt 去質子化 β-酮酯 → 穩定烯醇鹽 → 驅動平衡（不可逆）</div>
+
+  <div class="box-note">
+    <strong>Claisen 平衡驅動</strong>
+    <p>Claisen 縮合的<strong>熱力學驅動力</strong>：β-酮酯（pKₐ~11）可被 NaOEt 完全去質子化，形成熱力學穩定的烯醇鹽，使反應不可逆。若 β-酮酯沒有活潑 α-H，則縮合可逆（問題！）</p>
+  </div>
+
+  <h3 id="blocked-claisen">阻斷 Claisen（Blocked Claisen）</h3>
+  <p>當酯無 α-H（如苯甲酸酯 PhCO₂Et），無法發生自縮合，可利用更強鹼（三苯甲基鈉，Ph₃C⁻Na⁺）作為鹼進行跨縮合：</p>
+
+  <div class="reaction-scheme">
+PhCH₂CO₂Et + Ph₃C⁻Na⁺ → PhCH⁻CO₂Et (烯醇鹽)
+            + EtO₂C-CO₂Et (草酸酯，無 α-H，不競爭)
+            → 縮合產物 (74%)</div>
+
+  <!-- ===== CROSSED CLAISEN ===== -->
+  <h2 id="crossed-claisen">交叉 Claisen（Crossed Claisen）</h2>
+  <p>使用<strong>無 α-H 的電親性酯</strong>（不可烯醇化）+ 可烯醇化酯，可成功進行選擇性交叉 Claisen：</p>
+
+  <div class="box-key">
+    <strong>常見電親性酯的親電活性順序</strong>
+    <p>草酸酯（oxalate）> 甲酸酯（formate）> 碳酸酯（carbonate）> 苯甲酸酯（benzoate）</p>
+  </div>
+
+  <div class="box-example">
+    <strong>苯乙酸酯 + 碳酸二乙酯 → 苯丙二酸二乙酯</strong>
+    <p>苯乙酸乙酯（PhCH₂CO₂Et）+ 碳酸二乙酯（EtO₂C-OEt，無 α-H）+ NaOEt → 苯丙二酸二乙酯（diethyl phenylmalonate，兩個 CO₂Et 基），產率良好。</p>
+  </div>
+
+  <!-- ===== KETONE + ESTER ===== -->
+  <h2 id="ketone-ester">酮 + 酯縮合（生成 β-酮酯）</h2>
+  <p>酮烯醇鹽 + 酯發生跨 Claisen 縮合，生成 β-酮酯；碳酸酯比苯甲酸酯更親電：</p>
+
+  <div class="box-example">
+    <strong>環辛酮 + 碳酸二乙酯 → β-酮酯（NaH，91-94%）</strong>
+    <p>環辛酮（cyclooctanone）在 NaH 作用下形成烯醇鹽，與 EtO₂CO（碳酸二乙酯）縮合，主要得到<strong>取代少側的 β-酮酯</strong>（91-94% 產率）。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Acifran 藥物合成</strong>
+    <p>利用不對稱酮 + 酯縮合，精確控制區位選擇性，高效合成降脂藥 Acifran。</p>
+  </div>
+
+  <!-- ===== ACYLATION CONTROL ===== -->
+  <h2 id="acylation-control">醯化位置控制（C- vs O-醯化）</h2>
+  <p>烯醇鹽是兩性親核劑，醯化時可發生<strong>C-醯化</strong>（產物為 β-二羰基化合物）或<strong>O-醯化</strong>（產物為烯醇酯）。控制選擇性的方法：</p>
+
+  <table>
+    <tr><th>條件</th><th>偏好</th><th>原因</th></tr>
+    <tr><td>Li/Zn 烯醇鹽 + 醯氯/酐</td><td>C-醯化</td><td>金屬配位活化碳，螯合控制</td></tr>
+    <tr><td>1,3-二羰基（Mg 螯合型烯醇鹽）</td><td>C-醯化</td><td>Mg²⁺ 與兩個氧配位，降低 O 反應性</td></tr>
+    <tr><td>高活性醯化劑（酸酐）+ 硬性烯醇鹽</td><td>O-醯化風險</td><td>O 更硬，與硬親電體優先反應</td></tr>
+    <tr><td>烯胺 + 醯氯</td><td>C-醯化（不可逆）</td><td>C-醯化為不可逆，熱力學驅動</td></tr>
+    <tr><td>BF₃ + 酸酐</td><td>C-醯化（6-員環 TS）</td><td>硼烯醇鹽通過六員 TS 形成 1,3-二酮</td></tr>
+  </table>
+
+  <div class="box-example">
+    <strong>烯胺 C-醯化 — Longifolene 合成（82%）</strong>
+    <p>利用烯胺（pyrrolidine enamine）的不可逆 C-醯化反應，引入醯基後酸水解，高效合成天然倍半萜 longifolene 的環骨架（82% 產率）。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Aza-enolate（二甲腙型烯醇鹽）的 C-醯化</strong>
+    <p>使用二甲腙（dimethylhydrazone, RCHO→RCH=NNMe₂）作為醛的烯醇鹽等效物，LDA 去質子化後進行 C-醯化，整體產率 83%，區位選擇於取代少側。</p>
+  </div>
+
+  <!-- ===== INTRAMOLECULAR CLAISEN ===== -->
+  <h2 id="intramolecular-claisen">分子內交叉 Claisen 縮合（Dieckmann 縮合）</h2>
+  <p>雙酯化合物在鹼（NaOEt）下進行分子內 Claisen 縮合，生成環狀 β-酮酯，稱為 <strong>Dieckmann 縮合</strong>，是合成 5 或 6 員環的高效方法：</p>
+
+  <div class="reaction-scheme">
+            CO₂Et                  O   CO₂Et
+            |                      ‖   |
+EtO₂C—(CH₂)n—CH₂  + NaOEt → 環 (CH₂)n  (Dieckmann 縮合)
+                                   (β-酮酯環)</div>
+
+  <div class="box-example">
+    <strong>代表性例子</strong>
+    <ul>
+      <li>酮酯（keto-ester）NaH，82% 產率（5 員環，混合烯醇位置）</li>
+      <li>四酯化合物 Dieckmann，91% 產率（對稱策略避免區位問題）</li>
+      <li>二胺二酯（symmetrical strategy with diamine diester）以對稱性消除區位選擇性問題</li>
+    </ul>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>摘要</strong>
+    <table>
+      <tr><th>反應類型</th><th>反應物</th><th>產物</th><th>關鍵條件</th></tr>
+      <tr><td>羥醛縮合</td><td>酮/醛烯醇鹽 + 醛</td><td>β-羥基羰基（± 脫水）</td><td>鹼或酸催化</td></tr>
+      <tr><td>Mannich</td><td>烯醇化物 + HCHO + R₂NH</td><td>β-胺基羰基 / 烯酮</td><td>酸催化（HOAc）</td></tr>
+      <tr><td>Mukaiyama aldol</td><td>矽烯醇醚 + 醛</td><td>β-羥基羰基</td><td>TiCl₄</td></tr>
+      <tr><td>Reformatsky</td><td>α-溴酯 + 醛/酮</td><td>β-羥基酯</td><td>Zn, THF</td></tr>
+      <tr><td>Knoevenagel</td><td>1,3-二羰基 + 醛</td><td>α,β-不飽和（±脫羧）</td><td>R₂NH/HOAc</td></tr>
+      <tr><td>Robinson 環化</td><td>酮 + 甲基乙烯基酮</td><td>六員環烯酮</td><td>鹼（Michael + aldol）</td></tr>
+      <tr><td>Claisen 縮合</td><td>酯 + 酯</td><td>β-酮酯</td><td>NaOEt（可逆！需活潑 α-H）</td></tr>
+      <tr><td>Dieckmann 縮合</td><td>二酯</td><td>環狀 β-酮酯</td><td>NaOEt，分子內</td></tr>
+    </table>
+    <p><strong>β-酮酯合成要點（Claisen checklist）</strong>：選擇一個無 α-H 的酯為親電體，一個可烯醇化的酮/酯為親核體。若都有 α-H，需使用預形成的烯醇鹽（LDA）加以控制。</p>
+  </div>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

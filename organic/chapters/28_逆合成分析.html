@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十八章：逆合成分析</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十八章<br>逆合成分析</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">逆合成的基本概念</a>
+    <a href="#terminology" class="toc-sub">術語定義</a>
+    <a href="#guidelines">五條逆合成準則</a>
+    <a href="#synthons">供體與受體合成等效物</a>
+    <a href="#1-2-diX">1,2-二官能基</a>
+    <a href="#1-3-diX">1,3-二官能基</a>
+    <a href="#1-4-diX">1,4-二官能基</a>
+    <a href="#1-5-diX">1,5-二官能基</a>
+    <a href="#1-1-CC">1,1-C-C 斷鍵</a>
+    <a href="#amine-synthesis">胺的合成</a>
+    <a href="#drug-examples">藥物合成範例</a>
+    <a href="#1-3-diO">1,3-二氧合成</a>
+    <a href="#N-O-1-3">N,O 1,3 關係</a>
+    <a href="#claisen-disc">1,3-二羰基斷鍵</a>
+    <a href="#1-5-diCO">1,5-二羰基</a>
+    <a href="#umpolung">Umpolung 策略</a>
+    <a href="#1-2-difunc">1,2-二官能基（天然）</a>
+    <a href="#1-4-difunc">1,4-二官能基（不自然）</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十八章</div>
+    <h1>逆合成分析</h1>
+    <div class="subtitle">Retrosynthetic Analysis</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">逆合成的基本概念</h2>
+  <p><strong>逆合成分析（retrosynthetic analysis）</strong>是由 E.J. Corey 發展的系統化合成規劃方法，以<strong>逆合成箭頭（⟹）</strong>表示「目標分子可由哪些前驅物合成」，從目標（target）反向推導至已知起始物。</p>
+
+  <div class="reaction-scheme">
+目標分子  ⟹  中間體 A  ⟹  中間體 B  ⟹  ···  ⟹  起始物
+         （逆合成箭頭，表示「可由...合成」，非反應方向）</div>
+
+  <h3 id="terminology">術語定義</h3>
+  <table>
+    <tr><th>術語</th><th>英文</th><th>說明</th></tr>
+    <tr><td>斷鍵</td><td>disconnection</td><td>在目標分子中切斷一個鍵，得到兩個片段</td></tr>
+    <tr><td>合成等效物</td><td>synthon</td><td>斷鍵後得到的理想化片段（通常帶電荷）</td></tr>
+    <tr><td>試劑</td><td>reagent</td><td>實際使用的化合物，對應合成等效物</td></tr>
+    <tr><td>官能基互換</td><td>FGI</td><td>改變官能基類型，便於斷鍵或反應</td></tr>
+  </table>
+
+  <!-- ===== GUIDELINES ===== -->
+  <h2 id="guidelines">五條逆合成準則</h2>
+
+  <div class="box-key">
+    <strong>Corey 的五條逆合成準則</strong>
+    <ol>
+      <li><strong>選擇已知可靠的反應</strong>：只斷開可用高產率反應來形成的鍵</li>
+      <li><strong>在雜原子旁邊斷鍵</strong>：O、N 等雜原子提供極性，通常是 C-C 鍵斷開的最佳位置</li>
+      <li><strong>避免化學選擇性問題</strong>：選擇不需區分多個相似官能基的斷鍵方式</li>
+      <li><strong>兩基團同時斷鍵</strong>：儘量一次斷開能由一個反應形成的兩個鍵</li>
+      <li><strong>轉化為含氧官能基</strong>：N 的類似物常可回溯至 O 官能基（較易取得）</li>
+    </ol>
+  </div>
+
+  <!-- ===== SYNTHONS ===== -->
+  <h2 id="synthons">供體與受體合成等效物</h2>
+  <p>每個斷鍵產生一個<strong>受體（acceptor, a）</strong>合成等效物（缺電子）和一個<strong>供體（donor, d）</strong>合成等效物（富電子）。</p>
+
+  <div class="box-note">
+    <strong>合成等效物的標記規則</strong>
+    <p>下標數字代表官能基到斷裂位置的碳數：</p>
+    <ul>
+      <li><strong>a¹</strong>：醛的親電碳（CHO 的 C1，受體）→ 實際試劑：醛</li>
+      <li><strong>d²</strong>：烯醇鹽（α 碳，供體）→ 實際試劑：酮/LDA</li>
+      <li><strong>a²</strong>：環氧化物（β 碳，受體）→ 實際試劑：環氧化物</li>
+      <tr><td><strong>a³</strong>：烯酮的 β 碳（Michael 受體，受體）→ 實際試劑：烯酮</td></tr>
+      <li><strong>奇數下標</strong> → 受體（acceptor）；<strong>偶數下標</strong> → 供體（donor）</li>
+    </ul>
+  </div>
+
+  <!-- ===== 1,2-diX ===== -->
+  <h2 id="1-2-diX">1,2-二官能基的逆合成</h2>
+  <p>1,2-二官能基化合物（如 1,2-二醇、α-氨基醇）的逆合成通常回溯至烯烴（二羥基化或環氧開環）：</p>
+
+  <div class="reaction-scheme">
+1,2-二醇  ⟹  烯烴（OsO₄ 二羥基化正向）
+1,2-氨基醇 ⟹  環氧化物（胺開環正向）
+α-羥基酮  ⟹  烯烴（Rubottom 氧化正向）</div>
+
+  <!-- ===== 1,3-diX ===== -->
+  <h2 id="1-3-diX">1,3-二官能基的逆合成</h2>
+  <p>1,3-二官能基（1,3-diX）是<strong>自然極性（natural polarity）</strong>反應的典型產物，可回溯至：</p>
+  <ul>
+    <li><strong>羥醛反應（a¹ + d²）</strong>：1,3-羥基羰基 ⟹ 醛 + 烯醇鹽</li>
+    <li><strong>Michael 加成中的 a³ 受體</strong>：1,3-二羰基 ⟹ 烯酮（a³）+ 烯醇鹽（d²）</li>
+    <li><strong>Claisen 縮合</strong>：β-酮酯 ⟹ 兩個酯</li>
+  </ul>
+
+  <!-- ===== 1,4-diX ===== -->
+  <h2 id="1-4-diX">1,4-二官能基的逆合成（Umpolung 策略）</h2>
+  <p>1,4-二官能基（1,4-diX）是<strong>不自然極性</strong>，需要 umpolung 策略：</p>
+  <ul>
+    <li><strong>烯胺 + α-溴羰基（d¹ + a³）</strong>：1,4-二羰基 ⟹ 烯胺（d¹） + α-鹵羰基</li>
+    <li><strong>Friedel-Crafts + 環狀酸酐</strong>：可避免 umpolung（Friedel-Crafts 醯化 + 環酐直接給出 1,4-關係）</li>
+  </ul>
+
+  <!-- ===== 1,5-diX ===== -->
+  <h2 id="1-5-diX">1,5-二官能基的逆合成</h2>
+  <p>1,5-二羰基（1,5-diCO）是 Michael 加成（a³ + d²）的典型產物：</p>
+
+  <div class="reaction-scheme">
+1,5-二羰基逆合成：
+    O        O
+    ‖        ‖
+R—C—CH₂CH₂CH₂—C—R'   ⟹   烯酮（a³）+ 烯醇鹽（d²）
+                               （Michael 加成正向）</div>
+
+  <!-- ===== 1,1-CC ===== -->
+  <h2 id="1-1-CC">1,1-C-C 斷鍵（Grignard/FGI 策略）</h2>
+  <p>在羰基旁的 C-C 鍵可以斷開，回溯至 Grignard 加成（a¹ + d 試劑）：</p>
+
+  <div class="reaction-scheme">
+    OH
+    |
+R—C—R'R''  ⟹  R-CHO (或酮) + R'MgBr（或 R'Li）
+   醇（1,1 關係）     （Grignard 正向）</div>
+
+  <p>有時需先進行 FGI（官能基互換）：醇 → 酮（氧化），再對酮進行 1,1 C-C 斷鍵。</p>
+
+  <!-- ===== AMINE SYNTHESIS ===== -->
+  <h2 id="amine-synthesis">胺的合成策略</h2>
+  <p>胺在逆合成中常用兩種策略：</p>
+  <ol>
+    <li><strong>醯胺還原（LiAlH₄）</strong>：胺 ⟹ 醯胺 ⟹ 羧酸 + 胺（縮合）→ 醯胺 → LiAlH₄ 還原 → 胺</li>
+    <li><strong>還原胺化（reductive amination）</strong>：胺 ⟹ 酮（或醛）+ 胺 → 亞胺 → 還原 → 胺</li>
+  </ol>
+
+  <!-- ===== DRUG EXAMPLES ===== -->
+  <h2 id="drug-examples">藥物合成逆合成範例</h2>
+
+  <div class="box-example">
+    <strong>普萘洛爾（Propranolol，β-受體阻斷劑）</strong>
+    <p>1,2-二氧關係：逆合成回溯至環氧化物（由萘酚和環氧氯丙烷合成）。正向：萘酚 + 環氧氯丙烷 → 芳基環氧化物 → 異丙胺開環 → 普萘洛爾。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Ocfentanil（阿片類）、Fenfluramine（食慾抑制劑）、Nafimidone（抗癲癇）</strong>
+    <p>各含 1,2 關係的 C-N 鍵：逆合成均可回溯至還原胺化或醯胺還原策略。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Arildone（抗病毒藥）</strong>
+    <p>含 1,2-二羰基前驅體，逆合成回溯至烯烴功能化（Rubottom 氧化或親電環氧化）。</p>
+  </div>
+
+  <!-- ===== 1,3-diO ===== -->
+  <h2 id="1-3-diO">1,3-二氧關係的逆合成</h2>
+  <p>1,3-二氧化合物（如 β-羥基酯、β-羥基酮）的逆合成回溯至羥醛反應或 Reformatsky：</p>
+
+  <div class="box-example">
+    <strong>血栓素拮抗劑（Thromboxane Antagonist）</strong>
+    <p>含 1,3-羥基酯關係；逆合成：1,3-二氧 ⟹ 環酸酯 + 格氏試劑（或烯醇鹽 + 醛）。正向通過 Reformatsky 或分子內 aldol 建構。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Cinflumide（肌肉鬆弛劑）、Doxpicomine（鎮痛劑）</strong>
+    <p>均含 1,3-二氧關係；逆合成回溯至羥醛縮合（aldol）或 Reformatsky 反應。</p>
+  </div>
+
+  <!-- ===== N,O-1,3 ===== -->
+  <h2 id="N-O-1-3">N,O 的 1,3 關係</h2>
+  <p>β-氨基醇（1,3-N,O 關係）的逆合成策略：回溯至腈的加成（nitrile aldol），或 Mannich 反應，或環氧開環：</p>
+
+  <div class="box-example">
+    <strong>Venlafaxine（抗憂鬱藥）</strong>
+    <p>含 1,3-N,O 關係；逆合成：1,3-氨基醇 ⟹ 芳香酮 + 胺（Mannich 策略）或腈加成策略。</p>
+  </div>
+
+  <div class="box-example">
+    <strong>Clobutinol、Nisoxetine 類似物</strong>
+    <p>均含 β-氨基醇（1,3-N,O）：逆合成通過 Mannich 反應或還原胺化回溯到酮前驅體。</p>
+  </div>
+
+  <!-- ===== CLAISEN DISC ===== -->
+  <h2 id="claisen-disc">1,3-二羰基的 Claisen 斷鍵</h2>
+  <p>β-酮酯（1,3-二羰基）的逆合成可用 Claisen 斷鍵，回溯至兩個酯：</p>
+
+  <div class="box-example">
+    <strong>Tazadolene（鎮靜藥）、Bropirimine（免疫調節劑）</strong>
+    <p>均含 1,3-二羰基關係；逆合成通過 Claisen 斷鍵，回溯至酮 + 碳酸酯或酯 + 酯（Claisen 縮合或 Dieckmann）。</p>
+  </div>
+
+  <!-- ===== 1,5-diCO ===== -->
+  <h2 id="1-5-diCO">1,5-二羰基的逆合成</h2>
+  <div class="box-example">
+    <strong>Rogletimide（鎮靜藥）</strong>
+    <p>含 1,5-二羰基關係；逆合成：Michael 加成（a³+d²）+ 丙二酸酯烷基化。正向通過 Michael 加成 + 環化合成哌嗪骨架。</p>
+  </div>
+
+  <!-- ===== UMPOLUNG ===== -->
+  <h2 id="umpolung">Umpolung 策略</h2>
+  <p>對於<strong>不自然極性</strong>的 C-C 關係（如 1,2-二羰基、1,4-二官能基），需要 umpolung 試劑：</p>
+
+  <div class="box-key">
+    <strong>常見 Umpolung 等效物</strong>
+    <table>
+      <tr><th>合成等效物</th><th>實際試劑</th><th>適用關係</th></tr>
+      <tr><td>d¹（umpolung 醛碳）</td><td>1,3-dithiane（CN⁻ 也可）</td><td>1,2 或 1,4 二羰基</td></tr>
+      <tr><td>a²（umpolung 烯醇）</td><td>環氧化物</td><td>1,2 二官能基</td></tr>
+      <tr><td>CN⁻（等效 d¹）</td><td>HCN、NaCN</td><td>1,2 羥基腈</td></tr>
+    </table>
+  </div>
+
+  <div class="box-example">
+    <strong>苯硫醇二醇（Phenaglycodol 鎮靜劑）</strong>
+    <p>含 1,2-二功能化關係（兩個 OH）；逆合成：1,2-二醇 ⟹ 芳酮（OsO₄ 二羥基化）或環氧化物。正向通過 BH₃ 氫硼化或其他方法。</p>
+  </div>
+
+  <!-- ===== 1,2-DIFUNC ===== -->
+  <h2 id="1-2-difunc">1,2-二官能基的天然合成</h2>
+  <p>1,2 關係在自然合成中可用：</p>
+  <ul>
+    <li><strong>二羥基化（dihydroxylation）+ FGI</strong>：得到 1,2-二醇，再轉化其他基</li>
+    <li><strong>腈 + 酮（umpolung）</strong>：得到 α-羥基腈（cyanohydrin），再轉化</li>
+  </ul>
+
+  <!-- ===== 1,4-DIFUNC ===== -->
+  <h2 id="1-4-difunc">1,4-二官能基的逆合成</h2>
+  <p>1,4-二官能基（umpolung 極性）策略：</p>
+  <ul>
+    <li><strong>烯胺 + α-溴羰基</strong>（d¹ + a³）：1,4-二羰基 ⟹ 烯胺（醛等效 d¹）+ α-鹵代酮（a³）</li>
+    <li><strong>Friedel-Crafts + 環狀酐</strong>：芳環 + 環酐（如順丁烯二酸酐）→ 1,4-芳基羰基酸（避免 umpolung）</li>
+  </ul>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>逆合成分析總表</strong>
+    <table>
+      <tr><th>官能基關係</th><th>自然/非自然</th><th>回溯反應</th><th>實際試劑</th></tr>
+      <tr><td>1,2-二官能基</td><td>非自然（需 umpolung 形成 C-C）</td><td>烯烴二羥基化、環氧開環</td><td>OsO₄、環氧化物</td></tr>
+      <tr><td>1,3-二官能基（OH,CO）</td><td>自然（aldol）</td><td>羥醛反應（a¹+d²）</td><td>醛 + 烯醇鹽</td></tr>
+      <tr><td>1,3-二羰基</td><td>自然（Claisen）</td><td>Claisen 縮合</td><td>兩個酯</td></tr>
+      <tr><td>1,4-二羰基</td><td>非自然（需 umpolung）</td><td>烯胺 + α-鹵羰基</td><td>烯胺（d¹）+ RCOCHBrR</td></tr>
+      <tr><td>1,5-二羰基</td><td>自然（Michael）</td><td>Michael 加成（a³+d²）</td><td>烯酮 + 烯醇鹽</td></tr>
+    </table>
+    <ul>
+      <li><strong>奇數 a 型（a¹, a³）</strong>：醛（a¹）、烯酮（a³）、環氧化物（a²，特殊）</li>
+      <li><strong>偶數 d 型（d²）</strong>：烯醇鹽</li>
+      <li><strong>Umpolung（d¹）</strong>：1,3-dithiane、CN⁻</li>
+      <li>FGI 常用於使官能基相容（醇 → 酮，胺 → 酰胺等）</li>
+      <li>選擇斷鍵位置：優先在雜原子旁，且對應已知可靠反應</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

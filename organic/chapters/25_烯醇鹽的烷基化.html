@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二十五章：烯醇鹽的烷基化</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第二十五章<br>烯醇鹽的烷基化</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">烯醇鹽烷基化簡介</a>
+    <a href="#mechanism" class="toc-sub">兩步驟機制</a>
+    <a href="#other-enolates">其他烯醇鹽</a>
+    <a href="#nitrile-alkyl" class="toc-sub">腈與硝基烷的烷基化</a>
+    <a href="#alkylating-agents">烷基化試劑的選擇</a>
+    <a href="#lda">LDA 與強鹼烯醇鹽</a>
+    <a href="#ester-acid">酯與羧酸的烷基化</a>
+    <a href="#aldehyde">醛的烷基化</a>
+    <a href="#beta-dicarbonyl">1,3-二羰基化合物</a>
+    <a href="#regioselectivity">區位選擇性</a>
+    <a href="#enone-source">烯酮作為區位特異性烯醇鹽來源</a>
+    <a href="#synthesis-examples">合成實例</a>
+    <a href="#michael">Michael 加成</a>
+    <a href="#michael-acceptors" class="toc-sub">Michael 受體</a>
+    <a href="#intramolecular">分子內反應</a>
+    <a href="#enamines-michael">烯胺的 Michael 加成</a>
+    <a href="#silyl-michael">矽烯醇醚與 TiCl₄</a>
+    <a href="#various-activators">各類活化基</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第二十五章</div>
+    <h1>烯醇鹽的烷基化</h1>
+    <div class="subtitle">Alkylation of Enolates</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">烯醇鹽烷基化簡介</h2>
+  <p>在第二十章我們學習了如何生成烯醇鹽（enolates）。本章的重點是利用烯醇鹽作為<strong>親核劑</strong>，與<strong>烷基化試劑</strong>（electrophilic carbon, SN2）反應，在羰基的 α 位引入新的碳-碳鍵，這是有機合成中最重要的 C-C 鍵形成反應之一。</p>
+
+  <h3 id="mechanism">兩步驟機制</h3>
+  <p>烯醇鹽烷基化可概括為兩個步驟：</p>
+  <ol>
+    <li><strong>形成烯醇鹽</strong>：以鹼（強鹼或弱鹼）去質子化羰基 α 位</li>
+    <li><strong>SN2 烷基化</strong>：烯醇鹽碳作為親核劑，攻擊烷基化試劑（RX）的碳，發生背面攻擊</li>
+  </ol>
+
+  <div class="reaction-scheme">
+步驟 1：形成烯醇鹽
+    O                  O⁻
+    ‖                  |
+R—C—CH₂R'  + Base → R—C=CHR'   (烯醇鹽)
+
+步驟 2：SN2 烷基化
+    O⁻                  O
+    |                   ‖
+R—C=CHR'  + R''X → R—C—CHR'R''  + X⁻
+                        (α-烷基化產物)</div>
+
+  <div class="box-key">
+    <strong>關鍵概念</strong>
+    <p>烯醇鹽是<strong>兩性親核劑</strong>（ambident nucleophile）：可從 C 或 O 進行反應。在烷基化中通常以 C 親核（C-烷基化），因為碳比氧更具親核性（軟-軟匹配）。在強電子吸引基存在下，O-烷基化（得到烯醇醚）也可能發生。</p>
+  </div>
+
+  <!-- ===== OTHER ENOLATES ===== -->
+  <h2 id="other-enolates">其他類型的烯醇鹽</h2>
+  <p>除了簡單酮、醛，許多含活潑 C-H 的官能基也可以形成類似烯醇鹽的陰離子：</p>
+
+  <h3 id="nitrile-alkyl">腈與硝基烷的烷基化</h3>
+  <p><strong>腈（nitrile, R-CN）</strong>的 α-H 也具有相當酸性（pKₐ ≈ 25），可被強鹼去質子化，形成腈穩定的碳負離子，進行烷基化：</p>
+
+  <div class="reaction-scheme">
+CH₃CN  + LDA  →  ⁻CH₂CN  →  + RX  →  R-CH₂CN
+  (pKa~25)         (腈穩定陰離子)       (烷基化腈)</div>
+
+  <p><strong>硝基烷（nitroalkane, R-NO₂）</strong>的 α-H 酸性極強（pKₐ ≈ 10），因為一個硝基相當於兩個吸電子基（N 帶正電荷），可在弱鹼（如 NaOH、K₂CO₃）條件下形成陰離子：</p>
+
+  <div class="reaction-scheme">
+CH₃NO₂  + NaOH  →  ⁻CH₂NO₂  →  + RX  →  R-CH₂NO₂
+  (pKa~10)          (硝基穩定陰離子)       (烷基化硝基烷)</div>
+
+  <div class="box-note">
+    <strong>pKa 比較</strong>
+    <table>
+      <tr><th>化合物類型</th><th>pKₐ (α-H)</th><th>所需鹼</th></tr>
+      <tr><td>硝基烷 (RCH₂NO₂)</td><td>~10</td><td>弱鹼 (NaOH, K₂CO₃)</td></tr>
+      <tr><td>1,3-二羰基化合物</td><td>10–15</td><td>弱鹼 (NaOH, NaOEt)</td></tr>
+      <tr><td>酯 (RCO₂Et)</td><td>~25</td><td>強鹼 (NaOEt, LDA)</td></tr>
+      <tr><td>腈 (RCN)</td><td>~25</td><td>強鹼 (LDA)</td></tr>
+      <tr><td>酮 (R₂CHCOR)</td><td>~20</td><td>強鹼 (LDA)</td></tr>
+    </table>
+  </div>
+
+  <!-- ===== ALKYLATING AGENTS ===== -->
+  <h2 id="alkylating-agents">烷基化試劑的選擇</h2>
+  <p>烷基化試劑必須能發生 SN2 反應，因此反應活性取決於碳的位阻與離去基的離去能力。</p>
+
+  <div class="box-key">
+    <strong>反應活性順序（SN2）</strong>
+    <p>甲基（CH₃X）≈ 烯丙基（allyl, CH₂=CHCH₂X）≈ 苄基（benzyl, PhCH₂X）<br>
+    >> 伯碳（1° RCH₂X）<br>
+    >> 仲碳（2° R₂CHX）<br>
+    ✗ 叔碳（3° R₃CX）— 不適合（位阻過大，轉為 E2）</p>
+  </div>
+
+  <p>常見烷基化試劑包括烷基碘（RI）、烷基溴（RBr）、對甲苯磺酸酯（OTs）、甲磺酸酯（OMs）等。</p>
+
+  <!-- ===== LDA ===== -->
+  <h2 id="lda">LDA 與強鹼烯醇鹽</h2>
+  <p><strong>二異丙基胺基鋰（LDA）</strong>是製備動力學烯醇鹽最常用的強鹼（pKₐ~36），其特點是位阻大、非親核性，在 THF、-78°C 下使用。</p>
+
+  <div class="reaction-scheme">
+           O                    OLi
+           ‖        LDA         |
+    R—C—CH₂R'   ————→   R—C=CHR'
+              THF, -78°C
+              (定量去質子化，動力學烯醇鹽)</div>
+
+  <p>其他常用強鹼：</p>
+  <ul>
+    <li><strong>LTMP</strong>（二甲基哌啶基鋰）：更大位阻</li>
+    <li><strong>LiHMDS / LHMDS</strong>（雙(三甲矽基)胺基鋰）：常用於酯與醛烯醇鹽</li>
+    <li><strong>NaH</strong>：強鹼但有時會引起副反應（Claisen 縮合），適用於 β-二羰基化合物</li>
+  </ul>
+
+  <!-- ===== ESTER & ACID ===== -->
+  <h2 id="ester-acid">酯與羧酸的烷基化</h2>
+  <h3>酯的烷基化</h3>
+  <p>酯（pKₐ~25）的 α 位烷基化較困難，需注意避免 Claisen 縮合（自身反應）。解決方法：</p>
+  <ul>
+    <li>使用<strong>叔丁酯（t-Bu ester）</strong>：立體位阻阻止 Claisen，利用 LDA 在 -78°C 去質子化後烷基化</li>
+    <li>低溫、快速加入烷基化試劑</li>
+  </ul>
+
+  <h3>羧酸的烷基化（二鋰鹽法）</h3>
+  <p>羧酸（RCOOH）可與 2 當量 LDA 反應，生成<strong>二鋰鹽（dilithio enolate）</strong>，再與烷基化試劑反應，避免了酯化等副反應：</p>
+
+  <div class="reaction-scheme">
+RCH₂COOH  + 2 LDA  →  RCH⁻CO₂Li⁻  (二鋰鹽)
+                         |
+                       + R'X  →  RCH(R')COOH</div>
+
+  <!-- ===== ALDEHYDE ===== -->
+  <h2 id="aldehyde">醛的烷基化</h2>
+  <p>醛（pKₐ~17）的 α 位烷基化是個挑戰，原因在於：醛自身容易在 LDA 條件下發生<strong>自縮合（aldol condensation）</strong>。解決方案：</p>
+
+  <ul>
+    <li><strong>烯胺（enamine）</strong>：用仲胺（吡咯烷、嗎啉）與醛縮合，形成烯胺後烷基化，酸水解還原得醛</li>
+    <li><strong>aza-enolate（腙型烯醇鹽等效物）</strong>：利用 RCHO + RNH₂ 形成亞胺，再以 LDA 去質子化</li>
+    <li><strong>矽烯醇醚（silyl enol ether）</strong>：先將醛轉為矽烯醇醚，再以 Lewis 酸活化後烷基化</li>
+  </ul>
+
+  <!-- ===== BETA-DICARBONYL ===== -->
+  <h2 id="beta-dicarbonyl">1,3-二羰基化合物的烷基化</h2>
+  <p>1,3-二羰基化合物（如丙二酸二乙酯、乙醯乙酸乙酯）的亞甲基 H 有極高酸性（pKₐ = 10–15），可在弱鹼條件下形成穩定烯醇鹽：</p>
+
+  <div class="reaction-scheme">
+EtO₂C—CH₂—CO₂Et  +  NaOEt  →  EtO₂C—CH⁻—CO₂Et
+ 丙二酸二乙酯 (pKa~13)           (穩定陰離子)
+                   + R-X  →  EtO₂C—CHR—CO₂Et
+                   酸/熱水解、脫羧  →  RCH₂CO₂H
+                                    (合成一元酸)</div>
+
+  <div class="box-example">
+    <strong>乙醯乙酸乙酯合成（acetoacetic ester synthesis）</strong>
+    <p>乙醯乙酸乙酯（EtO₂C-CH₂-COCH₃，pKₐ~11）在 NaOEt 作用下形成穩定陰離子，經烷基化後，再以酸/鹼水解並加熱脫羧，可製備各種甲基酮（R-COCH₃）：</p>
+    <ol>
+      <li>NaOEt，R-X → EtO₂C-CHR-COCH₃</li>
+      <li>NaOH/H₂O 水解 → HOOC-CHR-COCH₃</li>
+      <li>Δ（加熱脫羧）→ R-CH₂-COCH₃（甲基酮）</li>
+    </ol>
+  </div>
+
+  <!-- ===== REGIOSELECTIVITY ===== -->
+  <h2 id="regioselectivity">烯醇鹽的區位選擇性</h2>
+  <p>對於不對稱酮（如 2-甲基環己酮），兩側都有 α-H，但酸性不同，可控制烯醇鹽的形成位置：</p>
+
+  <div class="box-key">
+    <strong>動力學烯醇鹽 vs. 熱力學烯醇鹽</strong>
+    <table>
+      <tr><th>類型</th><th>條件</th><th>形成位置</th><th>原因</th></tr>
+      <tr><td>動力學烯醇鹽</td><td>LDA，-78°C，THF，快速</td><td>取代基較少側（空間位阻小）</td><td>去質子化速率快</td></tr>
+      <tr><td>熱力學烯醇鹽</td><td>KH（或 KOt-Bu），高溫，平衡條件</td><td>取代基較多側（更穩定的烯醇鹽）</td><td>熱力學穩定性高</td></tr>
+    </table>
+  </div>
+
+  <div class="reaction-scheme">
+    2-甲基環己酮烯醇鹽區位選擇性
+
+    LDA, -78°C          OLi         OLi
+                         |            |
+    2-Me-cyclohexanone → 較少側烯醇鹽  or  較多側烯醇鹽
+    (動力學)              (主產物)         (次要)
+
+    KH, 高溫
+    (熱力學)              (次要)          (主產物，更穩定烯醇鹽)</div>
+
+  <!-- ===== ENONE SOURCE ===== -->
+  <h2 id="enone-source">烯酮作為區位特異性烯醇鹽來源</h2>
+  <p>利用<strong>共軛烯酮（enone）</strong>作為<strong>區位特異性（regiospecific）</strong>烯醇鹽來源，繞開動力學/熱力學問題：</p>
+
+  <ul>
+    <li><strong>金屬溶解還原（dissolving metal reduction）</strong>：Li/NH₃ 或 Na/NH₃ 還原烯酮 → 特定區位的烯醇鹽</li>
+    <li><strong>共軛加成後捕獲</strong>：有機銅試劑（R₂CuLi）1,4-加成 → 烯醇鹽</li>
+    <li><strong>Me₂CuLi + Me₃SiCl</strong>：共軛加成同時捕獲為矽烯醇醚，保留區位資訊</li>
+  </ul>
+
+  <!-- ===== SYNTHESIS EXAMPLES ===== -->
+  <h2 id="synthesis-examples">合成實例</h2>
+
+  <div class="box-example">
+    <strong>α-Chamigrene 的合成（螺環酮烯醇鹽）</strong>
+    <p>螺環酮通過烯醇鹽烷基化高效建構，關鍵步驟：</p>
+    <ol>
+      <li>烯酮 + Me₂CuLi → 共軛加成 → 引入甲基，同時以 Me₃SiCl 捕獲為矽烯醇醚（區位保持）</li>
+      <li>矽烯醇醚 + MeLi → 去矽保護，得鋰烯醇鹽</li>
+      <li>KH 轉為熱力學烯醇鹽 → 與烷基化試劑反應 → α-chamigrene 螺環骨架</li>
+    </ol>
+  </div>
+
+  <div class="box-example">
+    <strong>前列腺素 E₂（Prostaglandin E₂）的合成（Noyori，1978）</strong>
+    <p>Noyori 採用以下關鍵步驟完成 PGE₂ 的合成（78% 整體產率）：</p>
+    <ol>
+      <li>環戊酮衍生物以 LDA 形成區位特異性烯醇鹽</li>
+      <li>有機銅試劑（organocopper）共軛加成引入長碳鏈</li>
+      <li>烯醇鹽 + 烯丙基碘（allylic iodide）烷基化，引入另一鏈</li>
+    </ol>
+  </div>
+
+  <!-- ===== MICHAEL ===== -->
+  <h2 id="michael">Michael 加成（1,4-加成）</h2>
+  <p><strong>Michael 加成</strong>是烯醇鹽（或其他軟性親核劑）對<strong>α,β-不飽和羰基化合物（Michael 受體）</strong>的 1,4-共軛加成。</p>
+
+  <div class="reaction-scheme">
+                O                O⁻
+                ‖                |
+Nu⁻ + CH₂=CH—C—R  →  Nu—CH₂—CH=C—R  →  [H⁺]  →  Nu—CH₂—CH₂—C—R
+                                                              ‖
+                                                              O
+              Michael受體          烯醇鹽中間體                1,5-二羰基產物</div>
+
+  <h3 id="michael-acceptors">Michael 受體（Michael acceptors）</h3>
+  <p>常見 Michael 受體（α,β-不飽和化合物）包括：</p>
+
+  <table>
+    <tr><th>Michael 受體</th><th>名稱</th></tr>
+    <tr><td>CH₂=CH-COR</td><td>甲基乙烯基酮（MVK）</td></tr>
+    <tr><td>CH₂=CH-CO₂R</td><td>丙烯酸酯</td></tr>
+    <tr><td>CH₂=CH-CN</td><td>丙烯腈（acrylonitrile）</td></tr>
+    <tr><td>CH₂=CH-CHO</td><td>丙烯醛（acrolein）</td></tr>
+    <tr><td>環狀外亞甲基酮/酯</td><td>exo-methylene ketone/lactone</td></tr>
+  </table>
+
+  <div class="box-key">
+    <strong>Michael vs. 直接加成（Aldol）</strong>
+    <p>烯醇鹽親核性強弱決定反應位置：</p>
+    <ul>
+      <li><strong>穩定的烯醇鹽</strong>（1,3-二羰基、硝基烷）→ 軟性親核劑 → 偏好 1,4-共軛加成（Michael）</li>
+      <li><strong>活潑的烯醇鹽</strong>（簡單酮/酯）→ 硬性親核劑 → 偏好 1,2-直接加成（aldol）</li>
+    </ul>
+  </div>
+
+  <div class="box-example">
+    <strong>1,3-二羰基 + Michael 受體</strong>
+    <p>丙二酸二乙酯（diethyl malonate）+ 反丁烯二酸二乙酯（diethyl fumarate）→ 產率 93%。這是因為兩個 EWG（CO₂Et × 2）使丙二酸二乙酯的烯醇鹽為軟性親核劑，偏向 Michael 加成。</p>
+  </div>
+
+  <!-- ===== INTRAMOLECULAR ===== -->
+  <h2 id="intramolecular">分子內 SN2 → 環丙烷化</h2>
+  <p>當烯醇鹽分子中同時含有離去基（如 Br），可發生<strong>分子內 SN2</strong>，直接形成三員環（cyclopropane）：</p>
+
+  <div class="reaction-scheme">
+    O⁻                O
+    |                 ‖
+R—C=CH—CH₂—Br  →  R—C—[cyclopropane]  + Br⁻
+     (分子內 SN2，形成環丙烷)</div>
+
+  <!-- ===== ENAMINES MICHAEL ===== -->
+  <h2 id="enamines-michael">烯胺的 Michael 加成</h2>
+  <p><strong>烯胺（enamine）</strong>作為烯醇鹽等效物，可對 Michael 受體進行 1,4-加成，酸水解後得到 1,5-二羰基產物：</p>
+
+  <div class="reaction-scheme">
+                     O                    O    O
+pyrrolidine + R₂C=O → 烯胺 → + Michael受體 → [酸水解] → R₂C—CH₂—CH₂—C—R'
+                                                          (1,5-二羰基)</div>
+
+  <p>烯胺的優點：在溫和條件下反應，不需要強鹼，避免自縮合，且常給出良好的區位選擇性。</p>
+
+  <!-- ===== SILYL MICHAEL ===== -->
+  <h2 id="silyl-michael">矽烯醇醚 + TiCl₄ 的 Michael 加成</h2>
+  <p><strong>矽烯醇醚（silyl enol ether）</strong>在 Lewis 酸（TiCl₄）活化下，可對 Michael 受體進行 1,4-加成，得到 1,5-二羰基產物：</p>
+
+  <div class="reaction-scheme">
+OSiR₃          O               O    O
+|              ‖   TiCl₄      ‖    ‖
+R—C=CH₂  +  CH₂=CHC—R'  →  R—C—CH₂CH₂C—R'
+ 矽烯醇醚     Michael受體       (1,5-二羰基)</div>
+
+  <p><strong>矽酮縮醛（silyl ketene acetal）</strong>（來自酯）亦可在 TiCl₄ 條件下進行 Michael 加成。</p>
+
+  <!-- ===== VARIOUS ACTIVATORS ===== -->
+  <h2 id="various-activators">各類活化基的應用</h2>
+
+  <h3>丙烯腈作為 Michael 受體</h3>
+  <p>丙烯腈（CH₂=CHCN）是常用的 Michael 受體，CN 基活化雙鍵，且後續可水解為羧酸或還原為胺：</p>
+
+  <div class="box-example">
+    <strong>甘胺酸（glycine）合成</strong>
+    <p>利用丙烯腈的 Michael 加成，可合成胺基酸前驅體（80% 產率）。CN 基後經水解/還原即得 α-胺基酸。</p>
+  </div>
+
+  <h3>硝基烷的 Michael 加成</h3>
+  <p>硝基烷（pKₐ~10）作為穩定烯醇鹽等效物，可在溫和鹼（Al₂O₃、Cs₂CO₃）條件下進行 Michael 加成：</p>
+  <ul>
+    <li>Al₂O₃ 固相反應，0-25°C，92% 產率</li>
+    <li>Cs₂CO₃/DMF 條件下可進行分子內環化</li>
+    <li><strong>Nef 反應</strong>：硝基烷 → 醛/酮（重要的官能基轉化）</li>
+    <li>硝基丙烷 + MVK → Nef 反應 → 1,4-二酮（臭氧分解法）</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>Vivalan 藥物合成（4 步）</strong>
+    <ol>
+      <li>共軛加成 CN</li>
+      <li>H₂/Pd-C 氫化還原</li>
+      <li>環化反應</li>
+      <li>烷基化 + 還原</li>
+    </ol>
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+  <div class="box-summary">
+    <strong>摘要</strong>
+    <table>
+      <tr><th>方法</th><th>烯醇鹽類型</th><th>適用底物</th><th>反應條件</th></tr>
+      <tr><td>LDA 烷基化</td><td>動力學鋰烯醇鹽</td><td>酮、酯、腈</td><td>THF, -78°C</td></tr>
+      <tr><td>NaOEt 烷基化</td><td>鈉烯醇鹽</td><td>1,3-二羰基</td><td>EtOH, 室溫</td></tr>
+      <tr><td>乙醯乙酸酯合成</td><td>穩定烯醇鹽</td><td>乙醯乙酸乙酯</td><td>NaOEt，烷基化，水解，脫羧</td></tr>
+      <tr><td>丙二酸酯合成</td><td>穩定烯醇鹽</td><td>丙二酸二乙酯</td><td>NaOEt，烷基化，水解，脫羧</td></tr>
+      <tr><td>烯胺烷基化</td><td>烯胺（等效物）</td><td>醛、酮</td><td>吡咯烷，Δ</td></tr>
+      <tr><td>矽烯醇醚烷基化</td><td>矽烯醇醚（等效物）</td><td>酮、醛、酯</td><td>TiCl₄ 或 Lewis 酸</td></tr>
+      <tr><td>Michael 加成</td><td>穩定烯醇鹽</td><td>1,3-二羰基 + 烯酮/丙烯腈</td><td>弱鹼，室溫</td></tr>
+    </table>
+    <ul>
+      <li>烷基化試劑活性：甲基 ≈ 烯丙基 ≈ 苄基 >> 伯碳 >> 仲碳；叔碳不適用</li>
+      <li>動力學烯醇鹽（LDA，-78°C）→ 取代少側；熱力學烯醇鹽（KH，高溫）→ 取代多側</li>
+      <li>穩定烯醇鹽（1,3-二羰基、硝基烷）→ 偏好 Michael 加成</li>
+      <li>活潑烯醇鹽（簡單酮、醛）→ 偏好 aldol（直接加成）</li>
+    </ul>
+  </div>
+</div>
+
+<script>
+(function(){
+  var btn=document.getElementById('menu-btn');
+  var sidebar=document.getElementById('sidebar');
+  if(btn&&sidebar){
+    btn.addEventListener('click',function(){
+      sidebar.classList.toggle('open');
+      btn.textContent=sidebar.classList.contains('open')?'✕ 關閉':'☰ 目錄';
+    });
+    document.querySelectorAll('#toc a').forEach(function(a){
+      a.addEventListener('click',function(){
+        if(window.innerWidth<=900){sidebar.classList.remove('open');btn.textContent='☰ 目錄';}
+      });
+    });
+  }
+  var links=Array.prototype.slice.call(document.querySelectorAll('#toc a[href^="#"]'));
+  var targets=links.map(function(a){return document.getElementById(a.getAttribute('href').slice(1));});
+  function onScroll(){
+    var pos=window.scrollY+120;var current=0;
+    for(var i=0;i<targets.length;i++){if(targets[i]&&targets[i].offsetTop<=pos){current=i;}}
+    links.forEach(function(a,i){a.classList.toggle('active',i===current);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+})();
+</script>
+</body>
+</html>

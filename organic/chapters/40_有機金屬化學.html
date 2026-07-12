@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第40章 有機金屬化學</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 40 章</div>
+    <div class="ch-title">有機金屬化學</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#intro">導論：過渡金屬的優勢</a>
+    <a href="#18e">18電子規則</a>
+    <a href="#ligands">配位基與錯合物</a>
+    <a href="#oxidative-addition">氧化加成與還原消除</a>
+    <a href="#insertion">遷移插入與β-氫消除</a>
+    <a href="#heck">Heck反應</a>
+    <a href="#cross-coupling">交叉偶聯反應</a>
+    <a href="#allyl-pd">π-烯丙基鈀錯合物</a>
+    <a href="#buchwald">Buchwald-Hartwig胺化反應</a>
+    <a href="#wacker">Wacker氧化</a>
+    <a href="#gold">金催化：炔烴活化</a>
+    <a href="#metathesis">釕催化：烯烴複分解</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+<h1>第40章 有機金屬化學</h1>
+<p class="chapter-meta">Clayden Organic Chemistry · 第40章（pp. 1069–1101）</p>
+
+<h2 id="intro">導論：過渡金屬的優勢</h2>
+<p>有機金屬化學研究含有金屬-碳鍵的化合物及其在有機合成中的應用。過渡金屬能夠催化在普通有機化學條件下不可能發生的反應，例如：在孤立雙鍵上的親核取代、芳香族C–N鍵的形成，以及烯烴的複分解。</p>
+<p>金屬催化的核心優勢在於<strong>金屬的氧化態可以在反應過程中靈活改變</strong>，使其能夠同時作為親電試劑（接受電子）和親核試劑（提供電子）。本章以鈀為主線，因其催化能力最廣泛、最重要。</p>
+
+<h2 id="18e">18電子規則</h2>
+<p>過渡金屬錯合物中，穩定的18電子構型（滿殼層）是理解配位化學的基石，類似於有機化學中的八隅體規則。</p>
+
+<h3>電子計數</h3>
+<p>計算錯合物總電子數的方法：</p>
+<ul>
+  <li>金屬本身貢獻的價電子數（查週期表族數）</li>
+  <li>每個配位基貢獻的電子數（σ配位基貢獻2e，π配位基視貢獻而異）</li>
+  <li>離子型配位基（如Cl⁻）貢獻2e；中性配位基（如CO、PR₃）貢獻2e</li>
+</ul>
+
+<div class="box-example">
+<strong>典型電子計數</strong>
+<ul>
+  <li><strong>二茂鐵 Fe(η⁵-Cp)₂</strong>：Fe(0) 8e + 2×Cp(η⁵) 5e×2 = 8+10 = <strong>18e</strong>（穩定）</li>
+  <li><strong>Pd(PPh₃)₄</strong>：Pd(0) 10e + 4×PPh₃ 2e×4 = 10+8 = <strong>18e</strong>（穩定，但易解離成14e的Pd(PPh₃)₂）</li>
+  <li><strong>(MeCN)₂PdCl₂</strong>：Pd(II) 8e + 2×MeCN 2e×2 + 2×Cl⁻ 2e×2 = 8+4+4 = <strong>16e</strong>（平面四方，常見於Pd(II)）</li>
+</ul>
+</div>
+
+<div class="box-note">
+鈀(II)錯合物通常為16電子平面四方構型，這正是其催化活性的來源：空的配位位點可接受底物配位。
+</div>
+
+<h3>哈普托數（Hapto Numbers）</h3>
+<p>希臘字母η（eta）描述配位基中同時與金屬成鍵的原子數目：</p>
+<ul>
+  <li>η¹：單原子配位（如烷基）</li>
+  <li>η²：雙原子配位（如烯烴，π錯合物）</li>
+  <li>η³：三原子配位（如烯丙基，π-allyl）</li>
+  <li>η⁵：五原子配位（如環戊二烯基Cp，芳烴）</li>
+</ul>
+
+<h3>配位基特性</h3>
+<table>
+  <tr><th>配位基</th><th>電子對</th><th>貢獻電子數</th><th>特性</th></tr>
+  <tr><td>CO（羰基）</td><td>σ供體+π受體</td><td>2e</td><td>強π受體，反鍵作用</td></tr>
+  <tr><td>PR₃（膦）</td><td>σ供體</td><td>2e</td><td>易調節電子性和空間位阻</td></tr>
+  <tr><td>Cl⁻（氯離子）</td><td>σ供體+π供體</td><td>2e</td><td>橋接配位基</td></tr>
+  <tr><td>烯烴（η²）</td><td>π供體</td><td>2e</td><td>活化C=C供親核攻擊</td></tr>
+  <tr><td>Cp⁻（η⁵）</td><td>π供體</td><td>5e（或6e）</td><td>形成夾心化合物</td></tr>
+</table>
+
+<h3>反鍵作用（Back-Bonding）</h3>
+<p>在金屬羰基錯合物中，金屬的充填d軌域可向CO的空π*反鍵軌域捐贈電子密度，稱為<strong>反鍵作用</strong>（π back-bonding）。此作用：</p>
+<ul>
+  <li>削弱C≡O鍵（紅外伸縮頻率降低，從自由CO的2143 cm⁻¹降至錯合物的約1900 cm⁻¹）</li>
+  <li>穩定低氧化態金屬</li>
+  <li>強π受體配位基（CO > alkene > PR₃）使金屬更親電</li>
+</ul>
+
+<h2 id="ligands">配位基與錯合物</h2>
+
+<h3>Vaska's 錯合物</h3>
+<p>trans-[IrCl(CO)(PPh₃)₂]（Vaska錯合物）是研究氧化加成反應的標準模型。16電子Ir(I)錯合物可加成H₂、O₂、HX等小分子，形成18電子Ir(III)產物。</p>
+
+<h3>Wilkinson 催化劑</h3>
+<p>[RhCl(PPh₃)₃]（Wilkinson催化劑）是第一個被廣泛使用的均相氫化催化劑，可在常溫常壓下將烯烴加氫。其催化循環包含解離一個PPh₃（形成14e活性種）→ 氫氣氧化加成 → 烯烴配位 → 遷移插入 → 還原消除。</p>
+
+<h2 id="oxidative-addition">氧化加成與還原消除</h2>
+
+<h3>氧化加成（Oxidative Addition）</h3>
+<p>低氧化態金屬M(n)插入σ鍵（如C–X、H–X），金屬氧化態升高2，配位數增加2：</p>
+<pre class="reaction-scheme">M(n) + A–B  →  A–M(n+2)–B
+Pd(0)  + Ar–X  →  Ar–Pd(II)–X   (14e→16e)
+</pre>
+<p>反應性順序：C–I &gt; C–Br &gt; C–OTf &gt; C–Cl（鍵能越低越易反應）。</p>
+
+<h3>還原消除（Reductive Elimination）</h3>
+<p>氧化加成的逆反應，兩個順式（cis）配位基結合形成新σ鍵，金屬氧化態降低2：</p>
+<pre class="reaction-scheme">A–M(n+2)–B  →  M(n) + A–B
+Ar–Pd(II)–R  →  Pd(0) + Ar–R
+</pre>
+<div class="box-key">
+還原消除要求兩個配位基必須處於<strong>順式</strong>位置。這是為何許多催化反應設計中要確保兩個偶聯基團在同一側配位。
+</div>
+
+<h2 id="insertion">遷移插入與β-氫消除</h2>
+
+<h3>遷移插入（Migratory Insertion）</h3>
+<p>金屬的配位基遷移到相鄰的不飽和配位基上，形成新的C–C或C–X鍵：</p>
+<pre class="reaction-scheme">R–Pd–CO  →  R–C(=O)–Pd   (烷基遷移到CO)
+R–Pd–alkene  →  R–CH₂–CH₂–Pd  (氫化鈀加成)
+</pre>
+<p><strong>羰基化反應（OXO過程）</strong>：烯烴 + CO + H₂在Rh催化下→醛（Rh-BINAP配體可得到手性醛）。</p>
+
+<h3>β-氫消除（β-Hydride Elimination）</h3>
+<p>烷基金屬中，β碳上的氫轉移到金屬上，形成烯烴配位物，然後解離：</p>
+<pre class="reaction-scheme">R–CH₂–CH₂–Pd–X  →  R–CH=CH₂ + H–Pd–X
+</pre>
+<p>要求：β碳上有氫；β氫與金屬必須順式；需要空的配位位點。這是Heck反應的終止步驟，也是許多副反應的來源。</p>
+
+<h2 id="heck">Heck反應</h2>
+<p>Heck反應是鈀催化的芳基（或乙烯基）鹵化物與烯烴的偶聯反應，是有機合成中形成C–C鍵最重要的方法之一（Heck，2010年諾貝爾化學獎）。</p>
+
+<h3>催化循環</h3>
+<pre class="reaction-scheme">① Ar–X + Pd(0)  →  Ar–Pd(II)–X        氧化加成
+② Ar–Pd–X + RCH=CH₂  →  配位 η²-烯烴錯合物
+③ 烯烴插入: Ar遷移  →  Ar–CH₂–CH(R)–Pd–X
+④ β-氫消除  →  Ar–CH=CHR + H–Pd–X
+⑤ 鹼 + H–Pd–X  →  Pd(0) + 鹼·HX     再生催化劑
+</pre>
+
+<h3>區域選擇性</h3>
+<ul>
+  <li>芳基通常接在<strong>末端碳</strong>（較少取代的那端），因為Pd較大，傾向佔據空間位阻較小的位置</li>
+  <li>缺電子烯烴（丙烯酸酯等）選擇性更高（苯乙烯型端基最佳）</li>
+  <li>通常為<strong>反式（E）</strong>立體選擇性（β-H消除通過syn消除再旋轉達到熱力學最穩定的E型）</li>
+</ul>
+
+<div class="box-example">
+<strong>Heck反應舉例</strong>
+<pre class="reaction-scheme">PhI + CH₂=CHCOOEt  →[Pd(OAc)₂, PPh₃, Et₃N]→  Ph–CH=CH–COOEt
+                                                  (E)-肉桂酸乙酯  ~90%</pre>
+</div>
+
+<h2 id="cross-coupling">交叉偶聯反應</h2>
+<p>交叉偶聯反應通過<strong>轉金屬化（transmetallation）</strong>步驟，將不同有機基團通過金屬傳遞連接起來。一般催化循環：</p>
+<pre class="reaction-scheme">① Ar¹–X + Pd(0)  →  Ar¹–Pd–X        氧化加成
+② Ar¹–Pd–X + Ar²–M  →  Ar¹–Pd–Ar²   轉金屬化（M = Sn, B, Zn等）
+③ Ar¹–Pd–Ar²  →  Pd(0) + Ar¹–Ar²   還原消除
+</pre>
+
+<table>
+  <tr><th>反應名稱</th><th>有機金屬試劑（R–M）</th><th>特點與條件</th></tr>
+  <tr><td>Stille偶聯</td><td>Bu₃Sn–R（有機錫）</td><td>官能基耐受性好，但有毒</td></tr>
+  <tr><td>Suzuki偶聯</td><td>RB(OH)₂（硼酸）+ 鹼</td><td>最廣泛使用，低毒，穩定</td></tr>
+  <tr><td>Sonogashira偶聯</td><td>末端炔烴 + CuI共催化劑</td><td>形成C(sp)–C(sp²)鍵</td></tr>
+  <tr><td>Negishi偶聯</td><td>RZnX（有機鋅）</td><td>官能基耐受性好</td></tr>
+  <tr><td>Kumada偶聯</td><td>RMgX（格氏試劑）</td><td>簡單，但官能基限制多</td></tr>
+</table>
+
+<div class="box-key">
+Suzuki偶聯（2010年諾貝爾獎）使用硼酸，水/有機溶劑均可，空氣穩定，官能基耐受性極佳，是製藥工業首選的交叉偶聯方法。
+</div>
+
+<h2 id="allyl-pd">π-烯丙基鈀錯合物</h2>
+<p>烯丙基親電試劑（X = OAc, OCO₂R, Cl, OPO₃R₂等）在Pd(0)催化下生成π-烯丙基鈀陽離子錯合物（η³-allyl Pd），再被親核試劑攻擊完成取代反應。</p>
+
+<h3>反應機制與立體化學</h3>
+<pre class="reaction-scheme">烯丙基–X + Pd(0)  →  [η³-allyl–Pd]⁺ + X⁻    (背面攻擊，構型翻轉)
+[η³-allyl–Pd]⁺ + Nu⁻  →  Nu–allyl + Pd(0)   (背面攻擊，構型翻轉)
+淨結果：構型保留（雙重翻轉）
+</pre>
+
+<div class="box-note">
+整個反應經歷兩次反應（各自翻轉），因此整體<strong>構型保留</strong>。這與S_N2反應（構型翻轉）形成對比。
+</div>
+
+<h3>軟親核試劑最佳</h3>
+<ul>
+  <li><strong>C–C鍵形成</strong>：穩定的烯醇鹽（丙二酸酯、氰化物）效果最佳</li>
+  <li><strong>C–X鍵形成</strong>：醇鹽、胺類、硫醇鹽（X = O, N, S）</li>
+</ul>
+
+<h3>乙烯基環氧化物作為特殊親電試劑</h3>
+<p>乙烯基環氧化物因三員環張力的釋放能驅動與Pd(0)的反應，產生兩性離子π-烯丙基鈀中間體（內建烷氧基鹼，無需額外加鹼），親核試劑優先攻擊位阻較小的端基（整體為1,4-加成產物）。</p>
+
+<h3>分子內烷基化成環</h3>
+<p>π-烯丙基鈀可用於分子內烷基化反應，製備各種含氮或含氧雜環：</p>
+<ul>
+  <li>6/5稠合環優於橋接環（區域選擇性由鏈長決定）</li>
+  <li>三員環也可以製備（留基遠離親核試劑）</li>
+</ul>
+
+<h3>芳香黴素的合成（Trost）</h3>
+<p>Trost等人利用兩個Pd催化的烯丙基取代反應，全合成了核苷類似物芳香黴素（aristeromycin），精確控制了兩個立體中心均為保留構型，充分展現π-烯丙基鈀化學的立體控制能力。</p>
+
+<h2 id="buchwald">Buchwald-Hartwig胺化反應</h2>
+<p>鈀催化的芳基鹵化物與胺的偶聯，形成C–N鍵——一個在普通條件下幾乎不可能完成的反應（Buchwald和Hartwig，1990年代開發）。</p>
+
+<h3>催化循環</h3>
+<pre class="reaction-scheme">① Ar–X + Pd(0)  →  Ar–Pd(II)–X       氧化加成
+② Ar–Pd–X + HNR₂  →  Ar–Pd–NR₂      胺配位（配體鹼輔助脫HX）
+③ Ar–Pd–NR₂  →  Pd(0) + Ar–NR₂      還原消除（形成C–N鍵）
+   鹼（NaOtBu等）再生Pd(0)催化劑
+</pre>
+
+<h3>配位基設計</h3>
+<p>成功的Buchwald-Hartwig反應依賴於精心設計的膦配位基：</p>
+<ul>
+  <li>BINAP（軸手性雙膦）</li>
+  <li>Xantphos（大咬合角雙膦，有利於還原消除）</li>
+  <li>Davephos和RuPhos（二甲氨基聯苯磷配體，大空間位阻）</li>
+  <li>預成型Pd/配體錯合物（催化量使用）</li>
+</ul>
+
+<h3>反應範圍</h3>
+<p>優點：電子給體和受體取代基均可；立體位阻大的苯酚可耐受；芳基氯化物（比碘或溴便宜）也可成功反應；芳香雜環鹵化物（無論缺電子或富電子）均適用。</p>
+
+<div class="box-example">
+<strong>伊曲康唑（itraconazole，抗真菌藥）的合成</strong>
+<p>分子中心含有哌嗪環，左右各一個苯環（一個通過O連接，一個通過N連接）。利用Buchwald-Hartwig C–N偶聯分兩步引入：先保護一個N，再依次偶聯。81%收率。</p>
+</div>
+
+<h3>S_NAr vs Buchwald-Hartwig 比較</h3>
+<table>
+  <tr><th>特點</th><th>S_NAr</th><th>Buchwald-Hartwig</th></tr>
+  <tr><td>離去基活性順序</td><td>F &gt; Cl &gt; Br &gt; I</td><td>I &gt; Br &gt; Cl &gt;&gt; F</td></tr>
+  <tr><td>區域化學</td><td>需鄰或對位EWG</td><td>任何取代模式均可</td></tr>
+</table>
+
+<h2 id="wacker">Wacker氧化</h2>
+<p>Pd(II)配位的烯烴對親核試劑的反應性大幅增強：電子密度從π軌域流向金屬，使烯烴碳變得親電（類似溴鎓離子）。</p>
+
+<h3>氧化鈀化（Oxypalladation）</h3>
+<pre class="reaction-scheme">RCH=CH₂ + PdCl₂(cat), H₂O →
+  [氧化鈀化: H₂O攻擊較取代端] → enol → R–CO–CH₃
+  + H–Pd–Cl → Pd(0) → [CuCl₂/O₂再氧化] → PdCl₂
+</pre>
+
+<p><strong>Wacker氧化</strong>（工業上稱Hoechst-Wacker過程）：末端烯烴 + PdCl₂(cat)/CuCl₂/H₂O/O₂ → 甲基酮。水作親核試劑，攻擊較取代的末端，β-氫消除後烯醇互變成酮。</p>
+
+<div class="box-key">
+Wacker氧化的催化循環需要再氧化：Pd(0) → Pd(II)由CuCl₂完成，Cu(I) → Cu(II)再由空氣中O₂完成，整個過程是空氣氧化烯烴的高效方法。
+</div>
+
+<h3>矽基烯醇醚氧化（oxypalladation of silyl enol ethers）</h3>
+<p>矽基烯醇醚在Pd(OAc)₂作用下發生氧化鈀化，因無β-氫（另一側），只能消除至共軛位置，最終形成α,β-不飽和酮（烯酮）。這是由酮（via矽基烯醇醚）製備烯酮的區域選擇性方法。</p>
+
+<h3>醇作為分子內親核試劑</h3>
+<p>含羥基的二烯底物，在cat. Pd(OAc)₂/LiCl/AcOH條件下，分子內氧化鈀化形成四氫呋喃環（99:1 syn:anti立體選擇性），苯醌作為氧化劑再生Pd(II)。</p>
+
+<h2 id="gold">金催化：炔烴活化</h2>
+<p>汞(II)催化炔烴水化歷史悠久，但因毒性已被金催化取代。金(I)和金(III)與炔烴形成強π錯合物，使炔烴對親核試劑極度活化：</p>
+<pre class="reaction-scheme">R–C≡C–H + [Au]  →  R–C≡C–Au錯合物
+H₂O攻擊更取代端  →  烯醇金 → 酮 + Au⁺再生
+</pre>
+<p>即使是催化量的AuCl（NaAuCl₄形式）就可完成水化，條件溫和（H₂O/MeOH，室溫至60°C），且可耐受各種官能基。</p>
+
+<div class="box-example">
+<strong>金催化炔烴水化</strong>
+<pre class="reaction-scheme">環己基–C≡C–Me + 2 mol% NaAuCl₄, H₂O/MeOH →
+  環己基–CO–CH₃  (83% 收率)
+HO–Ph–C≡C–CH₂–CH₂–OH + 2 mol% AuCl, MeOH →
+  五元環縮醛  (99% 收率)
+</pre>
+</div>
+
+<h2 id="metathesis">釕催化：烯烴複分解</h2>
+<p>烯烴複分解（metathesis）是在釕卡賓催化劑下，兩個烯烴交換烯烴的兩端，釋放乙烯氣體形成新的烯烴：</p>
+<pre class="reaction-scheme">R¹CH=CH₂ + R²CH=CH₂  →[Ru]→  R¹CH=CHR² + CH₂=CH₂
+分子內：二烯  →[Ru]→  環烯 + 乙烯  (RCM環化複分解)
+</pre>
+
+<h3>Grubbs催化劑</h3>
+<ul>
+  <li><strong>Grubbs I催化劑</strong>：Cl₂(PCy₃)₂Ru=CHPh（2 mol%，穩定，商業可得）</li>
+  <li><strong>Grubbs II催化劑</strong>：Cl₂(PCy₃)(IMes)Ru=CHPh（更活潑，較少用量）</li>
+  <li><strong>Hoveyda-Grubbs催化劑</strong>：含苯乙烯醚配體，更穩定（0.25 mol%即可）</li>
+</ul>
+
+<h3>藥物合成應用</h3>
+<ul>
+  <li><strong>催眠藥（GlaxoSmithKline，Verona）</strong>：末端二烯→六員雜環（98%收率），再Simmons-Smith環丙烷化（反式選擇性）</li>
+  <li><strong>骨質疏鬆/骨關節炎藥（GlaxoSmithKline，美國）</strong>：七員環雜環，0.25 mol% Hoveyda-Grubbs</li>
+  <li><strong>馬來黴素A（malayamycin A，天然殺菌劑）</strong>：含4個手性中心的含氧雜環，Grubbs I催化RCM為核心步驟</li>
+</ul>
+
+<h2 id="summary">本章摘要</h2>
+<div class="box-summary">
+<ul>
+  <li><strong>18電子規則</strong>：穩定過渡金屬錯合物的電子計數原則；η數描述配位基接觸點數</li>
+  <li><strong>反鍵作用</strong>：金屬d→CO π*，降低CO伸縮頻率，穩定低價金屬</li>
+  <li><strong>氧化加成</strong>：Pd(0) + Ar–X → Ar–Pd(II)–X，金屬氧化態+2，配位數+2</li>
+  <li><strong>還原消除</strong>：需順式配位；形成C–C、C–N、C–O等鍵</li>
+  <li><strong>遷移插入</strong>：烷基遷移至CO（羰基化）或烯烴（加氫鈀化）</li>
+  <li><strong>β-氫消除</strong>：生成烯烴的終止步驟；需順式β-H及空配位點</li>
+  <li><strong>Heck反應</strong>：Pd(0)催化；ArX + 烯烴 → 取代烯烴；通常E型立體選擇性</li>
+  <li><strong>交叉偶聯</strong>：Stille（有機錫）、Suzuki（硼酸）、Sonogashira（炔烴+CuI）</li>
+  <li><strong>π-烯丙基鈀</strong>：雙重翻轉→整體保留；軟親核試劑最佳</li>
+  <li><strong>Buchwald-Hartwig</strong>：Pd催化C–N鍵形成；需強鹼和特殊膦配體</li>
+  <li><strong>Wacker氧化</strong>：末端烯烴→甲基酮；PdCl₂(cat)/CuCl₂/H₂O/O₂</li>
+  <li><strong>金催化</strong>：炔烴水化→酮；催化量AuCl即可</li>
+  <li><strong>Grubbs複分解</strong>：環化複分解（RCM）合成各種大小環化合物</li>
+</ul>
+</div>
+
+<div class="box-selftest">
+<ol>
+  <li>計算[Rh(CO)(Cl)(PPh₃)₂]（Vaska錯合物）的電子數，並說明它為何能進行氧化加成。</li>
+  <li>請繪出Heck反應的完整催化循環（以碘苯和丙烯酸甲酯為例），標明每個步驟的金屬氧化態。</li>
+  <li>比較Suzuki和Sonogashira偶聯反應的機制有何不同？各自形成什麼類型的C–C鍵？</li>
+  <li>解釋為何π-烯丙基鈀取代反應整體上呈現構型保留，而不是通常S_N2的翻轉。</li>
+  <li>Wacker氧化如何將乙烯轉化為乙醛？為何需要CuCl₂和O₂？</li>
+</ol>
+</div>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+document.getElementById('main').addEventListener('click', () => sidebar.classList.remove('open'));
+
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>

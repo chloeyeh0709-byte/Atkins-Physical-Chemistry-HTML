@@ -68,6 +68,10 @@ const files = [
   'organic/chapters/37_自由基反應.html',
   'organic/chapters/38_卡賓的合成與反應.html',
   'organic/chapters/39_反應機制的測定.html',
+  'organic/chapters/40_有機金屬化學.html',
+  'organic/chapters/41_不對稱合成.html',
+  'organic/chapters/42_生命的有機化學.html',
+  'organic/chapters/43_當代有機化學.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第43章 當代有機化學</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 43 章</div>
+    <div class="ch-title">當代有機化學</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#cancer">癌症治療藥物</a>
+    <a href="#hiv">HIV/AIDS的化學故事</a>
+    <a href="#indinavir">印第那韋（Indinavir）的合成</a>
+    <a href="#tamiflu">奧司他韋（Tamiflu）的合成</a>
+    <a href="#future">有機化學的未來</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+<h1>第43章 當代有機化學</h1>
+<p class="chapter-meta">Clayden Organic Chemistry · 第43章（pp. 1169–1181）</p>
+
+<p>這是本書的最後一章，以兩個引人入勝的全合成案例——印第那韋（抗HIV藥）和奧司他韋（克流感，抗流感藥）——示範前幾章所有技術的集大成應用。有機化學不只是學術，它是改善和拯救數百萬生命的工具。</p>
+
+<h2 id="cancer">癌症治療藥物</h2>
+<p>癌症的本質是細胞失控增殖，治療策略瞄準快速分裂的細胞：</p>
+<ul>
+  <li><strong>格列衛（Imatinib/Gleevec）</strong>：針對慢性髓性白血病（CML）的Bcr-Abl酪胺酸激酶抑制劑，開創了靶向治療時代（2001年FDA核准）</li>
+  <li><strong>5-氟尿嘧啶（5-FU）</strong>：尿嘧啶的氟代類似物，干擾DNA合成（胸苷酸合酶抑制劑）；最古老的化療藥物之一</li>
+  <li><strong>紫杉醇（Taxol）</strong>：太平洋紫衫樹中提取，穩定微管（阻止細胞分裂），1994年FDA批准；每年需求量極大，現已可半合成</li>
+  <li><strong>貝伐珠單抗（Avastin）</strong>：單克隆抗體，靶向VEGF（血管內皮生長因子），抑制腫瘤血管新生（抗VEGF療法）</li>
+</ul>
+
+<h2 id="hiv">HIV/AIDS的化學故事</h2>
+<p>HIV/AIDS於1980年代出現，有機化學對此的應答是逐步深入的：</p>
+
+<h3>第一階段：AZT（齊多夫定）</h3>
+<p>1987年FDA批准，HIV逆轉錄酶抑制劑。3'-疊氮基（N₃）取代OH，在體內磷酸化後作為假性核苷底物，嵌入病毒DNA鏈後無法延伸（鏈終止子）。AZT能延長患者生命，但不能根治，且副作用明顯。</p>
+
+<h3>第二階段：HIV蛋白酶抑制劑</h3>
+<p>HIV蛋白酶負責切割病毒多聚蛋白前體（Asp蛋白酶），是病毒成熟的關鍵。靶向HIV蛋白酶的藥物誕生：</p>
+<ul>
+  <li><strong>印第那韋（Indinavir/Crixivan，Merck，1996）</strong>：含5個立體中心的複雜分子（詳見下節全合成）</li>
+  <li><strong>立他韋（Ritonavir/Norvir，Abbott，1996）</strong>：結構類似，但更快完成臨床試驗</li>
+</ul>
+
+<h3>第三階段：雞尾酒療法（HAART）</h3>
+<p>高效抗逆轉錄病毒聯合療法（HAART）將多種機制的藥物聯合使用，大幅降低病毒進化抗藥性的機率：</p>
+<ul>
+  <li>核苷逆轉錄酶抑制劑（NRTIs，如AZT, 3TC）</li>
+  <li>非核苷逆轉錄酶抑制劑（NNRTIs）</li>
+  <li>HIV蛋白酶抑制劑（如印第那韋）</li>
+</ul>
+<p>HAART使HIV感染從「必死之症」轉為可長期控制的慢性病，是有機化學改變人類命運的最佳範例之一。</p>
+
+<h2 id="indinavir">印第那韋（Indinavir/Crixivan）的合成</h2>
+<p>印第那韋（Merck，1996）含有5個立體中心，需要多種不對稱合成技術集成，是真實工業規模不對稱合成的里程碑。全合成策略分為三個片段，再組合。</p>
+
+<h3>整體策略：三片段組合</h3>
+<pre class="reaction-scheme">片段1（環氧甲苯磺酸酯）
+    +
+片段2（手性哌嗪）
+    +
+片段3（順式-氨基茚醇）
+    ↓ 按序組合 ↓
+印第那韋（5個手性中心，單一對映體）
+</pre>
+
+<h3>片段1：Sharpless不對稱環氧化</h3>
+<pre class="reaction-scheme">烯丙醇 + t-BuOOH/Ti(OiPr)₄/L-(+)-DET →
+  手性環氧醇（高ee）
+環氧醇 + TsCl/Base → 環氧甲苯磺酸酯（片段1）
+  （此片段含有2個後續組合所需的立體中心）
+</pre>
+
+<h3>片段2：手性哌嗪的製備</h3>
+<pre class="reaction-scheme">吡嗪（pyrazine） →[H₂/Pd-C]→ 哌嗪（piperazine）
+哌嗪 →[不對稱氫化, (R)-BINAP/cod·RhOTf催化]→
+  2-甲基哌嗪（99% ee）
+→ 保護（Cbz/Boc保護NH）→ 片段2
+</pre>
+<p>手性哌嗪的關鍵是Rh/(R)-BINAP催化氫化，99% ee，體現第41章BINAP配體的實際工業應用。</p>
+
+<h3>片段3：順式-氨基茚醇</h3>
+<p>印第那韋特有的順式-氨基茚醇骨架來自茚（indene）：</p>
+<pre class="reaction-scheme">方法A（Merck早期路線）：
+  茚 → H₂O₂/MeCN（Ritter反應）→ 乙醯氨基-茚醇外消旋體
+  → 酒石酸鹽拆分 → 99.9% ee順式-氨基茚醇
+
+方法B（工業後期改進）：
+  茚 → 0.6 mol% Mn-salen複合物（Jacobsen環氧化）→
+  環氧茚（84% ee, 79% 收率）
+  → 開環（NaN₃）→ 疊氮醇 → 氫化 → 順式-氨基茚醇
+</pre>
+<p>這正是第41章介紹Jacobsen環氧化時所預告的，茚的環氧化物是抗HIV藥物的關鍵中間體。</p>
+
+<h3>Evans輔助基的應用</h3>
+<pre class="reaction-scheme">苯丙胺酸衍生的Evans噁唑啉酮 →[烯醇鹽+烯丙基溴]→ 烷基化（96:4 d.r.）
+→ 環氧化（mCPBA，再次不對稱控制）→ 環氧中間體
+</pre>
+
+<h3>三片段組合</h3>
+<pre class="reaction-scheme">哌嗪（片段2）+ 環氧甲苯磺酸酯（片段1）→
+  SN2開環（環氧）→ 胺基醇中間體
+→ 3-氯甲基吡啶烷基化 →
+→ + 順式-氨基茚醇（片段3，保護基移除後） →
+→ 縮合 → 去保護 → 印第那韋
+</pre>
+
+<div class="box-key">
+印第那韋合成完美整合了：Sharpless不對稱環氧化（片段1）、Rh/BINAP不對稱氫化（片段2）、Jacobsen環氧化（片段3）、Evans輔助基烷基化——本書最後幾章所有不對稱合成技術的完整示範。
+</div>
+
+<h2 id="tamiflu">奧司他韋（Oseltamivir/Tamiflu）的合成</h2>
+<p>奧司他韋（克流感）是流感病毒神經氨酸酶（neuraminidase）的過渡態類似物抑制劑，阻止新病毒從感染細胞釋放（阻斷傳播）：</p>
+
+<h3>藥物原理</h3>
+<p>流感病毒表面的神經氨酸酶切割唾液酸（sialic acid）與細胞受體的鍵，使新生病毒從細胞表面釋放。奧司他韋模擬過渡態唾液酸，不可逆地與神經氨酸酶活性位點的Arg結合。</p>
+
+<h3>Roche原始路線（莽草酸為起始原料）</h3>
+<p>原始工業路線以(−)-莽草酸（(-)-shikimic acid，莽草酸，主要提取自中國八角茴香）為起始原料，約10步合成，但莽草酸供應高度依賴季節和地區，在禽流感爆發時期出現嚴重短缺。</p>
+
+<h3>Corey 2006路線（全化學合成）</h3>
+<p>Corey及其同事（哈佛大學）於2006年H5N1禽流感恐慌期間，開發了不依賴天然原料的全化學合成路線：</p>
+<pre class="reaction-scheme">1,3-丁二烯 + CF₃CO₂CH₂CF₃  →[CBS型Lewis酸催化不對稱Diels-Alder]→
+  手性六員環（設定兩個鄰近的立體中心）
+→ 12步化學轉化（疊氮化、環化、選擇性胺化、醯化等）→
+奧司他韋  30%總收率
+</pre>
+
+<div class="box-example">
+<strong>Corey路線的關鍵創新</strong>
+<p>以CBS型Lewis酸催化的不對稱Diels-Alder反應為立體化學建立步驟，一步設定兩個相鄰手性中心，避免了對莽草酸的依賴，為應急藥物供應提供了獨立合成路徑。30%總收率在多步合成中相當可觀。</p>
+</div>
+
+<h2 id="future">有機化學的未來</h2>
+<p>最後，本書展望有機化學的幾個重要發展方向：</p>
+
+<h3>多樣性導向合成（Diversity-Oriented Synthesis, DOS）</h3>
+<p>傳統全合成針對單一靶分子，但藥物探索需要快速製備<strong>多樣性化合物庫</strong>（scaffold diversity）以篩選活性：</p>
+<ul>
+  <li>一個反應序列通過改變分叉點，合成多種骨架不同的化合物</li>
+  <li>高通量篩選（HTS）從化合物庫中尋找先導化合物</li>
+  <li>DOS已成為化學生物學和早期藥物發現的重要策略</li>
+</ul>
+
+<h3>酶工程（Directed Evolution，定向演化）</h3>
+<p>Frances Arnold（2018年諾貝爾化學獎）發展了通過反覆誘變和篩選來改造酶的技術：</p>
+<ul>
+  <li>可以使天然酶催化全新的反應（如碳矽鍵形成、卡賓插入）</li>
+  <li>製藥工業已將定向演化酶用於手性中間體的規模化製備（如節省多步合成保護基策略）</li>
+  <li>定向演化使酶變成了「可程式化的催化劑」</li>
+</ul>
+
+<h3>手性Brønsted酸催化</h3>
+<p>BINOL-磷酸（BINOL phosphoric acid）是新一代手性Brønsted酸催化劑，可催化多種親電-親核縮合反應：</p>
+<ul>
+  <li>Mannich反應、Pictet-Spengler反應、transfer hydrogenation等</li>
+  <li>催化活性來自磷酸的雙功能性（酸和鹼同時活化底物和親核試劑）</li>
+  <li>BINOL的軸手性傳遞到產物，ee通常&gt;90%</li>
+</ul>
+
+<div class="box-note">
+有機化學的未來不僅僅是更複雜的全合成，更在於更高效、更選擇性、更環境友好的合成方法，以及有機化學與生物學的深度融合。每一個新藥物的背後，都是有機化學無數年積累的智慧結晶。
+</div>
+
+<h2 id="summary">本章摘要</h2>
+<div class="box-summary">
+<ul>
+  <li><strong>癌症藥物</strong>：格列衛（Bcr-Abl激酶抑制劑）、5-FU（胸苷酸合酶抑制劑）、紫杉醇（微管穩定劑）、貝伐珠單抗（抗VEGF抗體）</li>
+  <li><strong>HIV/AIDS治療</strong>：AZT（鏈終止逆轉錄酶抑制劑）→蛋白酶抑制劑（印第那韋、立他韋）→HAART雞尾酒療法（根本改變HIV預後）</li>
+  <li><strong>印第那韋合成</strong>：三片段組合；片段1用Sharpless環氧化；片段2用Rh/BINAP不對稱氫化；片段3用Jacobsen環氧化；Evans噁唑啉酮輔助烷基化——集本書全部不對稱技術於一體</li>
+  <li><strong>奧司他韋合成</strong>：Roche路線（(-)-莽草酸，天然手性池，八角茴香提取）；Corey路線（2006，不對稱Diels-Alder，全化學合成，30%收率，不依賴天然原料）</li>
+  <li><strong>未來方向</strong>：多樣性導向合成（DOS）用於藥物探索；定向演化工程化酶（2018諾貝爾獎）；手性磷酸Brønsted酸催化</li>
+</ul>
+</div>
+
+<div class="box-selftest">
+<ol>
+  <li>AZT如何抑制HIV逆轉錄酶？它的3'位結構修飾如何導致鏈終止？</li>
+  <li>印第那韋的三個片段各自如何建立其手性？每個片段用了哪種不對稱技術？</li>
+  <li>Jacobsen環氧化的配體是如何製備的？它與Sharpless環氧化在底物範圍上有何不同？</li>
+  <li>奧司他韋的Corey路線以什麼反應作為立體化學建立的核心步驟？這一步設定了幾個立體中心？</li>
+  <li>什麼是「多樣性導向合成」？它與傳統全合成有何本質不同？</li>
+</ol>
+</div>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+document.getElementById('main').addEventListener('click', () => sidebar.classList.remove('open'));
+
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>

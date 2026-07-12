@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第41章 不對稱合成</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 41 章</div>
+    <div class="ch-title">不對稱合成</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#intro">導論：自然界的手性</a>
+    <a href="#chiral-pool">手性池</a>
+    <a href="#resolution">拆分法</a>
+    <a href="#measuring-ee">測量對映選擇性</a>
+    <a href="#chiral-aux">手性輔助基</a>
+    <a href="#cbs">CBS催化劑</a>
+    <a href="#binap">BINAP與Ru/Rh催化</a>
+    <a href="#sharpless-epox">Sharpless不對稱環氧化</a>
+    <a href="#jacobsen">Jacobsen環氧化</a>
+    <a href="#ad">Sharpless不對稱二羥化</a>
+    <a href="#cc-bonds">不對稱C–C鍵形成</a>
+    <a href="#organocatalysis">有機催化</a>
+    <a href="#aldol">不對稱醛醇縮合</a>
+    <a href="#enzymes">酶作為催化劑</a>
+    <a href="#summary">方法比較與摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+<h1>第41章 不對稱合成</h1>
+<p class="chapter-meta">Clayden Organic Chemistry · 第41章（pp. 1103–1133）</p>
+
+<h2 id="intro">導論：自然界的手性</h2>
+<p>自然界幾乎完全是手性的：所有天然胺基酸均為L型（S構型，Cys除外），所有天然糖類均為D型。藥物分子中手性的重要性更是不言而喻：</p>
+<ul>
+  <li><strong>L-多巴（L-dopa）</strong>：治療帕金森症，D型無效且有毒</li>
+  <li><strong>Citalopram（百憂解類）</strong>：S型活性是R型的150倍</li>
+  <li><strong>沙利竇邁（thalidomide）</strong>：R型止吐，S型致畸；且在體內可互相轉化——必須避免外消旋體</li>
+</ul>
+<p>「不對稱合成」的目標是製備<strong>高對映純（enantiopure）</strong>的化合物，方法可分為：手性池、拆分法、手性輔助基、手性試劑、手性催化劑。</p>
+
+<h2 id="chiral-pool">手性池（Chiral Pool）</h2>
+<p>直接從自然界廉價易得的手性化合物出發，保留並傳遞其立體化學。常用手性池原料：</p>
+
+<h3>胺基酸</h3>
+<ul>
+  <li>幾乎所有天然胺基酸均為S構型（Cys因優先順序例外為R）</li>
+  <li>丙胺酸（Ala）、纈胺酸（Val）、苯丙胺酸（Phe）、脯胺酸（Pro）等</li>
+</ul>
+
+<h3>羥基酸和多元醇</h3>
+<ul>
+  <li>乳酸（L-(+)-lactic acid, S）</li>
+  <li>扁桃酸（mandelic acid）</li>
+  <li>蘋果酸（malic acid）</li>
+  <li>酒石酸（tartaric acid, L-(+) = (R,R)，天然界最豐富的手性化合物之一）</li>
+</ul>
+
+<h3>碳水化合物</h3>
+<p>甘露糖（D-mannose）→氫化→甘露醇→選擇性保護→甘油醛（glyceraldehyde，高ee的C₃手性合成子）。</p>
+
+<div class="box-example">
+<strong>手性池合成：伊普森（ipsenol）</strong>
+<p>從S-纈胺酸（S-leucine）出發，12步合成手性蛋白（ipsenol，松木甲蟲費洛蒙）。優點：高ee起始，缺點：需要繞道利用現有的手性。</p>
+</div>
+
+<h2 id="resolution">拆分法（Resolution）</h2>
+<p>從外消旋混合物中分離對映異構體。最常用方法：與手性酸或鹼形成非對映異構體鹽，再利用物理性質差異（溶解度、熔點）分離。</p>
+
+<pre class="reaction-scheme">外消旋胺 + (−)-麻黃鹼 →  (R)-胺·(−)-麻黃鹼鹽（難溶，結晶析出）
+                          (S)-胺·(−)-麻黃鹼鹽（易溶，留在溶液）
+各用鹼處理 → 分別得到(R)-胺和(S)-胺（最高50%收率）
+</pre>
+
+<div class="box-note">
+拆分法理論最高收率50%，因為丟棄了一半材料。但如果能找到外消旋化條件（如某些胺基酸），可以循環再利用，達到接近100%理論收率（動力學拆分或動態動力學拆分）。另外，兩個對映體均可保留，各有用途。
+</div>
+
+<h2 id="measuring-ee">測量對映選擇性</h2>
+<p>對映體過剩（enantiomeric excess, ee）和對映體比（enantiomeric ratio, e.r.）是評估不對稱反應的核心指標：</p>
+
+<pre class="reaction-scheme">e.r. = R:S（如 94:6）
+ee = (94−6)/(94+6) × 100% = 88%
+</pre>
+
+<p>測量方法：</p>
+<ul>
+  <li><strong>旋光計</strong>：測[α]，與純對映體的[α]比較</li>
+  <li><strong>手性HPLC/GC</strong>：直接分離對映體，積分峰面積</li>
+  <li><strong>Mosher酸氯化物（MTPA-Cl）</strong>：與醇反應形成非對映體Mosher酯，¹H/¹⁹F NMR分析</li>
+  <li><strong>TFAE（NMR手性位移試劑）</strong>：加入到溶液中，使對映體¹H NMR峰分離</li>
+</ul>
+
+<h2 id="chiral-aux">手性輔助基（Chiral Auxiliaries）</h2>
+<p>暫時引入一個廉價易得的手性基團，控制反應的面選擇性，反應後再移除並回收。</p>
+
+<h3>Evans噁唑啉酮（Oxazolidinone）</h3>
+<p>最重要的手性輔助基之一，由S-纈胺酸或去甲麻黃鹼製備：</p>
+<pre class="reaction-scheme">S-纈胺酸 → 氨基醇 → 噁唑啉酮（Evans輔助基）
+輔助基接在醯基上 → N-醯基噁唑啉酮 →
+  ① 烷基化（烯醇鹽+RX）  96:4 d.r.
+  ② Diels-Alder（Lewis酸催化）  &gt;95:5 d.r.
+</pre>
+
+<h4>Diels-Alder反應的立體控制</h4>
+<p>N-丙烯醯基噁唑啉酮與Et₂AlCl（Lewis酸）配位後，雙烯體從輔助基較小基團那側進攻，達到高度的非對映選擇性。</p>
+
+<h4>烯醇鹽烷基化</h4>
+<p>N-醯基噁唑啉酮的鋰烯醇鹽是Z型（因噁唑啉酮的剛性），手性環境由輔助基的取代基提供，烷基化從空間位阻較小的一面進行。</p>
+
+<h4>移除輔助基</h4>
+<ul>
+  <li>LiAlH₄/DIBAL：還原為醇，需控制過度還原</li>
+  <li>LiOH/H₂O₂：水解為酸（同時保留醇羥基）</li>
+  <li>乾燥LiOBn：醇解為苄酯</li>
+</ul>
+
+<h2 id="cbs">CBS催化劑（Corey-Bakshi-Shibata）</h2>
+<p>由(S)-脯胺酸衍生的手性噁唑硼烷，用於BH₃還原酮製備手性醇，ee通常&gt;95%（某些底物可達99%）。</p>
+
+<h3>機制</h3>
+<pre class="reaction-scheme">CBS催化劑 + BH₃ → 活化的CBS·BH₃複合物
+酮配位至B（較大基團在遠端）→ 6員環過渡態
+氫從B轉移到酮的Re或Si面 → 手性醇
+</pre>
+<p>關鍵：6員環椅式過渡態（類似Meerwein-Ponndorf-Verley還原），催化量使用（20–30 mol%），BH₃是實際的氫供體。</p>
+
+<h2 id="binap">BINAP與Ru/Rh催化</h2>
+
+<h3>BINAP的特性</h3>
+<p>BINAP（2,2'-雙(二苯膦)-1,1'-聯萘）是<strong>軸手性</strong>（axially chiral）化合物，沒有傳統的手性中心，手性來自聯萘環的受阻旋轉（阻轉異構，atropisomerism）。(R)和(S)-BINAP均可合成。</p>
+
+<h3>Rh/BINAP不對稱氫化</h3>
+<p>用於N-乙醯基-α-胺基酸的不對稱氫化，ee可達&gt;95%：</p>
+<pre class="reaction-scheme">Ph–CH=C(NHAc)–CO₂H + H₂ →[Rh/(R)-BINAP]→
+  Ph–CH₂–CH(NHAc)–CO₂H  (S)-構型, &gt;95% ee
+</pre>
+<p>催化循環涉及底物與Rh的雙齒配位（NH和C=O），固定了底物的配位取向，使H₂從特定一面加成。</p>
+
+<h3>Ru/BINAP不對稱氫化</h3>
+<ul>
+  <li><strong>烯丙醇氫化</strong>：含OH基的烯烴通過OH配位固定面，ee &gt;95%（(R)-香茅醇工業合成）</li>
+  <li><strong>α,β-不飽和酸氫化</strong>：(S)-萘普生（naproxen）工業合成 &gt;97% ee</li>
+  <li><strong>Noyori Ru/TsDPEN轉移氫化（2001年諾貝爾獎）</strong>：異丙醇為氫供體，酮→手性醇；孟魯司特（montelukast）合成 83%收率 99.8% ee</li>
+</ul>
+
+<h2 id="sharpless-epox">Sharpless不對稱環氧化</h2>
+<p>（Sharpless，2001年諾貝爾獎）烯丙醇的不對稱環氧化，使用：</p>
+<ul>
+  <li>Ti(O-i-Pr)₄（Lewis酸催化劑，可催化量）</li>
+  <li>t-BuOOH（氧化劑，無毒的過氧化物）</li>
+  <li>酒石酸二乙酯（DET，手性配體）</li>
+</ul>
+
+<h3>面選擇性記憶規則</h3>
+<pre class="reaction-scheme">    醇（OH）在右下角的烯丙醇：
+L-(+)-DET（天然）→ 環氧化下面（β面）
+D-(−)-DET（非天然）→ 環氧化上面（α面）
+</pre>
+
+<div class="box-key">
+面選擇性可用Sharpless的「記憶術」預測：把烯丙醇OH放在右下角，L-(+)-DET的氧從下方攻擊，D-(-)-DET從上方攻擊。這使得Sharpless環氧化對任何不對稱合成學者都是可預測的。
+</div>
+
+<h3>反應特點</h3>
+<ul>
+  <li>僅適用於<strong>烯丙醇</strong>（需OH基配位鈦）</li>
+  <li>ee通常90-98%（催化量Ti和DET即可，4Å分子篩加速）</li>
+  <li>工業案例：disparlure（舞毒蛾費洛蒙）不對稱合成；propranolol（普萘洛爾，β受體阻滯劑）</li>
+</ul>
+
+<h3>Propranolol合成（Sharpless）</h3>
+<pre class="reaction-scheme">含矽的烯丙醇 + t-BuOOH/Ti(OiPr)₄/D-(−)-DET →
+  環氧矽烯丙醇（60%, 95% ee）
+→ MsCl → ArO-Na → Bu₄NF（去矽）→ i-PrNH₂開環 →
+  (S)-propranolol
+</pre>
+
+<h2 id="jacobsen">Jacobsen環氧化</h2>
+<p>Jacobsen環氧化使用Mn(III)-salen催化劑（由Jacobsen和Katsuki開發），可用於<strong>簡單烯烴</strong>（不需烯丙醇）的不對稱環氧化：</p>
+
+<h3>催化劑製備</h3>
+<pre class="reaction-scheme">手性二胺 + 2×水楊醛衍生物 →[K₂CO₃, EtOH]→ 手性salen配體
+salen配體 + Mn(OAc)₂·4H₂O + NaCl →
+  穩定的Mn(III)-salen配合物
+</pre>
+<p>Mn(III)在四配位的salen口袋中，以NaOCl作為氧化劑（普通家用漂白劑！），對cis烯烴效果最佳。</p>
+
+<div class="box-example">
+<strong>茚的Jacobsen環氧化</strong>
+<pre class="reaction-scheme">茚（indene）+ 0.6 mol% Mn-salen複合物 + NaOCl →
+  (1S,2R)-環氧茚  79%收率, 84% ee
+</pre>
+此環氧化物是HIV蛋白酶抑制劑印第那韋（indinavir）的關鍵中間體（見第43章）。
+</div>
+
+<h2 id="ad">Sharpless不對稱二羥化（AD反應）</h2>
+<p>Sharpless AD是目前最廣泛適用的不對稱反應之一，基於OsO₄對烯烴的syn二羥化，配以手性配體控制面選擇性。</p>
+
+<h3>試劑體系</h3>
+<ul>
+  <li><strong>催化量K₂OsO₄(OH)₄</strong>（毒性↓，但仍有毒，需通風）</li>
+  <li><strong>K₃Fe(CN)₆</strong>：再氧化Os(VI)→Os(VIII)的計量氧化劑</li>
+  <li><strong>K₂CO₃, MeSO₂NH₂</strong>：加速去複合步驟</li>
+  <li><strong>溶劑</strong>：2:1 H₂O/t-BuOH</li>
+  <li><strong>手性配體</strong>：DHQD₂PHAL或DHQ₂PHAL（兩種對映選擇性方向）</li>
+</ul>
+
+<h3>面選擇性記憶規則</h3>
+<p>二氫奎尼丁（DHQD，β面）和二氫奎寧（DHQ，α面）為一對「準對映體」（實際上不是真正對映體，但面選擇性相反）：</p>
+<ul>
+  <li>AD-mix-α（含DHQ₂PHAL）：從α面（底面）二羥化</li>
+  <li>AD-mix-β（含DHQD₂PHAL）：從β面（頂面）二羥化</li>
+</ul>
+
+<div class="box-example">
+<strong>trans-二苯乙烯的AD反應</strong>
+<pre class="reaction-scheme">Ph–CH=CH–Ph + AD-mix-β, t-BuOH/H₂O, 0°C →
+  (R,R)-1,2-二苯乙二醇  99.8% ee
+Ph–CH=CH–Ph + AD-mix-α, t-BuOH/H₂O, 0°C →
+  (S,S)-1,2-二苯乙二醇  &gt;99.5% ee
+</pre>
+這是文獻記載ee值最高的不對稱催化反應之一。
+</div>
+
+<h3>配體加速催化（Ligand-Accelerated Catalysis）</h3>
+<p>AD反應的精妙之處：手性胺配體不僅提供手性環境，還大幅<strong>加速</strong>反應（配體加速催化）。不加手性配體時，OsO₄也能緩慢反應，但生成外消旋產物。加速效應意味著大多數反應通過手性路徑進行，racemic背景反應幾乎可忽略。</p>
+
+<h3>二醇轉化為環氧化物</h3>
+<p>AD產物的二醇可進一步轉化為環氧化物，有多種途徑：</p>
+<ul>
+  <li>AcBr/MeC(OMe)₃ → 環狀原酸酯 → 溴代乙酸酯 → K₂CO₃/MeOH → 環氧化物（兩個區域異構體均給同一環氧化物）</li>
+  <li>SOCl₂ → 環狀亞磺酸酯 → NaIO₄/cat. RuCl₃氧化 → 環狀磺酸酯 → 環氧化物</li>
+</ul>
+
+<h2 id="cc-bonds">不對稱C–C鍵形成</h2>
+
+<h3>有機鋅試劑的不對稱加成</h3>
+<p>乙基鋅（Et₂Zn）與醛反應極慢，但加入手性胺基醇後反應速率大幅提升（配體加速催化），並以高ee生成手性醇：</p>
+<pre class="reaction-scheme">R–CHO + Et₂Zn  →（無添加）→  極慢，外消旋
+R–CHO + Et₂Zn + 1 mol% 手性胺基醇  →  ca. 90% ee
+</pre>
+<p>炔基鋅也可類似使用：Zn(OTf)₂/Et₃N活化末端炔烴，手性胺基醇催化（80% 95% ee）。</p>
+
+<h3>不對稱共軛加成</h3>
+<p>Cu催化的有機鋅與α,β-不飽和酮的共軛加成，配以BINOL-膦酰胺配體：</p>
+<pre class="reaction-scheme">環己烯酮 + Et₂Zn, Cu(OTf)₂, 含(S)-BINOL的磷酰胺配體 →
+  3-乙基環己酮 （良好ee）
+</pre>
+<p>Cu始終與手性配體結合，有機鋅轉金屬化到銅後才能發生共軛加成，確保手性環境的存在。</p>
+
+<h2 id="organocatalysis">有機催化（Organocatalysis）</h2>
+<p>MacMillan（2021年諾貝爾獎）開創了有機催化領域：用小的有機分子（不含金屬）催化不對稱反應。</p>
+
+<h3>亞胺鎓離子有機催化（Iminium Catalysis）</h3>
+<p>手性二級胺（MacMillan催化劑，從L-苯丙胺酸衍生）與α,β-不飽和醛縮合形成手性亞胺鎓離子：</p>
+<pre class="reaction-scheme">手性二級胺 + Ph–CH=CH–CHO →[縮合]→ 手性亞胺鎓離子
+  （trans幾何體，由雙甲基屏蔽正面）
+吡咯從背面攻擊（Friedel-Crafts烷基化） → 烯胺 →
+  水解 → 93% ee手性醛 + 催化劑再生
+</pre>
+<p>關鍵：亞胺鎓離子的trans幾何體使雙甲基屏蔽分子的一面，吡咯只能從另一面攻擊。用量通常10–20 mol%。</p>
+
+<h3>COX-2抑制劑的有機催化合成</h3>
+<pre class="reaction-scheme">甲氧基吲哚 + 不飽和醛 →[20 mol% MacMillan催化劑]→
+  吲哚-3-烷基化產物  87% ee, 82%收率
+</pre>
+
+<h2 id="aldol">不對稱醛醇縮合</h2>
+
+<h3>Evans輔助基醛醇反應（Evans Aldol）</h3>
+<p>Evans噁唑啉酮通過硼烯醇鹽控制非對映選擇性：</p>
+<pre class="reaction-scheme">N-醯基噁唑啉酮 + Bu₂BOTf/Et₃N → cis硼烯醇鹽
+  （trans被輔助基阻礙）
++ PhCHO →[Zimmermann-Traxler TS]→ 醛醇產物 95% &gt;500:1 d.r.
+  LiOH/H₂O₂ → 手性β-羥基酸 + 輔助基回收
+</pre>
+
+<p>硼配位至醛的機制（Zimmermann-Traxler過渡態）：硼需要讓輔助基的O解配位後再配位醛，迫使異丙基轉至烯醇的底面，固定了立體化學。</p>
+
+<h3>Discodermolide的合成（Novartis）</h3>
+<p>癌症治療劑discodermolide（僅能從深海海綿中微量提取）由Novartis以60g規模全合成，使用了4個Evans醛醇/烷基化反應（綠色鍵），完全在實驗室可控條件下操作。</p>
+
+<h3>脯胺酸催化的不對稱醛醇反應（有機催化）</h3>
+<p>L-脯胺酸（30 mol%）直接催化丙酮與醛的不對稱醛醇縮合：</p>
+<pre class="reaction-scheme">丙酮（過量）+ RCHO →[30 mol% (S)-脯胺酸, DMSO, 25°C]→
+  (S)-β-羥基酮  97%收率, 96% ee
+</pre>
+<p>機制：脯胺酸的氨基與丙酮形成烯胺；羧基通過H鍵組織六員過渡態（R基偽赤道）；水解烯胺，脯胺酸再生。此反應在25°C下進行，無金屬，無保護基，是「綠色化學」的典範。</p>
+
+<p>脯胺酸也能催化<strong>anti醛醇反應</strong>：羥甲基酮形成trans烯胺（E雙鍵），要求OH在6員TS中赤道位，必然得到anti醛醇產物。</p>
+
+<h2 id="enzymes">酶作為催化劑（生物催化）</h2>
+<p>酶是最高效的不對稱催化劑，利用特定的活性位點精確控制底物的取向：</p>
+<ul>
+  <li><strong>酮還原酶（ketoreductase）</strong>：使用NADPH為氫供體，還原酮為手性醇（91%收率, &gt;98% ee, 25g規模）</li>
+  <li>同一酮還原酶可在1/4噸規模製備某製藥中間體（phthalazine-based compound）</li>
+  <li>酶的「亂交性」（promiscuity）使其可接受非天然底物——生物催化正成為製藥工業的重要工具</li>
+</ul>
+
+<h2 id="summary">方法比較與摘要</h2>
+<div class="box-summary">
+<table>
+  <tr><th>方法</th><th>優點</th><th>缺點</th><th>典型例子</th></tr>
+  <tr><td>拆分法</td><td>兩個對映體均可得</td><td>最高50%收率</td><td>BINAP的拆分</td></tr>
+  <tr><td>手性池</td><td>高ee起始原料</td><td>僅一種對映體可得</td><td>胺基酸/糖衍生合成</td></tr>
+  <tr><td>手性輔助基</td><td>通常高ee且可結晶純化</td><td>需額外步驟引入和移除</td><td>Evans噁唑啉酮</td></tr>
+  <tr><td>手性試劑</td><td>能達成某些困難轉化</td><td>少數反應成功，通常非催化</td><td>烷基鋰-sparteine</td></tr>
+  <tr><td>手性催化劑</td><td>催化量可循環，高效</td><td>僅少數反應真正成功</td><td>不對稱氫化、環氧化、二羥化</td></tr>
+</table>
+</div>
+
+<div class="box-selftest">
+<ol>
+  <li>酒石酸二乙酯（DET）在Sharpless環氧化中扮演什麼角色？L-(+)-DET和D-(−)-DET分別讓氧從烯丙醇的哪一面進攻？</li>
+  <li>Evans噁唑啉酮為何使用Bu₂BOTf而不是LDA來生成烯醇鹽？硼烯醇鹽的幾何形狀是順式還是反式？</li>
+  <li>描述CBS催化劑的催化循環，解釋為何6員過渡態控制了面選擇性。</li>
+  <li>比較Sharpless不對稱環氧化和Jacobsen環氧化的底物範圍、試劑和ee值。</li>
+  <li>解釋脯胺酸催化的醛醇縮合中，「配體加速催化」概念如何確保高ee值。</li>
+</ol>
+</div>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+document.getElementById('main').addEventListener('click', () => sidebar.classList.remove('open'));
+
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>

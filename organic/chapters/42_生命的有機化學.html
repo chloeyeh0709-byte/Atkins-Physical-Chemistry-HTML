@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第42章 生命的有機化學</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 42 章</div>
+    <div class="ch-title">生命的有機化學</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#intro">初級代謝概覽</a>
+    <a href="#nucleic-acids">核酸</a>
+    <a href="#proteins">蛋白質</a>
+    <a href="#sugars">糖類</a>
+    <a href="#lipids">脂質</a>
+    <a href="#nad">NAD⁺/NADH</a>
+    <a href="#coenzyme-a">輔酶A</a>
+    <a href="#pep">磷酸烯醇丙酮酸</a>
+    <a href="#shikimic">莽草酸途徑</a>
+    <a href="#natural-products">天然產物</a>
+    <a href="#alkaloids">生物鹼</a>
+    <a href="#fatty-acids">脂肪酸與聚酮</a>
+    <a href="#terpenes">萜類</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+<h1>第42章 生命的有機化學</h1>
+<p class="chapter-meta">Clayden Organic Chemistry · 第42章（pp. 1133–1168）</p>
+
+<h2 id="intro">初級代謝概覽</h2>
+<p>生物的有機化學建立在少數核心代謝路徑上，通過相互轉化的小分子構建所有的複雜生物分子：</p>
+<pre class="reaction-scheme">CO₂ → 葡萄糖 → 丙酮酸 → 乙醯CoA → 檸檬酸循環
+                              ↘ 核酸、蛋白質、多糖、脂質
+</pre>
+<p>初級代謝（primary metabolism）幾乎存在於所有生物中，提供能量和建構材料。次級代謝（secondary metabolism）則在特定生物中產生天然產物。</p>
+
+<h2 id="nucleic-acids">核酸</h2>
+
+<h3>ATP結構</h3>
+<p>腺苷三磷酸（ATP）是細胞的能量貨幣，由腺嘌呤（adenine）+ 核糖 + 三個磷酸基團構成。ATP水解（→ADP + Pi，ΔG = −30.5 kJ/mol）驅動大量生物合成反應。</p>
+
+<h3>五種鹼基</h3>
+<table>
+  <tr><th>鹼基</th><th>類型</th><th>出現於</th><th>配對</th></tr>
+  <tr><td>腺嘌呤（A）</td><td>嘌呤</td><td>DNA, RNA</td><td>T（DNA）或U（RNA）</td></tr>
+  <tr><td>鳥嘌呤（G）</td><td>嘌呤</td><td>DNA, RNA</td><td>C（3個H鍵）</td></tr>
+  <tr><td>胞嘧啶（C）</td><td>嘧啶</td><td>DNA, RNA</td><td>G</td></tr>
+  <tr><td>胸腺嘧啶（T）</td><td>嘧啶</td><td>DNA</td><td>A（2個H鍵）</td></tr>
+  <tr><td>尿嘧啶（U）</td><td>嘧啶</td><td>RNA</td><td>A</td></tr>
+</table>
+
+<h3>Watson-Crick雙股螺旋</h3>
+<ul>
+  <li>A–T：2個氫鍵</li>
+  <li>G–C：3個氫鍵（G–C更穩定）</li>
+  <li>DNA比RNA更穩定，原因是2'位無OH基（RNA的2'-OH可作分子內親核試劑水解磷酸酯）</li>
+</ul>
+
+<h3>SAM甲基化</h3>
+<p>S-腺苷甲硫胺酸（SAM）是生物的甲基供體，參與眾多甲基化反應：</p>
+<pre class="reaction-scheme">可可鹼（theobromine）+ SAM → 咖啡因（caffeine）
+  （7-N甲基化，SN2機制，SAM上S–CH₃鍵斷裂）
+</pre>
+
+<h3>抗病毒核苷類藥物</h3>
+<ul>
+  <li><strong>AZT（齊多夫定）</strong>：3'位為疊氮基（N₃），阻礙DNA鏈延伸（HIV逆轉錄酶抑制劑）</li>
+  <li><strong>3TC/拉米夫定（lamivudine）</strong>：核糖環中O被S取代（S構型），抗HIV和HBV</li>
+  <li><strong>阿昔洛韋（acyclovir, Zovirax）</strong>：無糖環，僅保留甘油基鏈，對皰疹病毒的胸腺嘧啶激酶選擇性高</li>
+</ul>
+
+<h3>cAMP作為第二信使</h3>
+<p>環腺苷一磷酸（cAMP）由ATP環化而成（2',3'磷酸二酯鍵），作為荷爾蒙訊號的細胞內中繼分子，調控PKA（蛋白激酶A）等多種酶。</p>
+
+<h2 id="proteins">蛋白質</h2>
+
+<h3>肽鍵形成</h3>
+<p>核糖體在mRNA的密碼子指導下，將氨醯-tRNA中的胺基酸連接成肽鏈。肽鍵（CO–NH）具有部分雙鍵特性（氮孤對電子共軛），限制了肽鏈的旋轉自由度。</p>
+
+<h3>重要肽和蛋白質的例子</h3>
+<ul>
+  <li><strong>穀胱甘肽（glutathione, γ-Glu-Cys-Gly）</strong>：細胞抗氧化劑，含非常規γ-肽鍵（谷氨酸的γ-羧基成鍵）</li>
+  <li><strong>脯氨酸（Pro）在膠原蛋白中的作用</strong>：Gly-Pro-Hyp（Hyp = 羥基脯氨酸）三螺旋結構，維生素C缺乏→羥化受阻→壞血病</li>
+  <li><strong>賴諾普利（lisinopril）</strong>：ACE抑制劑，模擬底物肽段，含Lys殘基</li>
+  <li><strong>青黴素機制</strong>：青黴素模擬D-Ala-D-Ala肽段，不可逆地對絲胺酸蛋白酶（轉肽酶）的活性絲胺酸進行醯化，阻礙細菌細胞壁（肽聚糖）的交聯</li>
+</ul>
+
+<h2 id="sugars">糖類</h2>
+
+<h3>葡萄糖的環化與異頭效應</h3>
+<p>葡萄糖（開鏈形式）的C-1醛基與C-5羥基環化形成六元吡喃糖環（類似半縮醛）：</p>
+<ul>
+  <li><strong>α-葡萄糖</strong>：C-1的OH在赤道位（熱力學不利，但受動力學影響）</li>
+  <li><strong>β-葡萄糖</strong>：C-1的OH在軸向位（由異頭效應穩定）</li>
+</ul>
+
+<div class="box-key">
+<strong>異頭效應（Anomeric Effect）</strong>：在吡喃糖環上，C-1位的電負性取代基（OH, OR, F）偏好軸向位（α），而不是通常預期的赤道位。原因：C-1的σ*軌域與環氧的n孤對電子重疊穩定（n→σ*相互作用），軸向構型時重疊最大。
+</div>
+
+<h3>縮醛的形成固定環形式</h3>
+<p>半縮醛（異頭OH）可與另一個醇形成縮醛（糖苷），固定特定構型，阻止變旋（mutarotation）：</p>
+<ul>
+  <li><strong>苯甲醛縮醛</strong>：保護葡萄糖的4,6-二OH（反式稠合雙環），4-OH被立體選擇性地阻擋</li>
+  <li><strong>丙酮縮醛</strong>：優先形成順式5-5融合環（1,2-或1,3-二醇），環的幾何構型更穩定</li>
+  <li><strong>二硫縮醛</strong>：固定開鏈形式（C-1為SR, SR），有利於開鏈反應</li>
+</ul>
+
+<h3>糖苷（Glycosides）</h3>
+<ul>
+  <li>α-糖苷：OH在C-1的下方（軸向，D型糖的慣例）</li>
+  <li>β-糖苷：OH在C-1的上方（赤道）</li>
+  <li><strong>芥子苷（sinigrin）</strong>：β-糖苷，被酶水解後生成異硫氰酸烯丙酯（刺激性氣味，存在於芥末）；相關化合物蘿蔔硫素（sulforaphane）具抗癌活性</li>
+  <li><strong>纖維素</strong>：β-1,4-糖苷鍵（直鏈，人類無法消化）</li>
+  <li><strong>澱粉</strong>：α-1,4-糖苷鍵（螺旋形，可水解）</li>
+  <li><strong>几丁質（chitin）</strong>：N-乙醯葡萄糖胺的β-1,4聚合物（昆蟲外骨骼）</li>
+</ul>
+
+<h2 id="lipids">脂質</h2>
+<p>脂質主要為甘油的脂肪酸酯（三酸甘油酯）。典型脂肪酸：</p>
+<ul>
+  <li>棕櫚酸（C₁₆, 飽和）：最常見的飽和脂肪酸</li>
+  <li>油酸（C₁₈, 9Z-monoene）：橄欖油的主要成分</li>
+</ul>
+<p>磷脂（phospholipids）和糖脂（glycolipids）組成細胞膜的雙層結構（脂質雙層膜）。肥皂（皂化）：脂肪酸鈉鹽，親水極性頭+疏水鏈→膠束清潔。</p>
+
+<h2 id="nad">NAD⁺/NADH——自然界的NaBH₄</h2>
+<p>煙醯胺腺嘌呤二核苷酸（NAD⁺）是生物的氧化還原輔酶：</p>
+<pre class="reaction-scheme">NAD⁺ + 2e⁻ + H⁺  →  NADH  （氧化型→還原型）
+</pre>
+<p>NAD⁺作為氫化物接受劑，氧化醇類；NADH作為氫化物供體，還原羰基：</p>
+<pre class="reaction-scheme">乙醇 + NAD⁺ →[肝酒精脫氫酶]→ 乙醛 + NADH
+  （酶從Re面轉移氫化物→(S)-乳酸，對映選擇性&gt;99%）
+</pre>
+
+<h3>通過吡哆醛/吡哆胺的還原胺化</h3>
+<p>氨基轉移酶（aminotransferase）使用磷酸吡哆醛（PLP）作輔酶，催化酮酸與胺基酸之間的互換：</p>
+<pre class="reaction-scheme">α-酮戊二酸 + Ala →[轉胺酶/PLP]→ 谷氨酸 + 丙酮酸
+機制：胺基酸-Schiff鹼 → 互變 → 新α-酮酸 + 吡哆胺 → 再與另一酮酸反應
+</pre>
+<p>每個步驟都是單面轉移（酶控制立體化學），生成單一對映體胺基酸。</p>
+
+<h2 id="coenzyme-a">輔酶A（CoA）——生物的硫酯</h2>
+<p>輔酶A（CoASH）通過其硫醇（−SH）與羧酸形成硫酯（thioester），活化醯基用於縮合反應：</p>
+<ul>
+  <li><strong>乙醯CoA（CH₃CO–SCoA）</strong>：中心代謝分子，連接糖、脂肪、蛋白質代謝</li>
+  <li>硫酯比氧酯更易烯醇化（α-H酸性更強），是生物aldol和Claisen縮合的關鍵</li>
+  <li><strong>檸檬酸合酶（citrate synthase）</strong>：乙醯CoA + 草醯乙酸 → 檸檬酸（利用硫酯烯醇鹽的親核性）</li>
+</ul>
+
+<h3>賴胺酸烯胺（Aldolase）</h3>
+<p>醛縮酶利用賴胺酸（Lys）ε-胺基與底物酮形成亞胺，然後互變為烯胺（類似有機催化），催化1-6位果糖二磷酸的逆醛醇縮合（糖解途徑的關鍵步驟）。</p>
+
+<h2 id="pep">磷酸烯醇丙酮酸（PEP）</h2>
+<p>磷酸烯醇丙酮酸（PEP）是丙酮酸的高能磷酸化烯醇形式，是糖解末端、胺基酸和莽草酸途徑中的關鍵中間體：</p>
+<pre class="reaction-scheme">2-磷酸甘油酸 →[烯醇酶, E1cB機制]→ PEP + H₂O
+  （不是移除磷酸，而是移除較難離去的OH——E1cB由烯醇負離子推動）
+PEP + ADP →[丙酮酸激酶]→ 丙酮酸 + ATP  （能量回收）
+</pre>
+
+<h2 id="shikimic">莽草酸途徑</h2>
+<p>莽草酸途徑是植物（和某些細菌）合成苯丙胺酸（Phe）、酪胺酸（Tyr）、色胺酸（Trp）等芳香族胺基酸的唯一途徑，哺乳動物缺乏此途徑（故這些為必需胺基酸）：</p>
+
+<pre class="reaction-scheme">PEP + 赤鮮糖-4-磷酸（C₄糖）→[aldol縮合]→ 7C α-酮酸中間體
+→ 環化（形成莽草酸6員環）→ 多步 → 莽草酸
+→ 莽草酸 → 分支酸 → 苯丙胺酸/酪胺酸
+</pre>
+
+<div class="box-note">
+莽草酸是除草劑「農達（Roundup/glyphosate）」和抗流感藥「克流感（Tamiflu/oseltamivir）」的工業原料。草甘膦通過抑制莽草酸途徑的EPSP合酶殺死植物。
+</div>
+
+<h2 id="natural-products">天然產物</h2>
+<p>天然產物（natural products）是生物次級代謝產生的特殊化合物，分類為：</p>
+<ul>
+  <li><strong>萜類（terpenes）</strong>：以C₅異戊二烯為單元（香味物質、固醇等）</li>
+  <li><strong>生物鹼（alkaloids）</strong>：含氮，通常為鹼性，由胺基酸合成</li>
+  <li><strong>聚酮類（polyketides）</strong>：由乙酸（乙醯CoA）鏈延伸，含多氧官能基</li>
+</ul>
+
+<h2 id="alkaloids">生物鹼（Alkaloids）</h2>
+<p>生物鹼由胺基酸合成，均含鹼性胺基，常有強烈生物活性。以鳥胺酸（ornithine）為出發點的吡咯烷生物鹼最具代表性。</p>
+
+<h3>吡咯烷生物鹼——來自鳥胺酸</h3>
+<p>包括：菸鹼（nicotine）、莨菪鹼（hygrine）、阿托品（atropine）、古柯鹼（cocaine）等：</p>
+
+<pre class="reaction-scheme">鳥胺酸 →[吡哆醛脫羧]→ 腐胺（putrescine）
+腐胺 →[SAM甲基化]→ 仲胺 →[分子內縮合]→ 四氫吡咯陽離子
++ 2×乙醯CoA（Claisen縮合→乙醯乙醯CoA）→ 莨菪鹼 →[氧化]→ 托品酮（tropinone）
+</pre>
+
+<h4>Robinson的托品酮合成（1917）</h4>
+<p>Robinson（1917年）根據生物合成思路，在pH 7水溶液中以琥珀醛、甲胺和丙酮二羧酸合成了托品酮，條件與生物合成驚人相似。這個合成被稱為現代有機合成的里程碑。</p>
+
+<h3>苯基異喹啉生物鹼——來自酪胺酸</h3>
+<p>鴉片罌粟（Papaver somniferum）中的罌粟鹼（papaverine）、嗎啡（morphine）等都屬於苯基異喹啉生物鹼，均來自兩分子酪胺酸：</p>
+
+<pre class="reaction-scheme">酪胺酸 →[轉胺]→ 二羥苯丙酮酸（DHPP）
+酪胺酸 →[脫羧+羥化]→ 多巴（dopa）→ 多巴胺（dopamine）
+多巴胺 + DHPP → Schiff鹼 →[Mannich/EAS環化]→ 四氫異喹啉
+→[脫羧+4×SAM甲基化+氧化]→ 罌粟鹼
+</pre>
+
+<div class="box-example">
+<strong>Pictet-Spengler反應（實驗室類比）</strong>
+<pre class="reaction-scheme">多巴胺類 + 醛 →[pH 6, 25°C, 水]→ 還原型苯基異喹啉
+  機制：亞胺形成 → 質子化 → 親電芳香取代（EAS）
+</pre>
+實驗室在溫和水相條件可實現，充分體現生物合成仿生策略。
+</div>
+
+<h2 id="fatty-acids">脂肪酸與聚酮類天然產物</h2>
+
+<h3>脂肪酸的特徵</h3>
+<ul>
+  <li>碳鏈為偶數（兩碳為建構單位：乙酸/乙醯CoA）</li>
+  <li>直鏈（酶的精確控制，無分支）</li>
+  <li>不飽和鍵通常為cis（Z）構型</li>
+  <li>多個不飽和鍵之間有飽和碳分隔（非共軛）</li>
+</ul>
+
+<h3>脂肪酸生物合成循環</h3>
+<pre class="reaction-scheme">乙醯CoA（starter）+ 丙二醯CoA →[縮合酶]→ 乙醯乙醯CoA + CO₂
+乙醯乙醯CoA →[NADPH, 3-羥醯-ACP還原酶]→ β-羥基酸硫酯
+β-羥基酸 →[脫水, E1cB, 3-羥醯-ACP脫水酶]→ trans-α,β-不飽和硫酯（E型）
+不飽和酯 →[NADPH, 烯醯-ACP還原酶]→ 飽和C₄硫酯
+每輪循環：鏈延長2個碳，共需8輪→C₁₆棕櫚酸
+</pre>
+
+<h3>必需脂肪酸</h3>
+<p>哺乳動物無法在C9以遠插入cis雙鍵，因此亞油酸（C₁₈, ω-6）和α-亞麻酸（C₁₈, ω-3）必須從飲食中攝取。它們是花生四烯酸（C₂₀, ω-6）的前體，最終生成重要的信號分子：</p>
+<ul>
+  <li><strong>白三烯（leukotrienes）</strong>：過敏/哮喘介質</li>
+  <li><strong>前列腺素（prostaglandins）</strong>：炎症、發熱、疼痛介質</li>
+  <li><strong>血栓素A₂（thromboxane A₂）</strong>：血小板凝聚，參與血栓形成</li>
+</ul>
+
+<h3>芳香聚酮類：白藜蘆醇</h3>
+<pre class="reaction-scheme">4-羥基肉桂酸CoA硫酯 + 3×丙二醯CoA →[縮合]→
+線形四酮 →[aldol環化]→ 6員環 →[脫水/烯醇化/去羧基]→ 白藜蘆醇（resveratrol）
+</pre>
+<p>白藜蘆醇存在於紅葡萄皮中，可能與預防心臟病有關。</p>
+
+<h2 id="terpenes">萜類（Terpenes）</h2>
+<p>萜類通過異戊二烯（C₅）單元首尾相接構建，但真正的生物合成前體是<strong>甲瓦龍酸（mevalonic acid）</strong>，而非異戊二烯：</p>
+
+<h3>甲瓦龍酸途徑</h3>
+<pre class="reaction-scheme">3×乙醯CoA →[Claisen+aldol]→ HMG-CoA（3-羥基-3-甲基戊二醯CoA）
+HMG-CoA →[2×NADPH, HMG-CoA還原酶]→ 甲瓦龍酸
+甲瓦龍酸 →[ATP磷酸化]→ 甲瓦龍酸焦磷酸 →[消除]→ 異戊烯焦磷酸（IPP, C₅）
+IPP ⇌ 二甲基烯丙基焦磷酸（DMAPP, C₅）
+</pre>
+
+<div class="box-note">
+HMG-CoA還原酶是膽固醇生物合成的限速步驟，也是降膽固醇藥物史他汀類（statins, 如lovastatin, atorvastatin）的靶點。
+</div>
+
+<h3>萜類的鏈延長</h3>
+<pre class="reaction-scheme">IPP + DMAPP → 焦磷酸牻牛兒酯（GPP, C₁₀, 單萜）
+GPP + IPP → 焦磷酸法尼酯（FPP, C₁₅, 倍半萜）
+2×FPP → 角鯊烯（squalene, C₃₀, 三萜）→ 固醇
+GPP → IPP → 焦磷酸牻牛兒牻牛兒酯（GGPP, C₂₀, 二萜）
+</pre>
+
+<h3>環化：從C₁₀到複雜萜</h3>
+<p>GPP（trans雙鍵）不能直接環化，需先通過烯丙基重排生成牻牛兒基焦磷酸（neryl-PP，cis雙鍵），才能發生環化：</p>
+<pre class="reaction-scheme">GPP（trans）→[烯丙基Mg²⁺重排]→ 烯丙基陽離子（可自由旋轉）→
+cis-neryl-PP → 環化 → 薄荷烷碳正離子 → 檸檬烯（limonene）
+檸檬烯碳正離子 → 二次環化 → α-蒎烯（alpha-pinene）
+</pre>
+<p>數千種單萜和更複雜的萜類均由此類碳正離子級聯環化衍生。</p>
+
+<h3>固醇</h3>
+<p>角鯊烯（C₃₀）通過酶催化的協同四環化反應生成固醇前體，再通過多步酶催化轉化為睾酮、雌激素、孕酮和膽固醇（用於細胞膜，也是動脈硬化的元兇）。</p>
+
+<h2 id="summary">本章摘要</h2>
+<div class="box-summary">
+<ul>
+  <li><strong>核酸</strong>：五種鹼基（嘌呤A/G，嘧啶T/U/C）；Watson-Crick配對；RNA的2'-OH→自我水解；SAM甲基化；AZT/3TC/阿昔洛韋作為核苷類似物藥物</li>
+  <li><strong>蛋白質</strong>：穀胱甘肽抗氧化；青黴素模擬D-Ala-D-Ala阻礙細胞壁交聯；膠原蛋白Gly-Pro-Hyp三螺旋</li>
+  <li><strong>糖類</strong>：異頭效應（n→σ*穩定軸向取代基）；半縮醛→縮醛固定環形；α/β-糖苷；纖維素（β-1,4），澱粉（α-1,4），几丁質</li>
+  <li><strong>NAD⁺/NADH</strong>：生物的氫化物傳遞體，每次轉移均有立體選擇性</li>
+  <li><strong>CoA硫酯</strong>：活化醯基，促進Claisen和aldol縮合（檸檬酸合酶、醛縮酶、脂肪酸合酶）</li>
+  <li><strong>PEP</strong>：丙酮酸的高能烯醇形式，由烯醇酶催化E1cB脫水製備；用於糖解和莽草酸途徑</li>
+  <li><strong>莽草酸途徑</strong>：植物合成芳香族胺基酸（Phe, Tyr, Trp）的唯一途徑；草甘膦靶點；奧司他韋（Tamiflu）原料</li>
+  <li><strong>吡咯烷生物鹼</strong>：鳥胺酸→腐胺→莨菪鹼→托品酮；Robinson合成（1917）</li>
+  <li><strong>苯基異喹啉生物鹼</strong>：來自酪胺酸；罌粟鹼（Pictet-Spengler反應）</li>
+  <li><strong>脂肪酸</strong>：偶數C，直鏈；丙二醯CoA兩碳延長循環；花生四烯酸→前列腺素/白三烯/血栓素</li>
+  <li><strong>萜類</strong>：甲瓦龍酸→IPP/DMAPP（C₅）→GPP/FPP→環化；史他汀類抑制HMG-CoA還原酶</li>
+</ul>
+</div>
+
+<div class="box-selftest">
+<ol>
+  <li>解釋為何RNA比DNA更容易水解，並說明RNA水解的分子機制（包括關鍵的反應步驟和過渡態）。</li>
+  <li>什麼是異頭效應？請用軌道模型解釋為何β-葡萄糖吡喃環C-1的OH傾向於軸向位。</li>
+  <li>NAD⁺是如何將乙醇氧化為乙醛的？此反應的立體化學特點是什麼？</li>
+  <li>請比較脂肪酸生物合成和Claisen縮合的機制，說明丙二醯CoA的CO₂如何在縮合後釋放。</li>
+  <li>萜類為何被稱為「異戊二烯規則」，但其生物合成中真正的C₅前體是什麼？簡述從乙醯CoA到IPP的路徑。</li>
+</ol>
+</div>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+document.getElementById('main').addEventListener('click', () => sidebar.classList.remove('open'));
+
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const active = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id]').forEach(h => observer.observe(h));
+</script>
+</body>
+</html>

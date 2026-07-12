@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三十一章：飽和雜環與立體電子效應</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三十一章<br>飽和雜環與立體電子效應</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">飽和雜環的親核性</a>
+    <a href="#aziridine">氮丙環（Aziridine）</a>
+    <a href="#aziridine-open" class="toc-sub">氮丙環的開環</a>
+    <a href="#oxygen">含氧雜環</a>
+    <a href="#epoxide" class="toc-sub">環氧化物與四元環</a>
+    <a href="#thf-thp" class="toc-sub">THF 與 THP 作溶劑</a>
+    <a href="#karplus">Karplus 方程式與 NMR</a>
+    <a href="#anomeric">異頭效應（Anomeric Effect）</a>
+    <a href="#anomeric-glucose" class="toc-sub">葡萄糖的異頭效應</a>
+    <a href="#spiroketal" class="toc-sub">螺縮酮與雙異頭效應</a>
+    <a href="#stereoelectronics">立體電子效應</a>
+    <a href="#esters" class="toc-sub">酯與內酯的構象</a>
+    <a href="#ring-closure">成環速率與 Baldwin 法則</a>
+    <a href="#thorpe-ingold">Thorpe-Ingold 效應</a>
+    <a href="#baldwins-rules">Baldwin 法則</a>
+    <a href="#exo-tet" class="toc-sub">exo-tet 與 exo-trig</a>
+    <a href="#endo-trig" class="toc-sub">5-endo-trig 的不利性</a>
+    <a href="#endo-dig" class="toc-sub">endo-dig 均有利</a>
+    <a href="#exceptions" class="toc-sub">Baldwin 法則的例外</a>
+    <a href="#ring-nmr">環大小與 NMR 偶合</a>
+    <a href="#three-ring" class="toc-sub">三員環</a>
+    <a href="#four-ring" class="toc-sub">四員環（青黴素）</a>
+    <a href="#five-ring" class="toc-sub">五員環</a>
+    <a href="#geminal">孿偶合（²J）</a>
+    <a href="#diastereotopic">非等效質子</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第三十一章</div>
+    <h1>飽和雜環與立體電子效應</h1>
+    <div class="subtitle">Saturated Heterocycles and Stereoelectronics · pp. 789–824</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">飽和雜環的親核性</h2>
+  <p>飽和環狀胺通常比相應的無環胺<strong>親核性更強</strong>。原因是環狀結構的烷基「向後綁定」（tied-back），空間阻礙減小，氮原子孤對電子更易接近親電試劑。</p>
+
+  <table>
+    <thead><tr><th>化合物</th><th>相對速率（k<sub>rel</sub>）</th><th>備注</th></tr></thead>
+    <tbody>
+      <tr><td>三乙胺（Et₃N）</td><td>1</td><td>開鏈，空間阻礙大</td></tr>
+      <tr><td>奎寧環（Quinuclidine）</td><td>63</td><td>剛性双環，烷基全向後</td></tr>
+      <tr><td>DABCO</td><td>40</td><td>雙氮橋環，一個N為親核端</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box-example">
+    <strong>Baylis-Hillman 反應</strong>
+    DABCO 作為催化劑催化醛與活化烯烴（Michael 受體）的偶聯：
+    DABCO 的一個 N 首先對 Michael 受體發生共軛加成 → 生成烯醇鹽 → 烯醇鹽攻擊醛（醛醇型）
+    → E1cB 機制消除 DABCO → 得 α-亞甲基醇（Baylis-Hillman 產物）。
+  </div>
+
+  <!-- ===== AZIRIDINE ===== -->
+  <h2 id="aziridine">氮丙環（Aziridine）</h2>
+  <p>三員含氮雜環稱<strong>氮丙環（aziridine）</strong>，與環氧化物類比，具有以下特性：</p>
+  <ul>
+    <li><strong>鹼性比預期低</strong>（pKₐ = 8.0）：因 C–N 鍵帶有更多 sp² 特徵，氮的孤對軌道 s 成分增加 → 電子靠近核 → 不易給出</li>
+    <li><strong>N 構型翻轉慢</strong>：三員環限制了 N 的「雨傘翻轉」，使氮可成為立體中心</li>
+  </ul>
+
+  <h3 id="aziridine-open">氮丙環的開環</h3>
+  <p>氮丙環因環張力大，容易開環。環氮上的醯化（acylation）將正電荷引入 N，使其成為「氮鎓離子」型的好離去基，容易被親核試劑開環：</p>
+
+  <div class="reaction-scheme">氮丙環 + RCOCl（醯氯）→ 醯化氮丙環
+  親核試劑（Nu:）攻擊較少取代的碳 → 開環（SN2 型）
+  → 得 β-胺基衍生物</div>
+
+  <p>若以溴代反應，可生成溴代胺（氮鎓鹽中間體）：</p>
+  <div class="reaction-scheme">氮丙環 + Br₂ → [氮鎓鹽 aziridinium] → Br⁻ 開環 → 溴代胺</div>
+
+  <!-- ===== OXYGEN HETEROCYCLES ===== -->
+  <h2 id="oxygen">含氧雜環</h2>
+
+  <h3 id="epoxide">環氧化物與四元環</h3>
+  <p>含氧雜環的環張力決定其反應性：環氧化物（三員）張力最大，四氫呋喃（THF，五員）幾乎無張力，氧雜環丁烷（oxetane，四員）介於其間。</p>
+  <p>BF₃ 可活化環醚對親核攻擊：氧配位 BF₃ 後，環醚變成好離去基。氧雜環丁烷（四員）在 BF₃ 作用下定量開環；THF 在 BF₃ 作用下只開環 20%（五員環張力小）。</p>
+  <p>BuLi 在 >0°C 下可使 THF 分解（逆[2+3]）：半衰期約40 min（20°C）——因此 BuLi 反應需在低溫（–78°C）進行。</p>
+
+  <h3 id="thf-thp">THF 與 THP 作溶劑/保護基</h3>
+  <p>四氫呋喃（THF）和四氫吡喃（THP）不僅作溶劑，其衍生物（縮醛 acetal 形式）也廣泛用作醇的<strong>保護基</strong>（THP ether, MOM ether 等）。</p>
+
+  <!-- ===== KARPLUS ===== -->
+  <h2 id="karplus">Karplus 方程式與 NMR</h2>
+  <p>NMR 偶合常數 ³J（vicinal）與二面角 φ 的關係由 <strong>Karplus 方程</strong>描述：</p>
+
+  <div class="reaction-scheme">³J ≈ A·cos²φ − B·cosφ + C
+
+  φ = 0°  或  180°  →  ³J 大（~10–14 Hz）
+  φ = 90°             →  ³J ≈ 0 Hz
+  φ = 60° 或 120°    →  ³J 中等（~3–5 Hz）</div>
+
+  <div class="box-key">
+    <strong>Karplus 的應用</strong>
+    若兩個質子的二面角接近 0° 或 180°（反式/重疊），偶合常數大；
+    若二面角接近 90°，偶合常數接近零。
+    固定環的構象使二面角可測，藉此確定順/反構型。
+  </div>
+
+  <div class="box-example">
+    <strong>順/反縮醛的 NMR 判斷</strong>
+    1,3-二醇與醛縮合形成六員縮醛（1,3-二氧雜環己烷）。
+    <em>cis</em>-2,4-二甲基-1,3-二氧雜環己烷：兩 Me 均直立（大偶合）；
+    <em>trans</em>-異構體：一個 Me 直立一個平伏（不同偶合）。
+    NOE（Nuclear Overhauser Effect，1/r⁶）通過空間確定立體化學。
+  </div>
+
+  <!-- ===== ANOMERIC EFFECT ===== -->
+  <h2 id="anomeric">異頭效應（Anomeric Effect）</h2>
+  <p><strong>異頭效應</strong>是 C2 位（THP 中 C2）的電負性取代基（如 OR、Cl）傾向佔據<strong>直立鍵（axial）</strong>而非等轉鍵（equatorial）的立體電子現象——與簡單取代基的偏好相反。</p>
+
+  <div class="box-key">
+    <strong>異頭效應的軌道解釋</strong>
+    直立鍵的 C–X（X = OR、Cl 等）σ* 軌道與環氧的孤對 (lone pair) 反平行排列，
+    允許 n → σ* 超共軛：
+    O 孤對（軸向） → 直立 C–X 鍵的 σ*
+    此能量穩定化使直立鍵成為偏好構象。
+  </div>
+
+  <h3 id="anomeric-glucose">葡萄糖的異頭效應</h3>
+  <p>葡萄糖在水溶液中平衡：α-葡萄糖（C1-OH 直立）36%，β-葡萄糖（C1-OH 平伏）64%。單純從空間效應預測應全部 β（平伏），但異頭效應使 α 體佔有更大比例。在極性較低的溶劑中（及葡萄糖衍生物中），異頭效應更強，可使 α 體比例大幅增加。</p>
+
+  <h3 id="spiroketal">螺縮酮與雙異頭效應</h3>
+  <p><strong>螺縮酮（spiroketal）</strong>含兩個共享一個碳（螺原子）的環，常見於昆蟲信息素中。螺原子同時連接兩個 C–O 鍵，每個 O 各自貢獻一個異頭效應 → <strong>雙異頭效應（double anomeric effect）</strong>，使特定螺縮酮構象極度穩定。</p>
+
+  <!-- ===== STEREOELECTRONICS ===== -->
+  <h2 id="stereoelectronics">立體電子效應</h2>
+  <p>分子幾何形狀（軌道取向）對反應性和偏好構象的影響稱<strong>立體電子效應（stereoelectronic effect）</strong>。</p>
+
+  <h3 id="esters">酯與內酯的構象</h3>
+  <ul>
+    <li><strong>酯（開鏈）</strong>：偏好 <em>s-trans</em>（E）構象（C=O 與 O–C 呈反式）</li>
+    <li><strong>縮醛（開鏈）</strong>：高斯效應（gauche effect）使 O–C–O 偏好<em>gauche</em>（O 孤對與 C–O 相互穩定）</li>
+    <li><strong>內酯（環內酯）</strong>：環強制 <em>s-cis</em> 構象，使 C=O 比開鏈酯更具親電性 → 反應性增加</li>
+  </ul>
+
+  <!-- ===== RING CLOSURE ===== -->
+  <h2 id="ring-closure">成環速率與 Baldwin 法則</h2>
+  <p>分子內成環反應的速率取決於環大小：五員環 > 六員環 > 三員環 > 七員環 > 四員環 > 八到十員環。此順序由<strong>活化焓（ΔH‡）與活化熵（ΔS‡）</strong>共同決定。</p>
+
+  <h3 id="thorpe-ingold">Thorpe-Ingold 效應</h3>
+
+  <div class="box-key">
+    <strong>Thorpe-Ingold 效應</strong>
+    環上的<strong>gem-二取代</strong>（同碳雙取代）可顯著<strong>加速</strong>成環速率（動力學）
+    以及<strong>增大</strong>環化平衡常數（熱力學）。<br>
+    原因：取代基的排斥使鏈的鍵角變小，使兩端更靠近彼此，降低成環所需的熵損失。
+  </div>
+
+  <table>
+    <thead><tr><th>化合物</th><th>K<sub>rel</sub>（相對環化常數）</th></tr></thead>
+    <tbody>
+      <tr><td>琥珀酸（succinic acid）→ 琥珀酐</td><td>1</td></tr>
+      <tr><td>甲基取代琥珀酸類似物</td><td>14</td></tr>
+      <tr><td>四甲基取代類似物</td><td>24000</td></tr>
+    </tbody>
+  </table>
+
+  <p>Thorpe-Ingold 效應既是動力學現象（減少 ΔS‡），也是熱力學現象（增加 ΔS 差值）。gem-二取代使可用構象變少，起始物熵較低，成環 ΔS‡ 較小 → 環化更快。</p>
+
+  <!-- ===== BALDWIN'S RULES ===== -->
+  <h2 id="baldwins-rules">Baldwin 法則</h2>
+  <p>Baldwin 於 1976 年提出一套系統性分類方法，描述不同類型的分子內環化反應的有利性（favoured）或不利性（disfavoured）。</p>
+
+  <p>分類基於三個因素：</p>
+  <ol>
+    <li><strong>環的大小</strong>（形成的環有多少個原子，包括兩端）</li>
+    <li><strong>endo 或 exo</strong>：斷裂的鍵在環<em>內</em>（endo）還是環<em>外</em>（exo）</li>
+    <li><strong>tet / trig / dig</strong>：被攻擊碳的雜化（sp³=tet，sp²=trig，sp=dig）</li>
+  </ol>
+
+  <div class="box-example">
+    <strong>Baldwin 分類示例</strong>
+    • 3-exo-tet：形成三員環，斷裂鍵在環外，被攻擊碳為 sp³<br>
+    • 5-exo-trig：形成五員環，斷裂鍵在環外，被攻擊碳為 sp²（如 C=O 或 C=C）<br>
+    • 6-endo-dig：形成六員環，斷裂鍵在環內，被攻擊碳為 sp（三鍵）
+  </div>
+
+  <h3 id="exo-tet">exo-tet 與 exo-trig：均有利</h3>
+
+  <div class="box-key">
+    <strong>有利的環化類型</strong>
+    • 所有 exo-tet 均有利（立體電子無問題，孤對與 C–X σ* 容易重疊）<br>
+    • 所有 exo-trig 均有利（孤對容易與 C=X π* 重疊）<br>
+    • 5~7 endo-dig 均有利（炔的 π* 在環平面內，孤對容易到達）
+  </div>
+
+  <h3 id="endo-trig">5-endo-trig 的不利性（最重要！）</h3>
+
+  <div class="box-key">
+    <strong>5-endo-trig 不利（disfavoured）</strong>
+    endo-trig：斷裂的 C=X 鍵在環內 → 被攻擊的碳（sp²）在環的另一端<br>
+    對於五員環：親核試劑的孤對需彎向面外才能接觸 π*，但這樣它就離親電碳太遠——
+    如「被鏈條栓住剛好搆不到的骨頭的狗」。<br>
+    核心：N 孤對需要指向 π* 軌道，但彎出平面後離得太遠；不彎曲則方向錯誤。
+  </div>
+
+  <div class="box-example">
+    <strong>5-endo-trig 實例</strong>
+    胺基丙烯酸酯的共軛加成看起來合理（胺 + C=C-CO₂Et），但實際上不發生；
+    胺改為攻擊羰基碳（5-exo-trig，有利）→ 生成內醯胺。<br>
+    這是因為 5-endo-trig 的軌道幾何不利，而 5-exo-trig 完全合理。
+  </div>
+
+  <p>6-endo-trig 則<strong>有利</strong>（89% 產率）：鏈長增加一個碳使幾何問題消失，軌道可以良好重疊。</p>
+
+  <h3 id="endo-dig">endo-dig 均有利</h3>
+  <p>炔的 π* 軌道有<strong>兩個</strong>，其中一個始終在環平面內 → 無論從哪個方向接近，孤對都能與平面內的 π* 重疊。因此所有 endo-dig 環化均有利（4-endo-dig 也能工作！）。</p>
+
+  <p><strong>exo-dig</strong>：3, 4-exo-dig 不利（碳太遠）；5~7 exo-dig 有利。</p>
+
+  <h3 id="exceptions">Baldwin 法則的例外</h3>
+  <p>Baldwin 法則描述的是動力學有利性，當反應熱力學驅動力很強或無其他路徑時，「不利」的環化也可能發生：</p>
+  <ul>
+    <li>5-endo-trig 在熱力學極有利時可進行（如1,3-二氧雜環戊烷的形成，即從醛或酮與乙二醇縮合）</li>
+    <li>陽離子反應常不遵守 Baldwin 法則</li>
+    <li>硫原子（3d 軌道）和大二元環體系例外較多</li>
+  </ul>
+
+  <div class="box-summary">
+    <strong>Baldwin 法則速查表</strong>
+    tet（sp³）：endo 5, 6 不利；exo 均有利<br>
+    trig（sp²）：3, 4, 5-endo 不利；6, 7-endo 有利；exo 均有利<br>
+    dig（sp）：endo 均有利；3, 4-exo 不利；5~7 exo 有利<br>
+    <strong>最重要記憶點：5-endo-trig 不利！</strong>
+  </div>
+
+  <!-- ===== RING SIZE AND NMR ===== -->
+  <h2 id="ring-nmr">環大小與 NMR 偶合</h2>
+  <p>環大小影響 H–H 夾角（和二面角），進而影響偶合常數。碳環中環平面的幾何使相鄰 H 的二面角趨近於特定值：</p>
+
+  <table>
+    <thead><tr><th>環大小</th><th>H–C–C–H 夾角（ring plane）</th><th>典型 ³J (Hz)</th></tr></thead>
+    <tbody>
+      <tr><td>三員環（環丙烷）</td><td>120°</td><td>0.5–1.5</td></tr>
+      <tr><td>四員環</td><td>90°</td><td>2.5–4.0</td></tr>
+      <tr><td>五員環</td><td>72°</td><td>5.0–7.0</td></tr>
+      <tr><td>六員環</td><td>60°</td><td>8.5–11.0</td></tr>
+      <tr><td>七員環</td><td>51°</td><td>9.0–12.5</td></tr>
+    </tbody>
+  </table>
+
+  <p>H 越「分散」（鍵在環平面內夾角越大），偶合常數越小（分子的「螺旋槳效應」：夾角增大使等效二面角變小）。</p>
+
+  <h3 id="three-ring">三員環</h3>
+  <p>三員環中所有鍵均重疊（二面角 0°），<em>cis</em> 偶合 > <em>trans</em> 偶合（與烯烴相反！）。電負性原子（如 O）通過抽走電子密度進一步減小偶合常數。</p>
+
+  <div class="box-example">
+    <strong>除蟲菊酯（Chrysanthemic Acid）</strong>
+    含環丙烷，<em>cis</em> 酸和 <em>trans</em> 酸均重要。<em>cis</em>: J = 8 Hz（環上 cis）；<em>trans</em>: J = 5 Hz。
+    環氧化物偶合更小（J ≈ 2–5 Hz，因 O 奪電+「擴散效應」）。
+  </div>
+
+  <h3 id="four-ring">四員環（青黴素）</h3>
+  <p>四員環（β-內酰胺）偶合常數比六員環小。青黴素（penicillin）的 β-內酰胺環：<em>cis</em> 偶合 ~5 Hz。與之相比，硫黴素（thienamycin）為 <em>trans</em>（J ~2.5 Hz）。</p>
+
+  <h3 id="five-ring">五員環</h3>
+  <p>五員環（信封形，envelope）<em>cis</em> 和 <em>trans</em> 偶合約相同（~8–9 Hz）。快速構象平衡使所有 H 的位置時均化。</p>
+
+  <!-- ===== GEMINAL ===== -->
+  <h2 id="geminal">孿偶合（Geminal, ²J）</h2>
+  <p><strong>孿偶合（²J）</strong>發生於同一碳上的<strong>非等效（diastereotopic）</strong>兩個 H 之間。化學位移相同的 H（homotopic 或 enantiotopic）不顯示偶合信號。</p>
+
+  <p>影響 ²J 的因素：</p>
+  <ul>
+    <li><strong>鍵角</strong>：二面角最大（0°/180°）時 ²J 最大</li>
+    <li><strong>環大小</strong>：小環的鍵「向外展開」→ ²J 偏小</li>
+    <li><strong>電負性原子</strong>：鄰近電負性原子使 ²J 和 ³J 均減小</li>
+    <li><strong>π 系統</strong>：相鄰 π 鍵（C=C、C=O、芳香環）顯著<strong>增大</strong> ²J（可達 14–20 Hz）</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>Frontalin（蟻信素）</strong>
+    Frontalin 是螞蟻和大象的信息素。其 NMR 中 CH₂ 的兩個非等效 H 形成 AB 系統，
+    J = 7 Hz（²J，五員環 + 鄰近 O 使 J 偏小）。
+    可從兩峰之間的距離（以 Hz 計）直接讀出偶合常數。
+  </div>
+
+  <!-- ===== DIASTEREOTOPIC ===== -->
+  <h2 id="diastereotopic">非等效質子：同位、對映位、非對映位</h2>
+  <p>CH₂ 基團的兩個 H 有三種可能的對稱關係：</p>
+
+  <table>
+    <thead><tr><th>關係類型</th><th>區分方法</th><th>NMR 表現</th></tr></thead>
+    <tbody>
+      <tr><td><strong>同位（Homotopic）</strong>：換 H 為 G 得相同分子</td><td>任何方法均不可區分</td><td>完全相同化學位移，無偶合</td></tr>
+      <tr><td><strong>對映位（Enantiotopic）</strong>：換 H 為 G 得對映體</td><td>手性試劑/酶可區分</td><td>NMR 中相同化學位移（消旋條件）</td></tr>
+      <tr><td><strong>非對映位（Diastereotopic）</strong>：換 H 為 G 得非對映體</td><td>任何試劑（含非手性）均可區分</td><td>可能有不同化學位移，可偶合（AB 系統）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box-key">
+    <strong>判斷方法</strong>
+    將分子中待判斷的兩個 H 依次替換為虛構基團 G，畫出兩個結構，
+    判斷兩個結構的關係：<br>
+    • 相同 → 同位（homotopic）<br>
+    • 對映體 → 對映位（enantiotopic）<br>
+    • 非對映體 → 非對映位（diastereotopic）
+  </div>
+
+  <div class="box-note">
+    <strong>重要結論</strong>
+    在含有手性中心的分子中，<strong>所有 CH₂ 基團的兩個 H</strong>（無論距離手性中心多遠）
+    均為非對映位，在原理上（和通常在實踐上）具有不同的化學位移，可能呈現 AB 系統。
+  </div>
+
+  <p>非對映位質子的 AB 系統偶合常數（²J）通常很大（~14 Hz），而化學位移差（Δδ）通常很小（<1 ppm），使信號呈「屋頂形」（rooftop pattern）。</p>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+
+  <div class="box-summary">
+    <strong>飽和雜環的關鍵概念</strong>
+    1. 環狀胺因「向後綁定」效應親核性強；奎寧環 63×，DABCO 40× 強於三乙胺<br>
+    2. 氮丙環和環氧化物因環張力易開環；SN2 型，立體化學翻轉<br>
+    3. 異頭效應：C2 電負性取代基偏好直立鍵（n → σ* 超共軛穩定化）<br>
+    4. 雙異頭效應固定螺縮酮構象（昆蟲信息素）<br>
+    5. Thorpe-Ingold 效應：gem-二取代加速成環（動力學+熱力學）<br>
+    6. Baldwin 法則：5-endo-trig 不利；endo-dig 全有利；exo 基本有利<br>
+    7. 環大小影響 ³J：三員最小（0.5–1.5 Hz），六員最大（8.5–11 Hz）<br>
+    8. 非對映位 H：含手性中心分子中所有 CH₂ 的兩個 H 均非等效
+  </div>
+
+</div>
+<script>
+const btn=document.getElementById('menu-btn');
+const sidebar=document.getElementById('sidebar');
+btn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!sidebar.contains(e.target)&&e.target!==btn)sidebar.classList.remove('open');});
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('#toc a[href="#'+en.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id],h3[id]').forEach(h=>obs.observe(h));
+</script>
+</body>
+</html>

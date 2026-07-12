@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三十四章：周環反應（一）— 環加成</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三十四章<br>周環反應（一）— 環加成</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">周環反應概論</a>
+    <a href="#da">[4+2] Diels-Alder 反應</a>
+    <a href="#da-mech" class="toc-sub">機制與前沿軌道理論</a>
+    <a href="#da-endo" class="toc-sub">endo 規則與立體專一性</a>
+    <a href="#da-regio" class="toc-sub">區位選擇性（鄰/對規則）</a>
+    <a href="#da-water" class="toc-sub">水中加速與 Lewis 酸催化</a>
+    <a href="#wh-rules">Woodward-Hoffmann 法則</a>
+    <a href="#wh-explain" class="toc-sub">對稱性守恆與允許/禁止</a>
+    <a href="#other46">其他環加成：[4+3]、[4+6]</a>
+    <a href="#alder-ene">Alder ene 反應</a>
+    <a href="#photo22">光化學 [2+2] 環加成</a>
+    <a href="#photo-mechanism" class="toc-sub">機制與軌道解釋</a>
+    <a href="#photo-regio" class="toc-sub">光化學區位選擇性</a>
+    <a href="#thermal22">熱化學 [2+2]：烯酮與異氰酸酯</a>
+    <a href="#ketene" class="toc-sub">烯酮 [2+2] 與 β-內酰胺</a>
+    <a href="#dipolar">1,3-偶極環加成 [3+2]</a>
+    <a href="#nitrone" class="toc-sub">硝酮（Nitrone）</a>
+    <a href="#nitrile-oxide" class="toc-sub">腈氧化物（Nitrile Oxide）</a>
+    <a href="#biotin" class="toc-sub">生物素（Biotin）的合成</a>
+    <a href="#oso4">OsO₄ 二羥基化</a>
+    <a href="#ozonolysis">臭氧分解（Ozonolysis）</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第三十四章</div>
+    <h1>周環反應（一）— 環加成</h1>
+    <div class="subtitle">Pericyclic Reactions 1: Cycloadditions · pp. 877–908</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">周環反應概論</h2>
+  <p><strong>周環反應（pericyclic reactions）</strong>是電子在環形路徑中同時移動的協奏反應，無中間體，無離子，通過鍵合的過渡態進行。本章介紹<strong>環加成（cycloaddition）</strong>，即兩個 π 系統生成兩個新 σ 鍵的反應。</p>
+
+  <div class="box-key">
+    <strong>周環反應的特徵</strong>
+    • 協奏（concerted）：沒有中間體，一步完成<br>
+    • 立體専一（stereospecific）：立體化學忠實保留在產物中<br>
+    • 無離子：不受酸鹼、極性溶劑影響（但 Lewis 酸可調控）<br>
+    • 由<strong>軌道對稱性</strong>決定熱允許/禁止（Woodward-Hoffmann 規則）
+  </div>
+
+  <!-- ===== DIELS-ALDER ===== -->
+  <h2 id="da">[4+2] Diels-Alder 反應</h2>
+  <p>Diels-Alder 反應是最重要的環加成，由<strong>二烯（diene，4π）+ 親二烯體（dienophile，2π）</strong>生成<strong>六員環</strong>。</p>
+
+  <ul>
+    <li><strong>二烯</strong>必須在 <em>s-cis</em> 構象（兩個雙鍵為順式）</li>
+    <li><strong>親二烯體</strong>通常需要<strong>吸電子基（EWG）</strong>活化（降低 LUMO 能量）</li>
+    <li>反應<strong>立體専一</strong>：同面（suprafacial），二烯體的 Z/E 構型完整保留至產物</li>
+  </ul>
+
+  <h3 id="da-mech">機制與前沿軌道理論（FMO）</h3>
+  <p>Diels-Alder 反應的反應性由<strong>前沿軌道（FMO）</strong>解釋：</p>
+
+  <div class="reaction-scheme">HOMO（二烯，ψ₂）+ LUMO（親二烯體，π*）
+
+  二烯 ψ₂ 軌道：  + - + -  ← 兩端相位
+  親二烯體 π*：  + -        ← 兩端相位
+
+  在六員環 TS 中，相鄰位點相位匹配 → 鍵合成功（熱允許）</div>
+
+  <p>相位匹配使反應在<strong>熱（基態）條件</strong>下順利進行。而兩個烯烴的 [2+2] 環加成（HOMO+LUMO）相位<strong>不匹配</strong>（一端成鍵，另一端反鍵）→ 熱<strong>禁止</strong>。</p>
+
+  <h3 id="da-endo">endo 規則與立體専一性</h3>
+  <p>Diels-Alder 反應的立體化學由兩個規則控制：</p>
+  <ol>
+    <li><strong>立體専一</strong>：親二烯體上的基團（Z/E）在產物中保持原有構型（suprafacial 成環，新的兩個 σ 鍵均在同一面）</li>
+    <li><strong>endo 規則</strong>：動力學產物為 endo（親二烯體的取代基指向二烯，有次級軌道穩定）；熱力學產物為 exo（空間阻礙小）</li>
+  </ol>
+
+  <div class="box-example">
+    <strong>苯炔（Benzyne）的捕獲</strong>
+    苯炔是反應性極強的中間體，可以作為一種親二烯體被 Diels-Alder 捕獲，
+    生成稠合芳香環產物。此反應也用於確認苯炔的存在。
+  </div>
+
+  <h3 id="da-regio">區位選擇性（「鄰/對規則」）</h3>
+  <p>不對稱親二烯體 + 不對稱二烯的 Diels-Alder 有區位選擇性，傾向生成「<em>ortho</em>」（1,2-）和「<em>para</em>」（1,4-）類似的產物，而非「<em>meta</em>」（1,3-）：</p>
+
+  <div class="reaction-scheme">1-取代二烯 + 1-取代親二烯體
+    → 主要得到「鄰」產物（1,2-取代的六員環）
+
+  規律：最大 HOMO 係數的原子與最大 LUMO 係數的原子優先成鍵</div>
+
+  <h3 id="da-water">水中加速與 Lewis 酸催化</h3>
+  <ul>
+    <li><strong>水溶劑</strong>加速 Diels-Alder ~700 倍：疏水效應（hydrophobic effect）使二烯和親二烯體聚集，有效濃度增加</li>
+    <li><strong>Lewis 酸（如 BF₃、AlCl₃）</strong>：配位親二烯體的 C=O（或 EWG），降低 LUMO 能量，縮小 HOMO/LUMO 能量差 → 加速反應，同時提高區位選擇性</li>
+  </ul>
+
+  <!-- ===== WH RULES ===== -->
+  <h2 id="wh-rules">Woodward-Hoffmann 法則</h2>
+
+  <h3 id="wh-explain">對稱性守恆與允許/禁止</h3>
+  <p>Woodward-Hoffmann（W-H）法則基於<strong>分子軌道對稱性守恆</strong>：反應坐標上所有軌道的對稱性必須守恆。</p>
+
+  <div class="box-key">
+    <strong>W-H 法則的總判斷</strong>
+    熱允許條件：(4q+2)<sub>s</sub> + (4r)<sub>a</sub> 的總電子數為<strong>奇數</strong><br>
+    （s = suprafacial，a = antarafacial；q, r 為非負整數）<br><br>
+    • [4+2]（6π）：一個 (4×1+2) = 6 電子的同面組分 → 奇數 → <strong>熱允許</strong><br>
+    • [2+2]（4π）：4 電子全同面 → 偶數 → <strong>熱禁止</strong>，但<strong>光化學允許</strong>
+  </div>
+
+  <table>
+    <thead><tr><th>反應類型</th><th>電子數</th><th>熱</th><th>光</th></tr></thead>
+    <tbody>
+      <tr><td>[4+2] Diels-Alder</td><td>6π</td><td>允許</td><td>禁止</td></tr>
+      <tr><td>[2+2] 環加成</td><td>4π</td><td>禁止</td><td>允許</td></tr>
+      <tr><td>[4+3] 環加成</td><td>6π（oxyallyl）</td><td>允許</td><td>禁止</td></tr>
+      <tr><td>[4+6] 環加成</td><td>10π</td><td>允許</td><td>禁止</td></tr>
+    </tbody>
+  </table>
+
+  <!-- ===== OTHER CYCLOADDITIONS ===== -->
+  <h2 id="other46">其他環加成：[4+3]、[4+6]</h2>
+  <p><strong>[4+3] 環加成</strong>：烯丙基陽離子（oxyallyl cation，2e × 3C = 2π）+ 二烯（4π）→ 七員環。苯炔也可作為[4+3]的對象。</p>
+  <p><strong>[4+6] 環加成</strong>：二烯（4π）+ 三烯（6π）→ 十員環。例子較少見。</p>
+
+  <!-- ===== ALDER ENE ===== -->
+  <h2 id="alder-ene">Alder ene 反應</h2>
+  <p>Alder ene 反應是周環過程，涉及<strong>C–H 鍵的烯丙基重排 + π 鍵遷移</strong>，六員環 TS，不形成新環：</p>
+
+  <div class="reaction-scheme">        H
+        |
+  ene: C=C-C-H  +  enophile（C=X）
+             ↓（六員環 TS，3個組分）
+  新 C-C 鍵形成 + H 轉移 + ene 雙鍵移位</div>
+
+  <p>Alder ene 反應涉及 3 個鍵的打斷/生成（對比 Diels-Alder 的 2 個），「3」為奇數 → 熱允許（遵守 W-H 規則）。</p>
+
+  <div class="box-example">
+    <strong>薄荷醇（Menthol）的工業合成</strong>
+    R-香葉醛（R-citronellal）在 ZnBr₂ 催化下，對<strong>羰基 ene 反應</strong>：
+    醛的 C=O 為 enophile，分子內 ene → 形成新的六員環 → 生成 isopulegol（薄荷醇前驅體）
+    → 催化氫化 → (-)-薄荷醇（工業合成的主流路線）。
+  </div>
+
+  <!-- ===== PHOTO [2+2] ===== -->
+  <h2 id="photo22">光化學 [2+2] 環加成</h2>
+  <p>熱化學禁止的 [2+2] 在光化學條件下<strong>允許</strong>：光激發使一個烯烴進入激發態（π → π*），激發態改變了前沿軌道，使 [2+2] 成為可能。</p>
+
+  <h3 id="photo-mechanism">機制與軌道解釋</h3>
+  <p>UV 光（hν）將一個烯烴激發：一個電子從 π 躍遷至 π*。激發烯烴的 HOMO 變為 π*，與基態烯烴的 π（=HOMO）相互作用：</p>
+  <ul>
+    <li>激發烯烴 π* 軌道 + 基態烯烴 π 軌道 → 在六員環過渡態中，相位相同的一端均成鍵</li>
+    <li>結果：[2+2] 熱化學禁止的相位問題在光化學條件下消失</li>
+  </ul>
+
+  <p>光化學 [2+2] 產物沒有 endo 規則（無次級軌道相互作用），最不擁擠的 TS 控制。</p>
+
+  <h3 id="photo-regio">光化學區位選擇性</h3>
+  <p>光化學 [2+2] 的區位選擇性<strong>與熱化學相反</strong>：若用 HOMO（基態）/LUMO（基態）邏輯，預期熱化學結果；光化學中，激發態 enone 的 LUMO 和基態烯烴的 LUMO 相互作用，兩個 LUMO 的較大係數端優先成鍵 → 與熱化學反應的區位選擇性互反。</p>
+
+  <!-- ===== THERMAL [2+2] ===== -->
+  <h2 id="thermal22">熱化學 [2+2]：烯酮與異氰酸酯</h2>
+  <p>儘管如此，某些特殊的「雙 π 鍵直角」分子可在熱條件下發生 [2+2]：烯酮（ketene）和異氰酸酯（isocyanate）的兩個 π 鍵成直角，允許熱化學 [2+2]。</p>
+
+  <h3 id="ketene">烯酮 [2+2] 與 β-內酰胺合成</h3>
+  <p><strong>烯酮 [2+2]</strong>：烯酮（R₂C=C=O）的 C=C（一個 π）與親核烯烴的 π 進行 [2+2]，生成<strong>環丁酮</strong>（四員環）：</p>
+
+  <div class="reaction-scheme">R₂C=C=O（烯酮）+ R'CH=CH₂（烯烴）
+  → [2+2]（熱，因烯酮的兩個 π 垂直）
+  → 環丁酮（cyclobutanone）
+
+  典型製備：
+  (CH₃)₂C=C=O（二甲基烯酮，熱解丙酮或 2-氯醯氯/Et₃N 消除）
+  + 烯烴 → 環丁酮</div>
+
+  <p><strong>β-內酰胺（β-lactam）的 [2+2] 合成</strong>有兩種方式：</p>
+  <ul>
+    <li><strong>烯酮 + 亞胺（imine）</strong>：N（親核）攻擊 C=O → β-內酰胺（100% 產率，N-Ar 亞胺較穩定）</li>
+    <li><strong>異氰酸酯 + 烯烴</strong>：N（親核）攻擊 alkene → β-內酰胺（選用氯磺酰異氰酸酯，商業可得，EWG 可在反應後水解去除）</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>二氯烯酮法合成 β-內酰胺</strong>
+    二氯乙酰氯 + Et₃N → 二氯烯酮（dichloroketene，原位生成）<br>
+    + 苯基亞胺（Ph-CH=N-Ph）→ [2+2]（100% 產率）<br>
+    → β-內酰胺（若兩個組分各含一個取代基，最終在四員環中為 trans 構型，空間阻礙最小）
+  </div>
+
+  <!-- ===== 1,3-DIPOLAR ===== -->
+  <h2 id="dipolar">1,3-偶極環加成 [3+2]</h2>
+  <p><strong>1,3-偶極（1,3-dipole）</strong>是一個三原子的共振穩定的兩性離子（如硝酮、腈氧化物、疊氮化物），相當於 Diels-Alder 的「二烯」，與「親二烯偶極體（dipolarophile，通常為烯烴或炔）」發生 [3+2] 環加成生成五員雜環。</p>
+
+  <h3 id="nitrone">硝酮（Nitrone）</h3>
+  <p>硝酮（R₂C=N⁺(R')O⁻）的四個電子（兩個 π + 一個 O 孤對）提供「二烯」的 4e 組分；烯烴（2e）為親偶極體：</p>
+
+  <div class="reaction-scheme">       ⊕  ⊖
+R₁-CH=N-O
+   \    /
+    C=C     ← dipolarophile（烯烴）
+       ↓
+  二氫異噁唑（isoxazolidine，五員環）
+       ↓ [Zn/AcOH 選擇性還原 N-O 鍵]
+  1,3-胺基醇（amino-alcohol）</div>
+
+  <p>環狀硝酮（cyclic nitrone）的分子內 [3+2] 環加成給出精美的<strong>籠型（cage）</strong>產物，立體化學由最少阻礙的接近方式決定。N–O 鍵可選擇性被 Zn/AcOH 或 H₂/Ni 還原，保留 C–C 和 C–O 鍵，得到胺基醇（或 H₂/Ni 還原 C=N 再水解 N–O → 羥基酮）。</p>
+
+  <h3 id="nitrile-oxide">腈氧化物（Nitrile Oxide）</h3>
+  <p>腈氧化物（R–C≡N⁺–O⁻）是線型 1,3-偶極，比硝酮多一個 π 鍵。製備方法：</p>
+  <ol>
+    <li>醛 + NH₂OH → 肟（oxime）→ Cl₂ 氯化 → 氯肟（chloro-oxime）→ Et₃N → γ 消除 → 腈氧化物</li>
+    <li>硝基烷 + PhN=C=O（脫水）→ 腈氧化物（機制通過卡宾型中間體）</li>
+  </ol>
+
+  <div class="reaction-scheme">腈氧化物 + 烯烴 → [3+2] → 二氫異噁唑（立體専一，Z-烯 → cis）
+腈氧化物 + 炔  → [3+2] → 異噁唑（isoxazole，芳香六 π）
+
+產物用途：
+  → LiAlH₄ → 胺基醇（1,3-關係）
+  → H₂/Ni  → 羥基酮（只還原 C=N，N-O 水解）</div>
+
+  <h3 id="biotin">生物素（Biotin，維生素 B₇）的合成</h3>
+  <p>生物素的合成精妙地利用了分子內腈氧化物 [3+2] 環加成確立關鍵立體中心：</p>
+
+  <ol>
+    <li>環烯基溴化物 + 硫醇鹽 → S 烷基化（SN2 或 SN2'，均得同一產物）→ 硫醚</li>
+    <li>酯裂解 → 硫醇鹽再生 → 共軛加成（Michael）到硝基烯 → 硝基硫醚</li>
+    <li>硝基烷 + PhNCO → 腈氧化物（原位）→ 分子內 [3+2]（唯一可能的折疊方式）→ 籠型雙環</li>
+    <li>LiAlH₄ 還原（先 C=N 再 N–O）→ 胺基醇 → 再 LiAlH₄ 裂解 N–O → 全面還原</li>
+    <li>Beckmann 重排開七員環 → 再 7 步 → 生物素（biotin）</li>
+  </ol>
+
+  <!-- ===== OSO4 ===== -->
+  <h2 id="oso4">OsO₄ 二羥基化（Dihydroxylation）</h2>
+  <p>四氧化鋨（OsO₄）對烯烴的<strong>syn（同面）二羥基化</strong>是 [3+2] 環加成（OsO₄ 視為 1,3-偶極 / O=Os=O 作 4e 組分）：</p>
+
+  <div class="reaction-scheme">      O    O
+      ‖    ‖
+   Os-O    O   +  C=C
+      ↓（[3+2]，syn）
+  5-員 osmate ester（osmate 酯）
+      ↓ H₂O 水解
+  syn-二醇（兩個 OH 在同一面）</div>
+
+  <p>OsO₄ 本身昂貴且有毒，<strong>催化量 OsO₄ + NMO（N-甲基嗎啡啉 N-氧化物）或 Fe(III)</strong> 可使 Os(VI) 再氧化回 Os(VIII) → 循環催化。與 m-CPBA 環氧化不同，OsO₄ 對電子富足與貧乏的烯烴均有效（選用最佳 HOMO/LUMO 組合）。</p>
+
+  <!-- ===== OZONOLYSIS ===== -->
+  <h2 id="ozonolysis">臭氧分解（Ozonolysis）</h2>
+  <p>臭氧（O₃）是另一個重要的 1,3-偶極：</p>
+
+  <div class="reaction-scheme">臭氧（結構）：⊕O-O-O⊖（彎曲形，共振穩定的 1,3-偶極）
+
+步驟：
+1. 臭氧 + 烯烴 → [3+2] → 初級臭氧化物（molozonide，不穩定）
+2. 逆 [3+2] 分解（molozonide 極不穩定，O–O 鍵能量低 140 kJ/mol）
+   → 醛 + 羰基氧化物（carbonyl oxide）
+3. 羰基氧化物再次 [3+2] 環加成（反向，另一端）→ 臭氧化物（ozonide，穩定）
+
+臭氧化物分解：
+  → Me₂S（DMS）→ 醛（保留 C=O 不進一步氧化）
+  → H₂O₂  → 羧酸（進一步氧化）
+  → NaBH₄  → 醇（還原）</div>
+
+  <div class="box-note">
+    <strong>臭氧分解的用途</strong>
+    臭氧分解是<strong>切割雙鍵</strong>最常用的方法：一個碳碳雙鍵 → 兩個羰基官能基。
+    選擇不同的後處理可以得到醛、酸或醇：<br>
+    烯烴 → (1) O₃ (2) Me₂S → RCHO + R'CHO（醛）<br>
+    烯烴 → (1) O₃ (2) H₂O₂ → RCO₂H + R'CO₂H（酸）<br>
+    烯烴 → (1) O₃ (2) NaBH₄ → RCH₂OH + R'CH₂OH（醇）
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+
+  <div class="box-summary">
+    <strong>環加成反應總結</strong>
+    <br>
+    <strong>[4+2] Diels-Alder</strong>：最重要的環加成；s-cis 二烯 + EWG 親二烯體；熱允許；endo 為動力學產物；水中加速；Lewis 酸催化；立體専一（suprafacial）<br><br>
+    <strong>[2+2] 光化學</strong>：UV 激發一個烯烴 → 允許；熱條件禁止；無 endo 規則；烯酮和異氰酸酯例外可熱化學 [2+2]（兩個 π 垂直）<br><br>
+    <strong>[3+2] 1,3-偶極環加成</strong>：硝酮、腈氧化物、疊氮化物等 + 烯/炔 → 五員雜環；立体専一（suprafacial）；用於合成複雜立體中心<br><br>
+    <strong>OsO₄</strong>：[3+2] 機制，syn 二羥基化，催化 + NMO 再生；<br>
+    <strong>臭氧分解</strong>：連續三步（[3+2] → 逆 [3+2] → [3+2]）→ 臭氧化物 → 醛/酸/醇<br><br>
+    <strong>Woodward-Hoffmann 規則</strong>：(4q+2)s + (4r)a 為奇數 = 熱允許；光化學與熱化學結論相反
+  </div>
+
+  <div class="box-note">
+    <strong>下一章預告</strong>
+    本章介紹了環加成。下一章（第35章）介紹另外兩類周環反應：
+    <strong>電環反應（electrocyclic reactions）</strong>和<strong>σ 遷移重排（sigmatropic rearrangements）</strong>，
+    包括 Cope 重排、Claisen 重排等重要反應。
+  </div>
+
+</div>
+<script>
+const btn=document.getElementById('menu-btn');
+const sidebar=document.getElementById('sidebar');
+btn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!sidebar.contains(e.target)&&e.target!==btn)sidebar.classList.remove('open');});
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('#toc a[href="#'+en.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id],h3[id]').forEach(h=>obs.observe(h));
+</script>
+</body>
+</html>

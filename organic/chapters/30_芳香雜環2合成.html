@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三十章：芳香雜環（二）— 合成</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三十章<br>芳香雜環（二）— 合成</h2>
+  </div>
+  <div id="toc">
+    <a href="#strategy">合成策略概論</a>
+    <a href="#five-ionic">五員雜環的離子合成</a>
+    <a href="#pyrrole" class="toc-sub">吡咯的合成</a>
+    <a href="#furan-thiophene" class="toc-sub">呋喃與噻吩</a>
+    <a href="#knorr" class="toc-sub">Knorr 吡咯合成</a>
+    <a href="#six-ring">六員雜環的合成</a>
+    <a href="#hantzsch" class="toc-sub">Hantzsch 吡啶合成</a>
+    <a href="#pyridone-synth" class="toc-sub">吡啶酮的合成</a>
+    <a href="#two-adj">含兩相鄰雜原子的五員環</a>
+    <a href="#pyrazole" class="toc-sub">吡唑與異噁唑</a>
+    <a href="#thiazole" class="toc-sub">噻唑與硬軟酸鹼</a>
+    <a href="#click" class="toc-sub">1,3-偶極環加成：四唑與三唑</a>
+    <a href="#viagra" class="toc-sub">Viagra 的合成</a>
+    <a href="#two-nonadj">含兩非相鄰雜原子的六員環</a>
+    <a href="#pyrimidine" class="toc-sub">嘧啶與甲氧苄啶</a>
+    <a href="#pyridazine" class="toc-sub">噠嗪與吡嗪</a>
+    <a href="#fischer">Fischer 吲哚合成</a>
+    <a href="#fischer-mech" class="toc-sub">機制：[3,3]-σ 遷移</a>
+    <a href="#fischer-app" class="toc-sub">應用：藥物合成</a>
+    <a href="#reissert" class="toc-sub">Reissert 吲哚合成</a>
+    <a href="#quinoline">喹啉與異喹啉的合成</a>
+    <a href="#skraup" class="toc-sub">Skraup 反應</a>
+    <a href="#quinolone-ab" class="toc-sub">喹啉酮抗生素</a>
+    <a href="#isoquinoline" class="toc-sub">異喹啉合成</a>
+    <a href="#fused">多雜原子稠環</a>
+    <a href="#timolol" class="toc-sub">Timolol 的合成</a>
+    <a href="#summary">三大合成策略總結</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第三十章</div>
+    <h1>芳香雜環（二）— 合成</h1>
+    <div class="subtitle">Aromatic Heterocycles 2: Synthesis · pp. 757–788</div>
+  </div>
+
+  <!-- ===== STRATEGY ===== -->
+  <h2 id="strategy">合成策略概論</h2>
+  <p>合成芳香雜環時，首要步驟是<strong>切斷含雜原子的鍵</strong>（C–N、C–O、C–S），以雜原子充當親核試劑，碳框架作為親電試劑（雙官能基化合物）。此策略使我們能從簡單的開鏈前驅物出發，以<strong>離子型成環反應</strong>構建雜環。</p>
+
+  <div class="box-key">
+    <strong>核心策略</strong>
+    合成芳香雜環的三大方法：<br>
+    （1）<strong>離子型成環</strong>：切斷雜原子—碳鍵，以雙親電試劑（如1,4-或1,5-二羰基化合物）與含雜原子親核試劑反應<br>
+    （2）<strong>環加成</strong>：1,3-偶極環加成（[3+2]）構建五員雜環<br>
+    （3）<strong>現有環的改造</strong>：親電/親核芳香取代、鋰化後與親電試劑反應
+  </div>
+
+  <!-- ===== FIVE-MEMBERED IONIC ===== -->
+  <h2 id="five-ionic">五員雜環的離子合成</h2>
+
+  <h3 id="pyrrole">吡咯的合成</h3>
+  <p>吡咯由<strong>1,4-二羰基化合物</strong>（琥珀醛衍生物）與伯胺（RNH₂）或氨（NH₃）縮合環化而得。</p>
+
+  <div class="reaction-scheme">1,4-二羰基化合物 + RNH₂  →  吡咯
+
+     O     O                    R
+     ‖     ‖                    |
+ R¹-C-CH₂-CH₂-C-R²  + RNH₂ →  N
+                               / \
+                           R¹     R²
+                               (吡咯)</div>
+
+  <p>機制：胺首先與一個羰基縮合形成<strong>半縮胺</strong>（hemiaminal）→ 脫水成亞胺 → 另一端親核環化 → 脫水芳香化。</p>
+
+  <h3 id="furan-thiophene">呋喃與噻吩</h3>
+  <p>同樣的1,4-二羰基骨架，改變試劑即可合成其他雜環：</p>
+  <ul>
+    <li><strong>呋喃</strong>：酸催化環化（雜原子為 O，已存在於骨架中）</li>
+    <li><strong>噻吩</strong>：以 P₂S₅（或 Lawesson 試劑）將羰基 C=O 置換為 C–S，再環化</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>範例</strong>
+    己二酮（1,4-丁二酮） + H⁺ → 呋喃（脫兩分子水）<br>
+    己二酮 + P₂S₅ → 噻吩（硫代后環化）<br>
+    己二酮 + CH₃NH₂ → N-甲基吡咯
+  </div>
+
+  <h3 id="knorr">Knorr 吡咯合成</h3>
+  <p><strong>Knorr 合成</strong>是製備 1,4-二羰基前驅物的精妙方法：先以<strong>亞硝化</strong>（HNO₂）將酮 α-位轉化為亞硝基化合物，再以鋅/AcOH 還原成胺，胺立即與另一分子酮縮合環化，<strong>原位</strong>完成吡咯合成（產率可達 87%）。</p>
+
+  <div class="reaction-scheme">  EtO₂C-CH₂-CO-CH₃  →[HNO₂]→  EtO₂C-C(=NOH)-CO-CH₃
+
+  [Zn/AcOH] 還原 →  胺基中間體  →  分子內縮合  →  吡咯衍生物
+                                                      (87% 產率)</div>
+
+  <!-- ===== SIX-MEMBERED ===== -->
+  <h2 id="six-ring">六員雜環的合成</h2>
+  <p>吡啶由<strong>1,5-二羰基化合物</strong>與氨反應，形成<strong>二氫吡啶</strong>中間體，再氧化（以 DDQ、HNO₃ 或空氣/MnO₂）芳香化而得。</p>
+
+  <div class="reaction-scheme">1,5-二羰基化合物 + NH₃  →  1,2-二氫吡啶  →[氧化]→  吡啶
+
+  O         O
+  ‖         ‖
+  R¹-C-...-C-R²  + NH₃  →  [Ar-H]  →  Ar (芳香化)</div>
+
+  <h3 id="hantzsch">Hantzsch 吡啶合成</h3>
+  <p><strong>Hantzsch 合成</strong>是最重要的吡啶製備方法之一：以<strong>兩分子 β-酮酯 + 一分子醛 + 氨</strong>「一鍋」縮合環化，得到對稱的二氫吡啶，再氧化。</p>
+
+  <div class="reaction-scheme">2 EtO₂C-CH₂-CO-CH₃  +  RCHO  +  NH₃
+         ↓
+  [醛醇縮合 → Michael 加成 → 氨與羰基縮合 → 環化]
+         ↓
+  二氫吡啶（dihydropyridine）
+         ↓  [O]
+  取代吡啶</div>
+
+  <div class="box-note">
+    <strong>醫藥應用</strong>
+    <strong>二氫吡啶類</strong>化合物本身是重要藥物！氨氯地平（amlodipine）和非洛地平（felodipine）是<strong>鈣離子通道阻斷劑</strong>，用於治療高血壓和心絞痛。其不對稱版本可通過<strong>不對稱 Hantzsch 合成</strong>（手性烯胺 + 烯酮 + NH₃）獲得。
+  </div>
+
+  <p><strong>機制細節</strong>：第一步是醛醇縮合（keto-ester 對醛），第二步是 Michael 加成（第二分子 keto-ester 對 Michael 受體），然後 NH₃ 對羰基縮合，最後分子內成環並脫水。</p>
+
+  <p>若用<strong>羥胺</strong>（NH₂OH）代替 NH₃，對 1,5-二酮環化，可直接得到吡啶，無需氧化步驟（羥胺提供了多餘的氧化當量）。</p>
+
+  <h3 id="pyridone-synth">吡啶酮的合成</h3>
+  <p>吡啶酮不必從吡啶氧化而來：以<strong>甲酸乙酯（Claisen 縮合）</strong>激活甲基酮的 α-位，再與含活性亞甲基的試劑（如氰基乙酰胺）環化，可直接構建吡啶酮骨架。</p>
+
+  <!-- ===== TWO ADJACENT HETEROATOMS ===== -->
+  <h2 id="two-adj">含兩個相鄰雜原子的五員環</h2>
+
+  <h3 id="pyrazole">吡唑與異噁唑</h3>
+  <p>含兩個<strong>相鄰</strong>雜原子的五員雜環（吡唑 N-N、異噁唑 O-N）由<strong>1,3-二羰基化合物</strong>與含 N-N 或 N-O 鍵的試劑縮合得到：</p>
+
+  <ul>
+    <li><strong>吡唑（pyrazole）</strong>：1,3-二酮 + 肼（H₂N-NH₂）→ 吡唑（N-N 鍵由肼直接提供）</li>
+    <li><strong>異噁唑（isoxazole）</strong>：1,3-二酮 + 羥胺（HO-NH₂）→ 異噁唑</li>
+    <li><strong>噻嗪類（isothiazole）</strong>：「硫醯胺」（thioamine）不存在，故此策略不適用</li>
+  </ul>
+
+  <div class="reaction-scheme">1,3-二酮 + H₂N-NH₂  →  吡唑
+1,3-二酮 + HO-NH₂  →  異噁唑
+1,3-二酮 + HS-NH₂  →  ✗（硫醯胺不存在）</div>
+
+  <h3 id="thiazole">噻唑與硬軟酸鹼選擇性</h3>
+  <p><strong>噻唑（thiazole）</strong>含有非相鄰的 N 和 S，由<strong>硫代醯胺</strong>（thioamide，R-C(=S)-NH₂）與 <strong>α-鹵代酮</strong>（haloketone）縮合得到：</p>
+
+  <div class="reaction-scheme">  R-C(=S)-NH₂  +  Br-CH₂-CO-R'
+         ↓
+  （N 攻擊 C=O：硬-硬；S 攻擊 烷基 Br：軟-軟）
+         ↓
+  噻唑（thiazole）</div>
+
+  <div class="box-key">
+    <strong>硬軟酸鹼（HSAB）選擇性</strong>
+    反應具有精妙的區位選擇性：<br>
+    • 氮（較硬親核試劑）→ 攻擊羰基碳（C=O，較硬親電試劑）<br>
+    • 硫（較軟親核試劑）→ 攻擊烷基鹵（C–Br，較軟親電試劑）<br>
+    這種 HSAB 匹配使噻唑合成的區位選擇性極高。
+  </div>
+
+  <h3 id="click">1,3-偶極環加成：四唑與三唑</h3>
+  <p>1,3-偶極環加成（[3+2]）是構建多雜原子五員環的利器：</p>
+  <ul>
+    <li><strong>四唑（tetrazole）</strong>：腈（RCN）+ 疊氮化鈉（NaN₃）→ 四唑（熱條件下的 1,3-偶極環加成）</li>
+    <li><strong>三唑（triazole）</strong>：疊氮 + 炔 → 三唑；用 Cu(I) 催化（「點擊化學」click chemistry）可高度區位選擇地得到 1,4-取代三唑（產率 95%）</li>
+    <li><strong>異噁唑</strong>：也可由腈氧化物（nitrile oxide）+ 炔的 1,3-偶極環加成得到</li>
+  </ul>
+
+  <div class="box-example">
+    <strong>點擊化學（Click Chemistry）</strong>
+    Cu(I) 催化的叠氮-炔 Huisgen 環加成是最著名的「點擊反應」：<br>
+    R–N₃ + R'–C≡C–H → 1,4-二取代-1,2,3-三唑（>95% 產率，高度區位選擇性）<br>
+    此反應在水相中即可進行，條件溫和，廣泛用於藥物化學和生物正交標記。
+  </div>
+
+  <h3 id="viagra">Viagra 吡唑核心的合成</h3>
+  <p>Sildenafil（Viagra）中的吡唑環由一步 Claisen 縮合 → 再與甲基肼環化得到。完整路線：</p>
+  <ol>
+    <li>酯 Claisen 縮合 → β-酮二酯（keto-diester）</li>
+    <li>β-酮二酯 + 甲基肼（CH₃NHNH₂）→ 吡唑羧酸（脫 CO₂）</li>
+    <li>吡唑酸 → 硝化、還原 → 胺 → 磺醯胺化 → Viagra</li>
+  </ol>
+
+  <!-- ===== TWO NON-ADJACENT ===== -->
+  <h2 id="two-nonadj">含兩個非相鄰雜原子的六員環</h2>
+
+  <h3 id="pyrimidine">嘧啶與甲氧苄啶（Trimethoprim）</h3>
+  <p><strong>嘧啶（pyrimidine）</strong>含 1,3 位的兩個氮，由<strong>1,3-二羰基化合物</strong>與<strong>脒（amidine，H₂N-C(=NH)-R）</strong>縮合得到：</p>
+
+  <div class="reaction-scheme">1,3-二羰基化合物  +  H₂N-C(=NH)-NH₂（胍 guanidine）
+         ↓ NaCl 脫羧（decarboxylation）
+  氨基嘧啶（aminopyrimidine）</div>
+
+  <div class="box-example">
+    <strong>甲氧苄啶（Trimethoprim）的合成</strong>
+    甲氧苄啶是一種抗菌藥，其 2,4-二胺基嘧啶核心由含三甲氧苄基的 1,3-二羰基化合物與胍縮合，
+    再用 NaCl/DMF 脫羧而得。
+  </div>
+
+  <h3 id="pyridazine">噠嗪與吡嗪</h3>
+  <ul>
+    <li><strong>噠嗪（pyridazine）</strong>：1,4-二羰基化合物 + 肼（H₂N-NH₂）→ 二氫噠嗪 → 氧化</li>
+    <li><strong>吡嗪（pyrazine）</strong>：1,2-二酮 + 1,2-二胺 → 吡嗪</li>
+  </ul>
+
+  <!-- ===== FISCHER INDOLE ===== -->
+  <h2 id="fischer">Fischer 吲哚合成</h2>
+  <p>Fischer 吲哚合成是最重要的吲哚合成方法，自 Emil Fischer 於 1883 年發現至今仍廣泛應用。<strong>苯基肼</strong>（phenylhydrazine）與<strong>酮</strong>（或醛）在酸催化下生成腙（hydrazone），再重排成吲哚。</p>
+
+  <h3 id="fischer-mech">機制：[3,3]-σ 遷移重排</h3>
+  <p>Fischer 吲哚合成的關鍵步驟是<strong>[3,3]-σ 遷移重排</strong>（sigmatropic rearrangement）：</p>
+
+  <div class="reaction-scheme">PhNH-NH₂  +  R-CO-CH₂-R'
+         ↓（酸催化）
+  腙（hydrazone）: Ph-NH-N=C(R)-CH₂-R'
+         ↓（酸催化烯胺化）
+  烯胺腙: Ph-NH-N=CR-...（雙鍵移位）
+         ↓ [3,3]-σ 遷移重排（六員環 TS）
+  新的 C-C 鍵生成，N-N 鍵斷裂（打開）
+         ↓ 再芳香化（失去 H⁺）
+  縮胺（aminal）中間體
+         ↓ 脫 NH₃
+  吲哚（indole）</div>
+
+  <div class="box-key">
+    <strong>Fischer 吲哚合成總結</strong>
+    苯基肼 + 酮 → [酸] → 腙 → 烯胺 → [3,3] 重排 → 縮胺 → –NH₃ → 吲哚<br>
+    整個過程：一個新 C–C 鍵、一個新 C–N 鍵形成；N–N 鍵斷裂。
+  </div>
+
+  <h3 id="fischer-app">應用：藥物合成</h3>
+  <p>Fischer 合成廣泛應用於藥物吲哚的製備：</p>
+
+  <p><strong>區位選擇性的控制</strong>：若苯環只有一個可用的 <em>ortho</em> 位，環化必然發生在該位，其他取代基不影響結果。若苯環為對稱性取代，則從對稱起始物直接得到預期產物。</p>
+
+  <div class="box-example">
+    <strong>血清素類藥物的合成</strong>
+    <strong>血清素（Serotonin）</strong>是5-羥色胺，許多重要藥物（如曲坦類）具有類似骨架。<br><br>
+    <strong>舒馬曲坦（Sumatriptan）</strong>的合成：
+    <ol>
+      <li>芳香胺重氮化（NaNO₂/HCl）→ 重氮鹽</li>
+      <li>SnCl₂/HCl 還原 → 苯基肼鹽酸鹽</li>
+      <li>加入 3-氰基丙醛的縮醛（防止自身縮合）→ 酸性條件釋放醛並形成腙</li>
+      <li>多磷酸（PPA）催化 Fischer 環化 → 含腈基的吲哚</li>
+      <li>H₂/Rh 還原腈 → 胺；HCHO/HCO₂H（Eschweiler-Clarke 法）雙甲基化 → NMe₂</li>
+    </ol>
+  </div>
+
+  <div class="box-example">
+    <strong>昂丹司瓊（Ondansetron）— 止吐藥</strong>
+    ondansetron 含有吲哚和咪唑兩個雜環。吲哚部分的 1,3-位關係提示 Mannich 反應引入咪唑，
+    再用 Fischer 切斷（ZnCl₂ 催化）從不對稱二酮構建吲哚（二酮只向一側烯胺化），
+    再 K₂CO₃ 甲基化、Mannich 反應引入二甲胺基和甲醛、甲基化得目標物。
+  </div>
+
+  <div class="box-example">
+    <strong>吲哚美辛（Indomethacin）— 非甾體抗炎藥</strong>
+    含有不對稱取代的吲哚（苯环 + 烷鏈兩側均有取代基）。需控制酸催化条件使烯胺化發生在
+    烷基鏈一側（遠離甲基的方向），採用 t-Bu 酯防止脫羧，最後在 N 上醯化 → 得吲哚美辛。
+  </div>
+
+  <h3 id="reissert">Reissert 吲哚合成</h3>
+  <p>Fischer 合成給出 <em>R</em>₅ 位取代的吲哚，而 <strong>Reissert 合成</strong>給出 <em>R</em>₆ 位取代的吲哚——兩者互補。Reissert 合成從<strong>鄰硝基甲苯</strong>出發：</p>
+
+  <div class="reaction-scheme">鄰硝基甲苯 + (EtO₂C)₂（草酸二乙酯）
+       + EtO⁻（強鹼）
+  → α-硝基酮酯（甲基去質子→C-醯化）
+  → H₂/Pt/AcOH 還原硝基 → 胺
+  → 胺與酮基 分子内縮合 → 吲哚酯
+  （65% 產率）</div>
+
+  <p>由於吲哚环来自苯环的硝化，苯环的取代模式（第6位）与 Fischer 合成（第5位）不同，两者互为补充。</p>
+
+  <!-- ===== QUINOLINE ===== -->
+  <h2 id="quinoline">喹啉與異喹啉的合成</h2>
+
+  <p>喹啉（quinoline）是金雞納樹皮中奎寧（quinine）的核心骨架，亦是一大類抗生素（喹啉酮類）的基礎。喹啉的合成切斷與嗪環相似：切斷吡啶環的 C–N 鍵，需要一個 C₃ 親電合成子（兩端均為親電），最合適的是 1,3-二羰基化合物。</p>
+
+  <h3 id="skraup">Skraup 反應</h3>
+  <p><strong>Skraup 反應</strong>是最著名的喹啉合成方法，歷史上曾是「最暴烈」的有機反應之一：</p>
+
+  <div class="reaction-scheme">傳統 Skraup：
+  芳香胺 + 甘油 + H₂SO₄(濃) + 硝基苯  →[>100°C]→  喹啉
+  （甘油脫水原位生成丙烯醛；硝基苯為氧化劑）
+
+  現代改進（Doebner-von Miller 型）：
+  芳香胺 + α,β-不飽和羰基化合物（如丙烯醛）
+       ↓ 共軛加成
+  β-胺基羰基化合物
+       ↓ 酸催化環化（EAS 型）
+  二氫喹啉
+       ↓ DDQ 或 Fe(III) 氧化
+  喹啉（芳香化）</div>
+
+  <div class="box-example">
+    <strong>8-羥基喹啉（Oxine）</strong>
+    由鄰胺基苯酚 + 丙烯醛，在 Fe₂(SO₄)₃、B(OH)₃ 催化、痕量 H₂SO₄ 下反應，
+    90% 產率得 oxine。Oxine 可形成穩定的 Cu(II) 等金屬配合物，用於防腐蝕。
+  </div>
+
+  <h3 id="quinolone-ab">喹啉酮抗生素</h3>
+  <p>含 3-位羧酸的喹啉酮類是重要抗生素（如氧氟沙星、環丙沙星）。其核心骨架可由<strong>烯胺環化</strong>得到：</p>
+
+  <div class="reaction-scheme">芳香胺 + HC(OEt)₃（原甲酸三乙酯）/ Ac₂O
+     → 烯醚型烯胺
+芳香胺 + EtO₂C-CH₂-CHO（丙二酸半酯醛）
+     → 芳香胺加成 → 烯胺
+     → 加熱環化（分子内 Knoevenagel/醯胺型）→ 喹啉酮酯
+     → NaOH 水解 → 喹啉酮羧酸</div>
+
+  <div class="box-example">
+    <strong>Rosoxacin 的合成</strong>
+    Rosoxacin 含喹啉酮和吡啶兩個雜環。吡啶部分用 Hantzsch 乙炔酯变体从 3-硝基苯甲醛合成，
+    含两个炔酯和氨（醋酸铵）的特殊 Hantzsch；硝化 → 水解/脱羧 → Fe(II)/HCl 还原 →
+    得到含氨基的吡啶；再以喹啉酮标准环化（草酸二乙酯烯胺 + N-乙基化）即可得到 rosoxacin。
+  </div>
+
+  <p>喹啉酮可用 POCl₃ 轉化為氯化物，再通過親核取代引入各種取代基，進一步豐富喹啉骨架。</p>
+
+  <h3 id="isoquinoline">異喹啉的合成</h3>
+  <p>異喹啉可由<strong>苯乙胺衍生物</strong>的<strong>分子內 Vilsmeier 反應</strong>（以 POCl₃ 生成亞胺鹽）合成，再 Pd(0) 脫氫芳香化（Pd 催化加氫的逆反應）得到異喹啉：</p>
+
+  <div class="reaction-scheme">PhCH₂NH₂ + RCOCl  →  醯胺
+醯胺 + POCl₃  →  分子內 Vilsmeier（亞胺鹽）→  二氫異喹啉
+二氫異喹啉 + Pd(0)  →  異喹啉（芳香化）</div>
+
+  <!-- ===== FUSED BICYCLIC ===== -->
+  <h2 id="fused">多雜原子稠環</h2>
+
+  <p>許多藥物含有稠合雙雜環系統，可利用第29章中制备單環的化學逐步構建。</p>
+
+  <div class="box-example">
+    <strong>咪唑並[1,2-b]吡嗪（Imidazo[1,2-b]pyridazine）</strong>
+    從二氯吡嗪（第29章制備）出發：
+    <ol>
+      <li>NH₃/EtOH → 一个 Cl 被胺置換 → 胺基吡嗪</li>
+      <li>ROH/鹼 → 另一个 Cl 被醚置換 → 二取代吡嗪</li>
+      <li>胺基用溴代醯基溴（2-bromo-acid derivative）→ N-C=O 鍵（氮攻击碳）+ S_N2（氮攻击烷卤）→ 雙環化</li>
+    </ol>
+  </div>
+
+  <h3 id="timolol">Timolol 的合成（β-阻斷劑）</h3>
+  <p>Timolol 含有 1,2,5-噻二唑（thiadiazole）和飽和嗎啡啉（morpholine）。噻二唑環的製備依靠<strong>S₂Cl₂</strong> 作為環化試劑與「氰胺」（cyanamide）反應：</p>
+
+  <div class="reaction-scheme">H₂N-C≡N（氰胺）+ S₂Cl₂
+     →（N 攻擊親電 S）→ 氯代中間體
+     →（氯離子歧化提供 Cl⁻ 攻擊 CN）→ 硫雜唑啉
+     → 分子內環化 → 1,2,5-噻二唑（帶 –NH 和 –Cl 官能基）
+     → 環氧氯丙烷（epichlorohydrin）開環 → 引入側鏈 OH 和 Cl
+     → 嗎啡啉取代 Cl → Timolol</div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">三大合成策略總結</h2>
+
+  <div class="box-summary">
+    <strong>一、離子型成環（Ionic Cyclization）</strong>
+    以雜原子為親核試劑 + 雙親電碳框架<br><br>
+    <strong>一個雜原子的五員環</strong><br>
+    • 吡咯、噻吩、呋喃 ← 1,4-二羰基 + RNH₂ / P₂S₅ / H⁺<br><br>
+    <strong>一個雜原子的六員環</strong><br>
+    • 吡啶 ← 1,5-二羰基 + NH₃ + [O]<br><br>
+    <strong>兩個相鄰雜原子的五員環</strong><br>
+    • 吡唑、異噁唑 ← 1,3-二羰基 + H₂N-NH₂ / HO-NH₂<br>
+    • 噻唑 ← 硫代醯胺 + α-鹵代酮（HSAB 選擇性）<br><br>
+    <strong>兩個相鄰雜原子的六員環</strong><br>
+    • 噠嗪 ← 1,4-二羰基 + H₂N-NH₂ + [O]<br><br>
+    <strong>兩個非相鄰雜原子的五員環</strong><br>
+    • 咪唑、噻唑 ← α-鹵羰基 + 脒或硫代醯胺<br><br>
+    <strong>兩個非相鄰雜原子的六員環</strong><br>
+    • 嘧啶 ← 1,3-二羰基 + 脒（amidine）
+  </div>
+
+  <div class="box-summary">
+    <strong>二、環加成（Cycloaddition）</strong>
+    1,3-偶極環加成 [3+2]：<br>
+    • 腈氧化物 + 炔 → 異噁唑（芳香）<br>
+    • 疊氮化物 + 炔 → 1,2,3-三唑（Cu(I) 點擊 → 1,4-選擇性）<br>
+    • RCN + NaN₃ → 四唑<br><br>
+    σ 遷移重排（sigmatropic rearrangement）：<br>
+    • 苯基肼腙 → [3,3] 重排 → 吲哚（Fischer 合成的關鍵步驟）
+  </div>
+
+  <div class="box-summary">
+    <strong>三、現有環的改造（Ring Modification）</strong>
+    <strong>親電芳香取代（EAS）</strong>：<br>
+    • 吡咯、噻吩、呋喃：優先在 2-位和 5-位（α 位）<br>
+    • 吲哚：優先在 3-位（但親電試劑可遷移至 2-位）<br>
+    • 吡啶、喹啉：EAS 不推薦（電子不足）<br><br>
+    <strong>親核芳香取代（SNAr）</strong>：<br>
+    • 吡啶、喹啉：優先攻擊 2-位和 4-位（負電荷可落在 N 上穩定）<br>
+    • 嘧啶、吡嗪：所有位置均適合 SNAr<br>
+    • 喹啉酮 → POCl₃ → 氯化 → 親核取代<br><br>
+    <strong>金屬化後與親電試劑反應</strong>：<br>
+    • 吡咯（N 需保護）、噻吩、呋喃：BuLi 在 2-位鋰化，再與各種親電試劑反應<br>
+    • 需阻斷所有含 NH 的酸性質子
+  </div>
+
+  <div class="box-note">
+    <strong>學習建議</strong>
+    記憶雜環合成時，先問：需要什麼官能基切斷？雜原子—碳鍵斷裂後，需要幾個碳的
+    親電子合成子？1,4-二羰基 → 五員環（雜原子提供1個原子）；1,5-二羰基 → 六員環（雜原子提供1個原子）；
+    1,3-二羰基 → 含2個相鄰雜原子的五員環（兩個雜原子相鄰，來自肼/羥胺）。
+  </div>
+
+</div>
+<script>
+const btn=document.getElementById('menu-btn');
+const sidebar=document.getElementById('sidebar');
+btn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!sidebar.contains(e.target)&&e.target!==btn)sidebar.classList.remove('open');});
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('#toc a[href="#'+en.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id],h3[id]').forEach(h=>obs.observe(h));
+</script>
+</body>
+</html>

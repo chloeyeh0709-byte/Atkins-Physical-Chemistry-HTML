@@ -58,6 +58,11 @@ const files = [
   'organic/chapters/27_硫矽磷在有機化學中的應用.html',
   'organic/chapters/28_逆合成分析.html',
   'organic/chapters/29_芳香雜環1反應.html',
+  'organic/chapters/30_芳香雜環2合成.html',
+  'organic/chapters/31_飽和雜環與立體電子效應.html',
+  'organic/chapters/32_環狀分子的立體選擇性.html',
+  'organic/chapters/33_非對映選擇性.html',
+  'organic/chapters/34_周環反應1環加成.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

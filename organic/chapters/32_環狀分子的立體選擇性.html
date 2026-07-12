@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三十二章：環狀分子的立體選擇性</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三十二章<br>環狀分子的立體選擇性</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">環狀立體選擇性原理</a>
+    <a href="#cyclohexanone">環己酮的親核加成</a>
+    <a href="#nu-size" class="toc-sub">親核試劑大小的影響</a>
+    <a href="#enolate-attack" class="toc-sub">烯醇鹽與共軛加成</a>
+    <a href="#small-rings">小員環的立體選擇性</a>
+    <a href="#four-lactone" class="toc-sub">四員內酯</a>
+    <a href="#five-ring" class="toc-sub">五員環</a>
+    <a href="#cyclopentene" class="toc-sub">環戊烯的親電加成</a>
+    <a href="#cyclohexene-oxide">環己烯氧化物的開環</a>
+    <a href="#bicyclics">橋環化合物</a>
+    <a href="#norbornane" class="toc-sub">降冰片烷（Norbornane）</a>
+    <a href="#camphor" class="toc-sub">樟腦（Camphor）</a>
+    <a href="#fused">稠合雙環化合物</a>
+    <a href="#trans-decalin" class="toc-sub">反式十氫萘</a>
+    <a href="#cis-decalin" class="toc-sub">順式十氫萘</a>
+    <a href="#spirocyclic">螺環化合物</a>
+    <a href="#tethered">繫鏈策略與環過渡態</a>
+    <a href="#iodolactonization" class="toc-sub">碘內酯化反應</a>
+    <a href="#cyclic-ts" class="toc-sub">環過渡態逆轉立體選擇性</a>
+    <a href="#vo-epox" class="toc-sub">VO(acac)₂ 環氧化</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第三十二章</div>
+    <h1>環狀分子的立體選擇性</h1>
+    <div class="subtitle">Stereoselectivity in Cyclic Molecules · pp. 825–851</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">環狀立體選擇性原理</h2>
+  <p>環狀分子的優勢在於<strong>構象固定</strong>——一旦分子框架固定，就可以準確預測試劑從哪一面進攻。此章研究各種環系統的立體選擇性規律，並介紹利用臨時成環策略來控制非環分子的立體化學。</p>
+
+  <div class="box-key">
+    <strong>核心原則</strong>
+    • 三、四、五員環或帶有兩個以上 sp² 碳的六員環 → 平坦，試劑攻擊<strong>較不擁擠的一面</strong><br>
+    • 帶一個 sp² 碳的六員環（如環己酮）→ 試劑攻擊成為<strong>直立鍵（axial）取代的椅式</strong>構象的方向<br>
+    • 雙環化合物 → 試劑攻擊<strong>外面（exo 或 outside）</strong>
+  </div>
+
+  <!-- ===== CYCLOHEXANONE ===== -->
+  <h2 id="cyclohexanone">環己酮的親核加成</h2>
+
+  <h3 id="nu-size">親核試劑大小的影響</h3>
+  <p>環己酮的親核加成反應立體選擇性取決於試劑的大小：</p>
+  <ul>
+    <li><strong>小的親核試劑</strong>（如 LiAlH₄）→ 從<strong>直立方向（axial attack）</strong>進攻 → 得<strong>平伏鍵 OH（equatorial）</strong>，即 <em>trans</em> 醇（對 4-t-Bu-環己酮，90%）</li>
+    <li><strong>大的親核試劑</strong>（如 L-Selectride，(sec-Bu)₃BH⁻）→ 從<strong>平伏方向（equatorial attack）</strong>進攻（直立方向空間太擠）→ 得<strong>直立鍵 OH</strong>，即 <em>cis</em> 醇（95%）</li>
+  </ul>
+
+  <div class="box-note">
+    <strong>為什麼小試劑從直立方向攻擊？</strong>
+    直立進攻時，羰基碳的鍵角從平面型（120°）轉變為四面體（109°），
+    環己酮中的<strong>直立 1,3-H 阻礙</strong>比平伏阻礙小（直立方向的環骨架柔性讓開）。
+    這也稱為<strong>Anh-Eisenstein 效應</strong>的環系體現。
+  </div>
+
+  <h3 id="enolate-attack">烯醇鹽與共軛加成的直立進攻</h3>
+  <p>環己烯酮（cyclohexenone）的共軛加成（Michael 加成）中，烯醇鹽總是從<strong>直立方向</strong>進攻 β-碳，因為這能使新生成的碳直接進入椅式構象（而非扭船式）。</p>
+
+  <!-- ===== SMALL RINGS ===== -->
+  <h2 id="small-rings">小員環的立體選擇性</h2>
+
+  <h3 id="four-lactone">四員內酯（β-内酰胺）</h3>
+  <p>四員環近乎平面，親電試劑從兩面之一進攻，選擇<strong>遠離現有取代基</strong>的一面。若在一面有異丙基（bulky isopropyl），親電試劑幾乎完全（>98:2）從對面進攻。</p>
+
+  <h3 id="five-ring">五員環</h3>
+  <p>五員環是靈活的「信封（envelope）」構象，預測較難。LiAlH₄ 通常給 3:1 的非對映選擇性；更大的 LiBH(s-Bu)₃（Super-H）可達 98.5% <em>cis</em>。</p>
+  <p>含 sp² 碳的平坦五員環（如丁烯內酯，butenolide）則攻擊從<strong>較不擁擠的一面</strong>，預測容易。</p>
+
+  <div class="box-example">
+    <strong>苦杏仁酸（Mandelic acid）的五員縮醛</strong>
+    苦杏仁酸形成五員縮醛後：
+    • 用 LDA 去質子化 → 平坦烯醇鹽
+    • MeI 從對面（t-Bu 的反面）攻擊 → 84% 產率，>97:3 非對映選擇性
+  </div>
+
+  <h3 id="cyclopentene">環戊烯的親電加成</h3>
+  <p>環戊烯的環氧化（m-CPBA）從<strong>較不擁擠的一面</strong>100% 選擇性發生。溴化（生成溴鎓離子）從<strong>外面</strong>，而水（親核試劑）必然從<strong>另一面（裡面）</strong>攻擊 → 反式（trans）加成。</p>
+
+  <!-- ===== CYCLOHEXENE OXIDE ===== -->
+  <h2 id="cyclohexene-oxide">環己烯氧化物的開環</h2>
+  <p>環己烯氧化物（cyclohexene oxide）的親核開環<strong>始終以對二面體直立鍵（diaxial）方式進行</strong>——SN2 反應使攻擊在 180° 方向，對位置直立的 C–O 鍵，兩個開環原子直接進入椅式構象中的<strong>直立鍵</strong>位置。</p>
+
+  <div class="reaction-scheme">環己烯氧化物 + Nu:
+  → 反式直立開環（trans-diaxial opening）
+  → 兩個取代基均為直立鍵，位置反式（trans）
+  → 鬆弛到平伏鍵 → 最終產物（trans-1,2 取代環己烷）</div>
+
+  <div class="box-example">
+    <strong>NaN₃ 開環含哌啶的環氧化物</strong>
+    兩個不同的含哌啶環的環己烯氧化物被 NaN₃ 開環時，疊氮根的區位選擇性由<strong>對二面體直立</strong>開環規則決定。無論哪個碳被攻擊，兩個產物的取代基均為 trans。
+  </div>
+
+  <!-- ===== BICYCLICS ===== -->
+  <h2 id="bicyclics">橋環化合物</h2>
+
+  <h3 id="norbornane">降冰片烷（Norbornane）</h3>
+  <p>降冰片烷的上橋（exo）位比下橋（endo）位擁擠，但<strong>試劑主要從 exo 面進攻</strong>（~90%）：因為 endo 進攻需要試劑穿越邊界——2-碳橋在 endo 面形成阻礙。</p>
+
+  <h3 id="camphor">樟腦（Camphor）</h3>
+  <p>樟腦（camphor）的<strong>endo 面進攻較多（~95%）</strong>，與降冰片烷相反！原因是兩個甲基將 exo 面封死，試劑只能從 endo 面進攻。</p>
+
+  <div class="box-note">
+    <strong>橋環化合物的規律</strong>
+    沒有阻礙 → exo 進攻（試劑避開內橋）<br>
+    exo 面被甲基封閉 → endo 進攻（無選擇，只能走 endo）<br>
+    橋環化合物不能有橋頭雙鍵（Bredt 規則）。
+  </div>
+
+  <!-- ===== FUSED ===== -->
+  <h2 id="fused">稠合雙環化合物</h2>
+
+  <h3 id="trans-decalin">反式十氫萘（trans-Decalin）</h3>
+  <p>反式十氫萘（trans-decalin）是剛性的「兩把椅子」結構，不能翻轉。試劑始終從<strong>外面（outside）</strong>進攻，即與稠合氫相反的方向。</p>
+
+  <div class="box-example">
+    <strong>Wieland-Miescher 酮的合成</strong>
+    Wieland-Miescher 酮是甾醇合成的重要中間體（第26章 Robinson 環化的產物）。其含 6-5 稠合酮，
+    NaBH₄ 從外面（bottom face）還原共軛酮 C1 → 生成 equatorial OH（更穩定）→ 後續步驟均從外面進行。
+  </div>
+
+  <h3 id="cis-decalin">順式十氫萘（cis-Decalin）</h3>
+  <p>順式十氫萘（cis-decalin）能在兩個全椅式構象間快速翻轉（「蝴蝶」翻轉）。翻轉時取代基在兩個構象中的相對位置互換。試劑仍然從<strong>外面（outside）</strong>進攻，但「外面」因翻轉而可能改變。</p>
+
+  <div class="box-summary">
+    <strong>順式稠合環反應總結</strong>
+    1. <strong>外面的反應</strong>（對面稠合氫）：<br>
+       • 羰基的親核加成<br>
+       • 烯醇鹽與親電試劑（烷基化、醛醇、Michael）<br>
+       • <em>cis</em>-雙鍵的加成：氫化、硼氫化、環氧化<br>
+    2. <strong>外面然後裡面</strong>：<br>
+       • <em>trans</em>-加成：溴化、環氧化和環氧開環<br>
+    3. <strong>裡面的反應</strong>（跨環的成鍵）：<br>
+       • 成環反應（鍵在兩個環之間形成）
+  </div>
+
+  <!-- ===== SPIROCYCLIC ===== -->
+  <h2 id="spirocyclic">螺環化合物</h2>
+  <p>螺環化合物的兩個環通過一個螺原子連接，兩個環互相垂直。即使外表對稱，螺環化合物也常是手性的（無對稱面）。</p>
+
+  <div class="box-example">
+    <strong>手性螺環二烯的合成</strong>
+    螺環二酮（雙羰基）+ LiAlH₄ → 主要一種非對映體螺環二醇 →
+    拆分（解析）→ 消除（E2 或 E1cB）→ 1,6-螺[4.4]壬二烯（1,6-spiro[4.4]nonadiene）
+    此化合物雖然無手性碳，但因缺乏對稱面而具有手性（軸手性類似物）。
+  </div>
+
+  <!-- ===== TETHERED ===== -->
+  <h2 id="tethered">繫鏈策略與環過渡態</h2>
+  <p>有時可以利用「臨時成環（temporary ring formation）」——即使最終產物不是環狀——在過渡態中引入環形限制，從而控制立體化學。</p>
+
+  <h3 id="iodolactonization">碘內酯化反應（Iodolactonization）</h3>
+  <p>非共軛不飽和羧酸 + I₂/NaHCO₃(水) → <strong>碘內酯</strong>（iodolactone）。機制：</p>
+  <ol>
+    <li>碘鎓離子（iodonium）可逆形成於雙鍵上</li>
+    <li>羧基酸根（親核試劑）<strong>只能攻擊</strong>靠近的碳 → 選擇 <em>cis</em>-內酯（碘必須 trans 于 O）</li>
+    <li>SN2 開環使 I 和 O 呈<strong>反式</strong></li>
+  </ol>
+
+  <div class="box-example">
+    <strong>環狀底物的碘內酯化</strong>
+    環狀不飽和羧酸的碘內酯化：碘鎓離子可逆，只有 I 和 CO₂H 為 <em>trans</em> 的碘鎓才能環化。
+    因此，儘管碘鎓是可逆的，立體選擇性由「哪個碘鎓能環化」決定 → 單一非對映體。
+  </div>
+
+  <p>碘內酯可用作<strong>臨時繫鏈</strong>：固定構象 → E2 消除（選取唯一可用軸向 H）→ 環氧化（僅從底部）→ HBr 開環（反式直立）→ TMS 保護 → 第二個消除 → Michael 加成（直立）→ Zn 還原去橋 → Claisen 酯化 → 反式稠合 5,6-環——「欺騙」分子形成本不易形成的 trans-fused 結構。</p>
+
+  <h3 id="cyclic-ts">環過渡態逆轉立體選擇性</h3>
+  <p>環過渡態（cyclic transition state）是通過過渡態中的環形幾何（而非環形中間體）控制立體化學的方法。環氧化就是一例：</p>
+
+  <ul>
+    <li><strong>普通取代基</strong>（如 OAc）→ m-CPBA 攻擊<strong>對面</strong>（anti），因為取代基擋住了 syn 面</li>
+    <li><strong>羥基（OH）</strong>→ m-CPBA 優先從 <em>syn</em> 面攻擊（24:1，或用 CF₃CO₃H 50:1）<br>
+    原因：OH 通過氫鍵與過氧酸形成六員環過渡態，將過氧酸「遞送」到 syn 面</li>
+  </ul>
+
+  <h3 id="vo-epox">VO(acac)₂ 環氧化</h3>
+  <p>當羥基距離烯烴較遠，m-CPBA 效果不好時，可改用<strong>釩酸乙酰丙酮（VO(acac)₂）+ t-BuOOH</strong>：釩金屬螯合醇 OH 並遞送氧，<em>syn</em> 環氧化選擇性 >95:5。另一方面，保護 OH 為大基團 TBDMS 後，m-CPBA 從<strong>另一面（anti）</strong>進攻（83:17）。</p>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+
+  <div class="box-summary">
+    <strong>環狀立體選擇性規律</strong>
+    1. <strong>平坦環</strong>（3, 4, 5 員或帶多個 sp² C 的 6 員）→ 從<strong>較少阻礙面</strong>進攻<br>
+    2. <strong>帶兩個以上 trig C 的六員環</strong>→ 試劑從 axial 進攻（使產物成椅式），不直立方向需扭船<br>
+    3. <strong>雙環（橋環）</strong>→ 從 exo 面（外面）進攻<br>
+    4. <strong>稠環</strong>→ 從外面（outside，與稠合氫反面）進攻<br>
+    5. <strong>逆轉選擇性的策略</strong>：<br>
+       (a) 繫鏈親核試劑（如 COO⁻ 在碘內酯化中）<br>
+       (b) 環過渡態（如 OH 導向的環氧化，VO(acac)₂）
+  </div>
+
+</div>
+<script>
+const btn=document.getElementById('menu-btn');
+const sidebar=document.getElementById('sidebar');
+btn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!sidebar.contains(e.target)&&e.target!==btn)sidebar.classList.remove('open');});
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('#toc a[href="#'+en.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id],h3[id]').forEach(h=>obs.observe(h));
+</script>
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第三十三章：非對映選擇性</title>
+<style>
+*{box-sizing:border-box;}
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+body{margin:0;font-family:'Georgia',serif;background:var(--main-bg);color:var(--ink);line-height:1.85;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+#sidebar{
+  position:fixed;top:0;left:0;height:100vh;width:260px;
+  background:var(--sidebar-bg);color:var(--sidebar-fg);
+  overflow-y:auto;z-index:100;display:flex;flex-direction:column;
+  transition:transform .25s ease;
+}
+#sidebar-header{padding:24px 20px 16px;border-bottom:1px solid #333c45;}
+#sidebar-header .book-label{font-size:.7rem;letter-spacing:.12em;color:var(--sidebar-fg-dim);text-transform:uppercase;font-family:sans-serif;}
+#sidebar-header h2{margin:6px 0 0;font-size:1rem;font-weight:600;line-height:1.4;font-family:sans-serif;}
+#toc{padding:12px 0 32px;flex:1;}
+#toc a{
+  display:block;padding:7px 20px;font-size:.82rem;color:var(--sidebar-fg-dim);
+  font-family:sans-serif;border-left:3px solid transparent;transition:all .15s;line-height:1.4;
+}
+#toc a:hover{color:var(--sidebar-fg);background:rgba(255,255,255,.05);}
+#toc a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.12);}
+#toc .toc-sub{padding-left:34px;font-size:.77rem;}
+#menu-btn{
+  display:none;position:fixed;top:14px;left:14px;z-index:200;
+  background:var(--accent);color:#fff;border:none;border-radius:6px;
+  padding:8px 14px;font-size:.85rem;cursor:pointer;font-family:sans-serif;
+}
+@media(max-width:900px){
+  #menu-btn{display:block;}
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0!important;}
+}
+#main{margin-left:260px;padding:48px 56px 80px;max-width:900px;}
+.chapter-head{margin-bottom:40px;padding-bottom:24px;border-bottom:2px solid var(--rule);}
+.chapter-head .ch-num{font-family:sans-serif;font-size:.8rem;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;}
+.chapter-head h1{margin:.4em 0 .6em;font-size:2rem;line-height:1.25;}
+.chapter-head .subtitle{color:#6b5e52;font-size:1rem;}
+h2{font-size:1.35rem;margin:2.2em 0 .7em;padding-bottom:.3em;border-bottom:1px solid var(--rule);color:#1a1208;}
+h3{font-size:1.08rem;margin:1.6em 0 .5em;color:#2b2520;}
+h4{font-size:.95rem;margin:1.2em 0 .4em;color:#4a3f35;}
+p{margin:.7em 0;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{
+  border-radius:6px;padding:16px 20px;margin:1.4em 0;
+}
+.box-key{background:#eaf7ef;border-left:4px solid var(--accent);}
+.box-note{background:#f0f4f8;border-left:4px solid var(--accent2);}
+.box-example{background:#fff8ee;border-left:4px solid #e67e22;}
+.box-selftest{background:#f9f0f8;border-left:4px solid #8e44ad;}
+.box-summary{background:#f5f5f0;border-left:4px solid #7f8c8d;}
+.box-key strong,.box-note strong,.box-example strong,.box-selftest strong,.box-summary strong{
+  display:block;margin-bottom:6px;font-family:sans-serif;font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;
+}
+.box-key strong{color:#1a6b3a;}
+.box-note strong{color:var(--accent2);}
+.box-example strong{color:#a04000;}
+.box-selftest strong{color:#6c3483;}
+.box-summary strong{color:#555;}
+.reaction-scheme{
+  background:#1e2228;color:#d4e0c8;
+  border-radius:8px;padding:20px 24px;margin:1.4em 0;
+  font-family:'Courier New',Courier,monospace;font-size:.88rem;
+  line-height:1.7;overflow-x:auto;white-space:pre;
+}
+table{border-collapse:collapse;width:100%;margin:1.2em 0;font-size:.9rem;}
+th{background:#e8e0d4;padding:8px 12px;text-align:left;font-family:sans-serif;font-size:.82rem;}
+td{padding:7px 12px;border-bottom:1px solid var(--rule);}
+tr:last-child td{border-bottom:none;}
+ul,ol{padding-left:1.6em;margin:.6em 0;}
+li{margin:.35em 0;}
+code{background:#f0ece4;padding:1px 5px;border-radius:3px;font-size:.9em;}
+.math-block{text-align:center;margin:1em 0;overflow-x:auto;}
+</style>
+</head>
+<body>
+<button id="menu-btn">☰ 目錄</button>
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <div class="book-label">Clayden 有機化學</div>
+    <h2>第三十三章<br>非對映選擇性</h2>
+  </div>
+  <div id="toc">
+    <a href="#intro">立體專一性與立體選擇性回顧</a>
+    <a href="#prochiral">前手性與 Re/Si 面</a>
+    <a href="#felkin">Felkin-Anh 模型</a>
+    <a href="#felkin-app" class="toc-sub">Felkin-Anh 的應用</a>
+    <a href="#chelation">螯合控制（Chelation Control）</a>
+    <a href="#houk">Houk 模型（手性烯烴）</a>
+    <a href="#epoxidation">立體選擇性環氧化</a>
+    <a href="#enolate-stereo">烯醇鹽烷基化的立體選擇性</a>
+    <a href="#aldol">立體選擇性醛醇反應</a>
+    <a href="#zimm-traxler" class="toc-sub">Zimmermann-Traxler 過渡態</a>
+    <a href="#boron-enolate" class="toc-sub">硼烯醇鹽的選擇性</a>
+    <a href="#single-enantiomers">從非對映選擇反應得到單一對映體</a>
+    <a href="#chiral-pool" class="toc-sub">手性池（Chiral Pool）</a>
+    <a href="#mycaminoside" class="toc-sub">甲基麥賽奈苷的合成</a>
+    <a href="#penarisidin" class="toc-sub">派那裡西定的合成</a>
+    <a href="#summary">本章摘要</a>
+  </div>
+</nav>
+<div id="main">
+  <div class="chapter-head">
+    <div class="ch-num">第三十三章</div>
+    <h1>非對映選擇性</h1>
+    <div class="subtitle">Diastereoselectivity · pp. 853–876</div>
+  </div>
+
+  <!-- ===== INTRO ===== -->
+  <h2 id="intro">立體專一性與立體選擇性回顧</h2>
+  <p><strong>立體專一性（stereospecific）</strong>反應：反應機制決定立體結果，如 SN2（翻轉），E2（anti），環氧化物（syn）。<strong>立體選擇性（stereoselective）</strong>反應：從兩種可能結果中偏好一種，但無法100%保證。</p>
+
+  <!-- ===== PROCHIRAL ===== -->
+  <h2 id="prochiral">前手性與 Re/Si 面</h2>
+  <p>羰基化合物的<strong>前手性（prochiral）</strong>——兩個面雖然在非手性分子中等同（對映位），但在手性環境中（手性試劑、手性基團存在）就可區分。</p>
+
+  <p>面的命名：將 C=O 按優先順序（CIP 規則）排列，順時針 → <strong>Re 面</strong>，逆時針 → <strong>Si 面</strong>。</p>
+
+  <!-- ===== FELKIN-ANH ===== -->
+  <h2 id="felkin">Felkin-Anh 模型</h2>
+  <p><strong>Felkin-Anh 模型</strong>預測帶有 α-手性中心的醛（或酮）遭親核試劑攻擊的非對映選擇性。模型基於羰基的<strong>最穩定構象</strong>：</p>
+
+  <div class="box-key">
+    <strong>Felkin-Anh 模型規則</strong>
+    1. 羰基（C=O）所在的鍵（C1-C2）被「展開」（Newman 投影式）<br>
+    2. α-手性碳（C2）上最大基團（L）或<strong>最具電負性基團（X）</strong>垂直於 C=O 鍵<br>
+       （L/X 置於「側方」，使其 σ* 與 C=O π* 反平行，達到最大 n → σ* 穩定）<br>
+    3. 親核試劑從<strong>最不擁擠的一面</strong>（遠離 L/X 的方向）進攻 → <strong>Felkin 產物</strong><br>
+    4. 若 M（中等基團）在大基團一側，且 Nu 可以從 M 側進攻，得<strong>anti-Felkin 產物</strong>
+  </div>
+
+  <div class="reaction-scheme">Felkin-Anh 構象（Newman 式，沿 C1-C2 鍵看）：
+
+       O（C=O 垂直）
+       |
+  H -- C1 -- Nu（攻擊方向：由小面進入）
+       |
+  C2：L（大）在後，X（電負性）垂直，S（小）在前
+
+  → 親核試劑從 S 一側（最小阻礙）攻擊 → Felkin 主產物</div>
+
+  <h3 id="felkin-app">Felkin-Anh 的應用</h3>
+
+  <div class="box-example">
+    <strong>Dolastatin 胺基酸的合成</strong>
+    Dolastatin 含有帶 α-甲基的胺基酸片段。利用 Felkin-Anh 模型（N 最具電負性，垂直排列），
+    親核試劑從遠離 N 的一面攻擊，得 >96:4 的非對映選擇性。
+  </div>
+
+  <!-- ===== CHELATION ===== -->
+  <h2 id="chelation">螯合控制（Chelation Control）</h2>
+  <p>當 α-OR 基的 O 能與金屬離子（如 Mg²⁺、Li⁺）螯合時，金屬將整個碳框架固定成一個剛性螯合物，親核試劑從<strong>另一面</strong>（非螯合的 equatorial 方向）進攻 → 得到<strong>與 Felkin 模型相反</strong>的非對映體（稱 anti-Felkin 或 chelation-controlled 產物）。</p>
+
+  <table>
+    <thead><tr><th>保護基 R</th><th>主導控制</th><th>de（非對映超量）</th></tr></thead>
+    <tbody>
+      <tr><td>Me（甲基，小）</td><td>螯合控制</td><td>&gt;99:1</td></tr>
+      <tr><td>TMS（三甲基矽，中）</td><td>過渡</td><td>~80:20</td></tr>
+      <tr><td>Si(i-Pr)₃（大）</td><td>Felkin 控制</td><td>~42:58（幾乎無選擇性）</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box-note">
+    <strong>結論</strong>
+    • 小的 OR（可螯合）→ 螯合控制 → anti-Felkin 產物<br>
+    • 大的 OR（不可螯合）→ Felkin-Anh 控制 → Felkin 產物<br>
+    • Luche 還原（Ce³⁺/NaBH₄）：Ce³⁺ 螯合，即使大基團也可螯合控制
+  </div>
+
+  <!-- ===== HOUK ===== -->
+  <h2 id="houk">Houk 模型（手性烯烴）</h2>
+  <p>對帶有 α-手性中心的<strong>烯烴</strong>（而非羰基），Houk 模型預測親核試劑從哪一面加成：</p>
+  <ul>
+    <li>H 與雙鍵共平面（最低能量構象），<em>cis</em>-取代基固定分子只存在一個低能量構象</li>
+    <li>親電試劑從<strong>遠離 cis-取代基的一面</strong>加成</li>
+  </ul>
+
+  <!-- ===== EPOXIDATION ===== -->
+  <h2 id="epoxidation">立體選擇性環氧化</h2>
+  <p>烯烴的環氧化（m-CPBA）攻擊<strong>較不擁擠的一面</strong>，而烯丙基醇的環氧化由 OH 氫鍵導向（第32章，syn 95:5）。</p>
+
+  <div class="box-example">
+    <strong>烯丙基應變（Allylic Strain）控制</strong>
+    α,β-不飽和化合物的烯丙基位（allylic position）周圍的立體化學通過控制
+    A(1,3)-烯丙基應變（allylic strain）引導親電試劑方向，可得 77:23 到 95:5 的選擇性。
+  </div>
+
+  <!-- ===== ENOLATE ===== -->
+  <h2 id="enolate-stereo">烯醇鹽烷基化的立體選擇性</h2>
+  <p>烯醇鹽本身是平坦的（sp²），但若烯醇鹽的 α-碳帶有手性中心，烷基化剂從較不擁擠的一面進攻。利用<strong>烯丙基應變</strong>可固定烯醇鹽的構象，使選擇性顯著提高（77:23 → 95:5）。</p>
+
+  <!-- ===== ALDOL ===== -->
+  <h2 id="aldol">立體選擇性醛醇反應</h2>
+  <p>醛醇反應生成兩個新手性中心，可能得到 syn（赤式）或 anti（苏式）醛醇加成物：</p>
+  <ul>
+    <li><strong>syn 醛醇</strong>：兩個新基團（OH 和 R）在同一側</li>
+    <li><strong>anti 醛醇</strong>：兩個新基團在對側</li>
+  </ul>
+
+  <h3 id="zimm-traxler">Zimmermann-Traxler 過渡態</h3>
+  <p>金屬烯醇鹽（Li、B 等）的醛醇反應通過<strong>六員環椅式過渡態</strong>（Zimmermann-Traxler 模型）進行：</p>
+
+  <div class="reaction-scheme">六員環過渡態（Zimmermann-Traxler）：
+
+      O   R                O---M---O
+      |   |   （M = Li、B）|       |
+  M---O   C=C           C(enolate)-C(aldehyde)
+              |         |             |
+              H         R'            R''
+
+  Z-烯醇鹽（cis）→ syn 醛醇：R 在 equatorial → 兩個 R 同側（syn）
+  E-烯醇鹽（trans）→ anti 醛醇：R 在 axial → 兩個 R 異側（anti）</div>
+
+  <div class="box-key">
+    <strong>烯醇鹽幾何與醛醇產物的對應</strong>
+    • Z（cis）烯醇鹽 → syn（赤式）醛醇產物<br>
+    • E（trans）烯醇鹽 → anti（蘇式）醛醇產物<br>
+    此規律非常重要，可利用已知幾何的烯醇鹽預測醛醇立體化學。
+  </div>
+
+  <h3 id="boron-enolate">硼烯醇鹽的選擇性</h3>
+
+  <table>
+    <thead><tr><th>試劑（生成烯醇鹽類型）</th><th>主要產物</th><th>選擇性</th></tr></thead>
+    <tbody>
+      <tr><td>LDA（Li 烯醇鹽，大R → Z型）</td><td>syn 醛醇</td><td>~98% syn</td></tr>
+      <tr><td>9-BBN/Bu₂BOTf（B 烯醇鹽，Z型）</td><td>syn 醛醇</td><td>&gt;99:1</td></tr>
+      <tr><td>(c-Hex)₂BCl（B 烯醇鹽，E型）</td><td>anti 醛醇</td><td>&gt;97:3</td></tr>
+    </tbody>
+  </table>
+
+  <p>硼原子與氧的 B–O 鍵較強（比 Li–O 緊湊），使六員環過渡態更緊密 → 選擇性更高。</p>
+
+  <!-- ===== SINGLE ENANTIOMERS ===== -->
+  <h2 id="single-enantiomers">從非對映選擇反應得到單一對映體</h2>
+  <p>若起始物為<strong>對映純（enantiopure）</strong>化合物，則所有後續非對映選擇性反應引入的新手性中心，其絕對構型也由起始手性中心決定。因此，結合非對映選擇反應和對映純起始物，可得到<strong>對映純</strong>的複雜產物。</p>
+
+  <h3 id="chiral-pool">手性池（Chiral Pool）</h3>
+  <p><strong>手性池</strong>是自然界提供的對映純化合物的來源：氨基酸（丙胺酸、絲胺酸等）、糖類（葡萄糖、乳酸）、萜類（樟腦、薄荷醇）等。從手性池選取合適的起始物，可以借助自然的手性信息。</p>
+
+  <h3 id="mycaminoside">甲基麥賽奈苷（Methyl Mycaminoside）的合成</h3>
+  <p>甲基麥賽奈苷含有五個手性中心，只有一個來自手性池（(S)-乳酸）。其餘四個通過非對映選擇性反應逐步引入：</p>
+  <ol>
+    <li>(S)-乳酸 → 乙酰化 → 酸氯 → Grignard + 甲氧炔基溴化鎂 → 炔基醇</li>
+    <li>Lindlar 氫化（炔 → Z-烯）→ 異構純 Z-烯醇乙酸酯</li>
+    <li>環化（酸催化，異頭效應 → OMe 伸向軸向）→ 六員 THP（第二個手性中心）</li>
+    <li>LiAlH₃ 還原 → 直立進攻 → equatorial OH（第三個手性中心）</li>
+    <li>OH 導向環氧化（m-CPBA，syn）→ 環氧化物（第四、五個手性中心）</li>
+    <li>Me₂NH 以 SN2 開環（翻轉）→ 甲基麥賽奈苷</li>
+  </ol>
+
+  <h3 id="penarisidin">派那裡西定 A（Penarisidin A）的合成</h3>
+  <p>派那裡西定 A 是從日本海綿中分離的天然產物，含有四員氮丁環（azetidine ring）和一條長鏈，共有多個手性中心。確定其立體化學需要合成所有可能的非對映異構體再比對 NMR。</p>
+
+  <p><strong>左端（azetidine 端，3個手性中心）的合成</strong>——以 L-絲胺酸（serine）為起始物：</p>
+  <ol>
+    <li>L-絲胺酸 → Boc 保護 NH₂ → 縮醛保護 OH + NH₂ → 游離酯 LiBH₄ 還原 → 醛（Swern 氧化）</li>
+    <li>醛 + 炔基陰離子（Felkin-Anh，N 垂直）→ 從無阻礙面攻擊 → 炔基醇（第三個手性中心）</li>
+    <li>溶解金屬還原（Li/EtNH₂）→ E-烯 + 開環保護基</li>
+    <li>m-CPBA 環氧化，但 OH 導向 syn 面（錯誤立體化學！）</li>
+    <li>修正：TBDMS 保護 OH → m-CPBA 從 anti 面環氧化 → DIBAL-H 還原環氧化物 → 正確非對映體</li>
+    <li>OH → 甲磺酸酯（OMs）→ NaH 使 N 以 SN2（翻轉）攻擊 → 形成 azetidine 環</li>
+  </ol>
+
+  <p><strong>右端（長鏈，2個手性中心）的確定</strong>——以 L-異亮胺酸（L-isoleucine）為起始物：</p>
+  <ol>
+    <li>L-異亮胺酸 → 重氮化（NaNO₂/HCl）→ α-乳酸（雙翻轉 → 保留）→ 酯化 → LiAlH₄ → 二醇</li>
+    <li>TsCl → 環氧化物（保留兩個手性中心）</li>
+    <li>炔基陰離子開環 → 右端鏈合</li>
+    <li>連接左端與右端 → 比較 NMR 譜 → 確認天然派那裡西定 A 的立體化學</li>
+  </ol>
+
+  <div class="box-note">
+    <strong>α-乳酸形成的雙翻轉</strong>
+    重氮化通常使 C–N → C–OH 翻轉，但這裡有鄰基參與（neighboring group participation）：
+    羧基攻擊 α-碳（翻轉一次）形成 α-內酯，再被水（第二次翻轉）打開 → 淨保留構型！
+  </div>
+
+  <!-- ===== SUMMARY ===== -->
+  <h2 id="summary">本章摘要</h2>
+
+  <div class="box-summary">
+    <strong>非對映選擇性的關鍵模型</strong>
+    <br>
+    <strong>1. Felkin-Anh 模型</strong>（開鏈醛酮親核加成）<br>
+    最大基團（L）或電負性基團（X）垂直於 C=O；Nu 從最小阻礙面進入 → Felkin 產物<br><br>
+    <strong>2. 螯合控制</strong>（Chelation Control）<br>
+    α-位有可螯合 OR（如 OMe）+ 金屬（Mg²⁺、Li⁺、Ce³⁺）→ 螯合固定構象 → anti-Felkin 產物<br><br>
+    <strong>3. Houk 模型</strong>（手性烯烴）<br>
+    H 與雙鍵共平面；親電試劑從遠離 cis-取代基的一面進攻<br><br>
+    <strong>4. Zimmermann-Traxler TS</strong>（醛醇反應）<br>
+    Z-烯醇鹽 → syn 醛醇（椅式 TS 中 R 在 eq）<br>
+    E-烯醇鹽 → anti 醛醇（椅式 TS 中 R 在 ax）<br><br>
+    <strong>5. 手性池策略</strong><br>
+    從自然對映純化合物出發（氨基酸、糖）→ 只需一個手性中心，其餘由非對映選擇反應建立 → 全程對映純
+  </div>
+
+</div>
+<script>
+const btn=document.getElementById('menu-btn');
+const sidebar=document.getElementById('sidebar');
+btn.addEventListener('click',()=>sidebar.classList.toggle('open'));
+document.addEventListener('click',e=>{if(!sidebar.contains(e.target)&&e.target!==btn)sidebar.classList.remove('open');});
+const links=document.querySelectorAll('#toc a');
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(en=>{
+    if(en.isIntersecting){
+      links.forEach(l=>l.classList.remove('active'));
+      const a=document.querySelector('#toc a[href="#'+en.target.id+'"]');
+      if(a)a.classList.add('active');
+    }
+  });
+},{rootMargin:'-20% 0px -70% 0px'});
+document.querySelectorAll('h2[id],h3[id]').forEach(h=>obs.observe(h));
+</script>
+</body>
+</html>

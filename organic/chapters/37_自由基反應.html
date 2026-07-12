@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第37章 自由基反應</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 37 章</div>
+    <div class="ch-title">自由基反應</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#homolysis">均裂與自由基生成</a>
+    <a href="#initiators">引發劑</a>
+    <a href="#stability">自由基的穩定性</a>
+    <a href="#chain">鏈式反應機制</a>
+    <a href="#selectivity">鹵素自由基的選擇性</a>
+    <a href="#nbs">烯丙基溴化（NBS）</a>
+    <a href="#tributyltin">Bu₃SnH脫鹵還原</a>
+    <a href="#cc-bond">碳-碳鍵形成</a>
+    <a href="#fmo">前線軌道效應</a>
+    <a href="#polar-vs">自由基vs極性試劑</a>
+    <a href="#borane">硼烷-氧氣法</a>
+    <a href="#intramolecular">分子內自由基環化</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>第37章 自由基反應</h1>
+  <p class="chapter-meta">Clayden Organic Chemistry · Ch 37 (pp. 969–1002)</p>
+
+  <section id="homolysis">
+    <h2>均裂與自由基生成</h2>
+    <p>共價鍵的斷裂有兩種方式：</p>
+    <ul>
+      <li><strong>均裂（Homolysis）</strong>：每個原子各得一個電子，生成兩個自由基（radical）。以「魚鉤箭頭（single-headed arrow）」表示單電子移動。</li>
+      <li><strong>異裂（Heterolysis）</strong>：兩個電子均轉移到同一原子，生成離子。以雙頭彎箭頭表示。</li>
+    </ul>
+    <div class="reaction-scheme">
+    均裂 vs 異裂
+
+    均裂：  A—B  →  A•  +  •B   （自由基）
+    異裂：  A—B  →  A⁺  +  :B⁻  （離子）
+
+    表示法：
+    均裂：魚鉤箭頭（→ 單電子）
+    異裂：全箭頭（→ 電子對）
+    </div>
+
+    <h3>產生自由基的方法</h3>
+    <ol>
+      <li><strong>熱均裂</strong>：加熱弱鍵（Cl-Cl, O-O, N-N等）</li>
+      <li><strong>光均裂（hν）</strong>：光子能量使鍵均裂（Cl₂ + hν → 2Cl•）</li>
+      <li><strong>氫抽提（abstraction）</strong>：X• + H-C → H-X + C•</li>
+      <li><strong>加成（addition）</strong>：X• + C=C → X-C-C•</li>
+      <li><strong>消除（elimination/β-scission）</strong>：C-C• → C=C + •C</li>
+    </ol>
+  </section>
+
+  <section id="initiators">
+    <h2>引發劑（Radical Initiators）</h2>
+    <p>引發劑是容易均裂生成初始自由基的化合物：</p>
+    <h3>AIBN（偶氮二異丁腈）</h3>
+    <div class="reaction-scheme">
+    AIBN的均裂
+
+    NC-C(CH₃)₂-N=N-C(CH₃)₂-CN  →(66-72°C)→  2× •C(CH₃)₂CN  +  N₂
+
+    引發原因：1. N-N鍵弱  2. N₂是優良離去基  3. 腈穩定自由基
+    AIBN不分解O-H或普通C-H鍵 → 選擇性引發
+    </div>
+
+    <h3>過氧化二苯甲醯（Dibenzoyl peroxide，BPO）</h3>
+    <div class="reaction-scheme">
+    BPO的均裂
+
+    (PhCOO)₂  →(hν或加熱)→  2 PhCOO•  →(脫CO₂)→  2 Ph•
+
+    O-O鍵弱（約150 kJ/mol）→ 容易均裂
+    </div>
+
+    <h3>穩定自由基（Persistent Radicals）</h3>
+    <ul>
+      <li><strong>三苯甲基自由基（trityl radical）</strong>：Ph₃C• 在溶液中穩定存在，由Gomberg於1900年首次分離</li>
+      <li><strong>TEMPO</strong>：四甲基哌啶-N-氧化物，因氮-氧位阻和離域而穩定，用作自由基清除劑（scavenger）</li>
+      <li><strong>維生素E（α-Tocopherol）</strong>：生物抗氧化劑，苯酚O-H以H轉移終止不飽和脂質自由基鏈式反應</li>
+    </ul>
+  </section>
+
+  <section id="stability">
+    <h2>自由基的穩定性</h2>
+    <h3>結構特徵</h3>
+    <p>碳自由基為<strong>sp²雜化</strong>（平面），單電子在p軌道（SOMO，Singly Occupied Molecular Orbital）中。</p>
+
+    <h3>穩定性順序</h3>
+    <p><strong>3° > 2° > 1° > 甲基</strong>，原因是超共軛（hyperconjugation）。烯丙基/苄基自由基因離域而特別穩定。</p>
+
+    <div class="box-key">
+      <strong>FMO觀點：</strong><br>
+      SOMO + 吸電基（EWG）：EWG降低SOMO能量 → <em>親電性自由基（electrophilic radical）</em><br>
+      SOMO + 給電基（EDG）：EDG升高SOMO能量 → <em>親核性自由基（nucleophilic radical）</em>
+    </div>
+
+    <h3>特殊穩定化物種</h3>
+    <ul>
+      <li><strong>酮基自由基（ketyl radical）</strong>：羰基C得一電子後與O-電荷共振穩定（Mg/苯中生成，McMurry反應）</li>
+      <li><strong>McMurry反應</strong>：TiCl₃/LiAlH₄ → Ti(II)，還原酮生成酮基自由基→結合→脫氧→烯烴</li>
+      <li><strong>Acyloin反應</strong>：酯+Na（甲苯）→酮基自由基→結合→α-羥酮（acyloin）</li>
+    </ul>
+    <div class="reaction-scheme">
+    McMurry反應
+
+    2 R₂C=O  →(TiCl₃/LiAlH₄)→  2 R₂C•-O⁻[Ti]
+              →(偶聯+脫氧)→    R₂C=CR₂  （烯烴）
+    </div>
+  </section>
+
+  <section id="chain">
+    <h2>自由基鏈式反應</h2>
+    <p>鏈式反應（chain reaction）分三個階段：</p>
+    <div class="reaction-scheme">
+    鏈式反應三階段
+
+    引發（Initiation）：
+      In-In  →(hν)→  2 In•    引發劑均裂
+
+    增殖（Propagation）：
+      In• + Cl-Cl  →  In-Cl + Cl•
+      Cl• + H-R   →  H-Cl  + R•
+      R•  + Cl-Cl  →  R-Cl  + Cl•   （鏈循環）
+
+    終止（Termination）：
+      R•  + R•  →  R-R       自由基偶聯
+      R•  + Cl• →  R-Cl      捕獲
+      Cl• + Cl• →  Cl₂       重組
+    </div>
+    <div class="box-note">
+      增殖步驟中，每個步驟都再生一個自由基，保持鏈式循環。引發劑只需微量（催化量），所有消耗的增殖試劑（如Cl₂）均在鏈傳遞中被消耗。
+    </div>
+  </section>
+
+  <section id="selectivity">
+    <h2>鹵素自由基取代的選擇性</h2>
+    <p>氯化和溴化是典型的自由基鏈式反應，但選擇性差別顯著：</p>
+    <table>
+      <tr><th>自由基</th><th>選擇性</th><th>原因</th></tr>
+      <tr><td>Cl•（氯自由基）</td><td>低選擇性</td><td>Cl•活性高、過渡態早（Hammond：放熱）</td></tr>
+      <tr><td>Br•（溴自由基）</td><td>高選擇性</td><td>Br•活性低、過渡態晚（Hammond：接近自由基）</td></tr>
+    </table>
+    <div class="box-key">
+      <strong>Hammond假說：</strong><br>
+      放熱步驟 → 過渡態像反應物（早TS），活化能差異小，選擇性低<br>
+      吸熱步驟 → 過渡態像產物（晚TS），活化能差異大，選擇性高
+    </div>
+
+    <h3>鍵能與選擇性</h3>
+    <table>
+      <tr><th>C-H鍵</th><th>鍵能（kJ/mol）</th><th>對Cl•選擇性</th><th>對Br•選擇性</th></tr>
+      <tr><td>3°</td><td>400</td><td>低度偏好</td><td>高度偏好</td></tr>
+      <tr><td>2°</td><td>410</td><td>輕微偏好</td><td>偏好</td></tr>
+      <tr><td>1°</td><td>420</td><td>幾乎相同</td><td>不反應</td></tr>
+      <tr><td>烯丙基</td><td>364</td><td>強偏好</td><td>強偏好</td></tr>
+    </table>
+  </section>
+
+  <section id="nbs">
+    <h2>烯丙基溴化（NBS法）</h2>
+    <p><strong>NBS（N-溴琥珀醯亞胺）</strong>在光或引發劑存在下，以低濃度Br₂進行烯丙基位選擇性溴化：</p>
+    <div class="reaction-scheme">
+    NBS烯丙基溴化
+
+    環己烯 + NBS  →(hν, CCl₄)→  3-溴環己烯  （85%）
+
+    機制：
+    Br₂光解 → Br•
+    Br• + 烯丙C-H → HBr + 烯丙基自由基（共振穩定）
+    烯丙基自由基 + Br₂ → 烯丙溴化物 + Br•（鏈循環）
+    NBS作用：維持低[Br₂]，避免加成副反應
+    </div>
+    <div class="box-note">
+      低[Br₂]的重要性：若[Br₂]高，Br₂優先加成到雙鍵（極性反應），而非抽取烯丙H（自由基）。NBS作為Br₂的緩慢釋放源，同時CCl₄非極性溶劑不利於極性加成中間體（溴離子橋）。
+    </div>
+  </section>
+
+  <section id="tributyltin">
+    <h2>三丁基錫氫化物（Bu₃SnH）還原脫鹵</h2>
+    <p>Bu₃SnH可將鹵代烷還原為C-H，形成脫鹵代烷：</p>
+    <div class="reaction-scheme">
+    Bu₃SnH脫鹵機制
+
+    引發：Bu₃Sn-H  →(hν)→  Bu₃Sn• + H•
+
+    增殖：
+    Bu₃Sn• + R-Br  →  Bu₃SnBr + R•
+    R•       + H-SnBu₃ →  R-H    + Bu₃Sn•（循環）
+
+    淨反應：R-Br + Bu₃SnH  →  R-H + Bu₃SnBr
+    </div>
+    <div class="box-key">
+      <strong>鍵能熱力學（kJ/mol）：</strong>
+      <table>
+        <tr><th>鍵</th><th>鍵能</th></tr>
+        <tr><td>C-Br</td><td>280</td></tr>
+        <tr><td>Sn-H</td><td>308</td></tr>
+        <tr><td>C-H</td><td>418</td></tr>
+        <tr><td>Sn-Br</td><td>552</td></tr>
+      </table>
+      斷裂：C-Br(280) + Sn-H(308) = 588 kJ/mol<br>
+      生成：C-H(418) + Sn-Br(552) = 970 kJ/mol<br>
+      淨熱力學有利（放熱 ~382 kJ/mol）
+    </div>
+    <h3>AIBN引發Bu₃SnH的還原</h3>
+    <p>AIBN（而非過氧化物）是理想引發劑，因其生成的腈穩定自由基（低活性），不會抽取非弱鍵的H，只有Bu₃SnH的弱Sn-H鍵被抽取，確保選擇性。</p>
+    <p>反應活性：C-I > C-Br > C-Cl（C-F不反應）</p>
+  </section>
+
+  <section id="cc-bond">
+    <h2>碳-碳鍵的自由基形成</h2>
+    <p>1975年後，自由基在有機合成中的應用大幅擴展。最重要的突破是利用自由基形成C-C鍵：</p>
+    <div class="reaction-scheme">
+    烷基自由基加成到丙烯腈
+
+    R-I + CH₂=CH-CN  →(Bu₃SnH, AIBN)→  R-CH₂-CH₂-CN
+
+    機制（增殖）：
+    Bu₃Sn• + I-R  →  Bu₃SnI + R•
+    R•  + CH₂=CHCN  →  R-CH₂-•CHCN   （加成）
+    R-CH₂-•CHCN + H-SnBu₃  →  R-CH₂-CH₂CN + Bu₃Sn•
+    </div>
+    <div class="box-note">
+      <strong>錫法（tin method）的成功要素：</strong>
+      <ul>
+        <li>Bu₃SnH需緩慢加入（或催化量+NaBH₄回收）</li>
+        <li>起始原料含弱C-X鍵（C-I或C-Br）</li>
+        <li>自由基陷阱為親電性烯烴（CH₂=CHCN、CH₂=CHCO₂Me等），濃度至少10倍於Bu₃SnH</li>
+      </ul>
+    </div>
+    <p>BrCCl₃ + 苯乙烯在hν下也形成C-C鍵（Cl₃C• 加成到烯烴），但不能廣泛應用（限於有特殊弱C-Br的底物）。</p>
+  </section>
+
+  <section id="fmo">
+    <h2>前線軌道效應</h2>
+    <p>自由基的SOMO能量決定其親電/親核性，從而決定其選擇的反應夥伴：</p>
+    <div class="box-key">
+      <ul>
+        <li><strong>親核性自由基</strong>：SOMO能量高（EDG鄰位），偏好與LUMO低的親電性烯烴反應（如丙烯腈）</li>
+        <li><strong>親電性自由基</strong>：SOMO能量低（EWG鄰位），偏好與HOMO高的親核性烯烴反應（如乙烯基醚）</li>
+      </ul>
+    </div>
+    <table>
+      <tr><th>自由基類型</th><th>SOMO能量</th><th>偏好的烯烴</th></tr>
+      <tr><td>烷基自由基 R•</td><td>高（EDG超共軛）</td><td>親電性（CN、CO₂R）</td></tr>
+      <tr><td>腈穩定自由基 •CCN</td><td>低（EWG離域）</td><td>親核性（乙烯基醚、烯丙位）</td></tr>
+      <tr><td>丙二酸酯自由基</td><td>低</td><td>乙烯基醚（親核性烯烴）</td></tr>
+    </table>
+
+    <h3>共聚合（Copolymerization）</h3>
+    <p>乙酸乙烯酯（親核性，EDG）和丙烯酸甲酯（親電性，EWG）在自由基引發下生成<strong>交替共聚物</strong>：</p>
+    <ul>
+      <li>乙酸乙烯酯的自由基（親核）優先加成到親電性丙烯酸甲酯</li>
+      <li>丙烯酸甲酯的自由基（親電）優先加成到親核性乙酸乙烯酯</li>
+      <li>結果：沿鏈交替排列（alternating copolymer）</li>
+    </ul>
+  </section>
+
+  <section id="polar-vs">
+    <h2>自由基與極性試劑的反應性差異</h2>
+    <table>
+      <tr><th>底物類型</th><th>極性試劑（典型）</th><th>自由基（典型）</th></tr>
+      <tr><td>不飽和C=O</td><td>親核加成到C=O（1,2或1,4）</td><td>加成到C=C（β-碳），不攻擊C=O</td></tr>
+      <tr><td>X-H鍵（O-H, N-H）</td><td>質子轉移（酸鹼）</td><td>H抽取（C-H，弱鍵）</td></tr>
+      <tr><td>烷基鹵</td><td>SN2於碳（取代）</td><td>抽取鹵素（不於碳反應）</td></tr>
+    </table>
+    <div class="box-note">
+      自由基是「軟」物種——反應由軌道強度和鍵能決定，而非電荷密度。因此O-H和C=O（極化）不被自由基攻擊，C-H（非極化，但弱）被廣泛抽取。
+    </div>
+  </section>
+
+  <section id="borane">
+    <h2>硼烷-氧氣法</h2>
+    <p>三烷基硼（trialkylborane, R₃B）與O₂反應，通過自由基機制將烷基加成到親電性烯烴：</p>
+    <div class="reaction-scheme">
+    硼烷-氧法機制
+
+    R₃B + O₂  →  R₂B-O-O-R• + R•   （SH2 at B）
+
+    R• + CH₂=CH-C=O  →  R-CH₂-•CH-C=O  （加成）
+                      →  +R₃B  →  硼烯醇
+                      →  +H₂O  →  酮
+
+    整體：R₃B + CH₂=CHC=OR² + H₂O →  R-CH₂CH₂-COR²
+
+    氧氣驅動鏈反應，水解硼烯醇得到酮
+    </div>
+    <p>優點：可在水中進行；無需有機錫（環保）；Et₃B/O₂/H₃PO₂系統也可引發分子內環化。</p>
+  </section>
+
+  <section id="intramolecular">
+    <h2>分子內自由基環化</h2>
+    <p>分子內自由基環化比間分子反應<strong>效率更高</strong>，原因：</p>
+    <ul>
+      <li>自由基陷阱（雙鍵）始終靠近自由基，環化速率極快</li>
+      <li>不需陷阱過量，無需高[陷阱]/[錫]比</li>
+      <li>Bu₃Sn•無法競爭，可用更高濃度Bu₃SnH</li>
+      <li>C-Cl和C-SPh等強鍵也可使用（因環化速率快）</li>
+    </ul>
+    <div class="box-key">
+      <strong>5-exo-trig優先形成五員環</strong>（Baldwin規則）：<br>
+      ω-鹵代烯烴在Bu₃SnH/AIBN下優先生成五員環（而非六員環），即使六員環在熱力學上更穩定，因為五員環的環化速率更快。
+    </div>
+    <div class="reaction-scheme">
+    5-exo-trig環化
+
+    Br-(CH₂)₄-CH=CH₂  →(Bu₃SnH)→  [5員環•]  →  環戊烷（98%）
+                                               +  [6員環•（2%）]
+
+    Br-(CH₂)₅-CH=CH₂  →(Bu₃SnH)→  [5員環•（90%）] + [6員環（10%）]
+    </div>
+
+    <h3>分子內環化的立體化學</h3>
+    <p>有時構象約束（如縮醛「繩套」）決定新生成環節點的立體化學——cis環節點是必然結果。</p>
+
+    <h3>Et₃B/O₂/H₃PO₂法</h3>
+    <p>無錫（tin-free）方法：Et₃B + cat. O₂ 生成Et•，抽取C-I，自由基環化；H₃PO₂提供最後的H（類似Bu₃SnH的功能），形成的P自由基再抽取Et₃B中的Et，恢復鏈循環。</p>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <ul>
+        <li><strong>自由基生成</strong>：均裂（熱、光），引發劑（AIBN 66-72°C，BPO光或熱），魚鉤箭頭（單電子）</li>
+        <li><strong>穩定性</strong>：3° > 2° > 1° > CH₃，烯丙基/苄基離域穩定；EWG使SOMO低（親電）；EDG使SOMO高（親核）</li>
+        <li><strong>鏈式反應</strong>：引發→增殖（每步再生一個自由基）→終止</li>
+        <li><strong>Cl• vs Br•</strong>：Cl• 選擇性低（早TS，放熱）；Br• 選擇性高（晚TS，吸熱，Hammond假說）</li>
+        <li><strong>NBS烯丙基溴化</strong>：低[Br₂]維持、自由基機制、烯丙位選擇性</li>
+        <li><strong>Bu₃SnH脫鹵</strong>：Sn-Br(552)和C-H(418)生成比C-Br(280)+Sn-H(308)強；鏈反應；AIBN引發</li>
+        <li><strong>C-C鍵形成</strong>：R• + 電性烯烴（CN, CO₂R）→ 錫法；需低[Bu₃SnH]</li>
+        <li><strong>前線軌道</strong>：親核自由基+親電烯烴；親電自由基+親核烯烴</li>
+        <li><strong>分子內環化</strong>：比間分子快，偏好5員環（5-exo-trig）；Et₃B/O₂替代方案</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

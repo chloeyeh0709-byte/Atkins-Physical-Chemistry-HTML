@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第39章 反應機制的測定</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 39 章</div>
+    <div class="ch-title">反應機制的測定</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#two-types">機制的兩種類型</a>
+    <a href="#cannizzaro">Cannizzaro反應案例</a>
+    <a href="#kinetics">動力學證據</a>
+    <a href="#isotope-labeling">同位素標記</a>
+    <a href="#hammett">Hammett σ-ρ關係</a>
+    <a href="#hammett-curves">Hammett圖的彎曲</a>
+    <a href="#kie">動力學同位素效應（KIE）</a>
+    <a href="#entropy">活化熵</a>
+    <a href="#acid-base-cat">酸鹼催化</a>
+    <a href="#intermediates">中間體的偵測</a>
+    <a href="#stereochemistry">立體化學與機制</a>
+    <a href="#summary">機制研究方法總結</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>第39章 反應機制的測定</h1>
+  <p class="chapter-meta">Clayden Organic Chemistry · Ch 39 (pp. 1029–1070)</p>
+
+  <section id="two-types">
+    <h2>機制的兩種類型</h2>
+    <p>有機反應的「機制」可分為兩個層次：</p>
+    <ol>
+      <li><strong>機制的辨認（Mechanism recognition）</strong>：依據教科書中的模式，看到底物和產物，推測可能的機制步驟（類比已知反應）。本書前幾十章主要是這個。</li>
+      <li><strong>機制的實驗測定（Experimental determination）</strong>：透過動力學、同位素、催化、立體化學等實驗手段，以<em>科學方式</em>確認（或排除）某個機制。本章介紹這個層次。</li>
+    </ol>
+    <div class="box-note">
+      機制永遠不能被「證明」，只能被「支持」或「排除」。我們追求的是一組相互一致、難以同時滿足其他機制的實驗結果。
+    </div>
+  </section>
+
+  <section id="cannizzaro">
+    <h2>案例研究：Cannizzaro反應</h2>
+    <p>苯甲醛（ArCHO）在濃NaOH中不發生縮合，而是歧化（disproportionation）：一半氧化為羧酸，一半還原為醇。</p>
+    <div class="reaction-scheme">
+    Cannizzaro反應
+
+    2 ArCHO  →(NaOH)→  ArCOOH  +  ArCH₂OH
+    </div>
+
+    <h3>實驗排除錯誤機制</h3>
+    <ol>
+      <li><strong>自由基機制排除</strong>：TEMPO或過氧化物均不影響速率 → 無自由基鏈式反應</li>
+      <li><strong>同位素標記（¹⁸O）</strong>：D₂O溶劑中，氧不與溶劑交換 → O原子留在分子內</li>
+      <li><strong>雙標記（D/¹⁸O）</strong>：D₂O加到ArCHO後，D出現在醇（ArCH₂OD）而非酸（ArCOOH）→ 氫從醛轉移至另一醛的羰基碳</li>
+    </ol>
+    <h3>正確機制：雙陰離子（dianion）機制</h3>
+    <div class="reaction-scheme">
+    Cannizzaro正確機制
+
+    Step 1: ArCHO + OH⁻  →  ArCH(OH)O⁻  （加到C=O）
+    Step 2: ArCH(OH)O⁻  →  Ar-C(=O)-O⁻ + H⁻  （氫化物轉移）
+            + ArCHO               + ArCH₂O⁻
+
+    淨結果：ArCOO⁻ + ArCH₂OH（歧化）
+
+    速率 = k[ArCHO]²[OH⁻]（三分子，二級ArCHO + 一級OH）
+    </div>
+  </section>
+
+  <section id="kinetics">
+    <h2>動力學證據</h2>
+    <p><strong>速率方程（rate law）</strong>揭示過渡態的成分：</p>
+    <ul>
+      <li>速率 = k[A][B] → 二分子反應，A和B均在速率決定步驟的過渡態中</li>
+      <li>速率 = k[A]² → A的二聚體（或A與A的碰撞）在過渡態</li>
+      <li>速率 = k[A][B][C] → 三分子（罕見，熱力學上不利）</li>
+    </ul>
+    <div class="box-key">
+      速率方程只能告訴我們<strong>速率決定步驟（rate-determining step）</strong>的過渡態成分，不能直接告訴我們慢步驟<em>之後</em>發生了什麼。
+    </div>
+
+    <h3>交叉實驗（Crossover Experiment）</h3>
+    <p>混合兩種有差異標記的底物，若觀察到「交叉」產物（含另一底物的標記原子），說明中間體是<em>自由</em>的（intermolecular）；若無交叉，說明機制是分子內的。</p>
+  </section>
+
+  <section id="isotope-labeling">
+    <h2>同位素標記</h2>
+    <p>用穩定同位素（D, ¹³C, ¹⁸O, ¹⁵N等）或放射性同位素（¹⁴C）標記特定原子，追蹤其在反應中的去向：</p>
+    <table>
+      <tr><th>同位素</th><th>用途</th><th>偵測方法</th></tr>
+      <tr><td>D（氘）</td><td>H遷移追蹤，C-H鍵斷裂偵測</td><td>質譜、NMR</td></tr>
+      <tr><td>¹⁸O</td><td>O原子來源追蹤，酯水解位置</td><td>質譜</td></tr>
+      <tr><td>¹⁴C（放射）</td><td>C骨架重排追蹤</td><td>放射性計數</td></tr>
+      <tr><td>¹³C</td><td>C重排（¹³C NMR）</td><td>¹³C NMR</td></tr>
+    </table>
+
+    <div class="box-example">
+      <strong>雙標記實驗（Double Labeling）：</strong><br>
+      同時用兩種不同同位素（如D和¹³C）標記同一底物，提供更強的機制證據，排除多種可能機制。
+    </div>
+  </section>
+
+  <section id="hammett">
+    <h2>Hammett σ-ρ關係</h2>
+    <p><strong>Hammett關係</strong>是研究間位和對位取代基對苯環反應速率或平衡的定量線性關係：</p>
+    <div class="reaction-scheme">
+    Hammett方程
+
+    log(k_X / k_H) = σ · ρ
+
+    σ（sigma）：取代基常數（由苯甲酸解離常數定義）
+    ρ（rho）：反應常數（直線斜率，反應靈敏度）
+    </div>
+
+    <h3>σ值的定義</h3>
+    <ul>
+      <li>σ由苯甲酸pKa測量：σ_X = pKaH - pKa_X</li>
+      <li>EWG（吸電基，NO₂, CF₃）：σ > 0</li>
+      <li>EDG（給電基，NMe₂, OMe）：σ &lt; 0</li>
+    </ul>
+
+    <h3>ρ值的解釋</h3>
+    <table>
+      <tr><th>ρ值</th><th>意義</th></tr>
+      <tr><td>ρ > 0（正）</td><td>EWG加速反應，負電荷在苯環附近積聚（如親核加成到羰基）</td></tr>
+      <tr><td>ρ &lt; 0（負）</td><td>EDG加速反應，正電荷在苯環積聚（如SN1, EAS）</td></tr>
+      <tr><td>|ρ| 大（>4）</td><td>電荷直接在苯環上（如芳環陰離子、苄基陽離子）</td></tr>
+      <tr><td>|ρ| 中（2-4）</td><td>電荷在苯環鄰原子（與苯環共軛連接）</td></tr>
+      <tr><td>|ρ| 小（&lt;1）</td><td>苯環遠離反應位點</td></tr>
+    </table>
+
+    <div class="box-example">
+      <strong>案例：Cannizzaro反應 ρ = +3.8</strong><br>
+      正的ρ值表示苯環附近積聚負電荷，符合OH⁻加到C=O（生成烷氧陰離子）的機制。
+    </div>
+  </section>
+
+  <section id="hammett-curves">
+    <h2>Hammett圖的彎曲（改變速率決定步驟）</h2>
+    <p>若Hammett圖在某σ值處出現彎曲，表示在那個取代基附近<strong>速率決定步驟發生改變</strong>：</p>
+    <ul>
+      <li>一個步驟對EWG敏感（ρ₁），另一個對EDG敏感（ρ₂），此二步驟的速率在某取代基時互換</li>
+      <li>同一分子沿最快的機制路徑反應，受最慢步驟限制</li>
+    </ul>
+    <div class="box-key">
+      <strong>重要原理：</strong><br>
+      「反應沿最快的可能機制路徑進行，但速率受該機制最慢的步驟限制。」<br>
+      Hammett圖彎曲 → 在彎曲處兩個步驟速率相當，之後改由另一步驟為RDS。
+    </div>
+    <div class="box-example">
+      <strong>案例：偶極苯基甲醇分子內Friedel-Crafts烷基化</strong><br>
+      EWG-Ar加速碳正離子生成（ρ = +2.67，慢步驟是環化）；EDG-Ar加速碳正離子生成更快，但環化成為RDS（ρ = -2.51）。<br>
+      Hammett圖呈倒V形，在σ = +0.5處有折點。
+    </div>
+  </section>
+
+  <section id="kie">
+    <h2>動力學同位素效應（KIE）</h2>
+    <p><strong>動力學同位素效應（KIE）</strong>是同位素取代造成的速率變化：</p>
+    <div class="reaction-scheme">
+    KIE定義
+
+    KIE = k_H / k_D
+
+    若C-H鍵在速率決定步驟中斷裂 → k_H > k_D → KIE = 2–7
+
+    原因：零點能（zero-point energy）差異
+    C-H zero point energy > C-D zero point energy
+    → C-H 需要較少能量達到鍵斷裂
+    → C-H 比 C-D 快
+    </div>
+
+    <h3>零點能解釋</h3>
+    <p>根據量子力學（Heisenberg不確定性原理），振動鍵即使在最低能量狀態仍有零點能。較輕的H質量使C-H零點能高於C-D，即C-H處於較高的基態能量，須克服較低的活化障礙→反應更快。</p>
+    <div class="box-key">
+      <strong>KIE值的解釋：</strong>
+      <ul>
+        <li>k_H/k_D = 2–7（正常KIE）→ C-H鍵在RDS中斷裂（E2消除、去質子化等）</li>
+        <li>k_H/k_D ≈ 1 → C-H鍵不涉及RDS</li>
+        <li>k(D₂O)/k(H₂O) &lt; 1（溶劑同位素效應）→ 見酸/鹼催化一節</li>
+      </ul>
+    </div>
+
+    <div class="box-example">
+      <strong>E2 vs E1 的KIE區分：</strong><br>
+      α-D₂取代的苄溴，E2（C-H在RDS）→ k_H/k_D = 7.1<br>
+      E1（RDS = 碳正離子生成，C-H不斷）→ KIE ≈ 1<br>
+      可以此判定消除機制。
+    </div>
+
+    <h3>芳香親電取代的KIE</h3>
+    <p>苯硝化（nitration）：k_H/k_D = 1.0 → RDS不斷C-H（RDS是NO₂⁺攻擊）<br>
+    苯酚碘化：k_H/k_D = 4.1 → RDS斷C-H（苯氧陰離子去質子化比加成慢）</p>
+  </section>
+
+  <section id="entropy">
+    <h2>活化熵（Entropy of Activation, ΔS‡）</h2>
+    <p>ΔS‡反映反應過渡態的有序程度改變：</p>
+    <table>
+      <tr><th>ΔS‡</th><th>意義</th><th>典型反應</th></tr>
+      <tr><td>大正值（> +20 J/mol·K）</td><td>一分子→多個（有序↓）</td><td>斷裂反應（fragmentation）</td></tr>
+      <tr><td>中等值（±10-20）</td><td>單分子or雙分子（溶劑飽和）</td><td>SN1, SAC</td></tr>
+      <tr><td>大負值（-100以下）</td><td>高度有序過渡態</td><td>Diels-Alder（-120至-160 J/mol·K）</td></tr>
+    </table>
+
+    <div class="box-example">
+      <strong>斷裂反應 ΔS‡ = +36.8 J/mol·K：</strong><br>
+      磺酸酯碎裂為CO₂ + 烷烴 + 磺酸鹽（三個分子），熵增大，ΔS‡正值。<br><br>
+      <strong>Diels-Alder ΔS‡ ≈ -144 J/mol·K：</strong><br>
+      環戊二烯 + 順丁烯二酸酐，兩分子組合，且過渡態幾何要求嚴格（endo規則），熵大幅降低。
+    </div>
+
+    <p>SAC（特定酸催化）典型：ΔS‡接近0或稍負（SH1+H型）；GBC（一般鹼催化）：ΔS‡ = -120至-180 J/mol·K（三分子RDS，高度有序）。</p>
+  </section>
+
+  <section id="acid-base-cat">
+    <h2>酸鹼催化</h2>
+    <h3>特定酸催化（SAC，Specific Acid Catalysis）</h3>
+    <p>反應需要底物先被<em>快速</em>完全質子化（快速酸鹼平衡），然後質子化的底物經過RDS反應。速率只依賴[H₃O⁺]（pH），不依賴其他酸的濃度。</p>
+    <div class="reaction-scheme">
+    SAC機制框架
+
+    X + H⁺  →(K, fast)→  XH⁺
+    XH⁺     →(k, slow)→  products
+
+    rate = k·K·[H⁺][X]  ∝  [H⁺]
+
+    特徵：1. RDS不斷C-H鍵  2. k(H₂O)/k(D₂O) < 1（逆溶劑同位素）
+    </div>
+    <div class="box-key">
+      <strong>逆溶劑同位素效應（k(H₂O) &lt; k(D₂O)）是SAC的標誌：</strong><br>
+      D₃O⁺比H₃O⁺是更強的酸（D₂O溶劑中），使底物更容易被質子化，K更大，速率更快。
+    </div>
+
+    <h3>特定鹼催化（SBC，Specific Base Catalysis）</h3>
+    <p>速率只依賴[OH⁻]，底物先被快速去質子化（K），去質子化的底物在RDS反應：</p>
+    <div class="reaction-scheme">
+    SBC機制框架
+
+    XH + OH⁻ →(K, fast)→  X⁻ + H₂O
+    X⁻        →(k, slow)→  products
+
+    rate  ∝  [OH⁻]
+
+    特徵：逆溶劑同位素（k(D₂O) > k(H₂O)）
+    </div>
+
+    <h3>特定酸/鹼催化的特徵總結</h3>
+    <ul>
+      <li>只有H₃O⁺（SAC）或OH⁻（SBC）有效，與其他酸/鹼濃度無關</li>
+      <li>RDS中不涉及質子轉移</li>
+      <li>逆溶劑同位素效應（D₂O中更快）</li>
+      <li>pH-速率曲線直線（一段）</li>
+    </ul>
+
+    <h3>一般鹼催化（GBC，General Base Catalysis）</h3>
+    <p>速率不僅依賴[OH⁻]，還依賴溶液中<em>所有</em>鹼的濃度；在恆定pH下，增加弱鹼濃度仍能加速反應。</p>
+    <ul>
+      <li>質子轉移<em>在</em>RDS中發生</li>
+      <li>正常KIE（k_H/k_D > 1）</li>
+      <li>大負ΔS‡（三分子RDS）</li>
+    </ul>
+
+    <h3>一般酸催化（GAC，General Acid Catalysis）</h3>
+    <p>弱酸在RDS中直接給出質子，速率依賴各種酸的濃度：</p>
+    <ul>
+      <li>正常KIE</li>
+      <li>大負ΔS‡</li>
+      <li>在中性pH也可發生（不需極低pH）</li>
+    </ul>
+    <div class="box-example">
+      <strong>SAC vs GBC的對比（五員環 vs 四員環環醚合成）：</strong><br>
+      HO(CH₂)₃Cl → 四氫呋喃（THF）：需要強鹼（SBC），過渡態高應變，只有OH⁻有效<br>
+      HO(CH₂)₄Cl → 四氫吡喃：弱鹼ArO⁻也可（GBC），過渡態應變小，溫和鹼即可<br>
+      → GBC（溫和）適合容易的環化，SBC（強鹼）適合應變高的環化
+    </div>
+  </section>
+
+  <section id="intermediates">
+    <h2>中間體的偵測</h2>
+    <p>確認中間體的金標準：</p>
+    <ol>
+      <li>在反應混合物中直接偵測或分離中間體</li>
+      <li>獨立製備中間體，加入反應後可得到相同產物</li>
+      <li>動力學：中間體生成和消耗的速率合理</li>
+      <li>捕捉實驗（trapping reaction）</li>
+    </ol>
+
+    <h3>捕捉反應（Trapping）</h3>
+    <p>設計一個捕捉試劑（trapping agent），只能與假設的中間體反應，若加入後得到預期的捕捉產物，有力支持中間體存在：</p>
+    <div class="box-example">
+      <strong>芳香硝化的中間體（Wheland中間體）捕捉：</strong><br>
+      將親核基（醯胺）引入芳環的特定位置，使其在硝化時能捕捉鄰位碳正離子中間體（Wheland中間體）→ 得到環化捕捉產物 → 確認中間體存在及位置。
+    </div>
+
+    <h3>苯炔（Benzyne）的捕捉</h3>
+    <p>鄰氨基苯甲酸重氮化生成鄰位苯炔中間體，被分子內呋喃捕捉（Diels-Alder），得到橋式多環產物（86%），說明苯炔確實作為中間體。</p>
+
+    <h3>Favorskii反應的oxyallyl陽離子</h3>
+    <p>多個獨立實驗確認Favorskii的環丙酮和oxyallyl陽離子中間體：</p>
+    <ul>
+      <li>MeOD溶劑中：底物α位引入D（快速可逆烯醇化）</li>
+      <li>ΔS‡ = +64 J/mol·K（一分子→兩分子RDS）</li>
+      <li>Hammett ρ = -5（oxyallyl陽離子離域到苯環）</li>
+      <li>Zn/Cu法直接生成oxyallyl陽離子，參與Diels-Alder → 確認</li>
+    </ul>
+  </section>
+
+  <section id="stereochemistry">
+    <h2>立體化學與機制</h2>
+    <p>立體化學證據是最有力的機制工具之一：</p>
+    <table>
+      <tr><th>立體化學觀察</th><th>機制意涵</th></tr>
+      <tr><td>反應位點構型倒轉（inversion）</td><td>SN2（後面攻擊）</td></tr>
+      <tr><td>構型保留（retention）</td><td>鄰基參與（兩次SN2）或1,2-遷移</td></tr>
+      <tr><td>外消旋化</td><td>平面碳正離子中間體（SN1）</td></tr>
+      <tr><td>立體特異性（超表面）</td><td>協同反應（SN2、Diels-Alder、單線態卡賓）</td></tr>
+      <tr><td>非立體特異性</td><td>自由基中間體或平面碳正離子</td></tr>
+    </table>
+
+    <div class="box-example">
+      <strong>環氧乙烷開環的立體化學（Propranolol合成）：</strong><br>
+      NAph-O⁻ + 環氧氯丙烷（epichlorohydrin）：兩種可能機制（在Cl或在環氧的SN2），給出不同鏡像體產物。<br>
+      以鏡像純底物確認：環氧先被攻擊（SN2），生成特定鏡像體的丙醇胺，再關環（另一個SN2）→ 確認攻擊位點。
+    </div>
+
+    <h3>Ritter反應和Beckmann斷裂的共同中間體</h3>
+    <p>從不同起始物（tertiary alcohol 或 oxime）在酸中均生成相同的醯胺，且產物的立體化學一致（cis-decalin起始→trans-decalin產物，透過平面碳正離子中間體）：</p>
+    <ul>
+      <li>Ritter：3°醇→碳正離子→腈捕捉→亞硝鎓離子→水解→醯胺</li>
+      <li>Beckmann斷裂：肟→亞硝鎓離子→水→醯胺</li>
+      <li>兩個反應途徑通過相同中間體（碳正離子 + 腈）</li>
+    </ul>
+  </section>
+
+  <section id="summary">
+    <h2>機制研究方法總結</h2>
+    <div class="box-summary">
+      <strong>1. 確認產物結構</strong>
+      <ul>
+        <li>光譜（NMR, MS等）確認結構</li>
+        <li>同位素（D, ¹³C, ¹⁸O）追蹤原子命運</li>
+        <li>立體化學（保留/倒轉/外消旋）</li>
+      </ul>
+      <strong>2. 動力學方法</strong>
+      <ul>
+        <li>速率方程 → 過渡態成分</li>
+        <li>KIE（k_H/k_D = 2-7）→ C-H鍵是否在RDS中斷裂</li>
+        <li>ΔS‡正 → 單分子斷裂；大負 → 環加成或三分子</li>
+      </ul>
+      <strong>3. 結構-反應性關係</strong>
+      <ul>
+        <li>CF₃替換CH₃：電子探針（steric類似）</li>
+        <li>Hammett σ-ρ：ρ符號和大小揭示電荷類型和位置</li>
+        <li>Hammett圖彎曲 → RDS改變</li>
+      </ul>
+      <strong>4. 催化</strong>
+      <ul>
+        <li>SAC：只有H₃O⁺有效；k(D₂O) > k(H₂O)；無KIE</li>
+        <li>SBC：只有OH⁻有效；類似溶劑效應</li>
+        <li>GAC/GBC：弱酸/鹼也有效；正常KIE；大負ΔS‡</li>
+      </ul>
+      <strong>5. 中間體</strong>
+      <ul>
+        <li>獨立製備 + 相同產物</li>
+        <li>捕捉實驗（最有說服力）</li>
+        <li>多個反應共同指向同一中間體（互鎖網絡）</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

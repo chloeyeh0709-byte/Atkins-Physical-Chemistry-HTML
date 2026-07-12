@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第38章 卡賓的合成與反應</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 38 章</div>
+    <div class="ch-title">卡賓的合成與反應</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#diazomethane">重氮甲烷</a>
+    <a href="#carbene-generation">卡賓的生成方法</a>
+    <a href="#singlet-triplet">單線態與三線態卡賓</a>
+    <a href="#cyclopropanation">環丙烷化</a>
+    <a href="#simmons-smith">Simmons-Smith反應</a>
+    <a href="#ch-insertion">C-H插入</a>
+    <a href="#wolff">Wolff重排與Arndt-Eistert</a>
+    <a href="#nitrene">氮賓（Nitrene）</a>
+    <a href="#lone-pair-attack">卡賓對孤對電子的攻擊</a>
+    <a href="#metathesis">烯烴複分解反應</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>第38章 卡賓的合成與反應</h1>
+  <p class="chapter-meta">Clayden Organic Chemistry · Ch 38 (pp. 1003–1028)</p>
+
+  <section id="diazomethane">
+    <h2>重氮甲烷（Diazomethane）</h2>
+    <p><strong>重氮甲烷（CH₂N₂）</strong>是最簡單的重氮化合物，為有毒黃色氣體，但在醚中可作溶液使用。</p>
+
+    <h3>重氮甲烷的反應</h3>
+    <ul>
+      <li><strong>羧酸甲基化</strong>：RCOOH + CH₂N₂ → RCOOMe + N₂（立即，無需催化劑）</li>
+      <li><strong>酚的甲基化</strong>：ArOH + CH₂N₂ → ArOMe + N₂（溫和條件）</li>
+      <li><strong>光解→卡賓</strong>：CH₂N₂ →(hν)→ :CH₂（卡賓）+ N₂</li>
+    </ul>
+    <div class="box-note">
+      N₂是極佳離去基（N₂逸出驅動反應），加上重氮基中N⁺提供的親電碳，使重氮甲烷成為溫和甲基化試劑。烷基鹵（如MeI）會使某些底物產生N-烷基化副產物，CH₂N₂更為選擇性。
+    </div>
+  </section>
+
+  <section id="carbene-generation">
+    <h2>卡賓的生成方法</h2>
+    <p><strong>卡賓（Carbene）</strong>是中性的二價碳活性中間體（:CR₂），碳只有6個價電子。主要生成方法：</p>
+
+    <h3>1. 光解或熱解重氮化合物</h3>
+    <div class="reaction-scheme">
+    重氮化合物→卡賓
+
+    R₂C=N₂  →(hν 或 金屬催化)→  :CR₂  +  N₂
+
+    例：CH₂N₂ →(hν)→  :CH₂（methylene）
+        PhCHN₂ →(Rh₂(OAc)₄)→  PhCH:（苯卡賓）
+    </div>
+
+    <h3>2. α-消除（Bamford-Stevens法）</h3>
+    <div class="reaction-scheme">
+    Bamford-Stevens（甲苯磺醯腙→卡賓）
+
+    R₂C=NNHTos  →(強鹼或加熱)→  R₂C=N-N:⁻  →  :CR₂ + N₂
+
+    也稱Bamford-Stevens條件；可生成烯烴（重排路徑）或直接得卡賓
+    </div>
+
+    <h3>3. α-消除（CHCl₃/強鹼）</h3>
+    <div class="reaction-scheme">
+    α-消除生成二氯卡賓
+
+    CHCl₃  →(NaOH)→  ⁻CCl₃  →(消除Cl⁻)→  :CCl₂  （二氯卡賓）
+    </div>
+
+    <h3>4. α-內酯脫羧</h3>
+    <div class="reaction-scheme">
+    α-內酯→卡賓+CO₂
+
+    O=C-O-CR₂  →  :CR₂  +  CO₂
+    （α-propiolactone的脫羧）
+    </div>
+
+    <h3>5. N-雜環卡賓（NHC）的去質子化</h3>
+    <p>咪唑鹽（imidazolium salt）用強鹼去質子後，得到穩定的N-雜環卡賓（N-heterocyclic carbene, NHC），兩個氮上的孤對電子n→p施予穩定單線態。這是Grubbs催化劑中的重要配體。</p>
+    <div class="reaction-scheme">
+    NHC的生成
+
+    Ar-N   N-Ar          Ar-N   N-Ar
+      \   /               \   /
+       C-H  →(鹼)→         C:
+      [+]                  (NHC，穩定)
+    咪唑鹽                兩個N提供孤對穩定
+    </div>
+  </section>
+
+  <section id="singlet-triplet">
+    <h2>單線態與三線態卡賓</h2>
+    <p>:CR₂有兩個非鍵合電子，可有不同自旋排列：</p>
+    <table>
+      <tr><th>類型</th><th>電子排列</th><th>幾何</th><th>鍵角</th><th>性質</th></tr>
+      <tr><td>三線態（triplet）</td><td>兩個未配對電子（↑↑）</td><td>類sp², 彎曲</td><td>130-150°</td><td>ESR活性；類雙自由基</td></tr>
+      <tr><td>單線態（singlet）</td><td>電子配對在sp²軌道</td><td>sp², 彎曲</td><td>100-110°</td><td>空p軌道；類兩性（Lewis酸）</td></tr>
+    </table>
+    <div class="box-key">
+      <strong>哪種是基態？</strong><br>
+      • :CH₂（甲烯）：<em>三線態為基態</em>（Hund定則）<br>
+      • :CCl₂（二氯甲烯）：<em>單線態為基態</em>（Cl的n→p施予穩定單線態，能隙變小）<br>
+      • NHC：<em>單線態為基態</em>（兩個N均施予，大幅穩定單線態）<br><br>
+      n→p（lone pair→空p軌道）施予：鄰原子的孤對電子充填卡賓空p軌道，降低空p能量，穩定單線態。
+    </div>
+  </section>
+
+  <section id="cyclopropanation">
+    <h2>環丙烷化（Cyclopropanation）</h2>
+    <p>卡賓加成到烯烴的雙鍵（C=C），形成三員環（環丙烷）：</p>
+    <h3>單線態卡賓：同面（concerted），立體特異性</h3>
+    <div class="reaction-scheme">
+    單線態卡賓環丙烷化
+
+    :CH₂ + cis-2-丁烯  →  cis-1,2-二甲基環丙烷（100%，保留構型）
+    :CH₂ + trans-2-丁烯 →  trans-1,2-二甲基環丙烷（100%）
+
+    機制：協同[1+2]，suprafacial，卡賓空p + 填充π → 兩鍵同步形成
+    </div>
+
+    <h3>三線態卡賓：分步（stepwise），非立體特異性</h3>
+    <div class="reaction-scheme">
+    三線態卡賓環丙烷化
+
+    :CH₂（三線態）+ cis-2-丁烯 →  [1,3-二自由基（triplet）]
+                              →(自旋翻轉)→ [singlet 1,3-二自由基]
+                              →  環丙烷（cis + trans 混合物）
+
+    非立體特異性！因需自旋翻轉（spin-flip），時間夠長使鍵旋轉
+    </div>
+    <div class="box-key">
+      <strong>環丙烷化立體化學是判斷卡賓自旋態的最佳工具：</strong><br>
+      立體特異性 → 單線態卡賓（或金屬卡賓複合物協同反應）<br>
+      非立體特異性（cis+trans混合）→ 三線態卡賓（雙自由基中間體）
+    </div>
+  </section>
+
+  <section id="simmons-smith">
+    <h2>Simmons-Smith反應</h2>
+    <p>ICH₂ZnI（碘甲基鋅碘化物，由CH₂I₂+Zn(Cu)製備）是「卡賓等效體」，通過有機鋅配合物（而非自由卡賓）對烯烴進行立體特異性環丙烷化：</p>
+    <div class="reaction-scheme">
+    Simmons-Smith反應
+
+    CH₂I₂ + Zn(Cu)  →  ICH₂ZnI   （Simmons-Smith試劑）
+
+    烯烴 + ICH₂ZnI  →  環丙烷  （保留烯烴立體化學，>99% de）
+
+    鄰位OH導向：OH與Zn配位，在OH同側遞送CH₂
+    </div>
+    <div class="box-example">
+      <strong>烯丙醇的導向效果：</strong><br>
+      烯丙醇（allylic alcohol）中，OH上的O與Zn配位，CH₂優先從OH所在的面遞送，立體選擇性>99:1（同面）。不含OH時，選擇性大幅降低。
+    </div>
+  </section>
+
+  <section id="ch-insertion">
+    <h2>C-H插入（C-H Insertion）</h2>
+    <p>單線態卡賓可插入C-H鍵，立體化學<strong>保留</strong>（concerted，三中心過渡態）：</p>
+    <div class="reaction-scheme">
+    C-H插入
+
+    :CR₂  +  C-H  →  C-CR₂-H   （插入C-H，保留構型）
+
+    機制：三中心協同
+      R₂C:  +  C—H  →  [R₂C...C...H]‡  →  C-CR₂-H
+    </div>
+
+    <h3>Rh₂(OAc)₄催化的分子內C-H插入</h3>
+    <p>醋酸銠（rhodium acetate dimer, Rh₂(OAc)₄）催化重氮化合物分解，生成金屬卡賓複合物，進行高選擇性的<strong>分子內</strong>C-H插入，優先形成五員環（類似自由基環化的偏好）：</p>
+    <div class="reaction-scheme">
+    Rh₂(OAc)₄催化C-H插入（β-內醯胺合成）
+
+    N-H  +  N₂-CHR  →(Rh₂(OAc)₄)→  [Rh-CHR錯合物]  →  C-H或N-H插入
+                                                     →  β-內醯胺
+
+    Merck合成碳青黴素（carbapenems）：
+    重氮酸酐 →(Rh₂(OAc)₄)→ 金屬卡賓 →(N-H插入)→ β-內醯胺（五員環）
+    </div>
+    <div class="box-note">
+      金屬催化卡賓的C-H插入通常生成保留構型的產物，且分子內選擇性遠優於間分子，如Rh卡賓優先進行5-exo-trig型（生成五員環γ-內酯、γ-內醯胺等）。
+    </div>
+  </section>
+
+  <section id="wolff">
+    <h2>Wolff重排與Arndt-Eistert增碳</h2>
+    <h3>Wolff重排</h3>
+    <p>α-重氮酮（α-diazoketone）光解或熱解，先生成α-酮卡賓，再快速重排（Wolff重排）得到<strong>烯酮（ketene）</strong>：</p>
+    <div class="reaction-scheme">
+    Wolff重排
+
+    R-C(=O)-CHN₂  →(hν或Ag)→  [R-C(=O)-CH:]  →(Wolff)→  R-CH=C=O
+    （α-重氮酮）               （α-酮卡賓）               （烯酮）
+    </div>
+
+    <h3>Arndt-Eistert增碳（Homologation）</h3>
+    <p>利用Wolff重排，將羧酸（RCOOH）轉化為多一個碳的羧酸（RCH₂COOH）：</p>
+    <div class="reaction-scheme">
+    Arndt-Eistert增碳
+
+    RCOOH  →(1. SOCl₂)→  RCOCl  →(2. CH₂N₂)→  RCOCH N₂
+           →(3. hν, H₂O)→  Wolff→  R-CH=C=O  →(H₂O)→  RCH₂COOH
+
+    每次操作增加一個碳（CH₂）
+    </div>
+    <div class="box-example">
+      <strong>Arndt-Eistert的應用：</strong><br>
+      從氨基酸出發，每次增加一個碳，可逐步建構高級胺基酸或多肽側鏈。不破壞現有手性中心（Wolff重排為分子內，立體化學得以保留）。
+    </div>
+  </section>
+
+  <section id="nitrene">
+    <h2>氮賓（Nitrene）及相關重排</h2>
+    <p><strong>氮賓（Nitrene, :NR）</strong>是氮的卡賓類似物，亦為活性中間體，可由醯基疊氮（acyl azide）光解或 Curtius/Hofmann 重排產生：</p>
+
+    <h3>Curtius重排</h3>
+    <div class="reaction-scheme">
+    Curtius重排
+
+    RCOOH  →(1. ClCO₂Et)→  RCOC(O)OEt混合酐
+           →(2. NaN₃)→  RCON₃（醯基疊氮）
+           →(加熱)→  [R-N=C=O（異氰酸酯）]
+           →(H₂O)→  RNH₂（胺，減少一個碳）
+    </div>
+
+    <h3>Hofmann重排</h3>
+    <div class="reaction-scheme">
+    Hofmann重排
+
+    RCONH₂  →(Br₂, NaOH)→  [RN:（氮賓）]  →  [RNCO]  →(H₂O)→  RNH₂
+    （醯胺）                  （氮賓中間體）    （異氰酸酯）
+    </div>
+    <p>兩種重排的結果相同：羧酸（或醯胺）→ 比原來少一個碳的胺（降級）。</p>
+    <div class="box-key">
+      Curtius與Hofmann重排中，遷移基團（R）的立體化學<strong>完全保留</strong>（類似Baeyer-Villiger，1,2-遷移保留機制）。
+    </div>
+  </section>
+
+  <section id="lone-pair-attack">
+    <h2>卡賓對孤對電子的攻擊</h2>
+    <p>除了加成到C=C，卡賓也可插入O-H和N-H鍵，或攻擊孤對電子形成ylid：</p>
+    <div class="reaction-scheme">
+    卡賓插入O-H鍵
+
+    :CH₂  +  R-O-H  →  [R-O⁺H-CH₂⁻（ylid）]  →  R-O-CH₃
+                        （氧鎓ylid中間體）           （甲醚）
+    </div>
+
+    <h3>Ylid的生成與應用</h3>
+    <p>若雜原子（O、S、N）上沒有H，ylid不能重排，可被分離並用於其他反應（如不可由其他方法合成的ylid）。羰基取代卡賓（親電性）插入N-H是合成β-內醯胺（β-lactam）的重要策略。</p>
+
+    <div class="box-example">
+      <strong>Merck的碳青黴素合成：</strong><br>
+      β-內醯胺類抗生素的四員環（β-lactam）難以形成（環張力）。Merck選擇用Rh₂(OAc)₄催化卡賓插入N-H鍵（分子內），高效建構四員環：<br>
+      醯胺N-H + 重氮乙酸酯（鄰近） →(Rh₂(OAc)₄)→ β-內醯胺（75%收率）
+    </div>
+
+    <h3>重氮化合物卡賓插入的底物兼容性</h3>
+    <p>金屬卡賓（Rh催化）可容忍酸性N-H和O-H鍵，而有機金屬試劑（如有機鋰、Grignard）則不能，顯示了卡賓反應的溫和特性。</p>
+  </section>
+
+  <section id="metathesis">
+    <h2>烯烴複分解反應（Alkene Metathesis）</h2>
+    <p>金屬卡賓（尤其是Ru卡賓，Grubbs催化劑）催化的<strong>烯烴複分解（olefin metathesis）</strong>是現代有機合成最重要的C=C鍵形成方法之一，獲2005年諾貝爾化學獎（Chauvin、Schrock、Grubbs）。</p>
+
+    <h3>機制：[2+2]環加成-逆反應</h3>
+    <div class="reaction-scheme">
+    烯烴複分解機制（Grubbs催化劑）
+
+    [Ru]=CHR  +  CH₂=CH-R'  →([2+2])→  金屬環丁烷（metallacyclobutane）
+                             →(逆[2+2])→  [Ru]=CH-R'  +  CH₂=CHR
+
+    關鍵特徵：
+    • 大多數步驟可逆
+    • 不可逆步驟：乙烯（CH₂=CH₂）逸出氣相
+    • 驅動力：乙烯逸出
+    </div>
+
+    <h3>常見Grubbs催化劑</h3>
+    <table>
+      <tr><th>催化劑</th><th>結構特點</th><th>特性</th></tr>
+      <tr><td>Grubbs I（第一代）</td><td>(PCy₃)₂Cl₂Ru=CHPh</td><td>穩定，適用範圍廣</td></tr>
+      <tr><td>Grubbs II（第二代）</td><td>一個PCy₃換為NHC配體</td><td>活性更高，適用受阻烯烴</td></tr>
+      <tr><td>Hoveyda-Grubbs</td><td>苯亞甲基Ru，配體為苯基醚</td><td>可回收，空氣穩定</td></tr>
+    </table>
+
+    <h3>環關閉複分解（Ring-Closing Metathesis, RCM）</h3>
+    <div class="reaction-scheme">
+    RCM（形成環狀烯烴）
+
+    二烯  →(Ru催化劑, 2 mol%)→  環狀烯烴  +  H₂C=CH₂
+
+    例：N-Ts二丙烯胺 →(2 mol% Grubbs I)→  N-Ts吡咯啉（98%收率）
+    </div>
+    <p>RCM特別適合形成5~20員環，Grubbs催化劑也能在O-H和N-H官能基存在下工作（與有機金屬試劑不同）。</p>
+
+    <h3>交叉複分解（Cross Metathesis）</h3>
+    <p>兩種不同烯烴交換各自的兩個碳，生成新的烯烴（作為E異構體）和乙烯副產物。當兩種烯烴在空間或電子性質上差異足夠大時，交叉複分解才具有選擇性。</p>
+    <div class="reaction-scheme">
+    交叉複分解
+
+    R¹-CH=CH₂  +  R²-CH=CH₂  →(Ru)→  R¹-CH=CH-R²  +  CH₂=CH₂
+    （較少反應性）  （較多反應性）         (E異構體優先)
+    </div>
+
+    <h3>Ene-yne複分解</h3>
+    <p>當一個反應物是炔烴（而非烯烴）時，兩個C=C鍵相互換位後，炔烴中仍有一個C=C鍵與烯烴相連，結果產物是<strong>1,3-二烯</strong>，這恰好是Diels-Alder反應所需的二烯。Ene-yne複分解是製備Diels-Alder二烯底物的優雅方法。</p>
+    <div class="reaction-scheme">
+    Ene-yne複分解
+
+    R¹-C≡C-R² + CH₂=CH₂  →(Ru)→  R²-C(=CH₂)-CH=CH-R¹  （1,3-二烯）
+
+    隨後Diels-Alder環化，再氧化芳構化 → 多環芳香化合物
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <ul>
+        <li><strong>重氮甲烷</strong>：甲基化羧酸/酚；光解→:CH₂卡賓</li>
+        <li><strong>卡賓生成</strong>：重氮化合物分解（金屬催化或hν），α-消除（CHCl₃/鹼），Bamford-Stevens（甲苯磺醯腙），NHC去質子</li>
+        <li><strong>自旋態</strong>：:CH₂基態三線態；:CCl₂、NHC基態單線態；n→p施予穩定單線態</li>
+        <li><strong>環丙烷化</strong>：單線態→concerted [1+2]，立體特異性保留；三線態→stepwise via二自由基，非立體特異性</li>
+        <li><strong>Simmons-Smith</strong>：ICH₂ZnI，立體特異性，烯丙OH定向（>99% de）</li>
+        <li><strong>C-H插入</strong>：單線態卡賓三中心協同，保留構型；Rh₂(OAc)₄催化，優先五員環分子內插入</li>
+        <li><strong>Wolff重排</strong>：α-酮卡賓→烯酮；Arndt-Eistert增碳（+1 CH₂）</li>
+        <li><strong>氮賓</strong>：Curtius（醯基疊氮→異氰酸酯→胺，-1C）；Hofmann（醯胺+Br₂→胺，-1C）</li>
+        <li><strong>孤對電子攻擊</strong>：O-H/N-H插入；ylid生成；β-內醯胺合成</li>
+        <li><strong>烯烴複分解</strong>：Grubbs Ru催化劑；[2+2]-逆[2+2]機制；RCM製環，交叉複分解，ene-yne複分解</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

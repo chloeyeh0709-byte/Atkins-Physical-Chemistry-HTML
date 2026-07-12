@@ -63,6 +63,11 @@ const files = [
   'organic/chapters/32_環狀分子的立體選擇性.html',
   'organic/chapters/33_非對映選擇性.html',
   'organic/chapters/34_周環反應1環加成.html',
+  'organic/chapters/35_周環反應2σ遷移與電環反應.html',
+  'organic/chapters/36_鄰基參與重排與斷裂.html',
+  'organic/chapters/37_自由基反應.html',
+  'organic/chapters/38_卡賓的合成與反應.html',
+  'organic/chapters/39_反應機制的測定.html',
   'inorganic/chapters/04_對稱性與群論.html',
 ];
 

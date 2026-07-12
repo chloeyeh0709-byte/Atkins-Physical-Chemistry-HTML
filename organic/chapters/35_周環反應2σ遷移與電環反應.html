@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第35章 周環反應2：σ遷移與電環反應</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+
+/* Sidebar */
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+
+/* Hamburger */
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+
+/* Main */
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+
+/* Boxes */
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+
+/* Reaction schemes */
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+
+/* Tables */
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+
+/* Rule */
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+
+/* Woodward-Hoffmann table */
+.wh-table{background:#f9f5ec;border:1px solid var(--rule);border-radius:6px;padding:1rem;margin:1rem 0;}
+
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 35 章</div>
+    <div class="ch-title">周環反應2：σ遷移與電環反應</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#intro">周環反應概述</a>
+    <a href="#sigmatropic-intro">σ遷移重排概述</a>
+    <a href="#h-shift">氫原子的[1,j]遷移</a>
+    <a href="#carbon-shift">碳原子的σ遷移</a>
+    <a href="#cope">Cope重排</a>
+    <a href="#claisen">Claisen重排及其變體</a>
+    <a href="#electrocyclic-intro">電環反應概述</a>
+    <a href="#4n-electro">4n電子電環反應</a>
+    <a href="#4np2-electro">4n+2電子電環反應</a>
+    <a href="#orbital-explain">軌道對稱性解釋</a>
+    <a href="#aziridine">氮丙啶電環開環</a>
+    <a href="#synthesis">合成應用案例</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>第35章 周環反應2：σ遷移與電環反應</h1>
+  <p class="chapter-meta">Clayden Organic Chemistry · Ch 35 (pp. 909–930)</p>
+
+  <section id="intro">
+    <h2>周環反應的三大類別</h2>
+    <p>周環反應（pericyclic reactions）是透過環狀過渡態同步進行的，不涉及離子或自由基中間體。共分三大類：</p>
+    <ul>
+      <li><strong>環加成反應（Cycloadditions）</strong>：第34章介紹，如Diels-Alder [4+2]、[2+2]</li>
+      <li><strong>σ遷移重排（Sigmatropic rearrangements）</strong>：σ鍵連同π系統重新分配位置</li>
+      <li><strong>電環反應（Electrocyclic reactions）</strong>：共軛多烯與環化物之間的可逆轉換</li>
+    </ul>
+    <p>這三類反應都受<strong>Woodward-Hoffmann軌道對稱守恆規則</strong>支配，反應選擇性取決於熱或光激發條件以及電子數目（4n或4n+2）。</p>
+  </section>
+
+  <section id="sigmatropic-intro">
+    <h2>σ遷移重排概述</h2>
+    <p>σ遷移重排（sigmatropic rearrangement）中，一個σ鍵斷裂的同時另一個σ鍵在新位置生成，伴隨π鍵系統的移動。以[i,j]表示原子移動的範圍：</p>
+    <ul>
+      <li><strong>[1,j]遷移</strong>：原子從碳鏈的1號位遷移到j號位，σ鍵的一端固定</li>
+      <li><strong>[i,j]遷移（i≠1）</strong>：σ鍵兩端都移動，如[3,3]-Cope重排</li>
+    </ul>
+    <div class="box-key">
+      σ遷移重排的關鍵是<strong>超表面性（suprafacial）</strong>還是<strong>亞表面性（antarafacial）</strong>：
+      <ul>
+        <li>Suprafacial（s）：遷移基團在π系統同一面移動</li>
+        <li>Antarafacial（a）：遷移基團翻轉到π系統另一面移動</li>
+      </ul>
+      Woodward-Hoffmann規則決定哪種方式是軌道對稱允許的。
+    </div>
+  </section>
+
+  <section id="h-shift">
+    <h2>氫原子的[1,j]遷移</h2>
+    <h3>[1,5]-H遷移（熱允許）</h3>
+    <p>含5個碳的烯丙系統中，氫可沿suprafacial路徑從C-1遷移到C-5，形成新的共軛系統。這是<strong>熱允許</strong>（thermal）的過程。</p>
+    <div class="reaction-scheme">
+    [1,5]-H遷移（熱，suprafacial）
+
+    H         H                   H
+    |          \                   |
+  C=C-C=C-C   →    C-C=C-C=C
+    1 2 3 4 5        1 2 3 4 5
+
+  [1,5]超表面氫遷移：6電子過渡態，允許
+    </div>
+
+    <h3>[1,3]-H遷移（熱禁止）</h3>
+    <p>對於3個原子的π系統，suprafacial [1,3]-H遷移是<strong>熱禁止</strong>的（因為需要4電子過渡態，與Hückel反芳香性類似）。但光化學條件下的antarafacial [1,3]-H遷移是允許的。</p>
+
+    <div class="box-key">
+      <strong>氫遷移的選擇規則：</strong>
+      <table>
+        <tr><th>遷移類型</th><th>電子數</th><th>熱反應</th><th>光化學反應</th></tr>
+        <tr><td>[1,3]-H suprafacial</td><td>4e (4n, n=1)</td><td>禁止</td><td>允許（antarafacial）</td></tr>
+        <tr><td>[1,5]-H suprafacial</td><td>6e (4n+2, n=1)</td><td>允許</td><td>禁止</td></tr>
+        <tr><td>[1,7]-H suprafacial</td><td>8e (4n, n=2)</td><td>禁止</td><td>允許</td></tr>
+      </table>
+    </div>
+
+    <h3>實例：cyclopentadiene中的[1,5]-H遷移</h3>
+    <p>環戊二烯（cyclopentadiene）的5位氫在室溫即可進行[1,5]-H遷移，使雙鍵位置互換，可由NMR追蹤此快速互變。</p>
+
+    <div class="box-example">
+      <strong>維生素D的[1,7]-H遷移</strong><br>
+      維生素D的開環前驅物（previtamin D）在陽光照射後可進行[1,7]-H遷移（光化學允許，suprafacial），此為維生素D生物合成的關鍵步驟。
+    </div>
+  </section>
+
+  <section id="carbon-shift">
+    <h2>碳原子的σ遷移</h2>
+    <h3>碳正離子中的[1,2]-C遷移</h3>
+    <p>碳正離子的1,2-遷移（Wagner-Meerwein重排）是<strong>suprafacial</strong>的，且保留遷移碳的構型（electrophilic attack with retention）。這是因為C遷移時σ鍵充填軌道與σ*空軌道在同一面重疊。</p>
+
+    <h3>[2,3]-σ遷移：Wittig重排</h3>
+    <p>以烯丙基系統中的碳負離子發生[2,3]-σ遷移，立體化學特異性佳。</p>
+    <div class="reaction-scheme">
+    [2,3]-Wittig重排
+
+      O    BuLi       [O—C]⁻           OH
+      |           →   [  \  ]   →      |
+    [2] [3]         [2  3]          C=C
+    </div>
+  </section>
+
+  <section id="cope">
+    <h2>Cope重排</h2>
+    <p>[3,3]-σ遷移中最重要的是<strong>Cope重排</strong>，發生在1,5-二烯體系，透過6員環過渡態進行。</p>
+    <div class="reaction-scheme">
+    Cope重排（[3,3]-σ遷移）
+
+       1   2   3               3   2   1
+    C=C - C - C - C=C   →   C=C - C - C - C=C
+              ↕                         ↕
+            [6員環過渡態，椅式構象最穩定]
+    </div>
+
+    <h3>oxy-Cope重排</h3>
+    <p>當1,5-二烯的3位或4位有羥基時，稱為<strong>oxy-Cope重排</strong>。初產物為烯醇，互變後得到δ,ε-不飽和酮，整體驅動力強。用KH脫質子後可加速10<sup>10</sup>至10<sup>17</sup>倍（陰離子oxy-Cope）。</p>
+    <div class="reaction-scheme">
+    陰離子oxy-Cope重排
+
+        OH                O⁻               O
+         |       KH        |     [3,3]       ‖
+    C=C-C-C=C   →   C=C-C-C=C   →   C-C=C-C=C
+                                           ↕
+                                      烯醇→酮
+    </div>
+    <div class="box-key">
+      陰離子oxy-Cope重排：KH或KH/18-crown-6活化，速率提升10<sup>10</sup>倍以上，可在60°C（而非250°C）進行。廣泛用於天然物全合成中迅速建構複雜碳骨架。
+    </div>
+  </section>
+
+  <section id="claisen">
+    <h2>Claisen重排及其變體</h2>
+    <h3>Claisen重排（芳香族）</h3>
+    <p>苯基烯丙醚在加熱下發生[3,3]-σ遷移，生成cyclohexadienone，再互變回酚（烯醇化），側鏈出現在鄰位。這是<strong>芳香族Claisen重排</strong>。</p>
+    <div class="reaction-scheme">
+    Claisen重排
+
+     O                    O                OH
+     |    [3,3]            ‖    互變異構     |
+    Ph-O-CH₂-CH=CH₂  →  [環己二烯酮]  →  Ph
+    (苯基烯丙醚)           (鄰位側鏈)        (o-烯丙基苯酚)
+    </div>
+
+    <h3>脂肪族Claisen重排</h3>
+    <p>烯丙基乙烯基醚（allyl vinyl ether）加熱得到δ,ε-不飽和醛/酮，此為合成重要方法：</p>
+    <div class="reaction-scheme">
+    脂肪族Claisen重排
+
+    O-CH₂CH=CH₂            O
+    |          [3,3]→        ‖
+    CH=CH₂             CH₂-CH=CH₂
+    (烯丙基乙烯基醚)      (γ,δ-不飽和醛)
+    </div>
+
+    <h3>Ireland-Claisen重排</h3>
+    <p>酯的烯醇化後得到烯醇矽醚，再進行Claisen重排，生成γ,δ-不飽和酸。可用於立體選擇性合成。</p>
+    <div class="reaction-scheme">
+    Ireland-Claisen重排
+
+    酯  →(1. LDA, -78°C)→  烯醇矽醚
+        →(2. TMSCl)
+        →(加熱, Claisen)→  [3,3]→ γ,δ不飽和酸矽酯
+        →(水解)→  γ,δ不飽和酸
+    </div>
+
+    <h3>Eschenmoser-Claisen重排</h3>
+    <p>烯丙醇與乙酸乙烯酯（ketene acetal）反應，生成γ,δ-不飽和醯胺或γ,δ-不飽和酯。</p>
+
+    <h3>Johnson-Claisen重排</h3>
+    <p>烯丙醇與原乙酸三甲酯（trimethyl orthoacetate）在弱酸催化下，先生成乙烯基正乙酸酯，再Claisen重排得γ,δ-不飽和酯。</p>
+    <div class="reaction-scheme">
+    Johnson-Claisen重排
+
+    烯丙醇 + CH₃C(OMe)₃  →(酸催化)→  [烯丙基乙烯基酯] →(加熱)→ γ,δ-不飽和酯
+    </div>
+
+    <h3>aza-Cope/Mannich重排</h3>
+    <p>氮類似物：含亞胺的1,5-二烯進行[3,3]-aza-Cope，生成亞胺離子，再被Mannich型環化捕捉，得到含氮環系。</p>
+    <div class="box-example">
+      <strong>aza-Cope/Mannich反應：</strong><br>
+      1. 烯丙胺與醛縮合生成亞胺離子<br>
+      2. [3,3]-aza-Cope重排（2-aza-Cope）<br>
+      3. 新亞胺離子被烯醇進行Mannich反應關環<br>
+      整體可一鍋完成，用於生物鹼全合成（Overman重排）。
+    </div>
+  </section>
+
+  <section id="electrocyclic-intro">
+    <h2>電環反應概述</h2>
+    <p>電環反應是共軛多烯與環化物（含有σ鍵的環）之間的可逆相互轉換：</p>
+    <ul>
+      <li><strong>環化（ring closure）</strong>：開鏈多烯 → 含σ鍵環狀物</li>
+      <li><strong>開環（ring opening）</strong>：環狀物 → 開鏈多烯</li>
+    </ul>
+    <p>關鍵立體化學特徵在於末端原子的旋轉方式：</p>
+    <div class="box-key">
+      <strong>旋轉方式</strong>
+      <ul>
+        <li><strong>Conrotatory（順轉）</strong>：兩末端向同方向旋轉（一個順時針，一個逆時針）</li>
+        <li><strong>Disrotatory（異轉）</strong>：兩末端向相反方向旋轉（都順時針或都逆時針）</li>
+      </ul>
+      旋轉方式決定環化產物的立體化學。
+    </div>
+  </section>
+
+  <section id="4n-electro">
+    <h2>4n電子電環反應</h2>
+    <p>4n個π電子參與（如丁二烯4電子、辛四烯8電子等）：</p>
+    <table>
+      <tr><th>條件</th><th>旋轉方式</th><th>說明</th></tr>
+      <tr><td>熱（基態）</td><td>Conrotatory</td><td>HOMO對稱匹配要求</td></tr>
+      <tr><td>光（激發態）</td><td>Disrotatory</td><td>激發態HOMO對稱改變</td></tr>
+    </table>
+
+    <h3>丁二烯的電環化（4e，熱conrotatory）</h3>
+    <div class="reaction-scheme">
+    丁二烯 → 環丁烯（熱，conrotatory）
+
+         H    H                H  H
+         |    |                |  |
+    C₄H₄ →  [conrotatory]  → C₄H₄ (環丁烯)
+         取代基：trans-丁二烯 → cis-環丁烯
+                cis-丁二烯 → trans-環丁烯
+    </div>
+
+    <div class="box-example">
+      <strong>例：(E,E)-2,4-己二烯的熱電環化</strong><br>
+      conrotatory關環：兩末端甲基位於同側（cis-二甲基環丁烯）。<br>
+      光化學：disrotatory關環，甲基位於反側（trans）。
+    </div>
+  </section>
+
+  <section id="4np2-electro">
+    <h2>4n+2電子電環反應</h2>
+    <p>6個π電子（己三烯等）：</p>
+    <table>
+      <tr><th>條件</th><th>旋轉方式</th></tr>
+      <tr><td>熱（基態）</td><td>Disrotatory</td></tr>
+      <tr><td>光（激發態）</td><td>Conrotatory</td></tr>
+    </table>
+
+    <h3>己三烯的電環化（6e，熱disrotatory）</h3>
+    <div class="reaction-scheme">
+    (E,Z,E)-2,4,6-辛三烯 → 環己二烯（熱，disrotatory）
+
+    兩末端甲基向內旋轉 → 均為cis（二者均向環內）
+    disrotatory：末端原子反向旋轉
+    </div>
+
+    <div class="box-key">
+      <strong>Woodward-Hoffmann電環反應規則總表：</strong>
+      <table>
+        <tr><th>電子數</th><th>熱</th><th>光</th></tr>
+        <tr><td>4n（4,8,12,...）</td><td>Conrotatory</td><td>Disrotatory</td></tr>
+        <tr><td>4n+2（6,10,14,...）</td><td>Disrotatory</td><td>Conrotatory</td></tr>
+      </table>
+      記憶口訣：<em>「4n熱同（conrotatory）光異；4n+2熱異光同」</em>
+    </div>
+  </section>
+
+  <section id="orbital-explain">
+    <h2>軌道對稱性解釋</h2>
+    <p>選擇性的根本在於<strong>HOMO（最高佔據分子軌道）的對稱性</strong>：</p>
+    <ul>
+      <li>電環化的σ鍵生成需要末端軌道同相重疊（bonding interaction）</li>
+      <li>不同電子數的多烯，HOMO末端p軌道的相位關係不同</li>
+      <li>旋轉方式必須使末端產生同相重疊</li>
+    </ul>
+    <div class="box-note">
+      FMO（前線軌道）理論解釋：<br>
+      熱反應以基態HOMO為準；光反應以激發態（LUMO→HOMO*）為準。<br>
+      分析每種電子數的HOMO末端係數符號，即可預測con/disrotatory。
+    </div>
+
+    <h3>環戊二烯負離子（6e, 熱disrotatory）</h3>
+    <p>6電子體系，熱反應disrotatory，環化生成環戊二烯基負離子（芳香性，穩定）。</p>
+  </section>
+
+  <section id="aziridine">
+    <h2>氮丙啶的電環開環</h2>
+    <p>氮丙啶（aziridine）帶有吸電子基時，熱電環開環為<strong>conrotatory</strong>（3員環含2電子，屬4n = n=0，但通常計為4e總電子數，需要conrotatory）產生<strong>亞甲基亞胺（azomethine ylid）</strong>。</p>
+    <div class="reaction-scheme">
+    氮丙啶電環開環
+
+       Ph                        Ph
+        \                          \
+    MeO₂C-N        175°C   →  MeO₂C-N⁺=CH₂
+        /       conrotatory           ↕
+      CO₂Me                     azomethine ylid
+    </div>
+
+    <p>生成的偶極子（1,3-偶極）可被親偶極子捕捉，進行[3+2]環加成（Ch34）。環化產物的立體化學反映了氮丙啶開環的方式（conrotatory），因為[3+2]環加成是立體特異性的（兩個組分均suprafacial）。</p>
+    <div class="box-example">
+      <strong>立體化學驗證：</strong><br>
+      MeO₂C取代的氮丙啶有兩個非對映體：<br>
+      • cis-氮丙啶 →（conrotatory）→ 特定偶極子幾何→ 特定環加成產物<br>
+      • trans-氮丙啶 → 另一偶極子幾何 → 另一種立體選擇性產品<br>
+      此結果確認開環為conrotatory（4π電子體系熱反應）。
+    </div>
+  </section>
+
+  <section id="synthesis">
+    <h2>合成應用：蟑螂費洛蒙Periplanone B的合成</h2>
+    <p>Periplanone B是美洲蟑螂的性費洛蒙，為雙環氧化物。Schreiber於1984年完成其全合成，多數步驟均為周環反應：</p>
+    <ol>
+      <li><strong>光化學[2+2]環加成</strong>：烯酮與烯烴在hν下生成四員環（立體特異性，兩個新立體中心）</li>
+      <li><strong>Grignard加成</strong>：乙烯基溴化鎂（MgBr）加入酮，引入12員環所需碳原子</li>
+      <li><strong>陰離子oxy-Cope重排[3,3]</strong>：KH脫質子後重排，六員環→十員環，60°C即可（加速10<sup>10</sup>倍）</li>
+      <li><strong>4π電環開環（175°C）</strong>：四員環熱conrotatory開環，擴展為12員環（Z/E混合）</li>
+      <li><strong>光化學異構化（hν, 苯）</strong>：cis雙鍵轉為更穩定的trans雙鍵</li>
+      <li><strong>插入Z-烯和兩個環氧化</strong>：完成最終結構</li>
+    </ol>
+    <div class="reaction-scheme">
+    Periplanone B合成關鍵步驟：
+
+    環己烯酮 + 烯   →(hν, Et₂O)→  [2+2]環化（四員環, 72%）
+              ↓(MgBr加成, 63%)
+         [12-碳醇]
+              ↓(KH, 60°C, oxy-Cope)
+         [ten-membered ring]
+              ↓(175°C, 4π電環開環)
+         [12-membered ring, Z+E, 77%]
+              ↓(hν, 苯)
+         [E only, 82%]
+              ↓(進一步步驟)
+         periplanone B
+    </div>
+    <div class="box-note">
+      此合成展示周環反應的優雅與實用性：光化學控制立體化學（[2+2]）、oxy-Cope迅速建構大環碳骨架、電環反應擴環，環環相扣。
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <ul>
+        <li><strong>σ遷移重排</strong>：σ鍵在π系統中移位，用[i,j]表示遷移範圍</li>
+        <li><strong>[1,5]-H遷移</strong>：熱允許（6電子，suprafacial）；[1,3]-H熱禁止</li>
+        <li><strong>Cope重排（[3,3]）</strong>：1,5-二烯透過椅式6員環過渡態重排；oxy-Cope陰離子大幅加速</li>
+        <li><strong>Claisen重排（[3,3]）</strong>：烯丙基乙烯基醚→γ,δ-不飽和羰基；多種變體（Ireland、Eschenmoser、Johnson、aza-Cope/Mannich）</li>
+        <li><strong>電環反應</strong>：共軛多烯與環化物的可逆轉換，立體化學由旋轉方式決定</li>
+        <li><strong>W-H規則</strong>：4n熱conrotatory/光disrotatory；4n+2熱disrotatory/光conrotatory</li>
+        <li><strong>氮丙啶</strong>：熱conrotatory開環→azomethine ylid→被[3+2]捕捉</li>
+        <li><strong>合成價值</strong>：周環反應高度立體選擇性，在天然物合成中廣泛應用</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>

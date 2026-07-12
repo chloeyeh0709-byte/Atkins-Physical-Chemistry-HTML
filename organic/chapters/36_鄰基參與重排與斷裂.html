@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第36章 鄰基參與、重排與斷裂</title>
+<style>
+:root{
+  --sidebar-bg:#22282f;--sidebar-fg:#cfd6dd;--sidebar-fg-dim:#8b96a3;
+  --accent:#27ae60;--accent2:#2e6f9e;
+  --main-bg:#faf6ee;--paper-bg:#fffdf8;--ink:#2b2520;--rule:#e2d8c5;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:"Georgia",serif;background:var(--main-bg);color:var(--ink);display:flex;min-height:100vh;}
+#sidebar{width:270px;min-width:270px;background:var(--sidebar-bg);color:var(--sidebar-fg);height:100vh;position:sticky;top:0;overflow-y:auto;padding:1.5rem 0;flex-shrink:0;}
+#sidebar .brand{padding:0 1.2rem 1rem;border-bottom:1px solid #333;margin-bottom:1rem;}
+#sidebar .brand .ch-num{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sidebar-fg-dim);}
+#sidebar .brand .ch-title{font-size:1rem;font-weight:700;color:#fff;line-height:1.3;margin-top:.25rem;}
+#sidebar nav a{display:block;padding:.38rem 1.2rem;font-size:.82rem;color:var(--sidebar-fg-dim);text-decoration:none;border-left:3px solid transparent;transition:all .15s;}
+#sidebar nav a:hover{color:#fff;background:rgba(255,255,255,.05);}
+#sidebar nav a.active{color:#fff;border-left-color:var(--accent);background:rgba(39,174,96,.10);}
+#sidebar nav .sec-label{padding:.6rem 1.2rem .2rem;font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--sidebar-fg-dim);opacity:.6;}
+#menu-toggle{display:none;position:fixed;top:.75rem;left:.75rem;z-index:200;background:var(--accent);border:none;border-radius:6px;width:40px;height:40px;cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px;}
+#menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;}
+#main{flex:1;max-width:860px;padding:2.5rem 3rem;margin:0 auto;}
+h1{font-size:1.9rem;font-weight:700;border-bottom:3px solid var(--accent);padding-bottom:.5rem;margin-bottom:.4rem;}
+.chapter-meta{font-size:.85rem;color:#666;margin-bottom:2rem;}
+h2{font-size:1.35rem;font-weight:700;color:#1a3a28;margin:2.2rem 0 .7rem;padding-left:.6rem;border-left:4px solid var(--accent);}
+h3{font-size:1.08rem;font-weight:700;color:#2a4a35;margin:1.4rem 0 .5rem;}
+h4{font-size:.95rem;font-weight:700;color:#333;margin:1.1rem 0 .4rem;}
+p{line-height:1.8;margin-bottom:.9rem;}
+ul,ol{margin:.5rem 0 .9rem 1.4rem;line-height:1.8;}
+li{margin-bottom:.25rem;}
+.box-note,.box-example,.box-key,.box-selftest,.box-summary{border-radius:6px;padding:1rem 1.1rem;margin:1.2rem 0;border-left:5px solid;}
+.box-note{background:#eaf4ff;border-color:#4a90d9;}
+.box-note::before{content:"📝 注意";font-weight:700;display:block;margin-bottom:.4rem;color:#1a5fa8;}
+.box-example{background:#f0faf3;border-color:var(--accent);}
+.box-example::before{content:"✏️ 例題";font-weight:700;display:block;margin-bottom:.4rem;color:#1a7a40;}
+.box-key{background:#fffbea;border-color:#e0a800;}
+.box-key::before{content:"🔑 重點";font-weight:700;display:block;margin-bottom:.4rem;color:#a07000;}
+.box-selftest{background:#fdf0ff;border-color:#9b59b6;}
+.box-selftest::before{content:"✍️ 自我測驗";font-weight:700;display:block;margin-bottom:.4rem;color:#7b2fa0;}
+.box-summary{background:#f5f5f5;border-color:#666;}
+.box-summary::before{content:"📋 本節摘要";font-weight:700;display:block;margin-bottom:.4rem;color:#333;}
+.reaction-scheme{background:#1e2228;color:#a8d8a8;font-family:"Courier New",monospace;font-size:.82rem;padding:1.1rem 1.3rem;border-radius:8px;overflow-x:auto;margin:1rem 0;line-height:1.6;white-space:pre;}
+table{border-collapse:collapse;width:100%;margin:1rem 0;font-size:.88rem;}
+th{background:var(--accent);color:#fff;padding:.5rem .7rem;text-align:left;}
+td{padding:.45rem .7rem;border-bottom:1px solid var(--rule);}
+tr:nth-child(even) td{background:#f5f0e8;}
+hr{border:none;border-top:1px solid var(--rule);margin:2rem 0;}
+@media(max-width:820px){
+  #menu-toggle{display:flex;}
+  #sidebar{position:fixed;left:-280px;z-index:100;transition:left .25s;}
+  #sidebar.open{left:0;}
+  #main{padding:1.2rem 1.1rem;padding-top:3.5rem;}
+}
+</style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="選單"><span></span><span></span><span></span></button>
+
+<aside id="sidebar">
+  <div class="brand">
+    <div class="ch-num">第 36 章</div>
+    <div class="ch-title">鄰基參與、重排與斷裂</div>
+  </div>
+  <nav id="toc">
+    <div class="sec-label">本章目錄</div>
+    <a href="#ngp">鄰基參與</a>
+    <a href="#pi-participation">π電子參與</a>
+    <a href="#pinacol">頻哪醇重排</a>
+    <a href="#semipinacol">半頻哪醇與Tiffeneau-Demjanov</a>
+    <a href="#dienone-phenol">二烯酮-苯酚重排</a>
+    <a href="#benzilic">苯亞甲酸重排</a>
+    <a href="#favorskii">Favorskii重排</a>
+    <a href="#baeyer-villiger">Baeyer-Villiger反應</a>
+    <a href="#migration-why">遷移選擇性</a>
+    <a href="#beckmann">Beckmann重排</a>
+    <a href="#fragmentation-cc">C-C鍵的斷裂</a>
+    <a href="#eschenmoser">Eschenmoser斷裂</a>
+    <a href="#ring-expansion">環擴張斷裂</a>
+    <a href="#nootkatone">合成展示：Nootkatone</a>
+    <a href="#summary">本章摘要</a>
+  </nav>
+</aside>
+
+<main id="main">
+  <h1>第36章 鄰基參與、重排與斷裂</h1>
+  <p class="chapter-meta">Clayden Organic Chemistry · Ch 36 (pp. 931–969)</p>
+
+  <section id="ngp">
+    <h2>鄰基參與（Neighbouring Group Participation）</h2>
+    <p>當分子中的一個親核性基團，在離去基團離去時就近參與，形成橋式中間體，再被外部親核試劑攻擊，稱為<strong>鄰基參與（NGP）</strong>。整體立體化學為<strong>保留（retention）</strong>——因為發生了兩次SN2反轉，淨效果是構型保留。</p>
+
+    <h3>硫化物的鄰基參與</h3>
+    <div class="reaction-scheme">
+    β-硫化物的NGP
+
+    MeS-CH₂-CH₂-OTs  + Nu⁻  →
+
+        MeS⁺                MeS    Nu
+         \     [SN2 ×2]      |      |
+          CH₂-CH₂           CH₂-CH₂
+         橋式硫離子
+    →  淨效果：保留構型
+    </div>
+
+    <h3>羧酸根的鄰基參與</h3>
+    <p>反式-2-溴環己基乙酸鹽在水解時，鄰位羧酸根參與形成環氧內酯（lactonium橋），再被水攻擊，得到<em>反式</em>（保留）二醇。</p>
+    <div class="box-key">
+      NGP的核心標誌：<br>
+      1. 速率加快（內部親核試劑比外部有效）<br>
+      2. 立體化學：兩步SN2 = 保留（retention）<br>
+      3. 中間體可能可分離或以特殊產物比例出現
+    </div>
+
+    <h3>氮丙啶（Aziridinium Ion）的NGP</h3>
+    <p>β-氨基醇的NGP經由氮丙啶鎓離子進行；Payne重排則是環氧醇通過1,2-環氧重組達到熱力學更穩定的異構體。</p>
+  </section>
+
+  <section id="pi-participation">
+    <h2>π電子的鄰基參與</h2>
+    <p>苯環可作為親核試劑參與鄰基作用，形成<strong>苯鎓離子（phenonium ion）</strong>中間體，導致：</p>
+    <ul>
+      <li>速率大幅加快（苯基相比飽和C-C有更強的NGP）</li>
+      <li>骨架重排（Wagner-Meerwein型）</li>
+      <li>構型保留</li>
+    </ul>
+    <div class="reaction-scheme">
+    苯鎓離子形成
+
+    Ph-CH-CH₂-OTs  →  [Ph橋接鎓離子]  →  外部Nu攻擊
+    |
+    重排產物與保留構型
+    </div>
+  </section>
+
+  <section id="pinacol">
+    <h2>頻哪醇重排（Pinacol Rearrangement）</h2>
+    <p>鄰二醇（pinacol）在酸催化下，一個OH離去生成碳正離子，鄰位的烷基或芳基遷移，生成酮（羰基化合物）：</p>
+    <div class="reaction-scheme">
+    頻哪醇重排
+
+    HO  OH          OH              O
+    |    |    H⁺      |    遷移       ‖
+    R₂C-CR₂   →   R₂C⁺-CR₂  →   R₃C-CR
+                  (碳正離子)      (酮)
+    </div>
+    <div class="box-key">
+      遷移選擇性：能夠最大穩定化碳正離子的基團優先遷移（Ph > 3° > 2° > 1° > H）。遷移基團<strong>保留其原有構型</strong>（electrophilic attack with retention）。
+    </div>
+
+    <h3>1,2-氫或烷基遷移的立體化學</h3>
+    <p>在所有1,2-遷移中，遷移基團保持其立體化學。σ軌道的最大葉與目標σ*軌道在同一面重疊（與SN2的後面攻擊/反轉相比，1,2-遷移是前面攻擊/保留）。</p>
+  </section>
+
+  <section id="semipinacol">
+    <h2>半頻哪醇重排（Semipinacol）</h2>
+    <p>只有一個OH（或相當的離去基）的1,2-二醇類似物也能重排，稱為半頻哪醇重排。最重要的例子是<strong>Tiffeneau-Demjanov重排</strong>：</p>
+    <div class="reaction-scheme">
+    Tiffeneau-Demjanov重排
+
+    環酮  →(1. KCN, 2. HNO₂)→  α-氨基-α-羥腈
+    NH₂-C-OH                         →(NaNO₂/HCl)→
+                               →  重氮鎓離子 [diazonium]
+                               →  遷移+N₂離去
+                               →  環擴張酮（增加一個碳）
+    </div>
+    <div class="box-example">
+      環己酮 → Tiffeneau-Demjanov → 環庚酮（六→七員環擴張）<br>
+      此方法是製備中環酮的實用方法，每次增加一個碳，精準環擴。
+    </div>
+  </section>
+
+  <section id="dienone-phenol">
+    <h2>二烯酮-苯酚重排（Dienone-phenol Rearrangement）</h2>
+    <p>環己二烯酮在酸催化下，烷基或芳基遷移至羰基鄰位，再芳香化得苯酚：</p>
+    <div class="reaction-scheme">
+    二烯酮-苯酚重排
+
+    4,4-二取代環己二烯酮  →(H⁺)→  [碳正離子]
+                         →(遷移)→  重排中間體
+                         →(去質子)→  苯酚衍生物
+    </div>
+    <p>遷移基團選擇性複雜：電子推基（Ph）通常優先遷移，但帶有強吸電基（CO₂Et）的基團因不願留在碳正離子鄰位，也可能優先遷移。</p>
+  </section>
+
+  <section id="benzilic">
+    <h2>苯亞甲酸重排（Benzilic Acid Rearrangement）</h2>
+    <p>二苯基乙二酮（benzil）在強鹼（KOH）中，氫氧根加到一個羰基，另一個苯基帶著電子對遷移到第二個碳，最終得苯亞甲酸（benzilic acid）：</p>
+    <div class="reaction-scheme">
+    苯亞甲酸重排
+
+    Ph-C(=O)-C(=O)-Ph  →(KOH)→
+
+    [OH⁻加到C=O] → Ph遷移帶電子對 → Ph₂C(OH)-CO₂⁻
+                                        (苯亞甲酸鹽)
+    </div>
+    <div class="box-note">
+      此重排是1,2-遷移到<strong>羰基碳</strong>（類比頻哪醇中遷移到碳正離子），在鹼條件下通過四面體中間體進行。
+    </div>
+  </section>
+
+  <section id="favorskii">
+    <h2>Favorskii重排</h2>
+    <p>α-鹵代酮（α-halo ketone）在親核試劑（如甲醇/MeO⁻）作用下，重排生成酯。機制涉及<strong>環丙酮中間體（cyclopropanone）</strong>：</p>
+    <div class="reaction-scheme">
+    Favorskii重排機制
+
+    Ph-CH₂-C(=O)-CH₂-Cl  →(MeO⁻)→
+
+    1. MeO⁻拔去α-H → 烯醇化
+    2. 烯醇自身烷基化 → 環丙酮中間體
+    3. MeO⁻攻擊環丙酮 → 開環 → 酯
+
+    淨效果：R¹-C(=O)-CHX-R² → R¹CH₂-CO₂R（酯）
+    </div>
+
+    <h3>兩種異構體給同一產物</h3>
+    <p>兩種不同的α-氯取代異構體（Cl在不同位置）在MeO⁻作用下得到<em>同一種</em>酯，因為它們共用相同的對稱環丙酮中間體。</p>
+
+    <h3>環狀Favorskii：環收縮</h3>
+    <p>環酮溴化（α位）後加入甲醇鈉，發生Favorskii重排，環收縮一個碳：</p>
+    <div class="reaction-scheme">
+    環狀Favorskii重排
+
+    環己酮 →(Br₂, HOAc)→ 2-溴環己酮
+          →(NaOMe)→ 環戊甲酸甲酯（61% 收率）
+
+    六員環 → 五員環（環收縮）
+    </div>
+
+    <div class="box-example">
+      <strong>Cubane的合成：</strong><br>
+      Favorskii重排是合成立方烷（cubane）的關鍵步驟——用它將五員環收縮為四員環，再脫羧得到立方烷（1964年，Eaton&amp;Cole）。
+    </div>
+
+    <h3>沒有α-H的Favorskii</h3>
+    <p>無α-H時，環丙酮路徑被迫轉為類苯亞甲酸型機制（OH直接加到羰基，再遷移）。哌替啶（pethidine）的合成用此機制。</p>
+  </section>
+
+  <section id="baeyer-villiger">
+    <h2>Baeyer-Villiger反應</h2>
+    <p>酮與過酸（peracid，RCO₃H）反應，氧插入（C-C→C-O-C），生成酯或內酯。<em>m</em>-CPBA（間氯過苯甲酸）是最常用試劑。</p>
+    <div class="reaction-scheme">
+    Baeyer-Villiger反應機制
+
+    O         O  OH  O          O        O
+    ‖         |  |   |    遷移   ‖  -H⁺   ‖
+    R-C-R² + RCO₃H → R-C-O-O-COR →  R-O-C-R²
+                      (過酸加合物)    (Criegee中間體) → 酯
+
+    C-O-O鍵弱，C遷移與-O-COR⁻同步（concerted）
+    </div>
+
+    <h3>哪個基團遷移？（I）事實</h3>
+    <p>遷移能力順序（以CF₃CO₃H/苯甲酮類比較）：</p>
+    <table>
+      <tr><th>R基</th><th>Ph遷移（%）</th><th>R遷移（%）</th></tr>
+      <tr><td>Me</td><td>90</td><td>0</td></tr>
+      <tr><td>Et</td><td>87</td><td>6</td></tr>
+      <tr><td>i-Pr</td><td>33</td><td>63</td></tr>
+      <tr><td>t-Bu</td><td>2</td><td>77</td></tr>
+    </table>
+    <p>遷移能力（大→小）：<strong>t-Bu > sec-alkyl ≈ Ph > Et > Me</strong></p>
+
+    <h3>哪個基團遷移？（II）理由</h3>
+    <p>過渡態帶正電（carboxylate離去），能穩定正電荷的基團優先遷移。苯環通過π參與穩定正電荷（如五環戊二烯基陽離子），形成橋式中間體，比單純的烷基更穩定。</p>
+
+    <h3>立體化學：保留</h3>
+    <p>遷移基團的立體化學在Baeyer-Villiger中<strong>100%保留</strong>。sp³遷移碳從一個σ鍵滑到另一個σ鍵，最小限度重組，大葉軌道使新舊鍵在同面。</p>
+
+    <h3>合成應用</h3>
+    <ul>
+      <li><strong>L-多巴合成</strong>：L-酪氨酸→Friedel-Crafts醯化→Baeyer-Villiger→水解→L-多巴（帕金森病藥物）</li>
+      <li><strong>前列腺素中間體</strong>：環丁酮的B-V反應（小環優先反應）提供關鍵內酯</li>
+      <li><strong>MeCO<sup>+</sup>等效物</strong>：Ph-CO-Me中苯環遷移，MeCO⁺相當於「OH<sup>+</sup>」</li>
+      <li><strong>Dakin反應</strong>：ArCHO + H₂O₂，Ar遷移→ArO<sup>-</sup>（苯酚），電子豐富芳環特有</li>
+    </ul>
+  </section>
+
+  <section id="migration-why">
+    <h2>遷移選擇性的機理解釋</h2>
+    <p>在Baeyer-Villiger和相關1,2-遷移中，遷移基團必須<strong>與離去基anti-periplanar</strong>以獲得最佳軌道重疊（σ與σ*的軌道交疊）。</p>
+    <div class="box-note">
+      <strong>1,2-遷移中遷移基團保留其立體化學</strong>：<br>
+      因為遷移碳原子的σ充填軌道（而非空σ*軌道）作為親核體。遷移碳以<em>electrophilic</em>方式接受，保留構型；而SN2中碳以<em>nucleophilic</em>方式攻擊，倒轉構型。
+    </div>
+    <h3>anti-periplanar要求</h3>
+    <p>構象限制的分子（如剛性環系）中，anti-periplanar要求至關重要：</p>
+    <ul>
+      <li>氨基醇Tiffeneau-Demjanov重排：OH提供電子推，N₂⁺離去，只有anti-periplanar的基團（環碳鏈或H）遷移</li>
+      <li>四個非對映體給出四種不同產物（環縮醛、醛、酮或環氧），完全由anti-periplanar關係決定</li>
+    </ul>
+  </section>
+
+  <section id="beckmann">
+    <h2>Beckmann重排（Beckmann Rearrangement）</h2>
+    <p>肟（oxime，由酮+NH₂OH製得）在酸（H₂SO₄、PCl₅、SOCl₂、Al₂O₃等）催化下，OH轉為離去基，<em>trans</em>位的烷基遷移到氮，得到<strong>醯胺（amide）</strong>。</p>
+    <div class="reaction-scheme">
+    Beckmann重排機制
+
+       N-OH         N-OH₂⁺       N≡C⁺R²  +H₂O   O
+        |     H⁺     |     -H₂O   ↑           →   ‖
+    R¹-C-R²  →  R¹-C-R²  →  R¹遷移       →  HN-C-R¹
+                              (linear nitrilium)   (醯胺)
+    </div>
+
+    <h3>哪個基團遷移？</h3>
+    <p>C=N雙鍵有幾何異構（cis/trans），<em>trans</em>位於OH的基團遷移。幾何異構體比例直接反映在產物醯胺比例中。</p>
+    <div class="box-example">
+      <strong>工業應用：Nylon-6的合成</strong><br>
+      環己酮肟 →（H₂SO₄, Beckmann）→ ε-己內醯胺（caprolactam）→（鹼聚合）→ Nylon-6<br>
+      這是全球最大規模的Beckmann重排應用。
+    </div>
+
+    <h3>Beckmann斷裂（Beckmann Fragmentation）</h3>
+    <p>當遷移基團為<em>tertiary</em>烷基時，穩定性過高，直接斷裂形成穩定碳正離子和腈（nitrile），而非生成醯胺。這稱為<strong>Beckmann斷裂</strong>：</p>
+    <div class="reaction-scheme">
+    Beckmann斷裂
+
+    R³C-N-OH  →(H⁺)→  R³C⁺  +  N≡C-R（腈）
+    （叔烷基trans）      （穩定正離子）
+    碳正離子+腈重組 → 4種醯胺（非Beckmann產物）
+    </div>
+    <p>樟腦（camphor）的肟在醯氯處理下發生Beckmann斷裂，環張力釋放，腈無法形成8員環而導致開鏈腈副產物。</p>
+  </section>
+
+  <section id="fragmentation-cc">
+    <h2>C-C鍵極化使斷裂成為可能</h2>
+    <p>C-C鍵很強（339 kJ/mol）但難以通過親核/親電方式斷裂，原因在於它無法被極化。然而，若C-C鍵一端有電子推（源）、另一端有電子拉（槽），C-C鍵可被極化而斷裂：</p>
+    <div class="reaction-scheme">
+    1,2,3,4斷裂框架
+
+    電子源—C(1)—C(2)—C(3)—C(4)—電子槽
+
+    C2-C3鍵斷裂 → 兩個片段
+    源（如孤對電子，lone pair）推動電子
+    槽（如離去基離去）拉動電子
+    </div>
+    <p>常見電子源：孤對電子（OH、NR₂）、碳陰離子<br>常見電子槽：離去基離去（OTs→H₂O）、質子化羰基（C=OH⁺）</p>
+
+    <div class="box-example">
+      <strong>環丁酮的環擴斷裂：</strong><br>
+      甲氧基環戊酮在酸中，質子化C=O作為槽，醚氧孤對電子作為源，斷裂C-C形成7員環（五→七員環擴張）。<br><br>
+      <strong>Retro-aldol：</strong><br>
+      醛醇縮合的逆反應——羰基作槽，OH作源，在酸或鹼中斷裂C-C。
+    </div>
+  </section>
+
+  <section id="eschenmoser">
+    <h2>Eschenmoser斷裂</h2>
+    <p>Albert Eschenmoser（1960年代）設計的環擴法：α,β-環氧酮（epoxyketone）與甲苯磺醯肼反應，形成甲苯磺醯腙，不穩定→消除開環→1,2,3,4斷裂→產生<strong>酮-炔（keto-alkyne）</strong>：</p>
+    <div class="reaction-scheme">
+    Eschenmoser斷裂
+
+    α,β-環氧酮  →(TsNHNH₂)→  甲苯磺醯腙
+               →(消除開環)→   3,4-烯醇-甲苯磺醯腙
+               →(斷裂+N₂+ArSO₂H)→  酮-炔（環擴產物）
+
+    應用：12員環 → 15員環（muscone, exaltone的合成）
+    </div>
+    <div class="box-note">
+      Eschenmoser斷裂的精妙在於三個鍵同步斷裂（C-O, C-C, N-N），且斷裂鍵必須互相anti-periplanar。此條件自動滿足，因為消除步驟已設置了正確幾何。
+    </div>
+  </section>
+
+  <section id="ring-expansion">
+    <h2>環擴張斷裂</h2>
+    <p>六、六稠環（decalin）可視為一個10員環被中間的C-C鍵「閉合」。斷裂該鍵（附有合適的推-拉取代基）可釋放10員環。</p>
+    <div class="reaction-scheme">
+    去卡林環擴斷裂
+
+    OH  OTs         OTs
+     |   |    鹼      |          O
+    [6-6]環  →    [6-6]-OTs  →  [10員酮]（73%）
+
+    OTs必須anti-periplanar於斷裂C-C鍵
+    </div>
+
+    <h3>斷裂的立體化學控制</h3>
+    <ul>
+      <li>斷裂鍵（C-C）必須<strong>anti-periplanar</strong>於離去基（OTs），類似E2消除</li>
+      <li>斷裂立體特異性：反應與E2一樣選擇anti排列</li>
+      <li>雙鍵幾何（E/Z）由斷裂過渡態中黑色鍵的相對位置決定</li>
+    </ul>
+    <div class="box-example">
+      <strong>Caryophyllene的合成（Corey）：</strong><br>
+      利用環擴斷裂從雙環前驅物出發，得到含E型三取代雙鍵的9員環天然物caryophyllene。起始物的相對立體化學直接決定雙鍵幾何。
+    </div>
+
+    <h3>控制雙鍵斷裂（juvenile hormone合成）</h3>
+    <p>青幼素（juvenile hormone）需要精確控制三個三取代雙鍵，利用環狀前驅物的斷裂可從容易控制的環立體化學轉化為難以控制的開鏈雙鍵幾何。</p>
+  </section>
+
+  <section id="nootkatone">
+    <h2>合成展示：Nootkatone的三條路線</h2>
+    <p>Nootkatone是葡萄柚香氣化合物（最初誤認），三條合成路線均以斷裂反應為核心：</p>
+
+    <h3>三員環的斷裂</h3>
+    <p>從天然(–)-carone出發，共軛加成引入側鏈，形成雙環二酮，HCl催化下三員環斷裂（由烯酮拉、叔碳正離子穩定性推）→ 雙環烯酮 → 進一步轉化為nootkatone骨架。</p>
+
+    <h3>四員環的斷裂</h3>
+    <p>天然萜類二酮前驅物，HCl催化，醛醇縮合關六員環，四員環同時斷裂（釋放環張力），得到雙環氯代烯酮，再消除完成nootkatone。</p>
+
+    <h3>六員環的斷裂</h3>
+    <p>Diels-Alder加合物（橋接雙環），甲酸（HCO₂H）作為質子源，叔醇質子化後形成叔碳正離子，醚提供推力，斷裂六員環C-C，中間體環化（熱力學控制），再水解、消除甲酸酯得nootkatone（50%收率）。</p>
+
+    <div class="box-note">
+      儘管合成所有樣品均不含葡萄柚香氣，後來發現真正的葡萄柚香氣物質是一種簡單硫醇（1-p-menthene-8-thiol），人類嗅覺可偵測至2×10⁻⁵ ppb！合成研究糾正了此誤解。
+    </div>
+  </section>
+
+  <section id="summary">
+    <h2>本章摘要</h2>
+    <div class="box-summary">
+      <ul>
+        <li><strong>NGP</strong>：內部親核試劑在離去基離去時參與，淨構型<em>保留</em>（兩次SN2）</li>
+        <li><strong>1,2-遷移</strong>：烷基/H從碳正離子鄰位遷移，遷移基團<em>保留</em>構型，anti-periplanar要求</li>
+        <li><strong>頻哪醇</strong>：鄰二醇→酮；遷移能力：Ph>3°>2°>1°>H</li>
+        <li><strong>Tiffeneau-Demjanov</strong>：α-氨基腈脫重氮→環擴一個碳</li>
+        <li><strong>Favorskii</strong>：α-鹵代酮→環丙酮中間體→酯（環收縮）</li>
+        <li><strong>Baeyer-Villiger</strong>：酮+過酸→酯；t-Bu>sec>Ph>Et>Me遷移；保留構型</li>
+        <li><strong>Beckmann</strong>：肟+酸→醯胺（trans基遷移）；叔烷基→斷裂</li>
+        <li><strong>C-C斷裂</strong>：需要電子源（推）和電子槽（拉），1,2,3,4框架，anti-periplanar</li>
+        <li><strong>Eschenmoser斷裂</strong>：環氧酮+TsNHNH₂→酮炔（環擴）</li>
+        <li><strong>立體化學控制斷裂</strong>：E/Z雙鍵幾何由起始物立體化學決定（如E2）</li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<script>
+const toggle = document.getElementById('menu-toggle');
+const sidebar = document.getElementById('sidebar');
+toggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+const sections = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('#toc a');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      links.forEach(l => l.classList.remove('active'));
+      const a = document.querySelector(`#toc a[href="#${e.target.id}"]`);
+      if (a) a.classList.add('active');
+    }
+  });
+}, {rootMargin: '-20% 0px -70% 0px'});
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
